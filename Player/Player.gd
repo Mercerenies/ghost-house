@@ -15,6 +15,8 @@ func get_input_direction() -> Vector2:
 func can_move_to(pos: Vector2) -> bool:
     if position != target_pos:
         return false
+    if get_room().is_showing_modal():
+        return false
     return .can_move_to(pos)
 
 func _process(delta: float) -> void:

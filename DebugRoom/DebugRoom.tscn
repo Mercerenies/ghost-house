@@ -1,10 +1,9 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://DebugRoom/DebugRoom.gd" type="Script" id=1]
 [ext_resource path="res://Room/Room.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Player/Player.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Ghost/Ghost.tscn" type="PackedScene" id=4]
-[ext_resource path="res://DialogueBox/DialogueBox.tscn" type="PackedScene" id=5]
 
 [node name="DebugRoom" type="Node2D"]
 script = ExtResource( 1 )
@@ -17,7 +16,4 @@ position = Vector2( 32, 32 )
 
 [node name="Ghost" parent="Room" instance=ExtResource( 4 )]
 position = Vector2( 128, 64 )
-
-[node name="DialogueBox" parent="." instance=ExtResource( 5 )]
-visible = false
 

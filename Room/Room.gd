@@ -28,5 +28,8 @@ func move_entity(src: Vector2, dest: Vector2) -> void:
 func is_wall_at(pos: Vector2) -> bool:
     return get_tile_cell(pos) == Tile.DebugWall
 
+func is_showing_modal() -> bool:
+    return $DialogueBox.visible
+
 func _ready():
     pass
