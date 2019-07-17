@@ -1,0 +1,14 @@
+
+* DIALOGUE FORMAT
+  A dialogue object is a dictionary. Its elements are the various
+  dialogue states, whose respective names are the dictionary keys. The
+  values are arrays of instructions. A conversation always begins in
+  the ~start~ state.
+
+  An instruction is a dictionary. Instructions always have a ~command~
+  key. All of the other keys depend on which instruction is being executed.
+
+  + ~command~ (required) - Determines the instruction to execute.
+** ~say~ Instruction
+   Displays text to the screen in dialogue format.
+   + ~text~ (required) - The text to display.

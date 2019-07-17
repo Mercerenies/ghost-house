@@ -29,7 +29,7 @@ func is_wall_at(pos: Vector2) -> bool:
     return get_tile_cell(pos) == Tile.DebugWall
 
 func is_showing_modal() -> bool:
-    return $DialogueBox.visible
+    return $DialogueBox.is_active()
 
 func _ready():
     pass
