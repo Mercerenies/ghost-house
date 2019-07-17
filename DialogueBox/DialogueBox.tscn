@@ -1,12 +1,14 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://DialogueBox/DialogueBox.gd" type="Script" id=1]
+[ext_resource path="res://OutlinedPolygon2D/OutlinedPolygon2D.gd" type="Script" id=2]
 
 [node name="DialogueBox" type="Node2D"]
 script = ExtResource( 1 )
 
 [node name="Frame" type="Polygon2D" parent="."]
-polygon = PoolVector2Array( 0, 400, 1024, 400, 1024, 600, 0, 600 )
+polygon = PoolVector2Array( 0, 400, 1024, 400, 1024, 600, 0, 600, 0, 400 )
+script = ExtResource( 2 )
 
 [node name="Label" type="Label" parent="."]
 margin_left = 16.0
@@ -17,6 +19,10 @@ custom_colors/font_color = Color( 0, 0, 0, 1 )
 text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Dolor sed viverra ipsum nunc aliquet bibendum enim. In massa tempor nec feugiat. Nunc aliquet bibendum enim facilisis gravida. Nisl nunc mi ipsum faucibus vitae aliquet nec ullamcorper. Amet luctus venenatis lectus magna fringilla. Volutpat maecenas volutpat blandit aliquam etiam erat velit scelerisque in. Egestas egestas fringilla phasellus faucibus scelerisque eleifend. Sagittis orci a scelerisque purus semper eget duis. Nulla pharetra diam sit amet nisl suscipit. Sed adipiscing diam donec adipiscing tristique risus nec feugiat in. Fusce ut placerat orci nulla. Pharetra vel turpis nunc eget lorem dolor. Tristique senectus et netus et malesuada"
 autowrap = true
 clip_text = true
+
+[node name="SpeakerFrame" type="Polygon2D" parent="."]
+polygon = PoolVector2Array( 32, 375, 256, 375, 256, 405, 32, 405, 32, 375 )
+script = ExtResource( 2 )
 
 [node name="ShowTimer" type="Timer" parent="."]
 wait_time = 0.05
