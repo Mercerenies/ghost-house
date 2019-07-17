@@ -4,6 +4,7 @@ var _data: Dictionary = {}
 var _state: String = "start"
 var _index: int = 0
 var _text: String = ""
+var _active_branch: Array = []
 
 func _ready():
     _end_conversation()
@@ -20,9 +21,11 @@ func popup(data: Dictionary, state: String = "start") -> void:
 func _end_conversation() -> void:
     visible = false
     _text = ""
+    _active_branch = []
     $Label.text = ""
     $SpeakerLabel.text = ""
     $SpeakerFrame.visible = false
+    $Branching.visible = false
     _state = "start"
     _data = {}
     _index = 0
@@ -31,10 +34,13 @@ func _end_conversation() -> void:
 func _advance_state() -> void:
     _index += 1
     _text = ""
+    _active_branch = []
     $Label.text = ""
     $SpeakerLabel.text = ""
     $SpeakerFrame.visible = false
+    $Branching.visible = false
     $ShowTimer.stop()
+    visible = false
     if _index >= len(_data[_state]):
         _end_conversation()
     else:
@@ -53,14 +59,36 @@ func _advance_state() -> void:
                 _advance_state()
             'end':
                 _end_conversation()
+            'branch':
+                _text = instr['text']
+                if instr.has('speaker'):
+                    $SpeakerFrame.visible = true
+                    $SpeakerLabel.text = instr['speaker']
+                $ShowTimer.start()
+                visible = true
+                _active_branch = instr['options']
 
-func _on_ShowTimer_timeout():
-    $Label.text = _text.substr(0, $Label.text.length() + 1)
+func _text_shown() -> void:
+    if not _active_branch.empty():
+        $Branching.popup(_active_branch)
+
+func _on_ShowTimer_timeout() -> void:
+    if $Label.text != _text:
+        $Label.text = _text.substr(0, $Label.text.length() + 1)
+        if $Label.text == _text:
+            _text_shown()
 
 func _process(_delta: float) -> void:
     if visible:
         if Input.is_action_just_released("ui_accept"):
-            if $Label.text == _text:
+            if $Label.text == _text and _text != "":
+                if $Branching.is_active():
+                    var opt = $Branching.get_chosen_option()
+                    _state = opt['state']
+                    _index = -1
+                    $Branching.hide()
                 _advance_state()
             else:
                 $Label.text = _text
+                if $Label.text == _text:
+                    _text_shown()

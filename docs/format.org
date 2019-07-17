@@ -21,3 +21,9 @@
 ** ~end~ Instruction
    Ends the conversation. It is not strictly necessary to end a state
    with this instruction, but it makes the intention more clear.
+** ~branch~ Instruction
+   Provides the player with a set of options.
+   + ~prompt~ (required) - The text to display.
+   + ~speaker~ (optional) - The speaker.
+   + ~options~ (required) - An array of options. Each option should
+     have a ~text~ key and a ~state~ key.
