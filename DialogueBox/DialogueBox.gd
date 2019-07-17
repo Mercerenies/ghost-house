@@ -41,6 +41,12 @@ func _advance_state() -> void:
                 _text = instr['text']
                 $ShowTimer.start()
                 visible = true
+            'goto':
+                _state = instr['target']
+                _index = -1
+                _advance_state()
+            'end':
+                _end_conversation()
 
 func _on_ShowTimer_timeout():
     $Label.text = _text.substr(0, $Label.text.length() + 1)

@@ -12,3 +12,11 @@
 ** ~say~ Instruction
    Displays text to the screen in dialogue format.
    + ~text~ (required) - The text to display.
+** ~goto~ Instruction
+   Unconditionally jumps to a given state.
+   + ~target~ (required) - The state to go to. This state must exist,
+     but its instruction list can be empty (in which case the dialogue will
+     end).
+** ~end~ Instruction
+   Ends the conversation. It is not strictly necessary to end a state
+   with this instruction, but it makes the intention more clear.
