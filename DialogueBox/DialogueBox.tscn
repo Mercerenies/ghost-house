@@ -24,6 +24,16 @@ clip_text = true
 polygon = PoolVector2Array( 32, 375, 256, 375, 256, 405, 32, 405, 32, 375 )
 script = ExtResource( 2 )
 
+[node name="SpeakerLabel" type="Label" parent="."]
+margin_left = 40.0
+margin_top = 383.0
+margin_right = 240.0
+margin_bottom = 403.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "Speaker Name"
+align = 1
+clip_text = true
+
 [node name="ShowTimer" type="Timer" parent="."]
 wait_time = 0.05
 

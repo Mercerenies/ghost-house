@@ -6,31 +6,34 @@ var _index: int = 0
 var _text: String = ""
 
 func _ready():
-    $Label.text = ""
+    _end_conversation()
 
 func is_active() -> bool:
     return not _data.empty()
 
 func popup(data: Dictionary, state: String = "start") -> void:
+    _end_conversation()
     _data = data
-    _state = state
     _index = -1
-    _text = ""
-    $Label.text = ""
     _advance_state()
 
 func _end_conversation() -> void:
     visible = false
     _text = ""
     $Label.text = ""
+    $SpeakerLabel.text = ""
+    $SpeakerFrame.visible = false
     _state = "start"
     _data = {}
+    _index = 0
     $ShowTimer.stop()
 
 func _advance_state() -> void:
     _index += 1
     _text = ""
     $Label.text = ""
+    $SpeakerLabel.text = ""
+    $SpeakerFrame.visible = false
     $ShowTimer.stop()
     if _index >= len(_data[_state]):
         _end_conversation()
@@ -39,6 +42,9 @@ func _advance_state() -> void:
         match instr['command']:
             'say':
                 _text = instr['text']
+                if instr.has('speaker'):
+                    $SpeakerFrame.visible = true
+                    $SpeakerLabel.text = instr['speaker']
                 $ShowTimer.start()
                 visible = true
             'goto':

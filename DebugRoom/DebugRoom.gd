@@ -10,6 +10,8 @@ var _sample_dialogue = {
     ],
     "state2": [
         {"command": "say", "text": "Welcome to State 2."},
+        {"command": "say", "speaker": "Box", "text": "By the way, I have an identity now"},
+        {"command": "say", "text": "Not now though"},
         {"command": "end"}
     ]
 }

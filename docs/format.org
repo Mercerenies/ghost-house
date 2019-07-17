@@ -12,6 +12,7 @@
 ** ~say~ Instruction
    Displays text to the screen in dialogue format.
    + ~text~ (required) - The text to display.
+   + ~speaker~ (optional) - The speaker.
 ** ~goto~ Instruction
    Unconditionally jumps to a given state.
    + ~target~ (required) - The state to go to. This state must exist,
