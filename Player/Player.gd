@@ -37,7 +37,13 @@ func can_move_to(pos: Vector2) -> bool:
 
 func _process(delta: float) -> void:
     var input_dir = get_input_direction()
-    var target_cell = cell + input_dir
-    if input_dir != Vector2() and _can_move_at_all():
-        set_direction(_input_dir_to_dir(input_dir))
-        try_move_to(target_cell)
+    if _can_move_at_all():
+        if input_dir != Vector2():
+            var target_cell = cell + input_dir
+            set_direction(_input_dir_to_dir(input_dir))
+            try_move_to(target_cell)
+        elif Input.is_action_just_released("ui_accept"):
+            var target_cell = cell + Vector2(1, 0).rotated(get_direction() * PI / 2)
+            var target_entity = get_room().get_entity_cell(target_cell)
+            if target_entity != null:
+                target_entity.on_interact()

@@ -1,4 +1,4 @@
-extends Node2D
+extends Entity
 class_name MobileEntity
 
 enum Dir {
@@ -15,9 +15,6 @@ var target_pos: Vector2
 
 var _dir: int = Dir.DOWN
 var _image_index: int = 0
-
-func get_room():
-    return get_parent()
 
 func set_direction(dir: int) -> void:
     _dir = dir

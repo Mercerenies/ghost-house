@@ -7,18 +7,23 @@ var _text: String = ""
 var _active_branch: Array = []
 
 func _ready():
-    _end_conversation()
+    _data = {}
+    _end_conversation_now()
 
 func is_active() -> bool:
     return not _data.empty()
 
 func popup(data: Dictionary, state: String = "start") -> void:
-    _end_conversation()
+    _end_conversation_now()
     _data = data
     _index = -1
     _advance_state()
 
 func _end_conversation() -> void:
+    _end_conversation_now()
+    call_deferred("_end_conversation_deferred")
+
+func _end_conversation_now() -> void:
     visible = false
     _text = ""
     _active_branch = []
@@ -27,9 +32,11 @@ func _end_conversation() -> void:
     $SpeakerFrame.visible = false
     $Branching.visible = false
     _state = "start"
-    _data = {}
     _index = 0
     $ShowTimer.stop()
+
+func _end_conversation_deferred() -> void:
+    _data = {}
 
 func _advance_state() -> void:
     _index += 1
@@ -79,7 +86,7 @@ func _on_ShowTimer_timeout() -> void:
             _text_shown()
 
 func _process(_delta: float) -> void:
-    if visible:
+    if is_active():
         if Input.is_action_just_released("ui_accept"):
             if $Label.text == _text and _text != "":
                 if $Branching.is_active():

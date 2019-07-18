@@ -31,5 +31,8 @@ func is_wall_at(pos: Vector2) -> bool:
 func is_showing_modal() -> bool:
     return $DialogueBox.is_active()
 
+func show_dialogue(dia: Dictionary) -> void:
+    $DialogueBox.popup(dia)
+
 func _ready():
     pass
