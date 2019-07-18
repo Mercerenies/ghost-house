@@ -1,13 +1,29 @@
 extends Node2D
 class_name MobileEntity
 
+enum Dir {
+    RIGHT = 0, DOWN, LEFT, UP
+}
+
 export(float) var speed: float = 128.0 # Pixels / sec
+export(Texture) var texture: Texture = null
+var sprite: Sprite = null
+var timer: Timer = null
 
 var cell: Vector2
 var target_pos: Vector2
 
+var _dir: int = Dir.DOWN
+var _image_index: int = 0
+
 func get_room():
     return get_parent()
+
+func set_direction(dir: int) -> void:
+    _dir = dir
+
+func get_direction() -> int:
+    return _dir
 
 func can_move_to(dest: Vector2) -> bool:
     var room = get_room()
@@ -27,8 +43,29 @@ func _ready() -> void:
     cell = current_cell
     target_pos = position
 
+    sprite = Sprite.new()
+    add_child(sprite)
+    sprite.texture = texture
+    sprite.hframes = 4
+    sprite.vframes = 4
+    sprite.frame = 0
+    sprite.position = Vector2(16, 16)
+
+    timer = Timer.new()
+    add_child(timer)
+    timer.connect("timeout", self, "_on_Timer_timeout")
+    timer.wait_time = 0.1
+    timer.start()
+
 func _process(delta: float) -> void:
+    sprite.frame = get_direction() * 4
+    if position != target_pos:
+        sprite.frame += _image_index
+
     if (target_pos - position).length() < speed * delta:
         position = target_pos
     else:
         position += (target_pos - position).normalized() * speed * delta
+
+func _on_Timer_timeout() -> void:
+    _image_index = (_image_index + 1) % 4
