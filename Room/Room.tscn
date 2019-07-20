@@ -11,6 +11,8 @@ format = 1
 tile_data = PoolIntArray( 196610, 0, 0 )
 script = ExtResource( 2 )
 
-[node name="DialogueBox" parent="." instance=ExtResource( 3 )]
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="DialogueBox" parent="CanvasLayer" instance=ExtResource( 3 )]
 visible = false
 

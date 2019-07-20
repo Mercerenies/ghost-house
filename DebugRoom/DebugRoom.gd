@@ -26,4 +26,4 @@ var _sample_dialogue = {
 }
 
 func _ready():
-    $Room/DialogueBox.popup(_sample_dialogue)
+    $Room.get_dialogue_box().popup(_sample_dialogue)
