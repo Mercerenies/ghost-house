@@ -27,3 +27,15 @@
    + ~speaker~ (optional) - The speaker.
    + ~options~ (required) - An array of options. Each option should
      have a ~text~ key and a ~state~ key.
+* ROOM FORMAT
+  A room object specifies generation parameters for producing a room.
+  It is a dictionary whose top-level keys are as follows. All of these
+  are required.
+** ~config~ (required)
+   A dictionary specifying various configuration data.
+*** ~width~ (required)
+    Specifies the width of the room, in generator units. Must be an
+    integer.
+*** ~height~ (required)
+    Specifies the height of the room, in generator units. Must be an
+    integer.
