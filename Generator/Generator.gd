@@ -49,6 +49,41 @@ func _grid_set(pos: Vector2, value: int) -> void:
     var h = _data['config']['height']
     _grid[pos.y + pos.x * h] = value
 
+func _can_draw_hypothetical_box(box: Rect2, hypo_box: Rect2) -> bool:
+    if box.intersects(hypo_box):
+        return false
+    for i in range(box.size.x):
+        for j in range(box.size.y):
+            var pos = _grid_get(Vector2(box.position.x + i, box.position.y + j))
+            if pos == -3 or pos >= 0:
+                return false
+    return true
+
+func _can_draw_box(box: Rect2) -> bool:
+    return _can_draw_hypothetical_box(box, Rect2(Vector2(), Vector2()))
+
+func _is_cell_hypothetically_dead(pos: Vector2, new_box: Rect2) -> bool:
+    if _can_draw_hypothetical_box(Rect2(pos, Vector2(2, 2)), new_box):
+        return false
+    if _can_draw_hypothetical_box(Rect2(pos + Vector2(-1, 0), Vector2(2, 2)), new_box):
+        return false
+    if _can_draw_hypothetical_box(Rect2(pos + Vector2(0, -1), Vector2(2, 2)), new_box):
+        return false
+    if _can_draw_hypothetical_box(Rect2(pos + Vector2(-1, -1), Vector2(2, 2)), new_box):
+        return false
+    return true
+
+func _is_cell_dead(pos: Vector2) -> bool:
+    return _is_cell_hypothetically_dead(pos, Rect2(Vector2(), Vector2()))
+
+func _mark_dead_cells() -> void:
+    var w = _data['config']['width']
+    var h = _data['config']['height']
+    for i in range(w):
+        for j in range(h):
+            if _grid_get(Vector2(i, j)) == -1 and _is_cell_dead(Vector2(i, j)):
+                _grid_set(Vector2(i, j), -2)
+
 func _random_dir() -> Vector2:
     match randi() % 4:
         0:
@@ -205,6 +240,7 @@ func generate() -> Room:
     _room = RoomScene.instance()
     _produce_grid_array()
     _produce_hallways()
+    _mark_dead_cells()
     _grid_to_room()
     print(_grid)
     #for i in range(_data['config']['width']):
