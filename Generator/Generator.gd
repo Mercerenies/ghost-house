@@ -4,9 +4,23 @@ class_name Generator
 class HallwayData:
     var id: int
     var data: Array
+    var connections: Array
     func _init(id: int, data: Array):
         self.id = id
         self.data = data
+        self.connections = []
+
+class RoomData:
+    var id: int
+    var box: Rect2
+    var connections: Array
+    func _init(id: int, box: Rect2):
+        self.id = id
+        self.box = box
+        self.connections = []
+
+class Graph:
+    var adja: Dictionary = {}
 
 const RoomScene = preload("res://Room/Room.tscn")
 const PlayerScene = preload("res://Player/Player.tscn")
@@ -27,6 +41,8 @@ const ID_ROOMS = 256
 var _data: Dictionary = {}
 var _grid: Array = [] # Row major (y + x * h)
 var _room: Room = null
+var _boxes: Dictionary = {}
+var _connections: Array = []
 
 const CELL_SIZE = 4
 const WALL_SIZE = 1
@@ -153,6 +169,7 @@ func _produce_hallway():
 func _paint_hallway(hw: HallwayData) -> void:
     for pos in hw.data:
         _grid_set(pos, hw.id)
+    _boxes[hw.id] = hw
 
 func _merge_hallways(hws: Array) -> void:
     var cache = {}
@@ -206,6 +223,7 @@ func _paint_room(id: int, rect: Rect2) -> void:
     for x in range(rect.position.x, rect.end.x):
         for y in range(rect.position.y, rect.end.y):
             _grid_set(Vector2(x, y), id)
+    _boxes[id] = RoomData.new(id, rect)
 
 func _produce_live_rooms(start_id: int = ID_ROOMS) -> int:
     _mark_dead_cells()
@@ -263,6 +281,32 @@ func _produce_dead_rooms(start_id: int) -> int:
 
     return current_id
 
+func _produce_adjacency_graph() -> Graph:
+    var w = _data['config']['width']
+    var h = _data['config']['height']
+    var graph = Graph.new()
+    var adja = graph.adja
+    for x in range(w):
+        for y in range(h):
+            var a = _grid_get(Vector2(x, y))
+            var b = _grid_get(Vector2(x + 1, y))
+            var c = _grid_get(Vector2(x, y + 1))
+            if a >= ID_HALLS and not adja.has(a):
+                adja[a] = []
+            if b >= ID_HALLS and not adja.has(b):
+                adja[b] = []
+            if c >= ID_HALLS and not adja.has(c):
+                adja[c] = []
+            if a >= ID_HALLS and b >= ID_HALLS and a != b:
+                var link = [Vector2(x, y), Vector2(x + 1, y)]
+                adja[a].append({ "pos": link, "value": b })
+                adja[b].append({ "pos": link, "value": a })
+            if a >= ID_HALLS and c >= ID_HALLS and a != c:
+                var link = [Vector2(x, y), Vector2(x, y + 1)]
+                adja[a].append({ "pos": link, "value": c })
+                adja[c].append({ "pos": link, "value": a })
+    return graph
+
 func _draw_base_room(pos: Vector2) -> void:
     var xpos = pos.x * TOTAL_CELL_SIZE + WALL_SIZE
     var ypos = pos.y * TOTAL_CELL_SIZE + WALL_SIZE
@@ -318,6 +362,25 @@ func _draw_base_room(pos: Vector2) -> void:
         else:
             _room.set_tile_cell(Vector2(xpos + CELL_SIZE, ypos + CELL_SIZE), _room.Tile.DebugWall)
 
+func _open_doorways() -> void:
+    # Assumes all connections are of the form [a, b] where b is either
+    # strictly one to the right or strictly one below a.
+    for conn in _connections:
+        var a = conn.pos[0]
+        var b = conn.pos[1]
+        var xpos = b.x * TOTAL_CELL_SIZE + WALL_SIZE
+        var ypos = b.y * TOTAL_CELL_SIZE + WALL_SIZE
+        if b - a == Vector2(0, 1):
+            _room.set_tile_cell(Vector2(xpos + 1, ypos - 1), _room.Tile.DebugFloor)
+            _room.set_tile_cell(Vector2(xpos + 2, ypos - 1), _room.Tile.DebugFloor)
+            _room.set_tile_cell(Vector2(xpos + 1, ypos - 2), _room.Tile.DebugFloor)
+            _room.set_tile_cell(Vector2(xpos + 2, ypos - 2), _room.Tile.DebugFloor)
+        elif b - a == Vector2(1, 0):
+            _room.set_tile_cell(Vector2(xpos - 1, ypos + 1), _room.Tile.DebugFloor)
+            _room.set_tile_cell(Vector2(xpos - 1, ypos + 2), _room.Tile.DebugFloor)
+            _room.set_tile_cell(Vector2(xpos - 2, ypos + 1), _room.Tile.DebugFloor)
+            _room.set_tile_cell(Vector2(xpos - 2, ypos + 2), _room.Tile.DebugFloor)
+
 func _open_all_doorways() -> void:
     # This code literally only exists for debugging purposes.
     var w = _data['config']['width']
@@ -335,21 +398,56 @@ func _open_all_doorways() -> void:
             _room.set_tile_cell(Vector2(xpos + 1, ypos + 4), _room.Tile.DebugFloor)
             _room.set_tile_cell(Vector2(xpos + 2, ypos + 4), _room.Tile.DebugFloor)
 
+func _connect_rooms() -> void:
+    var graph = _produce_adjacency_graph()
+    var total_nodes = len(graph.adja.keys())
+    var visited = [_grid_get(Vector2(0, 0))]
+    var edges = []
+    for es in graph.adja.values():
+        for e in es:
+            edges.append(e)
+    edges.shuffle()
+    var edge_count = len(edges)
+    while len(visited) < total_nodes:
+        var i = 0
+        while i < edge_count:
+            var edge = edges[i]
+            var a = _grid_get(edge.pos[0])
+            var b = _grid_get(edge.pos[1])
+            if visited.has(a) != visited.has(b):
+                _connections.append(edge)
+                if not visited.has(a):
+                    visited.append(a)
+                if not visited.has(b):
+                    visited.append(b)
+                edge_count -= 1
+                edges[i] = edges[edge_count]
+                edges[edge_count] = edge
+            else:
+                i += 1
+    for i in range(edge_count):
+        # Add 10% of the extras back
+        var edge = edges[i]
+        if randf() < 0.05:
+            _connections.append(edge)
+
 func _grid_to_room() -> void:
     var w = _data['config']['width']
     var h = _data['config']['height']
     for x in range(w):
         for y in range(h):
             _draw_base_room(Vector2(x, y))
-    # DEBUG CODE
-    _open_all_doorways()
+    _open_doorways()
 
 func generate() -> Room:
     _room = RoomScene.instance()
+    _boxes = {}
+    _connections = []
     _produce_grid_array()
     _produce_hallways()
     var id = _produce_live_rooms()
     _produce_dead_rooms(id)
+    _connect_rooms()
     _grid_to_room()
     print(_grid)
     #for i in range(_data['config']['width']):
