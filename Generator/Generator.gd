@@ -12,6 +12,7 @@ const RoomScene = preload("res://Room/Room.tscn")
 const PlayerScene = preload("res://Player/Player.tscn")
 
 # _grid IDs
+#   -3 - OOB
 #   -2 - Empty (dead cell marker)
 #   -1 - Empty
 #   0 to 255 - Hallway identifier
@@ -20,6 +21,10 @@ const PlayerScene = preload("res://Player/Player.tscn")
 var _data: Dictionary = {}
 var _grid: Array = [] # Row major (y + x * h)
 var _room: Room = null
+
+const CELL_SIZE = 4
+const WALL_SIZE = 1
+const TOTAL_CELL_SIZE = CELL_SIZE + WALL_SIZE * 2
 
 func _init(room_data: Dictionary):
     _data = room_data
@@ -36,6 +41,8 @@ func _produce_grid_array() -> void:
 
 func _grid_get(pos: Vector2) -> int:
     var h = _data['config']['height']
+    if pos.y + pos.x * h < 0 or pos.y + pos.x * h >= len(_grid):
+        return -3
     return _grid[pos.y + pos.x * h]
 
 func _grid_set(pos: Vector2, value: int) -> void:
@@ -82,7 +89,6 @@ func _produce_hallway():
     return null
 
 func _paint_hallway(hw: HallwayData) -> void:
-    # TODO What about overlapping hallways?!
     for pos in hw.data:
         _grid_set(pos, hw.id)
 
@@ -114,17 +120,86 @@ func _produce_hallways(start_id: int = 0) -> void:
     for hw in hws:
         _paint_hallway(hw)
 
+func _draw_base_room(pos: Vector2) -> void:
+    var xpos = pos.x * TOTAL_CELL_SIZE + WALL_SIZE
+    var ypos = pos.y * TOTAL_CELL_SIZE + WALL_SIZE
+    var cell = _grid_get(pos)
+    if cell >= 0:
+        # Draw the contents of the room
+        for i in range(CELL_SIZE):
+            for j in range(CELL_SIZE):
+                _room.set_tile_cell(Vector2(xpos + i, ypos + j), _room.Tile.DebugFloor)
+        # Now draw the walls
+        # Top Wall
+        for i in range(CELL_SIZE):
+            if _grid_get(pos + Vector2(0, -1)) == cell:
+                _room.set_tile_cell(Vector2(xpos + i, ypos - 1), _room.Tile.DebugFloor)
+            else:
+                _room.set_tile_cell(Vector2(xpos + i, ypos - 1), _room.Tile.DebugWall)
+        # Bottom Wall
+        for i in range(CELL_SIZE):
+            if _grid_get(pos + Vector2(0, 1)) == cell:
+                _room.set_tile_cell(Vector2(xpos + i, ypos + CELL_SIZE), _room.Tile.DebugFloor)
+            else:
+                _room.set_tile_cell(Vector2(xpos + i, ypos + CELL_SIZE), _room.Tile.DebugWall)
+        # Left Wall
+        for i in range(CELL_SIZE):
+            if _grid_get(pos + Vector2(-1, 0)) == cell:
+                _room.set_tile_cell(Vector2(xpos - 1, ypos + i), _room.Tile.DebugFloor)
+            else:
+                _room.set_tile_cell(Vector2(xpos - 1, ypos + i), _room.Tile.DebugWall)
+        # Right Wall
+        for i in range(CELL_SIZE):
+            if _grid_get(pos + Vector2(1, 0)) == cell:
+                _room.set_tile_cell(Vector2(xpos + CELL_SIZE, ypos + i), _room.Tile.DebugFloor)
+            else:
+                _room.set_tile_cell(Vector2(xpos + CELL_SIZE, ypos + i), _room.Tile.DebugWall)
+        # Upper Left Wall
+        if _grid_get(pos + Vector2(-1, 0)) == cell and _grid_get(pos + Vector2(0, -1)) == cell and _grid_get(pos + Vector2(-1, -1)) == cell:
+            _room.set_tile_cell(Vector2(xpos - 1, ypos - 1), _room.Tile.DebugFloor)
+        else:
+            _room.set_tile_cell(Vector2(xpos - 1, ypos - 1), _room.Tile.DebugWall)
+        # Upper Right Wall
+        if _grid_get(pos + Vector2(1, 0)) == cell and _grid_get(pos + Vector2(0, -1)) == cell and _grid_get(pos + Vector2(1, -1)) == cell:
+            _room.set_tile_cell(Vector2(xpos + CELL_SIZE, ypos - 1), _room.Tile.DebugFloor)
+        else:
+            _room.set_tile_cell(Vector2(xpos + CELL_SIZE, ypos - 1), _room.Tile.DebugWall)
+        # Lower Left Wall
+        if _grid_get(pos + Vector2(-1, 0)) == cell and _grid_get(pos + Vector2(0, 1)) == cell and _grid_get(pos + Vector2(-1, 1)) == cell:
+            _room.set_tile_cell(Vector2(xpos - 1, ypos + CELL_SIZE), _room.Tile.DebugFloor)
+        else:
+            _room.set_tile_cell(Vector2(xpos - 1, ypos + CELL_SIZE), _room.Tile.DebugWall)
+        # Lower Right Wall
+        if _grid_get(pos + Vector2(1, 0)) == cell and _grid_get(pos + Vector2(0, 1)) == cell and _grid_get(pos + Vector2(1, 1)) == cell:
+            _room.set_tile_cell(Vector2(xpos + CELL_SIZE, ypos + CELL_SIZE), _room.Tile.DebugFloor)
+        else:
+            _room.set_tile_cell(Vector2(xpos + CELL_SIZE, ypos + CELL_SIZE), _room.Tile.DebugWall)
+
+func _open_all_doorways() -> void:
+    # This code literally only exists for debugging purposes.
+    var w = _data['config']['width']
+    var h = _data['config']['height']
+    for x in range(w):
+        for y in range(h):
+            var xpos = x * TOTAL_CELL_SIZE + WALL_SIZE
+            var ypos = y * TOTAL_CELL_SIZE + WALL_SIZE
+            _room.set_tile_cell(Vector2(xpos - 1, ypos + 1), _room.Tile.DebugFloor)
+            _room.set_tile_cell(Vector2(xpos - 1, ypos + 2), _room.Tile.DebugFloor)
+            _room.set_tile_cell(Vector2(xpos + 1, ypos - 1), _room.Tile.DebugFloor)
+            _room.set_tile_cell(Vector2(xpos + 2, ypos - 1), _room.Tile.DebugFloor)
+            _room.set_tile_cell(Vector2(xpos + 4, ypos + 1), _room.Tile.DebugFloor)
+            _room.set_tile_cell(Vector2(xpos + 4, ypos + 2), _room.Tile.DebugFloor)
+            _room.set_tile_cell(Vector2(xpos + 1, ypos + 4), _room.Tile.DebugFloor)
+            _room.set_tile_cell(Vector2(xpos + 2, ypos + 4), _room.Tile.DebugFloor)
+
 func _grid_to_room() -> void:
     var w = _data['config']['width']
     var h = _data['config']['height']
-    var CELL_SIZE = 4
     for x in range(w):
         for y in range(h):
-            var cell = _grid_get(Vector2(x, y))
-            if cell >= 0:
-                for i in range(CELL_SIZE):
-                    for j in range(CELL_SIZE):
-                        _room.set_tile_cell(Vector2(i + x * CELL_SIZE, j + y * CELL_SIZE), _room.Tile.DebugFloor)
+            _draw_base_room(Vector2(x, y))
+    # DEBUG CODE
+    _open_all_doorways()
 
 func generate() -> Room:
     _room = RoomScene.instance()
@@ -136,5 +211,5 @@ func generate() -> Room:
     #    for j in range(_data['config']['height']):
     #        _room.set_tile_cell(Vector2(i, j), _room.Tile.DebugFloor)
     var player = PlayerScene.instance()
-    _add_entity(Vector2(randi() % _data['config']['width'], randi() % _data['config']['height']), player)
+    _add_entity(Vector2(1, 1), player)
     return _room
