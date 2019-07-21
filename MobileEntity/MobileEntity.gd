@@ -59,7 +59,7 @@ func _process(delta: float) -> void:
     if position != target_pos:
         sprite.frame += _image_index
 
-    if (target_pos - position).length() < speed * delta:
+    if (target_pos - position).length() <= speed * delta:
         position = target_pos
     else:
         position += (target_pos - position).normalized() * speed * delta
