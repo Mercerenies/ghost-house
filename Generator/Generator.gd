@@ -18,6 +18,12 @@ const PlayerScene = preload("res://Player/Player.tscn")
 #   0 to 255 - Hallway identifier
 #   256 to 2047 - Room identifier
 
+const ID_OOB = -3
+const ID_DEAD = -2
+const ID_EMPTY = -1
+const ID_HALLS = 0
+const ID_ROOMS = 256
+
 var _data: Dictionary = {}
 var _grid: Array = [] # Row major (y + x * h)
 var _room: Room = null
@@ -37,12 +43,12 @@ func _add_entity(pos: Vector2, entity: Object) -> void:
 func _produce_grid_array() -> void:
     _grid = []
     for i in range(_data['config']['width'] * _data['config']['height']):
-        _grid.append(-1)
+        _grid.append(ID_EMPTY)
 
 func _grid_get(pos: Vector2) -> int:
     var h = _data['config']['height']
     if pos.y + pos.x * h < 0 or pos.y + pos.x * h >= len(_grid):
-        return -3
+        return ID_OOB
     return _grid[pos.y + pos.x * h]
 
 func _grid_set(pos: Vector2, value: int) -> void:
@@ -55,7 +61,7 @@ func _can_draw_hypothetical_box(box: Rect2, hypo_box: Rect2) -> bool:
     for i in range(box.size.x):
         for j in range(box.size.y):
             var pos = _grid_get(Vector2(box.position.x + i, box.position.y + j))
-            if pos == -3 or pos >= 0:
+            if pos == ID_OOB or pos >= ID_HALLS:
                 return false
     return true
 
@@ -81,8 +87,8 @@ func _mark_dead_cells() -> void:
     var h = _data['config']['height']
     for i in range(w):
         for j in range(h):
-            if _grid_get(Vector2(i, j)) == -1 and _is_cell_dead(Vector2(i, j)):
-                _grid_set(Vector2(i, j), -2)
+            if _grid_get(Vector2(i, j)) == ID_EMPTY and _is_cell_dead(Vector2(i, j)):
+                _grid_set(Vector2(i, j), ID_DEAD)
 
 func _random_dir() -> Vector2:
     match randi() % 4:
@@ -142,7 +148,7 @@ func _merge_hallways(hws: Array) -> void:
             else:
                 cache[pos] = hw
 
-func _produce_hallways(start_id: int = 0) -> void:
+func _produce_hallways(start_id: int = ID_HALLS) -> void:
     var hws = []
     for i in range(start_id, start_id + 3):
         var hw = _produce_hallway()
