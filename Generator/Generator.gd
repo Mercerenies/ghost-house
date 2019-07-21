@@ -14,10 +14,12 @@ class RoomData:
     var id: int
     var box: Rect2
     var connections: Array
+    var type: int
     func _init(id: int, box: Rect2):
         self.id = id
         self.box = box
         self.connections = []
+        self.type = -1 # Unset to begin with; we'll set it later
 
 class Graph:
     var adja: Dictionary = {}
@@ -431,6 +433,12 @@ func _connect_rooms() -> void:
         if randf() < 0.05:
             _connections.append(edge)
 
+func _determine_room_properties() -> void:
+    for v in _boxes.values():
+        if v is RoomData:
+            v.type = RoomTypes.decide_room_type(v.box.size)
+            print(v.type)
+
 func _grid_to_room() -> void:
     var w = _data['config']['width']
     var h = _data['config']['height']
@@ -448,6 +456,7 @@ func generate() -> Room:
     var id = _produce_live_rooms()
     _produce_dead_rooms(id)
     _connect_rooms()
+    _determine_room_properties()
     _grid_to_room()
     print(_grid)
     #for i in range(_data['config']['width']):
