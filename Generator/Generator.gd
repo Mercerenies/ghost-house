@@ -46,8 +46,9 @@ func _produce_grid_array() -> void:
         _grid.append(ID_EMPTY)
 
 func _grid_get(pos: Vector2) -> int:
+    var w = _data['config']['width']
     var h = _data['config']['height']
-    if pos.y + pos.x * h < 0 or pos.y + pos.x * h >= len(_grid):
+    if pos.x < 0 or pos.y < 0 or pos.x >= w or pos.y >= h:
         return ID_OOB
     return _grid[pos.y + pos.x * h]
 
@@ -89,6 +90,26 @@ func _mark_dead_cells() -> void:
         for j in range(h):
             if _grid_get(Vector2(i, j)) == ID_EMPTY and _is_cell_dead(Vector2(i, j)):
                 _grid_set(Vector2(i, j), ID_DEAD)
+
+func _creates_dead_cells(box: Rect2) -> bool:
+    var pos
+    # Top and bottom edges
+    for i in range(-1, box.size.x + 1):
+        pos = box.position + Vector2(i, -1)
+        if _grid_get(pos) == ID_EMPTY and _is_cell_hypothetically_dead(pos, box):
+            return true
+        pos = box.end - Vector2(i + 1, 0)
+        if _grid_get(pos) == ID_EMPTY and _is_cell_hypothetically_dead(pos, box):
+            return true
+    # Left and right edges
+    for i in range(-1, box.size.y + 1):
+        pos = box.position + Vector2(-1, i)
+        if _grid_get(pos) == ID_EMPTY and _is_cell_hypothetically_dead(pos, box):
+            return true
+        pos = box.end - Vector2(0, i + 1)
+        if _grid_get(pos) == ID_EMPTY and _is_cell_hypothetically_dead(pos, box):
+            return true
+    return false
 
 func _random_dir() -> Vector2:
     match randi() % 4:
@@ -160,6 +181,63 @@ func _produce_hallways(start_id: int = ID_HALLS) -> void:
     _merge_hallways(hws)
     for hw in hws:
         _paint_hallway(hw)
+
+func _enumerate_rectangles(pos: Vector2) -> Dictionary:
+    # This is an absolute BS O(n^4) (at least in principle) algorithm right now.
+    # Please please please for the love of all that is good, make this more efficient.
+    var dead = []
+    var alive = []
+    for width in [2, 3, 4]:
+        for height in [2, 3, 4]:
+            for left_offset in range(1 - width, 1):
+                for top_offset in range(1 - height, 1):
+                    var rect = Rect2(pos + Vector2(left_offset, top_offset), Vector2(width, height))
+                    if _can_draw_box(rect):
+                        if _creates_dead_cells(rect):
+                            dead.append(rect)
+                        else:
+                            alive.append(rect)
+    return {
+        'dead': dead,
+        'alive': alive
+    }
+
+func _paint_live_room(id: int, rect: Rect2) -> void:
+    for x in range(rect.position.x, rect.end.x):
+        for y in range(rect.position.y, rect.end.y):
+            _grid_set(Vector2(x, y), id)
+
+func _produce_live_rooms(start_id: int = ID_ROOMS) -> int:
+    _mark_dead_cells()
+
+    var current_id = start_id
+    var w = _data['config']['width']
+    var h = _data['config']['height']
+    var cells = []
+    for i in range(w):
+        for j in range(h):
+            if _grid_get(Vector2(i, j)) == ID_EMPTY:
+                cells.append(Vector2(i, j))
+    cells.shuffle()
+
+    for pos in cells:
+        if _grid_get(pos) != ID_EMPTY:
+            continue
+        var rects = _enumerate_rectangles(pos)
+        var dead = rects['dead']
+        var alive = rects['alive']
+        var rect
+        #print("Cell: {0}\nDead: {1}\nAlive: {2}".format([pos, str(dead), str(alive)]))
+        if not alive.empty():
+            rect = alive[randi() % len(alive)]
+        else:
+            #print("DEAD")
+            rect = dead[randi() % len(dead)]
+        _paint_live_room(current_id, rect)
+        current_id += 1
+        _mark_dead_cells()
+
+    return current_id
 
 func _draw_base_room(pos: Vector2) -> void:
     var xpos = pos.x * TOTAL_CELL_SIZE + WALL_SIZE
@@ -246,7 +324,7 @@ func generate() -> Room:
     _room = RoomScene.instance()
     _produce_grid_array()
     _produce_hallways()
-    _mark_dead_cells()
+    _produce_live_rooms()
     _grid_to_room()
     print(_grid)
     #for i in range(_data['config']['width']):
