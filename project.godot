@@ -53,6 +53,10 @@ _global_script_class_icons={
 config/name="ghost-house"
 config/icon="res://icon.png"
 
+[autoload]
+
+Util="*res://Util/Util.gd"
+
 [rendering]
 
 quality/driver/driver_name="GLES2"
