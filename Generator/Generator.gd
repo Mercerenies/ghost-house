@@ -202,7 +202,7 @@ func _enumerate_rectangles(pos: Vector2) -> Dictionary:
         'alive': alive
     }
 
-func _paint_live_room(id: int, rect: Rect2) -> void:
+func _paint_room(id: int, rect: Rect2) -> void:
     for x in range(rect.position.x, rect.end.x):
         for y in range(rect.position.y, rect.end.y):
             _grid_set(Vector2(x, y), id)
@@ -233,9 +233,33 @@ func _produce_live_rooms(start_id: int = ID_ROOMS) -> int:
         else:
             #print("DEAD")
             rect = dead[randi() % len(dead)]
-        _paint_live_room(current_id, rect)
+        _paint_room(current_id, rect)
         current_id += 1
         _mark_dead_cells()
+
+    return current_id
+
+func _produce_dead_rooms(start_id: int) -> int:
+    var current_id = start_id
+    var w = _data['config']['width']
+    var h = _data['config']['height']
+
+    for x in range(w):
+        for y in range(h):
+            if _grid_get(Vector2(x, y)) < ID_HALLS and not _grid_get(Vector2(x, y)) == ID_OOB:
+                if randf() < 0.5:
+                    # Expand to the right
+                    var ww = 1
+                    while ww < 4 and _grid_get(Vector2(x + ww, y)) < ID_HALLS and not _grid_get(Vector2(x + ww, y)) == ID_OOB:
+                        ww += 1
+                    _paint_room(current_id, Rect2(x, y, ww, 1))
+                else:
+                    # Expand to the bottom
+                    var hh = 1
+                    while hh < 4 and _grid_get(Vector2(x, y + hh)) < ID_HALLS and not _grid_get(Vector2(x, y + hh)) == ID_OOB:
+                        hh += 1
+                    _paint_room(current_id, Rect2(x, y, 1, hh))
+                current_id += 1
 
     return current_id
 
@@ -324,7 +348,8 @@ func generate() -> Room:
     _room = RoomScene.instance()
     _produce_grid_array()
     _produce_hallways()
-    _produce_live_rooms()
+    var id = _produce_live_rooms()
+    _produce_dead_rooms(id)
     _grid_to_room()
     print(_grid)
     #for i in range(_data['config']['width']):
