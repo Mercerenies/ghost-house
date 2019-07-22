@@ -1,7 +1,7 @@
 extends TileMap
 class_name Room
 
-enum Tile { EmptyTile = 0, DebugFloor, DebugWall }
+const Tile = RoomTypes.Tile
 
 var entities: Dictionary = {}
 

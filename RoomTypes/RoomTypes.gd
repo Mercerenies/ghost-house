@@ -1,5 +1,9 @@
 extends Node
 
+enum Tile {
+    EmptyTile = 0, DebugFloor, DebugWall, TileFloor1, TileFloor2, LightGrayCarpet, GrayCarpet, DarkGrayCarpet, TileFloor3, WoodFloor1
+}
+
 enum RT {
     Hallway = 0, Bedroom, MasterBedroom, Bathroom, Washroom, WardrobeRoom,
     Closet, LongCloset, Theater, Foyer, Study, SittingRoom,
@@ -25,10 +29,35 @@ var _roomtypes: Dictionary = {
     Vector2(4, 4): [RT.MasterBedroom, RT.Theater, RT.Foyer, RT.DiningHall]
 }
 
+var _floortypes: Dictionary = {
+    RT.Hallway: [Tile.LightGrayCarpet, Tile.GrayCarpet, Tile.DarkGrayCarpet, Tile.WoodFloor1],
+    RT.Bedroom: [Tile.LightGrayCarpet, Tile.GrayCarpet, Tile.DarkGrayCarpet, Tile.WoodFloor1],
+    RT.MasterBedroom: [Tile.LightGrayCarpet, Tile.GrayCarpet, Tile.DarkGrayCarpet, Tile.WoodFloor1],
+    RT.Bathroom: [Tile.TileFloor1, Tile.TileFloor2, Tile.TileFloor3],
+    RT.Washroom: [Tile.TileFloor1, Tile.TileFloor2, Tile.TileFloor3],
+    RT.WardrobeRoom: [Tile.LightGrayCarpet, Tile.GrayCarpet, Tile.DarkGrayCarpet, Tile.WoodFloor1],
+    RT.Closet: [Tile.LightGrayCarpet, Tile.GrayCarpet, Tile.DarkGrayCarpet, Tile.WoodFloor1],
+    RT.LongCloset: [Tile.LightGrayCarpet, Tile.GrayCarpet, Tile.DarkGrayCarpet, Tile.WoodFloor1],
+    RT.Theater: [Tile.LightGrayCarpet, Tile.GrayCarpet, Tile.DarkGrayCarpet, Tile.WoodFloor1],
+    RT.Foyer: [Tile.WoodFloor1],
+    RT.Study: [Tile.WoodFloor1],
+    RT.SittingRoom: [Tile.LightGrayCarpet, Tile.GrayCarpet, Tile.DarkGrayCarpet, Tile.WoodFloor1],
+    RT.LaundryRoom: [Tile.TileFloor1, Tile.TileFloor2, Tile.TileFloor3, Tile.WoodFloor1],
+    RT.Kitchen: [Tile.TileFloor1, Tile.TileFloor2, Tile.TileFloor3],
+    RT.StorageRoom: [Tile.WoodFloor1],
+    RT.DiningRoom: [Tile.WoodFloor1],
+    RT.DiningHall: [Tile.WoodFloor1],
+    RT.Garage: [Tile.DebugFloor]
+}
+
 func decide_room_type(dims: Vector2) -> int:
     if dims.x > dims.y:
         dims = Vector2(dims.y, dims.x)
     var arr = _roomtypes[dims]
+    return arr[randi() % len(arr)]
+
+func decide_floor_type(rtype: int) -> int:
+    var arr = _floortypes[rtype]
     return arr[randi() % len(arr)]
 
 func _ready():

@@ -5,21 +5,25 @@ class HallwayData:
     var id: int
     var data: Array
     var connections: Array
+    var floortype: int
     func _init(id: int, data: Array):
         self.id = id
         self.data = data
         self.connections = []
+        self.floortype = RoomTypes.Tile.EmptyTile
 
 class RoomData:
     var id: int
     var box: Rect2
     var connections: Array
     var type: int
+    var floortype: int
     func _init(id: int, box: Rect2):
         self.id = id
         self.box = box
         self.connections = []
         self.type = -1 # Unset to begin with; we'll set it later
+        self.floortype = RoomTypes.Tile.EmptyTile
 
 class Graph:
     var adja: Dictionary = {}
@@ -313,54 +317,55 @@ func _draw_base_room(pos: Vector2) -> void:
     var xpos = pos.x * TOTAL_CELL_SIZE + WALL_SIZE
     var ypos = pos.y * TOTAL_CELL_SIZE + WALL_SIZE
     var cell = _grid_get(pos)
+    var floortype = _boxes[cell].floortype
     if cell >= 0:
         # Draw the contents of the room
         for i in range(CELL_SIZE):
             for j in range(CELL_SIZE):
-                _room.set_tile_cell(Vector2(xpos + i, ypos + j), _room.Tile.DebugFloor)
+                _room.set_tile_cell(Vector2(xpos + i, ypos + j), floortype)
         # Now draw the walls
         # Top Wall
         for i in range(CELL_SIZE):
             if _grid_get(pos + Vector2(0, -1)) == cell:
-                _room.set_tile_cell(Vector2(xpos + i, ypos - 1), _room.Tile.DebugFloor)
+                _room.set_tile_cell(Vector2(xpos + i, ypos - 1), floortype)
             else:
                 _room.set_tile_cell(Vector2(xpos + i, ypos - 1), _room.Tile.DebugWall)
         # Bottom Wall
         for i in range(CELL_SIZE):
             if _grid_get(pos + Vector2(0, 1)) == cell:
-                _room.set_tile_cell(Vector2(xpos + i, ypos + CELL_SIZE), _room.Tile.DebugFloor)
+                _room.set_tile_cell(Vector2(xpos + i, ypos + CELL_SIZE), floortype)
             else:
                 _room.set_tile_cell(Vector2(xpos + i, ypos + CELL_SIZE), _room.Tile.DebugWall)
         # Left Wall
         for i in range(CELL_SIZE):
             if _grid_get(pos + Vector2(-1, 0)) == cell:
-                _room.set_tile_cell(Vector2(xpos - 1, ypos + i), _room.Tile.DebugFloor)
+                _room.set_tile_cell(Vector2(xpos - 1, ypos + i), floortype)
             else:
                 _room.set_tile_cell(Vector2(xpos - 1, ypos + i), _room.Tile.DebugWall)
         # Right Wall
         for i in range(CELL_SIZE):
             if _grid_get(pos + Vector2(1, 0)) == cell:
-                _room.set_tile_cell(Vector2(xpos + CELL_SIZE, ypos + i), _room.Tile.DebugFloor)
+                _room.set_tile_cell(Vector2(xpos + CELL_SIZE, ypos + i), floortype)
             else:
                 _room.set_tile_cell(Vector2(xpos + CELL_SIZE, ypos + i), _room.Tile.DebugWall)
         # Upper Left Wall
         if _grid_get(pos + Vector2(-1, 0)) == cell and _grid_get(pos + Vector2(0, -1)) == cell and _grid_get(pos + Vector2(-1, -1)) == cell:
-            _room.set_tile_cell(Vector2(xpos - 1, ypos - 1), _room.Tile.DebugFloor)
+            _room.set_tile_cell(Vector2(xpos - 1, ypos - 1), floortype)
         else:
             _room.set_tile_cell(Vector2(xpos - 1, ypos - 1), _room.Tile.DebugWall)
         # Upper Right Wall
         if _grid_get(pos + Vector2(1, 0)) == cell and _grid_get(pos + Vector2(0, -1)) == cell and _grid_get(pos + Vector2(1, -1)) == cell:
-            _room.set_tile_cell(Vector2(xpos + CELL_SIZE, ypos - 1), _room.Tile.DebugFloor)
+            _room.set_tile_cell(Vector2(xpos + CELL_SIZE, ypos - 1), floortype)
         else:
             _room.set_tile_cell(Vector2(xpos + CELL_SIZE, ypos - 1), _room.Tile.DebugWall)
         # Lower Left Wall
         if _grid_get(pos + Vector2(-1, 0)) == cell and _grid_get(pos + Vector2(0, 1)) == cell and _grid_get(pos + Vector2(-1, 1)) == cell:
-            _room.set_tile_cell(Vector2(xpos - 1, ypos + CELL_SIZE), _room.Tile.DebugFloor)
+            _room.set_tile_cell(Vector2(xpos - 1, ypos + CELL_SIZE), floortype)
         else:
             _room.set_tile_cell(Vector2(xpos - 1, ypos + CELL_SIZE), _room.Tile.DebugWall)
         # Lower Right Wall
         if _grid_get(pos + Vector2(1, 0)) == cell and _grid_get(pos + Vector2(0, 1)) == cell and _grid_get(pos + Vector2(1, 1)) == cell:
-            _room.set_tile_cell(Vector2(xpos + CELL_SIZE, ypos + CELL_SIZE), _room.Tile.DebugFloor)
+            _room.set_tile_cell(Vector2(xpos + CELL_SIZE, ypos + CELL_SIZE), floortype)
         else:
             _room.set_tile_cell(Vector2(xpos + CELL_SIZE, ypos + CELL_SIZE), _room.Tile.DebugWall)
 
@@ -370,18 +375,20 @@ func _open_doorways() -> void:
     for conn in _connections:
         var a = conn.pos[0]
         var b = conn.pos[1]
+        var floora = _boxes[_grid_get(a)].floortype
+        var floorb = _boxes[_grid_get(b)].floortype
         var xpos = b.x * TOTAL_CELL_SIZE + WALL_SIZE
         var ypos = b.y * TOTAL_CELL_SIZE + WALL_SIZE
         if b - a == Vector2(0, 1):
-            _room.set_tile_cell(Vector2(xpos + 1, ypos - 1), _room.Tile.DebugFloor)
-            _room.set_tile_cell(Vector2(xpos + 2, ypos - 1), _room.Tile.DebugFloor)
-            _room.set_tile_cell(Vector2(xpos + 1, ypos - 2), _room.Tile.DebugFloor)
-            _room.set_tile_cell(Vector2(xpos + 2, ypos - 2), _room.Tile.DebugFloor)
+            _room.set_tile_cell(Vector2(xpos + 1, ypos - 1), floorb)
+            _room.set_tile_cell(Vector2(xpos + 2, ypos - 1), floorb)
+            _room.set_tile_cell(Vector2(xpos + 1, ypos - 2), floora)
+            _room.set_tile_cell(Vector2(xpos + 2, ypos - 2), floora)
         elif b - a == Vector2(1, 0):
-            _room.set_tile_cell(Vector2(xpos - 1, ypos + 1), _room.Tile.DebugFloor)
-            _room.set_tile_cell(Vector2(xpos - 1, ypos + 2), _room.Tile.DebugFloor)
-            _room.set_tile_cell(Vector2(xpos - 2, ypos + 1), _room.Tile.DebugFloor)
-            _room.set_tile_cell(Vector2(xpos - 2, ypos + 2), _room.Tile.DebugFloor)
+            _room.set_tile_cell(Vector2(xpos - 1, ypos + 1), floorb)
+            _room.set_tile_cell(Vector2(xpos - 1, ypos + 2), floorb)
+            _room.set_tile_cell(Vector2(xpos - 2, ypos + 1), floora)
+            _room.set_tile_cell(Vector2(xpos - 2, ypos + 2), floora)
 
 func _open_all_doorways() -> void:
     # This code literally only exists for debugging purposes.
@@ -437,7 +444,9 @@ func _determine_room_properties() -> void:
     for v in _boxes.values():
         if v is RoomData:
             v.type = RoomTypes.decide_room_type(v.box.size)
-            print(v.type)
+            v.floortype = RoomTypes.decide_floor_type(v.type)
+        else:
+            v.floortype = RoomTypes.decide_floor_type(RoomTypes.RT.Hallway)
 
 func _grid_to_room() -> void:
     var w = _data['config']['width']
