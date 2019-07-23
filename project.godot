@@ -24,6 +24,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Generator/Generator.gd"
 }, {
+"base": "Node",
+"class": "GeneratorData",
+"language": "GDScript",
+"path": "res://GeneratorData/GeneratorData.gd"
+}, {
 "base": "Entity",
 "class": "MobileEntity",
 "language": "GDScript",
@@ -43,6 +48,7 @@ _global_script_class_icons={
 "DialogueEntity": "",
 "Entity": "",
 "Generator": "",
+"GeneratorData": "",
 "MobileEntity": "",
 "OutlinedPolygon2D": "",
 "Room": ""

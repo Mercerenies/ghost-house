@@ -1,32 +1,9 @@
 extends Node
 class_name Generator
 
-class HallwayData:
-    var id: int
-    var data: Array
-    var connections: Array
-    var floortype: int
-    func _init(id: int, data: Array):
-        self.id = id
-        self.data = data
-        self.connections = []
-        self.floortype = RoomTypes.Tile.EmptyTile
-
-class RoomData:
-    var id: int
-    var box: Rect2
-    var connections: Array
-    var type: int
-    var floortype: int
-    func _init(id: int, box: Rect2):
-        self.id = id
-        self.box = box
-        self.connections = []
-        self.type = -1 # Unset to begin with; we'll set it later
-        self.floortype = RoomTypes.Tile.EmptyTile
-
-class Graph:
-    var adja: Dictionary = {}
+const HallwayData = GeneratorData.HallwayData
+const RoomData = GeneratorData.RoomData
+const Graph = GeneratorData.Graph
 
 const RoomScene = preload("res://Room/Room.tscn")
 const PlayerScene = preload("res://Player/Player.tscn")
@@ -38,11 +15,11 @@ const PlayerScene = preload("res://Player/Player.tscn")
 #   0 to 255 - Hallway identifier
 #   256 to 2047 - Room identifier
 
-const ID_OOB = -3
-const ID_DEAD = -2
-const ID_EMPTY = -1
-const ID_HALLS = 0
-const ID_ROOMS = 256
+const ID_OOB = GeneratorData.ID_OOB
+const ID_DEAD = GeneratorData.ID_DEAD
+const ID_EMPTY = GeneratorData.ID_EMPTY
+const ID_HALLS = GeneratorData.ID_HALLS
+const ID_ROOMS = GeneratorData.ID_ROOMS
 
 var _data: Dictionary = {}
 var _grid: Array = [] # Row major (y + x * h)
@@ -457,6 +434,8 @@ func _grid_to_room() -> void:
     _open_doorways()
 
 func generate() -> Room:
+    var w = _data['config']['width']
+    var h = _data['config']['height']
     _room = RoomScene.instance()
     _boxes = {}
     _connections = []
@@ -467,6 +446,7 @@ func generate() -> Room:
     _connect_rooms()
     _determine_room_properties()
     _grid_to_room()
+    _room.get_minimap().initialize(Vector2(w, h), _grid, _boxes, _connections)
     print(_grid)
     #for i in range(_data['config']['width']):
     #    for j in range(_data['config']['height']):

@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://RoomTileset/RoomTileset.tres" type="TileSet" id=1]
 [ext_resource path="res://Room/Room.gd" type="Script" id=2]
 [ext_resource path="res://DialogueBox/DialogueBox.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Minimap/Minimap.tscn" type="PackedScene" id=4]
 
 [node name="Room" type="TileMap"]
 tile_set = ExtResource( 1 )
@@ -15,3 +16,5 @@ script = ExtResource( 2 )
 
 [node name="DialogueBox" parent="CanvasLayer" instance=ExtResource( 3 )]
 visible = false
+
+[node name="Minimap" parent="CanvasLayer" instance=ExtResource( 4 )]

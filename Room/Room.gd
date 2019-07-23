@@ -29,13 +29,16 @@ func is_wall_at(pos: Vector2) -> bool:
     return get_tile_cell(pos) == Tile.DebugWall
 
 func is_showing_modal() -> bool:
-    return $CanvasLayer/DialogueBox.is_active()
+    return get_dialogue_box().is_active()
 
 func show_dialogue(dia: Dictionary) -> void:
-    $CanvasLayer/DialogueBox.popup(dia)
+    get_dialogue_box().popup(dia)
 
 func get_dialogue_box():
     return $CanvasLayer/DialogueBox
+
+func get_minimap():
+    return $CanvasLayer/Minimap
 
 func _ready():
     pass
