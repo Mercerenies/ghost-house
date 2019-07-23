@@ -8,6 +8,7 @@ var _dims: Vector2 = Vector2(0, 0)
 var _grid: Array = []
 var _boxes: Dictionary = {}
 var _connections: Array = []
+var _discovered: Dictionary = {}
 
 func _ready():
     pass
@@ -28,6 +29,8 @@ func initialize(dims: Vector2, grid: Array, boxes: Dictionary, connections: Arra
     _grid = grid
     _boxes = boxes
     _connections = connections
+    _discovered = {}
+    update_map()
 
 func _find_player() -> Vector2:
     for c in get_parent().get_parent().get_children():
@@ -45,17 +48,21 @@ func _draw() -> void:
     playerrpos.x = floor(playerrpos.x)
     playerrpos.y = floor(playerrpos.y)
     var playerroom = _grid_get(playerrpos)
+    _discovered[playerroom] = true
     # Background
     for i in range(_dims.x):
         for j in range(_dims.y):
             var cell = _grid_get(Vector2(i, j))
-            var color = Color(1, 1, 1, 0.25)
-            if cell == playerroom:
-                color = Color(1, 0, 0, 0.25)
-            draw_rect(Rect2(upperleft + Vector2(i, j) * GRID_CELL_SIZE, Vector2(1, 1) * GRID_CELL_SIZE), color, true)
+            if _discovered.has(cell):
+                var color = Color(1, 1, 1, 0.25)
+                if cell == playerroom:
+                    color = Color(1, 0, 0, 0.25)
+                draw_rect(Rect2(upperleft + Vector2(i, j) * GRID_CELL_SIZE, Vector2(1, 1) * GRID_CELL_SIZE), color, true)
     var trblack = Color(0, 0, 0, 1)
     # Room barriers
     for v in _boxes.values():
+        if not _discovered.has(v.id):
+            continue
         if v is GeneratorData.HallwayData:
             for point in v.data:
                 var cellpos = point * GRID_CELL_SIZE + upperleft
@@ -78,13 +85,16 @@ func _draw() -> void:
     # Doors
     for c in _connections:
         var pos = c.pos
-        var cellpos = pos[0] * GRID_CELL_SIZE + upperleft
-        var center = Vector2(-128, -128) # Off-screen to start with, just in case
-        if pos[1] - pos[0] == Vector2(1, 0):
-            center = cellpos + Vector2(GRID_CELL_SIZE, GRID_CELL_SIZE / 2)
-        elif pos[1] - pos[0] == Vector2(0, 1):
-            center = cellpos + Vector2(GRID_CELL_SIZE / 2, GRID_CELL_SIZE)
-        draw_rect(Rect2(center - Vector2(DOOR_DRAW_RADIUS, DOOR_DRAW_RADIUS),
-                        Vector2(DOOR_DRAW_RADIUS, DOOR_DRAW_RADIUS) * 2),
-                  trblack,
-                  true)
+        var a = _grid_get(pos[0])
+        var b = _grid_get(pos[1])
+        if _discovered.has(a) or _discovered.has(b):
+            var cellpos = pos[0] * GRID_CELL_SIZE + upperleft
+            var center = Vector2(-128, -128) # Off-screen to start with, just in case
+            if pos[1] - pos[0] == Vector2(1, 0):
+                center = cellpos + Vector2(GRID_CELL_SIZE, GRID_CELL_SIZE / 2)
+            elif pos[1] - pos[0] == Vector2(0, 1):
+                center = cellpos + Vector2(GRID_CELL_SIZE / 2, GRID_CELL_SIZE)
+            draw_rect(Rect2(center - Vector2(DOOR_DRAW_RADIUS, DOOR_DRAW_RADIUS),
+                            Vector2(DOOR_DRAW_RADIUS, DOOR_DRAW_RADIUS) * 2),
+                      trblack,
+                      true)
