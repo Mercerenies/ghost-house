@@ -2,6 +2,7 @@ extends Node2D
 
 const GRID_CELL_SIZE = 16
 const DOOR_DRAW_RADIUS = 4
+const Player = preload("res://Player/Player.gd")
 
 var _dims: Vector2 = Vector2(0, 0)
 var _grid: Array = []
@@ -28,9 +29,30 @@ func initialize(dims: Vector2, grid: Array, boxes: Dictionary, connections: Arra
     _boxes = boxes
     _connections = connections
 
+func _find_player() -> Vector2:
+    for c in get_parent().get_parent().get_children():
+        if c is Player:
+            return c.cell
+    return Vector2(-1, -1)
+
+func update_map() -> void:
+    self.update()
+
 func _draw() -> void:
     var upperleft = Vector2(get_viewport_rect().size.x - GRID_CELL_SIZE * _dims.x, 0)
-    draw_rect(Rect2(upperleft, _dims * GRID_CELL_SIZE), Color(1, 1, 1, 0.25), true)
+    var playerpos = _find_player()
+    var playerrpos = playerpos / GeneratorData.TOTAL_CELL_SIZE
+    playerrpos.x = floor(playerrpos.x)
+    playerrpos.y = floor(playerrpos.y)
+    var playerroom = _grid_get(playerrpos)
+    # Background
+    for i in range(_dims.x):
+        for j in range(_dims.y):
+            var cell = _grid_get(Vector2(i, j))
+            var color = Color(1, 1, 1, 0.25)
+            if cell == playerroom:
+                color = Color(1, 0, 0, 0.25)
+            draw_rect(Rect2(upperleft + Vector2(i, j) * GRID_CELL_SIZE, Vector2(1, 1) * GRID_CELL_SIZE), color, true)
     var trblack = Color(0, 0, 0, 1)
     # Room barriers
     for v in _boxes.values():

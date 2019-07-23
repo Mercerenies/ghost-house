@@ -48,7 +48,7 @@ var _floortypes: Dictionary = {
     RT.StorageRoom: [Tile.WoodFloor1, Tile.WoodFloor2, Tile.WoodFloor3],
     RT.DiningRoom: [Tile.WoodFloor1, Tile.WoodFloor2, Tile.WoodFloor3],
     RT.DiningHall: [Tile.WoodFloor1, Tile.WoodFloor2, Tile.WoodFloor3],
-    RT.Garage: [Tile.DebugFloor]
+    RT.Garage: [Tile.DebugFloor] # ////
 }
 
 func decide_room_type(dims: Vector2) -> int:

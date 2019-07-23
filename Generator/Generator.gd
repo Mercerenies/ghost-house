@@ -27,9 +27,9 @@ var _room: Room = null
 var _boxes: Dictionary = {}
 var _connections: Array = []
 
-const CELL_SIZE = 4
-const WALL_SIZE = 1
-const TOTAL_CELL_SIZE = CELL_SIZE + WALL_SIZE * 2
+const CELL_SIZE = GeneratorData.CELL_SIZE
+const WALL_SIZE = GeneratorData.WALL_SIZE
+const TOTAL_CELL_SIZE = GeneratorData.TOTAL_CELL_SIZE
 
 func _init(room_data: Dictionary):
     _data = room_data
@@ -453,4 +453,5 @@ func generate() -> Room:
     #        _room.set_tile_cell(Vector2(i, j), _room.Tile.DebugFloor)
     var player = PlayerScene.instance()
     _add_entity(Vector2(1, 1), player)
+    player.connect("player_moved", _room.get_minimap(), "update_map")
     return _room

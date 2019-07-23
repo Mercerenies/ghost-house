@@ -40,5 +40,9 @@ func get_dialogue_box():
 func get_minimap():
     return $CanvasLayer/Minimap
 
+func get_entities() -> Array:
+    # Remember, this also returns the CanvasLayer...
+    return get_children()
+
 func _ready():
     pass

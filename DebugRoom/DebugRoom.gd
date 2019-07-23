@@ -27,3 +27,6 @@ var _sample_dialogue = {
 
 func _ready():
     $Room.get_dialogue_box().popup(_sample_dialogue)
+
+func _on_Player_player_moved():
+    $Room.get_minimap().update_map()

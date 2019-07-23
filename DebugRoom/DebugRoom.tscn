@@ -16,4 +16,4 @@ position = Vector2( 32, 32 )
 
 [node name="DebugGhost" parent="Room" instance=ExtResource( 4 )]
 position = Vector2( 128, 480 )
-
+[connection signal="player_moved" from="Room/Player" to="." method="_on_Player_player_moved"]

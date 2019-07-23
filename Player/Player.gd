@@ -1,5 +1,7 @@
 extends MobileEntity
 
+signal player_moved
+
 func _ready():
     $Sprite.visible = false
 
@@ -41,7 +43,8 @@ func _process(delta: float) -> void:
         if input_dir != Vector2():
             var target_cell = cell + input_dir
             set_direction(_input_dir_to_dir(input_dir))
-            try_move_to(target_cell)
+            if try_move_to(target_cell):
+                emit_signal("player_moved")
         elif Input.is_action_just_released("ui_accept"):
             var target_cell = cell + Vector2(1, 0).rotated(get_direction() * PI / 2)
             var target_entity = get_room().get_entity_cell(target_cell)
