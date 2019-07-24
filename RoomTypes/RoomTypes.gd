@@ -2,7 +2,7 @@ extends Node
 
 enum Tile {
     EmptyTile = 0, DebugFloor, DebugWall, TileFloor1, TileFloor2, LightGrayCarpet, GrayCarpet, DarkGrayCarpet, TileFloor3, WoodFloor1,
-    WoodFloor2, WoodFloor3, ConcreteFloor
+    WoodFloor2, WoodFloor3, ConcreteFloor, StripedWall1, StripedWall2
 }
 
 enum RT {
@@ -11,6 +11,8 @@ enum RT {
     LaundryRoom, Kitchen, StorageRoom, DiningRoom, DiningHall,
     Garage
 }
+
+var walls: Array = [Tile.DebugWall, Tile.StripedWall1, Tile.StripedWall2]
 
 var _roomtypes: Dictionary = {
     Vector2(1, 1): [RT.Washroom, RT.Closet, RT.LaundryRoom, RT.StorageRoom],
@@ -51,6 +53,27 @@ var _floortypes: Dictionary = {
     RT.Garage: [Tile.ConcreteFloor]
 }
 
+var _walltypes: Dictionary = {
+    RT.Hallway: [Tile.StripedWall1],
+    RT.Bedroom: [Tile.StripedWall2],
+    RT.MasterBedroom: [Tile.StripedWall1],
+    RT.Bathroom: [Tile.StripedWall2],
+    RT.Washroom: [Tile.StripedWall2],
+    RT.WardrobeRoom: [Tile.StripedWall1],
+    RT.Closet: [Tile.StripedWall2],
+    RT.LongCloset: [Tile.StripedWall2],
+    RT.Theater: [Tile.StripedWall2],
+    RT.Foyer: [Tile.StripedWall2],
+    RT.Study: [Tile.StripedWall2],
+    RT.SittingRoom: [Tile.StripedWall2],
+    RT.LaundryRoom: [Tile.StripedWall2],
+    RT.Kitchen: [Tile.StripedWall2],
+    RT.StorageRoom: [Tile.StripedWall2],
+    RT.DiningRoom: [Tile.StripedWall2],
+    RT.DiningHall: [Tile.StripedWall2],
+    RT.Garage: [Tile.StripedWall1]
+}
+
 func decide_room_type(dims: Vector2) -> int:
     if dims.x > dims.y:
         dims = Vector2(dims.y, dims.x)
@@ -59,6 +82,10 @@ func decide_room_type(dims: Vector2) -> int:
 
 func decide_floor_type(rtype: int) -> int:
     var arr = _floortypes[rtype]
+    return arr[randi() % len(arr)]
+
+func decide_wall_type(rtype: int) -> int:
+    var arr = _walltypes[rtype]
     return arr[randi() % len(arr)]
 
 func _ready():

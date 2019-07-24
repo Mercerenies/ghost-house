@@ -6,11 +6,13 @@ class HallwayData:
     var data: Array
     var connections: Array
     var floortype: int
+    var walltype: int
     func _init(id: int, data: Array):
         self.id = id
         self.data = data
         self.connections = []
         self.floortype = RoomTypes.Tile.EmptyTile
+        self.walltype = RoomTypes.Tile.DebugWall
 
 class RoomData:
     var id: int
@@ -18,12 +20,14 @@ class RoomData:
     var connections: Array
     var type: int
     var floortype: int
+    var walltype: int
     func _init(id: int, box: Rect2):
         self.id = id
         self.box = box
         self.connections = []
         self.type = -1 # Unset to begin with; we'll set it later
         self.floortype = RoomTypes.Tile.EmptyTile
+        self.walltype = RoomTypes.Tile.DebugWall
 
 class Graph:
     var adja: Dictionary = {}

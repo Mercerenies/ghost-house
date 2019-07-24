@@ -26,7 +26,7 @@ func move_entity(src: Vector2, dest: Vector2) -> void:
     set_entity_cell(src, null)
 
 func is_wall_at(pos: Vector2) -> bool:
-    return get_tile_cell(pos) == Tile.DebugWall
+    return RoomTypes.walls.has(get_tile_cell(pos))
 
 func is_showing_modal() -> bool:
     return get_dialogue_box().is_active()
