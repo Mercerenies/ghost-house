@@ -2,7 +2,7 @@ extends Node
 
 enum Tile {
     EmptyTile = 0, DebugFloor, DebugWall, TileFloor1, TileFloor2, LightGrayCarpet, GrayCarpet, DarkGrayCarpet, TileFloor3, WoodFloor1,
-    WoodFloor2, WoodFloor3
+    WoodFloor2, WoodFloor3, ConcreteFloor
 }
 
 enum RT {
@@ -48,7 +48,7 @@ var _floortypes: Dictionary = {
     RT.StorageRoom: [Tile.WoodFloor1, Tile.WoodFloor2, Tile.WoodFloor3],
     RT.DiningRoom: [Tile.WoodFloor1, Tile.WoodFloor2, Tile.WoodFloor3],
     RT.DiningHall: [Tile.WoodFloor1, Tile.WoodFloor2, Tile.WoodFloor3],
-    RT.Garage: [Tile.DebugFloor] # ////
+    RT.Garage: [Tile.ConcreteFloor]
 }
 
 func decide_room_type(dims: Vector2) -> int:
