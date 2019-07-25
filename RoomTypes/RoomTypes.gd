@@ -2,7 +2,8 @@ extends Node
 
 enum Tile {
     EmptyTile = 0, DebugFloor, DebugWall, TileFloor1, TileFloor2, LightGrayCarpet, GrayCarpet, DarkGrayCarpet, TileFloor3, WoodFloor1,
-    WoodFloor2, WoodFloor3, ConcreteFloor, StripedWall1, StripedWall2
+    WoodFloor2, WoodFloor3, ConcreteFloor, StripedWall1, StripedWall2, DiamondWall, CircleWall, GradientWall1, GradientWall2, RockyWall,
+    PipeWall
 }
 
 enum RT {
@@ -12,7 +13,8 @@ enum RT {
     Garage
 }
 
-var walls: Array = [Tile.DebugWall, Tile.StripedWall1, Tile.StripedWall2]
+var walls: Array = [Tile.DebugWall, Tile.StripedWall1, Tile.StripedWall2, Tile.DiamondWall, Tile.CircleWall,
+                    Tile.GradientWall1, Tile.GradientWall2, Tile.RockyWall, Tile.PipeWall]
 
 var _roomtypes: Dictionary = {
     Vector2(1, 1): [RT.Washroom, RT.Closet, RT.LaundryRoom, RT.StorageRoom],
@@ -45,7 +47,7 @@ var _floortypes: Dictionary = {
     RT.Foyer: [Tile.WoodFloor1, Tile.WoodFloor2, Tile.WoodFloor3],
     RT.Study: [Tile.WoodFloor1, Tile.WoodFloor2, Tile.WoodFloor3],
     RT.SittingRoom: [Tile.LightGrayCarpet, Tile.GrayCarpet, Tile.DarkGrayCarpet, Tile.WoodFloor1, Tile.WoodFloor2, Tile.WoodFloor3],
-    RT.LaundryRoom: [Tile.TileFloor1, Tile.TileFloor3, Tile.WoodFloor1, Tile.WoodFloor2, Tile.WoodFloor3],
+    RT.LaundryRoom: [Tile.TileFloor1, Tile.TileFloor3, Tile.WoodFloor1, Tile.WoodFloor2, Tile.WoodFloor3, Tile.ConcreteFloor],
     RT.Kitchen: [Tile.TileFloor1, Tile.TileFloor3],
     RT.StorageRoom: [Tile.WoodFloor1, Tile.WoodFloor2, Tile.WoodFloor3],
     RT.DiningRoom: [Tile.WoodFloor1, Tile.WoodFloor2, Tile.WoodFloor3],
@@ -54,24 +56,24 @@ var _floortypes: Dictionary = {
 }
 
 var _walltypes: Dictionary = {
-    RT.Hallway: [Tile.StripedWall1],
-    RT.Bedroom: [Tile.StripedWall2],
-    RT.MasterBedroom: [Tile.StripedWall1],
-    RT.Bathroom: [Tile.StripedWall2],
-    RT.Washroom: [Tile.StripedWall2],
-    RT.WardrobeRoom: [Tile.StripedWall1],
-    RT.Closet: [Tile.StripedWall2],
-    RT.LongCloset: [Tile.StripedWall2],
-    RT.Theater: [Tile.StripedWall2],
-    RT.Foyer: [Tile.StripedWall2],
-    RT.Study: [Tile.StripedWall2],
-    RT.SittingRoom: [Tile.StripedWall2],
-    RT.LaundryRoom: [Tile.StripedWall2],
-    RT.Kitchen: [Tile.StripedWall2],
-    RT.StorageRoom: [Tile.StripedWall2],
-    RT.DiningRoom: [Tile.StripedWall2],
-    RT.DiningHall: [Tile.StripedWall2],
-    RT.Garage: [Tile.StripedWall1]
+    RT.Hallway: [Tile.StripedWall1, Tile.StripedWall2],
+    RT.Bedroom: [Tile.StripedWall1, Tile.StripedWall2],
+    RT.MasterBedroom: [Tile.StripedWall1, Tile.StripedWall2],
+    RT.Bathroom: [Tile.DiamondWall, Tile.CircleWall],
+    RT.Washroom: [Tile.DiamondWall, Tile.CircleWall],
+    RT.WardrobeRoom: [Tile.StripedWall1, Tile.StripedWall2],
+    RT.Closet: [Tile.StripedWall1, Tile.StripedWall2, Tile.GradientWall1, Tile.GradientWall2, Tile.PipeWall],
+    RT.LongCloset: [Tile.StripedWall1, Tile.StripedWall2, Tile.GradientWall1, Tile.GradientWall2, Tile.PipeWall],
+    RT.Theater: [Tile.DebugWall],
+    RT.Foyer: [Tile.DebugWall],
+    RT.Study: [Tile.DebugWall],
+    RT.SittingRoom: [Tile.StripedWall1, Tile.StripedWall2],
+    RT.LaundryRoom: [Tile.StripedWall1, Tile.StripedWall2, Tile.GradientWall1, Tile.GradientWall2, Tile.RockyWall, Tile.PipeWall],
+    RT.Kitchen: [Tile.DiamondWall, Tile.CircleWall],
+    RT.StorageRoom: [Tile.GradientWall1, Tile.GradientWall2, Tile.RockyWall, Tile.PipeWall],
+    RT.DiningRoom: [Tile.DiamondWall, Tile.CircleWall],
+    RT.DiningHall: [Tile.DiamondWall, Tile.CircleWall],
+    RT.Garage: [Tile.GradientWall1, Tile.GradientWall2, Tile.RockyWall, Tile.PipeWall]
 }
 
 func decide_room_type(dims: Vector2) -> int:
