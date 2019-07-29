@@ -3,7 +3,7 @@ extends Node
 enum Tile {
     EmptyTile = 0, DebugFloor, DebugWall, TileFloor1, TileFloor2, LightGrayCarpet, GrayCarpet, DarkGrayCarpet, TileFloor3, WoodFloor1,
     WoodFloor2, WoodFloor3, ConcreteFloor, StripedWall1, StripedWall2, DiamondWall, CircleWall, GradientWall1, GradientWall2, RockyWall,
-    PipeWall
+    PipeWall, RedRegalWall, OrangeRegalWall, ColumnedWall1, ColumnedWall2, ColumnedWall3
 }
 
 enum RT {
@@ -14,7 +14,8 @@ enum RT {
 }
 
 var walls: Array = [Tile.DebugWall, Tile.StripedWall1, Tile.StripedWall2, Tile.DiamondWall, Tile.CircleWall,
-                    Tile.GradientWall1, Tile.GradientWall2, Tile.RockyWall, Tile.PipeWall]
+                    Tile.GradientWall1, Tile.GradientWall2, Tile.RockyWall, Tile.PipeWall, Tile.RedRegalWall,
+                    Tile.OrangeRegalWall, Tile.ColumnedWall1, Tile.ColumnedWall2, Tile.ColumnedWall3]
 
 var _roomtypes: Dictionary = {
     Vector2(1, 1): [RT.Washroom, RT.Closet, RT.LaundryRoom, RT.StorageRoom],
@@ -56,23 +57,23 @@ var _floortypes: Dictionary = {
 }
 
 var _walltypes: Dictionary = {
-    RT.Hallway: [Tile.StripedWall1, Tile.StripedWall2],
-    RT.Bedroom: [Tile.StripedWall1, Tile.StripedWall2],
-    RT.MasterBedroom: [Tile.StripedWall1, Tile.StripedWall2],
+    RT.Hallway: [Tile.StripedWall1, Tile.StripedWall2, Tile.ColumnedWall1, Tile.ColumnedWall2, Tile.ColumnedWall3],
+    RT.Bedroom: [Tile.StripedWall1, Tile.StripedWall2, Tile.ColumnedWall1, Tile.ColumnedWall2, Tile.ColumnedWall3],
+    RT.MasterBedroom: [Tile.StripedWall1, Tile.StripedWall2, Tile.RedRegalWall, Tile.OrangeRegalWall],
     RT.Bathroom: [Tile.DiamondWall, Tile.CircleWall],
     RT.Washroom: [Tile.DiamondWall, Tile.CircleWall],
-    RT.WardrobeRoom: [Tile.StripedWall1, Tile.StripedWall2],
+    RT.WardrobeRoom: [Tile.StripedWall1, Tile.StripedWall2, Tile.ColumnedWall1, Tile.ColumnedWall2, Tile.ColumnedWall3],
     RT.Closet: [Tile.StripedWall1, Tile.StripedWall2, Tile.GradientWall1, Tile.GradientWall2, Tile.PipeWall],
     RT.LongCloset: [Tile.StripedWall1, Tile.StripedWall2, Tile.GradientWall1, Tile.GradientWall2, Tile.PipeWall],
-    RT.Theater: [Tile.DebugWall],
-    RT.Foyer: [Tile.DebugWall],
-    RT.Study: [Tile.DebugWall],
+    RT.Theater: [Tile.RedRegalWall, Tile.OrangeRegalWall],
+    RT.Foyer: [Tile.RedRegalWall, Tile.OrangeRegalWall],
+    RT.Study: [Tile.ColumnedWall1, Tile.ColumnedWall2, Tile.ColumnedWall3],
     RT.SittingRoom: [Tile.StripedWall1, Tile.StripedWall2],
     RT.LaundryRoom: [Tile.StripedWall1, Tile.StripedWall2, Tile.GradientWall1, Tile.GradientWall2, Tile.RockyWall, Tile.PipeWall],
     RT.Kitchen: [Tile.DiamondWall, Tile.CircleWall],
     RT.StorageRoom: [Tile.GradientWall1, Tile.GradientWall2, Tile.RockyWall, Tile.PipeWall],
-    RT.DiningRoom: [Tile.DiamondWall, Tile.CircleWall],
-    RT.DiningHall: [Tile.DiamondWall, Tile.CircleWall],
+    RT.DiningRoom: [Tile.DiamondWall, Tile.CircleWall, Tile.RedRegalWall, Tile.OrangeRegalWall],
+    RT.DiningHall: [Tile.DiamondWall, Tile.CircleWall, Tile.RedRegalWall, Tile.OrangeRegalWall],
     RT.Garage: [Tile.GradientWall1, Tile.GradientWall2, Tile.RockyWall, Tile.PipeWall]
 }
 
