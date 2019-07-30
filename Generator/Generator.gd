@@ -7,6 +7,8 @@ const Graph = GeneratorData.Graph
 
 const RoomScene = preload("res://Room/Room.tscn")
 const PlayerScene = preload("res://Player/Player.tscn")
+const HorizontalFloorTransition = preload("res://RoomTransition/HorizontalFloorTransition.tscn")
+const VerticalFloorTransition = preload("res://RoomTransition/VerticalFloorTransition.tscn")
 
 # _grid IDs
 #   -3 - OOB
@@ -376,6 +378,13 @@ func _open_doorways() -> void:
             _room.set_tile_cell(Vector2(xpos + 2, ypos - 1), floorb)
             _room.set_tile_cell(Vector2(xpos + 1, ypos - 2), floora)
             _room.set_tile_cell(Vector2(xpos + 2, ypos - 2), floora)
+            if floora != floorb:
+                var transa = VerticalFloorTransition.instance()
+                var transb = VerticalFloorTransition.instance()
+                transa.position = Vector2(xpos + 1, ypos - 1) * 32
+                transb.position = Vector2(xpos + 2, ypos - 1) * 32
+                _room.add_child(transa)
+                _room.add_child(transb)
         elif b - a == Vector2(1, 0):
             _room.set_tile_cell(Vector2(xpos - 1, ypos + 1), floorb)
             _room.set_tile_cell(Vector2(xpos - 1, ypos + 2), floorb)
@@ -383,6 +392,13 @@ func _open_doorways() -> void:
             _room.set_tile_cell(Vector2(xpos - 2, ypos + 2), floora)
             _room.set_tile_cell(Vector2(xpos - 2, ypos    ), walla )
             _room.set_tile_cell(Vector2(xpos - 1, ypos    ), wallb )
+            if floora != floorb:
+                var transa = HorizontalFloorTransition.instance()
+                var transb = HorizontalFloorTransition.instance()
+                transa.position = Vector2(xpos - 1, ypos + 1) * 32
+                transb.position = Vector2(xpos - 1, ypos + 2) * 32
+                _room.add_child(transa)
+                _room.add_child(transb)
 
 func _open_all_doorways() -> void:
     # This code literally only exists for debugging purposes.
