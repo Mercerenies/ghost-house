@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://DebugRoom/DebugRoom.gd" type="Script" id=1]
 [ext_resource path="res://Room/Room.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Player/Player.tscn" type="PackedScene" id=3]
 [ext_resource path="res://DebugGhost/DebugGhost.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Furniture/DebugGreenBox.tscn" type="PackedScene" id=5]
 
 [node name="DebugRoom" type="Node2D"]
 script = ExtResource( 1 )
@@ -16,4 +17,7 @@ position = Vector2( 32, 32 )
 
 [node name="DebugGhost" parent="Room" instance=ExtResource( 4 )]
 position = Vector2( 128, 480 )
+
+[node name="DebugGreenBox" parent="Room" instance=ExtResource( 5 )]
+position = Vector2( 64, 128 )
 [connection signal="player_moved" from="Room/Player" to="." method="_on_Player_player_moved"]
