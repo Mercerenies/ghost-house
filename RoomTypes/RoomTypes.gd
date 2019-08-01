@@ -35,46 +35,79 @@ var _roomtypes: Dictionary = {
     Vector2(4, 4): [RT.MasterBedroom, RT.Theater, RT.Foyer, RT.DiningHall]
 }
 
-var _floortypes: Dictionary = {
-    RT.Hallway: [Tile.LightGrayCarpet, Tile.GrayCarpet, Tile.DarkGrayCarpet, Tile.WoodFloor1, Tile.WoodFloor2, Tile.WoodFloor3],
-    RT.Bedroom: [Tile.LightGrayCarpet, Tile.GrayCarpet, Tile.DarkGrayCarpet, Tile.WoodFloor1, Tile.WoodFloor2, Tile.WoodFloor3],
-    RT.MasterBedroom: [Tile.LightGrayCarpet, Tile.GrayCarpet, Tile.DarkGrayCarpet, Tile.WoodFloor1, Tile.WoodFloor2, Tile.WoodFloor3],
-    RT.Bathroom: [Tile.TileFloor1, Tile.TileFloor3],
-    RT.Washroom: [Tile.TileFloor1, Tile.TileFloor3],
-    RT.WardrobeRoom: [Tile.LightGrayCarpet, Tile.GrayCarpet, Tile.DarkGrayCarpet, Tile.WoodFloor1, Tile.WoodFloor2, Tile.WoodFloor3],
-    RT.Closet: [Tile.LightGrayCarpet, Tile.GrayCarpet, Tile.DarkGrayCarpet, Tile.WoodFloor1, Tile.WoodFloor2, Tile.WoodFloor3],
-    RT.LongCloset: [Tile.LightGrayCarpet, Tile.GrayCarpet, Tile.DarkGrayCarpet, Tile.WoodFloor1, Tile.WoodFloor2, Tile.WoodFloor3],
-    RT.Theater: [Tile.LightGrayCarpet, Tile.GrayCarpet, Tile.DarkGrayCarpet, Tile.WoodFloor1, Tile.WoodFloor2, Tile.WoodFloor3],
-    RT.Foyer: [Tile.WoodFloor1, Tile.WoodFloor2, Tile.WoodFloor3],
-    RT.Study: [Tile.WoodFloor1, Tile.WoodFloor2, Tile.WoodFloor3],
-    RT.SittingRoom: [Tile.LightGrayCarpet, Tile.GrayCarpet, Tile.DarkGrayCarpet, Tile.WoodFloor1, Tile.WoodFloor2, Tile.WoodFloor3],
-    RT.LaundryRoom: [Tile.TileFloor1, Tile.TileFloor3, Tile.WoodFloor1, Tile.WoodFloor2, Tile.WoodFloor3, Tile.ConcreteFloor],
-    RT.Kitchen: [Tile.TileFloor1, Tile.TileFloor3],
-    RT.StorageRoom: [Tile.WoodFloor1, Tile.WoodFloor2, Tile.WoodFloor3],
-    RT.DiningRoom: [Tile.WoodFloor1, Tile.WoodFloor2, Tile.WoodFloor3],
-    RT.DiningHall: [Tile.WoodFloor1, Tile.WoodFloor2, Tile.WoodFloor3],
-    RT.Garage: [Tile.ConcreteFloor]
-}
-
-var _walltypes: Dictionary = {
-    RT.Hallway: [Tile.StripedWall1, Tile.StripedWall2, Tile.ColumnedWall1, Tile.ColumnedWall2, Tile.ColumnedWall3],
-    RT.Bedroom: [Tile.StripedWall1, Tile.StripedWall2, Tile.ColumnedWall1, Tile.ColumnedWall2, Tile.ColumnedWall3],
-    RT.MasterBedroom: [Tile.StripedWall1, Tile.StripedWall2, Tile.RedRegalWall, Tile.OrangeRegalWall],
-    RT.Bathroom: [Tile.DiamondWall, Tile.CircleWall],
-    RT.Washroom: [Tile.DiamondWall, Tile.CircleWall],
-    RT.WardrobeRoom: [Tile.StripedWall1, Tile.StripedWall2, Tile.ColumnedWall1, Tile.ColumnedWall2, Tile.ColumnedWall3],
-    RT.Closet: [Tile.StripedWall1, Tile.StripedWall2, Tile.GradientWall1, Tile.GradientWall2, Tile.PipeWall],
-    RT.LongCloset: [Tile.StripedWall1, Tile.StripedWall2, Tile.GradientWall1, Tile.GradientWall2, Tile.PipeWall],
-    RT.Theater: [Tile.RedRegalWall, Tile.OrangeRegalWall],
-    RT.Foyer: [Tile.RedRegalWall, Tile.OrangeRegalWall],
-    RT.Study: [Tile.ColumnedWall1, Tile.ColumnedWall2, Tile.ColumnedWall3],
-    RT.SittingRoom: [Tile.StripedWall1, Tile.StripedWall2],
-    RT.LaundryRoom: [Tile.StripedWall1, Tile.StripedWall2, Tile.GradientWall1, Tile.GradientWall2, Tile.RockyWall, Tile.PipeWall],
-    RT.Kitchen: [Tile.DiamondWall, Tile.CircleWall],
-    RT.StorageRoom: [Tile.GradientWall1, Tile.GradientWall2, Tile.RockyWall, Tile.PipeWall],
-    RT.DiningRoom: [Tile.DiamondWall, Tile.CircleWall, Tile.RedRegalWall, Tile.OrangeRegalWall],
-    RT.DiningHall: [Tile.DiamondWall, Tile.CircleWall, Tile.RedRegalWall, Tile.OrangeRegalWall],
-    RT.Garage: [Tile.GradientWall1, Tile.GradientWall2, Tile.RockyWall, Tile.PipeWall]
+var _config: Dictionary = {
+    RT.Hallway: {
+        "floors": [Tile.LightGrayCarpet, Tile.GrayCarpet, Tile.DarkGrayCarpet, Tile.WoodFloor1, Tile.WoodFloor2, Tile.WoodFloor3],
+        "walls": [Tile.StripedWall1, Tile.StripedWall2, Tile.ColumnedWall1, Tile.ColumnedWall2, Tile.ColumnedWall3]
+    },
+    RT.Bedroom: {
+        "floors": [Tile.LightGrayCarpet, Tile.GrayCarpet, Tile.DarkGrayCarpet, Tile.WoodFloor1, Tile.WoodFloor2, Tile.WoodFloor3],
+        "walls": [Tile.StripedWall1, Tile.StripedWall2, Tile.ColumnedWall1, Tile.ColumnedWall2, Tile.ColumnedWall3]
+    },
+    RT.MasterBedroom: {
+        "floors": [Tile.LightGrayCarpet, Tile.GrayCarpet, Tile.DarkGrayCarpet, Tile.WoodFloor1, Tile.WoodFloor2, Tile.WoodFloor3],
+        "walls": [Tile.StripedWall1, Tile.StripedWall2, Tile.RedRegalWall, Tile.OrangeRegalWall]
+    },
+    RT.Bathroom: {
+        "floors": [Tile.TileFloor1, Tile.TileFloor3],
+        "walls": [Tile.DiamondWall, Tile.CircleWall]
+    },
+    RT.Washroom: {
+        "floors": [Tile.TileFloor1, Tile.TileFloor3],
+        "walls": [Tile.DiamondWall, Tile.CircleWall]
+    },
+    RT.WardrobeRoom: {
+        "floors": [Tile.LightGrayCarpet, Tile.GrayCarpet, Tile.DarkGrayCarpet, Tile.WoodFloor1, Tile.WoodFloor2, Tile.WoodFloor3],
+        "walls": [Tile.StripedWall1, Tile.StripedWall2, Tile.ColumnedWall1, Tile.ColumnedWall2, Tile.ColumnedWall3]
+    },
+    RT.Closet: {
+        "floors": [Tile.LightGrayCarpet, Tile.GrayCarpet, Tile.DarkGrayCarpet, Tile.WoodFloor1, Tile.WoodFloor2, Tile.WoodFloor3],
+        "walls": [Tile.StripedWall1, Tile.StripedWall2, Tile.GradientWall1, Tile.GradientWall2, Tile.PipeWall]
+    },
+    RT.LongCloset: {
+        "floors": [Tile.LightGrayCarpet, Tile.GrayCarpet, Tile.DarkGrayCarpet, Tile.WoodFloor1, Tile.WoodFloor2, Tile.WoodFloor3],
+        "walls": [Tile.StripedWall1, Tile.StripedWall2, Tile.GradientWall1, Tile.GradientWall2, Tile.PipeWall]
+    },
+    RT.Theater: {
+        "floors": [Tile.LightGrayCarpet, Tile.GrayCarpet, Tile.DarkGrayCarpet, Tile.WoodFloor1, Tile.WoodFloor2, Tile.WoodFloor3],
+        "walls": [Tile.RedRegalWall, Tile.OrangeRegalWall]
+    },
+    RT.Foyer: {
+        "floors": [Tile.WoodFloor1, Tile.WoodFloor2, Tile.WoodFloor3],
+        "walls": [Tile.RedRegalWall, Tile.OrangeRegalWall]
+    },
+    RT.Study: {
+        "floors": [Tile.WoodFloor1, Tile.WoodFloor2, Tile.WoodFloor3],
+        "walls": [Tile.ColumnedWall1, Tile.ColumnedWall2, Tile.ColumnedWall3]
+    },
+    RT.SittingRoom: {
+        "floors": [Tile.LightGrayCarpet, Tile.GrayCarpet, Tile.DarkGrayCarpet, Tile.WoodFloor1, Tile.WoodFloor2, Tile.WoodFloor3],
+        "walls": [Tile.StripedWall1, Tile.StripedWall2]
+    },
+    RT.LaundryRoom: {
+        "floors": [Tile.TileFloor1, Tile.TileFloor3, Tile.WoodFloor1, Tile.WoodFloor2, Tile.WoodFloor3, Tile.ConcreteFloor],
+        "walls": [Tile.StripedWall1, Tile.StripedWall2, Tile.GradientWall1, Tile.GradientWall2, Tile.RockyWall, Tile.PipeWall]
+    },
+    RT.Kitchen: {
+        "floors": [Tile.TileFloor1, Tile.TileFloor3],
+        "walls": [Tile.DiamondWall, Tile.CircleWall]
+    },
+    RT.StorageRoom: {
+        "floors": [Tile.WoodFloor1, Tile.WoodFloor2, Tile.WoodFloor3],
+        "walls": [Tile.GradientWall1, Tile.GradientWall2, Tile.RockyWall, Tile.PipeWall]
+    },
+    RT.DiningRoom: {
+        "floors": [Tile.WoodFloor1, Tile.WoodFloor2, Tile.WoodFloor3],
+        "walls": [Tile.DiamondWall, Tile.CircleWall, Tile.RedRegalWall, Tile.OrangeRegalWall]
+    },
+    RT.DiningHall: {
+        "floors": [Tile.WoodFloor1, Tile.WoodFloor2, Tile.WoodFloor3],
+        "walls": [Tile.DiamondWall, Tile.CircleWall, Tile.RedRegalWall, Tile.OrangeRegalWall]
+    },
+    RT.Garage: {
+        "floors": [Tile.ConcreteFloor],
+        "walls": [Tile.GradientWall1, Tile.GradientWall2, Tile.RockyWall, Tile.PipeWall]
+    }
 }
 
 func decide_room_type(dims: Vector2) -> int:
@@ -84,11 +117,11 @@ func decide_room_type(dims: Vector2) -> int:
     return arr[randi() % len(arr)]
 
 func decide_floor_type(rtype: int) -> int:
-    var arr = _floortypes[rtype]
+    var arr = _config[rtype]["floors"]
     return arr[randi() % len(arr)]
 
 func decide_wall_type(rtype: int) -> int:
-    var arr = _walltypes[rtype]
+    var arr = _config[rtype]["walls"]
     return arr[randi() % len(arr)]
 
 func _ready():
