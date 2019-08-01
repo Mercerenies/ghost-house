@@ -38,6 +38,8 @@ const ID_EMPTY = -1
 const ID_HALLS = 0
 const ID_ROOMS = 256
 
+const FLAG_EDGE_FURNITURE = 0
+
 const CELL_SIZE = 4
 const WALL_SIZE = 1
 const TOTAL_CELL_SIZE = CELL_SIZE + WALL_SIZE * 2

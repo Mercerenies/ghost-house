@@ -23,8 +23,11 @@ const ID_EMPTY = GeneratorData.ID_EMPTY
 const ID_HALLS = GeneratorData.ID_HALLS
 const ID_ROOMS = GeneratorData.ID_ROOMS
 
+const FLAG_EDGE_FURNITURE = GeneratorData.FLAG_EDGE_FURNITURE
+
 var _data: Dictionary = {}
 var _grid: Array = [] # Row major (y + x * h)
+var _flag_grid: Array = []
 var _room: Room = null
 var _boxes: Dictionary = {}
 var _connections: Array = []
@@ -43,8 +46,10 @@ func _add_entity(pos: Vector2, entity: Object) -> void:
 
 func _produce_grid_array() -> void:
     _grid = []
+    _flag_grid = []
     for i in range(_data['config']['width'] * _data['config']['height']):
         _grid.append(ID_EMPTY)
+        _flag_grid.append(0)
 
 func _grid_get(pos: Vector2) -> int:
     var w = _data['config']['width']
@@ -56,6 +61,20 @@ func _grid_get(pos: Vector2) -> int:
 func _grid_set(pos: Vector2, value: int) -> void:
     var h = _data['config']['height']
     _grid[pos.y + pos.x * h] = value
+
+func _flag_grid_get(pos: Vector2, bit: int) -> bool:
+    var w = _data['config']['width']
+    var h = _data['config']['height']
+    if pos.x < 0 or pos.y < 0 or pos.x >= w or pos.y >= h:
+        return false
+    return _flag_grid[pos.y + pos.x * h] & (1 << bit)
+
+func _flag_grid_set(pos: Vector2, bit: int, value: int) -> void:
+    var h = _data['config']['height']
+    if value:
+        _grid[pos.y + pos.x * h] |= (1 << bit)
+    else:
+        _grid[pos.y + pos.x * h] &= ~(1 << bit)
 
 func _can_draw_hypothetical_box(box: Rect2, hypo_box: Rect2) -> bool:
     if box.intersects(hypo_box):
@@ -532,7 +551,7 @@ func _is_blocking_doorway(rect: Rect2) -> bool:
                 return true
     return false
 
-# const tmp = preload("res://Furniture/DebugGreenBox.tscn")
+const tmp = preload("res://Furniture/DebugLittleGreenBox/DebugLittleGreenBox.tscn")
 
 # func _debug_furniture_flood() -> void:
 #     var w = _data['config']['width']
@@ -593,4 +612,5 @@ func generate() -> Room:
     #for k in _boxes:
     #    _try_to_place(_boxes[k], TwinBedPlacement.new())
     #    _try_to_place(_boxes[k], KingBedPlacement.new())
+    # ///// Decide how we want to define a "safe for edge furniture cell" and start marking cells with the flag.
     return _room
