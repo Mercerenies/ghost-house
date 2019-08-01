@@ -11,3 +11,9 @@ func position_self() -> void:
         for j in range(dims.y):
             get_room().set_entity_cell(current_cell + Vector2(i, j), self)
     cell = current_cell
+
+func set_dims(vec: Vector2) -> void:
+    dims = vec
+
+func get_dims() -> Vector2:
+    return dims

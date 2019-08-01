@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/DebugGreenBox.png-e3b45b2d642ea2591c9d5c6bd29638c6.stex"
+path="res://.import/KingBed.png-beae2179b0b849a214d43ffc75746868.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Furniture/DebugGreenBox.png"
-dest_files=[ "res://.import/DebugGreenBox.png-e3b45b2d642ea2591c9d5c6bd29638c6.stex" ]
+source_file="res://Furniture/KingBed/KingBed.png"
+dest_files=[ "res://.import/KingBed.png-beae2179b0b849a214d43ffc75746868.stex" ]
 
 [params]
 

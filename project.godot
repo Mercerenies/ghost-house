@@ -19,6 +19,16 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Entity/Entity.gd"
 }, {
+"base": "StaticEntity",
+"class": "Furniture",
+"language": "GDScript",
+"path": "res://Furniture/Furniture.gd"
+}, {
+"base": "Reference",
+"class": "FurniturePlacement",
+"language": "GDScript",
+"path": "res://Furniture/FurniturePlacement.gd"
+}, {
 "base": "Node",
 "class": "Generator",
 "language": "GDScript",
@@ -28,6 +38,11 @@ _global_script_classes=[ {
 "class": "GeneratorData",
 "language": "GDScript",
 "path": "res://GeneratorData/GeneratorData.gd"
+}, {
+"base": "FurniturePlacement",
+"class": "KingBedPlacement",
+"language": "GDScript",
+"path": "res://Furniture/KingBed/KingBedPlacement.gd"
 }, {
 "base": "Entity",
 "class": "MobileEntity",
@@ -48,16 +63,25 @@ _global_script_classes=[ {
 "class": "StaticEntity",
 "language": "GDScript",
 "path": "res://StaticEntity/StaticEntity.gd"
+}, {
+"base": "FurniturePlacement",
+"class": "TwinBedPlacement",
+"language": "GDScript",
+"path": "res://Furniture/TwinBed/TwinBedPlacement.gd"
 } ]
 _global_script_class_icons={
 "DialogueEntity": "",
 "Entity": "",
+"Furniture": "",
+"FurniturePlacement": "",
 "Generator": "",
 "GeneratorData": "",
+"KingBedPlacement": "",
 "MobileEntity": "",
 "OutlinedPolygon2D": "",
 "Room": "",
-"StaticEntity": ""
+"StaticEntity": "",
+"TwinBedPlacement": ""
 }
 
 [application]

@@ -532,17 +532,31 @@ func _is_blocking_doorway(rect: Rect2) -> bool:
                 return true
     return false
 
-const tmp = preload("res://Furniture/DebugGreenBox.tscn")
+# const tmp = preload("res://Furniture/DebugGreenBox.tscn")
 
-func _debug_furniture_flood() -> void:
-    var w = _data['config']['width']
-    var h = _data['config']['height']
-    for i in range(w * TOTAL_CELL_SIZE):
-        for j in range(h * TOTAL_CELL_SIZE):
-            if _can_put_furniture_at(Rect2(i, j, 2, 2)) and not _is_blocking_doorway(Rect2(i, j, 2, 2)):
-                var silly = tmp.instance()
-                _add_entity(Vector2(i, j), silly)
-        
+# func _debug_furniture_flood() -> void:
+#     var w = _data['config']['width']
+#     var h = _data['config']['height']
+#     for i in range(w * TOTAL_CELL_SIZE):
+#         for j in range(h * TOTAL_CELL_SIZE):
+#             if _can_put_furniture_at(Rect2(i, j, 2, 2)) and not _is_blocking_doorway(Rect2(i, j, 2, 2)):
+#                 var silly = tmp.instance()
+#                 _add_entity(Vector2(i, j), silly)
+
+func _try_to_place(room, placement) -> void:
+    var positions = placement.enumerate(room)
+    var valid_positions = []
+    for value in positions:
+        var pos = placement.value_to_position(value)
+        if _can_put_furniture_at(pos):
+            if placement.can_block_doorways() or not _is_blocking_doorway(pos):
+                valid_positions.append(value)
+    if len(valid_positions) == 0:
+        return
+    var chosen = valid_positions[randi() % len(valid_positions)]
+    var obj = placement.spawn_at(chosen)
+    if obj != null:
+        _add_entity(placement.value_to_position(chosen).position, obj)
 
 func generate() -> Room:
     var w = _data['config']['width']
@@ -563,7 +577,20 @@ func generate() -> Room:
     #    for j in range(_data['config']['height']):
     #        _room.set_tile_cell(Vector2(i, j), _room.Tile.DebugFloor)
     var player = PlayerScene.instance()
-    _add_entity(Vector2(1, 1), player)
+    # DEBUG CODE We'll clean this up later; it's quick and dirty player placement right now
+    var playercheck = false
+    for i in range(100):
+        for j in range(100):
+            if _room.get_entity_cell(Vector2(i + 2, j + 2)) == null:
+                _add_entity(Vector2(i + 2, j + 2), player)
+                playercheck = true
+                break
+        if playercheck:
+            break
     player.connect("player_moved", _room.get_minimap(), "update_map")
     #_debug_furniture_flood()
+    # DEBUG CODE
+    #for k in _boxes:
+    #    _try_to_place(_boxes[k], TwinBedPlacement.new())
+    #    _try_to_place(_boxes[k], KingBedPlacement.new())
     return _room
