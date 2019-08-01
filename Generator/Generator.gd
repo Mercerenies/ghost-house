@@ -500,14 +500,46 @@ func _can_put_furniture_at(rect: Rect2) -> bool:
             transitions += 1
     return transitions <= 2
 
+func _is_doorway_at_position(pos: Vector2) -> bool:
+    if not _room.is_wall_at(pos):
+        # Left edge
+        var cell = Vector2(floor(pos.x / TOTAL_CELL_SIZE), floor(pos.y / TOTAL_CELL_SIZE))
+        if int(pos.x) % TOTAL_CELL_SIZE == 0:
+            if _grid_get(cell) != _grid_get(cell + Vector2(-1, 0)):
+                return true
+        # Right edge
+        if int(pos.x) % TOTAL_CELL_SIZE == TOTAL_CELL_SIZE - 1:
+            if _grid_get(cell) != _grid_get(cell + Vector2(1, 0)):
+                return true
+        # Top Edge
+        if int(pos.y) % TOTAL_CELL_SIZE == 0:
+            if _grid_get(cell) != _grid_get(cell + Vector2(0, -1)):
+                return true
+        # Bottom Edge
+        if int(pos.y) % TOTAL_CELL_SIZE == TOTAL_CELL_SIZE - 1:
+            if _grid_get(cell) != _grid_get(cell + Vector2(0, 1)):
+                return true
+    return false
+
+func _is_blocking_doorway(rect: Rect2) -> bool:
+    for i in range(rect.size.x + 2):
+        for j in range(rect.size.y + 2):
+            # Cut the corners
+            if (i == 0 or i == rect.size.x + 1) and (j == 0 or j == rect.size.y + 1):
+                continue
+            # Perform the check
+            if _is_doorway_at_position(rect.position + Vector2(i - 1, j - 1)):
+                return true
+    return false
+
 const tmp = preload("res://Furniture/DebugGreenBox.tscn")
 
-func _DEBUGGINGFUNCTIONPLEASEREMOVEMEFORTHELOVEOFGOD() -> void:
+func _debug_furniture_flood() -> void:
     var w = _data['config']['width']
     var h = _data['config']['height']
     for i in range(w * TOTAL_CELL_SIZE):
         for j in range(h * TOTAL_CELL_SIZE):
-            if _can_put_furniture_at(Rect2(i, j, 2, 2)):
+            if _can_put_furniture_at(Rect2(i, j, 2, 2)) and not _is_blocking_doorway(Rect2(i, j, 2, 2)):
                 var silly = tmp.instance()
                 _add_entity(Vector2(i, j), silly)
         
@@ -533,6 +565,5 @@ func generate() -> Room:
     var player = PlayerScene.instance()
     _add_entity(Vector2(1, 1), player)
     player.connect("player_moved", _room.get_minimap(), "update_map")
-    #_DEBUGGINGFUNCTIONPLEASEREMOVEMEFORTHELOVEOFGOD()
-    # ///// We need to add specific rules about doorways (most furniture should never directly block a doorway, even partially)
+    #_debug_furniture_flood()
     return _room
