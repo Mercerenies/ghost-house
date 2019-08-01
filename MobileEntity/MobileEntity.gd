@@ -34,11 +34,13 @@ func try_move_to(dest: Vector2) -> bool:
         return true
     return false
 
-func _ready() -> void:
+func position_self() -> void:
     var current_cell = Vector2(floor(position.x / 32), floor(position.y / 32))
     get_room().set_entity_cell(current_cell, self)
     cell = current_cell
     target_pos = position
+
+func _ready() -> void:
 
     sprite = Sprite.new()
     add_child(sprite)

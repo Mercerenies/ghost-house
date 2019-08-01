@@ -39,7 +39,7 @@ func _init(room_data: Dictionary):
 func _add_entity(pos: Vector2, entity: Object) -> void:
     _room.add_child(entity)
     entity.position = pos * 32
-    _room.set_entity_cell(pos, entity)
+    entity.position_self()
 
 func _produce_grid_array() -> void:
     _grid = []
@@ -468,6 +468,50 @@ func _grid_to_room() -> void:
             _draw_base_room(Vector2(x, y))
     _open_doorways()
 
+func is_blocked(pos: Vector2) -> bool:
+    return _room.is_wall_at(pos) or _room.get_entity_cell(pos) != null
+
+func _can_put_furniture_at(rect: Rect2) -> bool:
+    # Check the position we want to put it at first
+    for i in range(rect.size.x):
+        for j in range(rect.size.y):
+            if is_blocked(rect.position + Vector2(i, j)):
+                return false
+    var transitions = 0
+    # Top edge
+    for i in range(rect.size.x + 1):
+        var pos = Vector2(rect.position.x - 1 + i, rect.position.y - 1)
+        if is_blocked(pos) != is_blocked(pos + Vector2(1, 0)):
+            transitions += 1
+    # Right edge
+    for i in range(rect.size.y + 1):
+        var pos = Vector2(rect.end.x, rect.position.y - 1 + i)
+        if is_blocked(pos) != is_blocked(pos + Vector2(0, 1)):
+            transitions += 1
+    # Bottom edge
+    for i in range(rect.size.x + 1):
+        var pos = Vector2(rect.end.x - i, rect.end.y)
+        if is_blocked(pos) != is_blocked(pos + Vector2(-1, 0)):
+            transitions += 1
+    # Left edge
+    for i in range(rect.size.y + 1):
+        var pos = Vector2(rect.position.x - 1, rect.end.y - i)
+        if is_blocked(pos) != is_blocked(pos + Vector2(0, -1)):
+            transitions += 1
+    return transitions <= 2
+
+const tmp = preload("res://Furniture/DebugGreenBox.tscn")
+
+func _DEBUGGINGFUNCTIONPLEASEREMOVEMEFORTHELOVEOFGOD() -> void:
+    var w = _data['config']['width']
+    var h = _data['config']['height']
+    for i in range(w * TOTAL_CELL_SIZE):
+        for j in range(h * TOTAL_CELL_SIZE):
+            if _can_put_furniture_at(Rect2(i, j, 2, 2)):
+                var silly = tmp.instance()
+                _add_entity(Vector2(i, j), silly)
+        
+
 func generate() -> Room:
     var w = _data['config']['width']
     var h = _data['config']['height']
@@ -489,4 +533,6 @@ func generate() -> Room:
     var player = PlayerScene.instance()
     _add_entity(Vector2(1, 1), player)
     player.connect("player_moved", _room.get_minimap(), "update_map")
+    #_DEBUGGINGFUNCTIONPLEASEREMOVEMEFORTHELOVEOFGOD()
+    # ///// We need to add specific rules about doorways (most furniture should never directly block a doorway, even partially)
     return _room
