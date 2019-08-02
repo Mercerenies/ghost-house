@@ -1,0 +1,15 @@
+
+* FURNITURE
+  To determine if we can put furniture at a given position.
+
+  1. If there's already a player / entity there, obviously the answer
+     is no.
+  2. Otherwise, make a list of all adjacent (and corner-adjacent)
+     cells to the potential placement.
+  3. Traverse all of these cells in clockwise order. You should find
+     at most one contiguous segment of "unblocked" cells and at most
+     one contiguous segment of "blocked" cells. If so, yes. If not,
+     no.
+
+  Note: "blocked" is defined as being either a wall or occupied by an
+  entity of any kind. "unblocked", of course, means not blocked.
