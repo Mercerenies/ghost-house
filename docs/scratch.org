@@ -1,5 +1,5 @@
 
-* FURNITURE
+* SPECIAL FURNITURE PLACEMENT
   To determine if we can put furniture at a given position.
 
   1. If there's already a player / entity there, obviously the answer
@@ -13,3 +13,23 @@
 
   Note: "blocked" is defined as being either a wall or occupied by an
   entity of any kind. "unblocked", of course, means not blocked.
+* FURNITURE TYPES
+** SPECIAL FURNITURE
+   + [X] Twin Bed
+   + [X] King Bed
+   + [ ] Shower
+   + [ ] Bathtub
+** EDGE FURNITURE
+   + [ ] Bookshelf
+   + [ ] Desk
+   + [ ] Toilet
+   + [ ] Cabinet
+   + [ ] Wardrobe
+   + [ ] Coffee Table
+   + [ ] Dining Table
+   + [ ] Lamp
+   + [ ] Kitchen Sink
+   + [ ] Bathroom Sink
+   + [ ] Washing Machine
+   + [ ] Dryer
+   + [ ] Television
