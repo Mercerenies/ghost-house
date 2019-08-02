@@ -1,5 +1,4 @@
 extends FurniturePlacement
-class_name TwinBedPlacement
 
 const TwinBedScene = preload("res://Furniture/TwinBed/TwinBed.tscn")
 

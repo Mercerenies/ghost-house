@@ -1,5 +1,4 @@
 extends Node
-class_name Generator
 
 const HallwayData = GeneratorData.HallwayData
 const RoomData = GeneratorData.RoomData
@@ -9,6 +8,8 @@ const RoomScene = preload("res://Room/Room.tscn")
 const PlayerScene = preload("res://Player/Player.tscn")
 const HorizontalFloorTransition = preload("res://RoomTransition/HorizontalFloorTransition.tscn")
 const VerticalFloorTransition = preload("res://RoomTransition/VerticalFloorTransition.tscn")
+const TwinBedPlacement = preload("res://Furniture/TwinBed/TwinBedPlacement.gd")
+const KingBedPlacement = preload("res://Furniture/KingBed/KingBedPlacement.gd")
 
 # _grid IDs
 #   -3 - OOB
