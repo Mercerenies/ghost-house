@@ -46,9 +46,10 @@ func _add_entity(pos: Vector2, entity: Object) -> void:
 
 func _produce_grid_array() -> void:
     _grid = []
-    _flag_grid = []
     for i in range(_data['config']['width'] * _data['config']['height']):
         _grid.append(ID_EMPTY)
+    _flag_grid = []
+    for i in range(_data['config']['width'] * TOTAL_CELL_SIZE * _data['config']['height'] * TOTAL_CELL_SIZE):
         _flag_grid.append(0)
 
 func _grid_get(pos: Vector2) -> int:
@@ -63,18 +64,18 @@ func _grid_set(pos: Vector2, value: int) -> void:
     _grid[pos.y + pos.x * h] = value
 
 func _flag_grid_get(pos: Vector2, bit: int) -> bool:
-    var w = _data['config']['width']
-    var h = _data['config']['height']
+    var w = _data['config']['width'] * TOTAL_CELL_SIZE
+    var h = _data['config']['height'] * TOTAL_CELL_SIZE
     if pos.x < 0 or pos.y < 0 or pos.x >= w or pos.y >= h:
         return false
     return _flag_grid[pos.y + pos.x * h] & (1 << bit)
 
-func _flag_grid_set(pos: Vector2, bit: int, value: int) -> void:
-    var h = _data['config']['height']
+func _flag_grid_set(pos: Vector2, bit: int, value: bool) -> void:
+    var h = _data['config']['height'] * TOTAL_CELL_SIZE
     if value:
-        _grid[pos.y + pos.x * h] |= (1 << bit)
+        _flag_grid[pos.y + pos.x * h] |= (1 << bit)
     else:
-        _grid[pos.y + pos.x * h] &= ~(1 << bit)
+        _flag_grid[pos.y + pos.x * h] &= ~(1 << bit)
 
 func _can_draw_hypothetical_box(box: Rect2, hypo_box: Rect2) -> bool:
     if box.intersects(hypo_box):
@@ -380,6 +381,32 @@ func _draw_base_room(pos: Vector2) -> void:
         else:
             _room.set_tile_cell(Vector2(xpos + CELL_SIZE, ypos + CELL_SIZE), _room.Tile.DebugWall)
 
+func _mark_safe_edge_cells() -> void:
+    var w = _data['config']['width'] * TOTAL_CELL_SIZE
+    var h = _data['config']['height'] * TOTAL_CELL_SIZE
+    # Find non-corner walls
+    for x in range(w):
+        for y in range(h):
+            if _room.is_wall_at(Vector2(x, y)):
+                continue
+            var walled = (int(_room.is_wall_at(Vector2(x + 1, y))) + int(_room.is_wall_at(Vector2(x, y + 1))) +
+                          int(_room.is_wall_at(Vector2(x - 1, y))) + int(_room.is_wall_at(Vector2(x, y - 1))))
+            if walled == 1:
+                _flag_grid_set(Vector2(x, y), FLAG_EDGE_FURNITURE, true)
+    # Conditionally add back in the corners
+    for x in range(w):
+        for y in range(h):
+            if _room.is_wall_at(Vector2(x, y)) or _flag_grid_get(Vector2(x, y), FLAG_EDGE_FURNITURE):
+                continue
+            var walled = (int(_room.is_wall_at(Vector2(x + 1, y))) + int(_room.is_wall_at(Vector2(x, y + 1))) +
+                          int(_room.is_wall_at(Vector2(x - 1, y))) + int(_room.is_wall_at(Vector2(x, y - 1))))
+            var edged = (int(_flag_grid_get(Vector2(x + 1, y), FLAG_EDGE_FURNITURE)) +
+                         int(_flag_grid_get(Vector2(x - 1, y), FLAG_EDGE_FURNITURE)) +
+                         int(_flag_grid_get(Vector2(x, y + 1), FLAG_EDGE_FURNITURE)) +
+                         int(_flag_grid_get(Vector2(x, y - 1), FLAG_EDGE_FURNITURE)))
+            if walled == 2 and edged < 2:
+                _flag_grid_set(Vector2(x, y), FLAG_EDGE_FURNITURE, true)
+
 func _open_doorways() -> void:
     # Assumes all connections are of the form [a, b] where b is either
     # strictly one to the right or strictly one below a.
@@ -464,7 +491,7 @@ func _connect_rooms() -> void:
             else:
                 i += 1
     for i in range(edge_count):
-        # Add 10% of the extras back
+        # Add 5% of the extras back
         var edge = edges[i]
         if randf() < 0.05:
             _connections.append(edge)
@@ -577,6 +604,15 @@ func _try_to_place(room, placement) -> void:
     if obj != null:
         _add_entity(placement.value_to_position(chosen).position, obj)
 
+func _debug_edges() -> void:
+    var w = _data['config']['width'] * TOTAL_CELL_SIZE
+    var h = _data['config']['height'] * TOTAL_CELL_SIZE
+    for i in range(w):
+        for j in range(h):
+            if _flag_grid_get(Vector2(i, j), FLAG_EDGE_FURNITURE) and _can_put_furniture_at(Rect2(i, j, 1, 1)) and not _is_blocking_doorway(Rect2(i, j, 1, 1)):
+                 var silly = tmp.instance()
+                 _add_entity(Vector2(i, j), silly)
+
 func generate() -> Room:
     var w = _data['config']['width']
     var h = _data['config']['height']
@@ -590,8 +626,14 @@ func generate() -> Room:
     _connect_rooms()
     _determine_room_properties()
     _grid_to_room()
+    _mark_safe_edge_cells()
     _room.get_minimap().initialize(Vector2(w, h), _grid, _boxes, _connections)
     print(_grid)
+    # DEBUG CODE
+    for k in _boxes:
+        _try_to_place(_boxes[k], TwinBedPlacement.new())
+        _try_to_place(_boxes[k], KingBedPlacement.new())
+    #_debug_edges()
     #for i in range(_data['config']['width']):
     #    for j in range(_data['config']['height']):
     #        _room.set_tile_cell(Vector2(i, j), _room.Tile.DebugFloor)
@@ -608,9 +650,4 @@ func generate() -> Room:
             break
     player.connect("player_moved", _room.get_minimap(), "update_map")
     #_debug_furniture_flood()
-    # DEBUG CODE
-    #for k in _boxes:
-    #    _try_to_place(_boxes[k], TwinBedPlacement.new())
-    #    _try_to_place(_boxes[k], KingBedPlacement.new())
-    # ///// Decide how we want to define a "safe for edge furniture cell" and start marking cells with the flag.
     return _room
