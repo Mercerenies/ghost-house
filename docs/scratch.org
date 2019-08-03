@@ -30,6 +30,6 @@
    + [ ] Lamp
    + [ ] Kitchen Sink
    + [ ] Bathroom Sink
-   + [ ] Washing Machine
-   + [ ] Dryer
+   + [X] Washing Machine
+   + [X] Dryer
    + [X] Television

@@ -4,6 +4,8 @@ const EdgeBookshelfPlacement = preload("res://Furniture/Bookshelf/EdgeBookshelfP
 const EdgeLongBookshelfPlacement = preload("res://Furniture/LongBookshelf/EdgeLongBookshelfPlacement.gd")
 const EdgeTelevisionPlacement = preload("res://Furniture/Television/EdgeTelevisionPlacement.gd")
 const EdgeVacuousFurniturePlacement = preload("res://Furniture/EdgeVacuousFurniturePlacement.gd")
+const EdgeLaundryMachinePlacement = preload("res://Furniture/LaundryMachine/EdgeLaundryMachinePlacement.gd")
+const EdgeDryerPlacement = preload("res://Furniture/Dryer/EdgeDryerPlacement.gd")
 
 enum Tile {
     EmptyTile = 0, DebugFloor, DebugWall, TileFloor1, TileFloor2, LightGrayCarpet, GrayCarpet, DarkGrayCarpet, TileFloor3, WoodFloor1,
@@ -138,8 +140,12 @@ func get_edge_manager(rtype: int) -> EdgePlacementManager:
         var bks = EdgeBookshelfPlacement.new()
         var lbk = EdgeLongBookshelfPlacement.new()
         var tlv = EdgeTelevisionPlacement.new()
+        var lau = EdgeLaundryMachinePlacement.new()
+        var dry = EdgeDryerPlacement.new()
         _tmp = EdgePlacementManager.new([{ "placement": bks, "chance": 10 },
                                          { "placement": lbk, "chance": 20 },
+                                         { "placement": lau, "chance": 10 },
+                                         { "placement": dry, "chance": 10 },
                                          { "placement": tlv, "chance": 20 }])
     return _tmp
 
