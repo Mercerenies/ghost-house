@@ -1,5 +1,9 @@
 extends Node
 
+const EdgeBookshelfPlacement = preload("res://Furniture/Bookshelf/EdgeBookshelfPlacement.gd")
+const EdgeLongBookshelfPlacement = preload("res://Furniture/LongBookshelf/EdgeLongBookshelfPlacement.gd")
+const EdgeVacuousFurniturePlacement = preload("res://Furniture/EdgeVacuousFurniturePlacement.gd")
+
 enum Tile {
     EmptyTile = 0, DebugFloor, DebugWall, TileFloor1, TileFloor2, LightGrayCarpet, GrayCarpet, DarkGrayCarpet, TileFloor3, WoodFloor1,
     WoodFloor2, WoodFloor3, ConcreteFloor, StripedWall1, StripedWall2, DiamondWall, CircleWall, GradientWall1, GradientWall2, RockyWall,
@@ -123,6 +127,17 @@ func decide_floor_type(rtype: int) -> int:
 func decide_wall_type(rtype: int) -> int:
     var arr = _config[rtype]["walls"]
     return arr[randi() % len(arr)]
+
+var _tmp = null
+
+func get_edge_manager(rtype: int) -> EdgePlacementManager:
+    # DEBUG CODE (Just returns a constant right now that doesn't depend on the room type)
+    if _tmp == null:
+        var bookshelf1 = EdgeBookshelfPlacement.new()
+        var bookshelf2 = EdgeLongBookshelfPlacement.new()
+        var vacuous = EdgeVacuousFurniturePlacement.new()
+        _tmp = EdgePlacementManager.new([{ "placement": bookshelf1, "chance": 0.33 }, { "placement": bookshelf2, "chance": 0.66 }])
+    return _tmp
 
 func _ready():
     pass

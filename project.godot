@@ -14,6 +14,16 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://DialogueEntity/DialogueEntity.gd"
 }, {
+"base": "Reference",
+"class": "EdgeFurniturePlacement",
+"language": "GDScript",
+"path": "res://Furniture/EdgeFurniturePlacement.gd"
+}, {
+"base": "Reference",
+"class": "EdgePlacementManager",
+"language": "GDScript",
+"path": "res://Furniture/EdgePlacementManager.gd"
+}, {
 "base": "Node2D",
 "class": "Entity",
 "language": "GDScript",
@@ -56,6 +66,8 @@ _global_script_classes=[ {
 } ]
 _global_script_class_icons={
 "DialogueEntity": "",
+"EdgeFurniturePlacement": "",
+"EdgePlacementManager": "",
 "Entity": "",
 "Furniture": "",
 "FurniturePlacement": "",

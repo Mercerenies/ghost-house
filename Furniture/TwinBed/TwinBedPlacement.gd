@@ -1,6 +1,6 @@
 extends FurniturePlacement
 
-const TwinBedScene = preload("res://Furniture/TwinBed/TwinBed.tscn")
+const TwinBedScene = preload("TwinBed.tscn")
 
 func enumerate(room) -> Array:
     if not (room is GeneratorData.RoomData):

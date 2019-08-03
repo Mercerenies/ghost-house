@@ -20,7 +20,7 @@
    + [ ] Shower
    + [ ] Bathtub
 ** EDGE FURNITURE
-   + [ ] Bookshelf
+   + [X] Bookshelf
    + [ ] Desk
    + [ ] Toilet
    + [ ] Cabinet

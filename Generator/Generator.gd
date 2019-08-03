@@ -8,8 +8,6 @@ const RoomScene = preload("res://Room/Room.tscn")
 const PlayerScene = preload("res://Player/Player.tscn")
 const HorizontalFloorTransition = preload("res://RoomTransition/HorizontalFloorTransition.tscn")
 const VerticalFloorTransition = preload("res://RoomTransition/VerticalFloorTransition.tscn")
-const TwinBedPlacement = preload("res://Furniture/TwinBed/TwinBedPlacement.gd")
-const KingBedPlacement = preload("res://Furniture/KingBed/KingBedPlacement.gd")
 
 # _grid IDs
 #   -3 - OOB
@@ -580,6 +578,11 @@ func _is_blocking_doorway(rect: Rect2) -> bool:
     return false
 
 const tmp = preload("res://Furniture/DebugLittleGreenBox/DebugLittleGreenBox.tscn")
+const tmp_TwinBedPlacement = preload("res://Furniture/TwinBed/TwinBedPlacement.gd")
+const tmp_KingBedPlacement = preload("res://Furniture/KingBed/KingBedPlacement.gd")
+const tmp_EdgePlacementManager = preload("res://Furniture/EdgePlacementManager.gd")
+const tmp_EdgeBookshelfPlacement = preload("res://Furniture/Bookshelf/EdgeBookshelfPlacement.gd")
+const tmp_EdgeLongBookshelfPlacement = preload("res://Furniture/LongBookshelf/EdgeLongBookshelfPlacement.gd")
 
 # func _debug_furniture_flood() -> void:
 #     var w = _data['config']['width']
@@ -614,6 +617,40 @@ func _debug_edges() -> void:
                  var silly = tmp.instance()
                  _add_entity(Vector2(i, j), silly)
 
+func _fill_edges() -> void:
+    var w = _data['config']['width'] * TOTAL_CELL_SIZE
+    var h = _data['config']['height'] * TOTAL_CELL_SIZE
+    for x in range(w):
+        for y in range(h):
+            var room = _boxes[_grid_get(Vector2(floor(x / TOTAL_CELL_SIZE), floor(y / TOTAL_CELL_SIZE)))]
+            var mngr = RoomTypes.get_edge_manager(room.type if room is RoomData else RoomTypes.RT.Hallway)
+            if _flag_grid_get(Vector2(x, y), FLAG_EDGE_FURNITURE):
+                var direction = -1
+                if not is_blocked(Vector2(x + 1, y)) and not _flag_grid_get(Vector2(x + 1, y), FLAG_EDGE_FURNITURE):
+                    direction = 0
+                elif not is_blocked(Vector2(x, y + 1)) and not _flag_grid_get(Vector2(x, y + 1), FLAG_EDGE_FURNITURE):
+                    direction = 1
+                elif not is_blocked(Vector2(x - 1, y)) and not _flag_grid_get(Vector2(x - 1, y), FLAG_EDGE_FURNITURE):
+                    direction = 2
+                elif not is_blocked(Vector2(x - 1, y)) and not _flag_grid_get(Vector2(x, y - 1), FLAG_EDGE_FURNITURE):
+                    direction = 3
+                else:
+                    continue
+                var max_width = 1
+                if direction % 2 == 0:
+                    # Vertical expand
+                    while _flag_grid_get(Vector2(x, y + max_width), FLAG_EDGE_FURNITURE):
+                        max_width += 1
+                else:
+                    # Horizontal expand
+                    while _flag_grid_get(Vector2(x + max_width, y), FLAG_EDGE_FURNITURE):
+                        max_width += 1
+                var obj = mngr.generate_at_position(Vector2(x, y), direction, max_width)
+                if obj != null:
+                    var rect = Rect2(Vector2(x, y), obj.dims)
+                    if _can_put_furniture_at(rect) and not _is_blocking_doorway(rect):
+                        _add_entity(Vector2(x, y), obj)
+
 func generate() -> Room:
     var w = _data['config']['width']
     var h = _data['config']['height']
@@ -632,8 +669,9 @@ func generate() -> Room:
     print(_grid)
     # DEBUG CODE
     for k in _boxes:
-        _try_to_place(_boxes[k], TwinBedPlacement.new())
-        _try_to_place(_boxes[k], KingBedPlacement.new())
+        _try_to_place(_boxes[k], tmp_TwinBedPlacement.new())
+        _try_to_place(_boxes[k], tmp_KingBedPlacement.new())
+    _fill_edges()
     #_debug_edges()
     #for i in range(_data['config']['width']):
     #    for j in range(_data['config']['height']):
