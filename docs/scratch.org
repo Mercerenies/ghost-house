@@ -28,7 +28,7 @@
    + [ ] Wardrobe
    + [ ] Coffee Table
    + [ ] Lamp
-   + [ ] Kitchen Sink
+   + [X] Kitchen Sink
    + [ ] Bathroom Sink
    + [X] Washing Machine
    + [X] Dryer

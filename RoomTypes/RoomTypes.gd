@@ -14,6 +14,8 @@ const EdgeToiletPlacement = preload("res://Furniture/Toilet/EdgeToiletPlacement.
 const EdgeLongCabinetPlacement = preload("res://Furniture/LongCabinet/EdgeLongCabinetPlacement.gd")
 const EdgeCabinetPlacement = preload("res://Furniture/Cabinet/EdgeCabinetPlacement.gd")
 const EdgeDresserPlacement = preload("res://Furniture/Dresser/EdgeDresserPlacement.gd")
+const EdgeKitchenCounterPlacement = preload("res://Furniture/KitchenCounter/EdgeKitchenCounterPlacement.gd")
+const EdgeKitchenSinkPlacement = preload("res://Furniture/KitchenSink/EdgeKitchenSinkPlacement.gd")
 
 enum Tile {
     EmptyTile = 0, DebugFloor, DebugWall, TileFloor1, TileFloor2, LightGrayCarpet, GrayCarpet, DarkGrayCarpet, TileFloor3, WoodFloor1,
@@ -158,6 +160,8 @@ func get_edge_manager(rtype: int) -> EdgePlacementManager:
         var dre = EdgeDresserPlacement.new()
         var lca = EdgeLongCabinetPlacement.new()
         var cab = EdgeCabinetPlacement.new()
+        var kco = EdgeKitchenCounterPlacement.new()
+        var ksi = EdgeKitchenSinkPlacement.new()
         _tmp = EdgePlacementManager.new([{ "placement": bks, "chance": 10 },
                                          { "placement": lbk, "chance": 20 },
                                          { "placement": lau, "chance": 10 },
@@ -170,7 +174,9 @@ func get_edge_manager(rtype: int) -> EdgePlacementManager:
                                          { "placement": toi, "chance": 10 },
                                          { "placement": dre, "chance": 15 },
                                          { "placement": lca, "chance": 15 },
-                                         { "placement": cab, "chance": 15 }])
+                                         { "placement": cab, "chance": 15 },
+                                         { "placement": kco, "chance": 15 },
+                                         { "placement": ksi, "chance": 15 }])
     return _tmp
 
 func _ready():
