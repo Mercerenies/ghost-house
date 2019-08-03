@@ -626,13 +626,13 @@ func _fill_edges() -> void:
             var mngr = RoomTypes.get_edge_manager(room.type if room is RoomData else RoomTypes.RT.Hallway)
             if _flag_grid_get(Vector2(x, y), FLAG_EDGE_FURNITURE):
                 var direction = -1
-                if not is_blocked(Vector2(x + 1, y)) and not _flag_grid_get(Vector2(x + 1, y), FLAG_EDGE_FURNITURE):
+                if _room.is_wall_at(Vector2(x - 1, y)) and not is_blocked(Vector2(x + 1, y)) and not _flag_grid_get(Vector2(x + 1, y), FLAG_EDGE_FURNITURE):
                     direction = 0
-                elif not is_blocked(Vector2(x, y + 1)) and not _flag_grid_get(Vector2(x, y + 1), FLAG_EDGE_FURNITURE):
+                elif _room.is_wall_at(Vector2(x, y - 1)) and not is_blocked(Vector2(x, y + 1)) and not _flag_grid_get(Vector2(x, y + 1), FLAG_EDGE_FURNITURE):
                     direction = 1
-                elif not is_blocked(Vector2(x - 1, y)) and not _flag_grid_get(Vector2(x - 1, y), FLAG_EDGE_FURNITURE):
+                elif _room.is_wall_at(Vector2(x + 1, y)) and not is_blocked(Vector2(x - 1, y)) and not _flag_grid_get(Vector2(x - 1, y), FLAG_EDGE_FURNITURE):
                     direction = 2
-                elif not is_blocked(Vector2(x - 1, y)) and not _flag_grid_get(Vector2(x, y - 1), FLAG_EDGE_FURNITURE):
+                elif _room.is_wall_at(Vector2(x, y + 1)) and not is_blocked(Vector2(x, y - 1)) and not _flag_grid_get(Vector2(x, y - 1), FLAG_EDGE_FURNITURE):
                     direction = 3
                 else:
                     continue
