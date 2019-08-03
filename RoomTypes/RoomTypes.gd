@@ -11,6 +11,9 @@ const EdgeReclinerPlacement = preload("res://Furniture/Recliner/EdgeReclinerPlac
 const EdgeDiningChairPlacement = preload("res://Furniture/DiningChair/EdgeDiningChairPlacement.gd")
 const EdgeOfficeChairPlacement = preload("res://Furniture/OfficeChair/EdgeOfficeChairPlacement.gd")
 const EdgeToiletPlacement = preload("res://Furniture/Toilet/EdgeToiletPlacement.gd")
+const EdgeLongCabinetPlacement = preload("res://Furniture/LongCabinet/EdgeLongCabinetPlacement.gd")
+const EdgeCabinetPlacement = preload("res://Furniture/Cabinet/EdgeCabinetPlacement.gd")
+const EdgeDresserPlacement = preload("res://Furniture/Dresser/EdgeDresserPlacement.gd")
 
 enum Tile {
     EmptyTile = 0, DebugFloor, DebugWall, TileFloor1, TileFloor2, LightGrayCarpet, GrayCarpet, DarkGrayCarpet, TileFloor3, WoodFloor1,
@@ -152,6 +155,9 @@ func get_edge_manager(rtype: int) -> EdgePlacementManager:
         var dnc = EdgeDiningChairPlacement.new()
         var ofc = EdgeOfficeChairPlacement.new()
         var toi = EdgeToiletPlacement.new()
+        var dre = EdgeDresserPlacement.new()
+        var lca = EdgeLongCabinetPlacement.new()
+        var cab = EdgeCabinetPlacement.new()
         _tmp = EdgePlacementManager.new([{ "placement": bks, "chance": 10 },
                                          { "placement": lbk, "chance": 20 },
                                          { "placement": lau, "chance": 10 },
@@ -161,7 +167,10 @@ func get_edge_manager(rtype: int) -> EdgePlacementManager:
                                          { "placement": rec, "chance": 10 },
                                          { "placement": dnc, "chance": 10 },
                                          { "placement": ofc, "chance": 10 },
-                                         { "placement": toi, "chance": 10 }])
+                                         { "placement": toi, "chance": 10 },
+                                         { "placement": dre, "chance": 15 },
+                                         { "placement": lca, "chance": 15 },
+                                         { "placement": cab, "chance": 15 }])
     return _tmp
 
 func _ready():

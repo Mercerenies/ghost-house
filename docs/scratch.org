@@ -24,7 +24,7 @@
    + [X] Bookshelf
    + [ ] Desk
    + [X] Toilet
-   + [ ] Cabinet
+   + [X] Cabinet
    + [ ] Wardrobe
    + [ ] Coffee Table
    + [ ] Lamp
@@ -37,3 +37,4 @@
    + [X] Sofa
    + [X] Dining Chair
    + [X] Office Chair
+   + [X] Dresser
