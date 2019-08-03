@@ -9,12 +9,12 @@ func _init(placements: Array) -> void:
     _placements = placements
 
 func generate_at_position(pos: Vector2, dir: int, max_width: int):
-    var count = 0.0
+    var count = 0
     for pl in _placements:
         if pl["placement"].get_width() > max_width:
             continue
         count += pl["chance"]
-    var choice = fmod(randf(), count)
+    var choice = randi() % count
     for pl in _placements:
         if pl["placement"].get_width() > max_width:
             continue

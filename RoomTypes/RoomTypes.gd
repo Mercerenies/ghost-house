@@ -2,6 +2,7 @@ extends Node
 
 const EdgeBookshelfPlacement = preload("res://Furniture/Bookshelf/EdgeBookshelfPlacement.gd")
 const EdgeLongBookshelfPlacement = preload("res://Furniture/LongBookshelf/EdgeLongBookshelfPlacement.gd")
+const EdgeTelevisionPlacement = preload("res://Furniture/Television/EdgeTelevisionPlacement.gd")
 const EdgeVacuousFurniturePlacement = preload("res://Furniture/EdgeVacuousFurniturePlacement.gd")
 
 enum Tile {
@@ -133,10 +134,13 @@ var _tmp = null
 func get_edge_manager(rtype: int) -> EdgePlacementManager:
     # DEBUG CODE (Just returns a constant right now that doesn't depend on the room type)
     if _tmp == null:
-        var bookshelf1 = EdgeBookshelfPlacement.new()
-        var bookshelf2 = EdgeLongBookshelfPlacement.new()
-        var vacuous = EdgeVacuousFurniturePlacement.new()
-        _tmp = EdgePlacementManager.new([{ "placement": bookshelf1, "chance": 0.33 }, { "placement": bookshelf2, "chance": 0.66 }])
+        var vac = EdgeVacuousFurniturePlacement.new()
+        var bks = EdgeBookshelfPlacement.new()
+        var lbk = EdgeLongBookshelfPlacement.new()
+        var tlv = EdgeTelevisionPlacement.new()
+        _tmp = EdgePlacementManager.new([{ "placement": bks, "chance": 10 },
+                                         { "placement": lbk, "chance": 20 },
+                                         { "placement": tlv, "chance": 20 }])
     return _tmp
 
 func _ready():

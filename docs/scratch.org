@@ -19,6 +19,7 @@
    + [X] King Bed
    + [ ] Shower
    + [ ] Bathtub
+   + [ ] Dining Table
 ** EDGE FURNITURE
    + [X] Bookshelf
    + [ ] Desk
@@ -26,10 +27,9 @@
    + [ ] Cabinet
    + [ ] Wardrobe
    + [ ] Coffee Table
-   + [ ] Dining Table
    + [ ] Lamp
    + [ ] Kitchen Sink
    + [ ] Bathroom Sink
    + [ ] Washing Machine
    + [ ] Dryer
-   + [ ] Television
+   + [X] Television
