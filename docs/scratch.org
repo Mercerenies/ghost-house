@@ -29,7 +29,7 @@
    + [ ] Coffee Table
    + [ ] Lamp
    + [X] Kitchen Sink
-   + [ ] Bathroom Sink
+   + [X] Bathroom Sink
    + [X] Washing Machine
    + [X] Dryer
    + [X] Television

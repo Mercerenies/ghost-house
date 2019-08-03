@@ -17,6 +17,8 @@ const EdgeDresserPlacement = preload("res://Furniture/Dresser/EdgeDresserPlaceme
 const EdgeKitchenCounterPlacement = preload("res://Furniture/KitchenCounter/EdgeKitchenCounterPlacement.gd")
 const EdgeKitchenSinkPlacement = preload("res://Furniture/KitchenSink/EdgeKitchenSinkPlacement.gd")
 const EdgeWasherDryerPlacement = preload("res://Furniture/LaundryMachine/EdgeWasherDryerPlacement.gd")
+const EdgeBathroomCounterPlacement = preload("res://Furniture/BathroomCounter/EdgeBathroomCounterPlacement.gd")
+const EdgeBathroomSinkPlacement = preload("res://Furniture/BathroomSink/EdgeBathroomSinkPlacement.gd")
 
 enum Tile {
     EmptyTile = 0, DebugFloor, DebugWall, TileFloor1, TileFloor2, LightGrayCarpet, GrayCarpet, DarkGrayCarpet, TileFloor3, WoodFloor1,
@@ -107,7 +109,9 @@ var _config: Dictionary = {
         "edges": [
             EdgePlacementManager.new([
                 {"placement": EdgeVacuousFurniturePlacement.new(), "chance": 100 },
-                {"placement": EdgeToiletPlacement.new(), "chance": 10 }
+                {"placement": EdgeToiletPlacement.new(), "chance": 10 },
+                {"placement": EdgeBathroomCounterPlacement.new(), "chance": 10 },
+                {"placement": EdgeBathroomSinkPlacement.new(), "chance": 10 }
             ])
         ]
     },
@@ -117,7 +121,9 @@ var _config: Dictionary = {
         "edges": [
             EdgePlacementManager.new([
                 {"placement": EdgeVacuousFurniturePlacement.new(), "chance": 50 },
-                {"placement": EdgeToiletPlacement.new(), "chance": 10 }
+                {"placement": EdgeToiletPlacement.new(), "chance": 10 },
+                {"placement": EdgeBathroomCounterPlacement.new(), "chance": 10 },
+                {"placement": EdgeBathroomSinkPlacement.new(), "chance": 10 }
             ])
         ]
     },
