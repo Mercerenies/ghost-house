@@ -38,3 +38,4 @@
    + [X] Dining Chair
    + [X] Office Chair
    + [X] Dresser
+   + [ ] Mirror

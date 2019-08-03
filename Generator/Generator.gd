@@ -501,9 +501,11 @@ func _determine_room_properties() -> void:
             v.type = RoomTypes.decide_room_type(v.box.size)
             v.floortype = RoomTypes.decide_floor_type(v.type)
             v.walltype = RoomTypes.decide_wall_type(v.type)
+            v.edgetype = RoomTypes.decide_edge_manager(v.type)
         else:
             v.floortype = RoomTypes.decide_floor_type(RoomTypes.RT.Hallway)
             v.walltype = RoomTypes.decide_wall_type(RoomTypes.RT.Hallway)
+            v.edgetype = RoomTypes.decide_edge_manager(RoomTypes.RT.Hallway)
 
 func _grid_to_room() -> void:
     var w = _data['config']['width']
@@ -623,7 +625,7 @@ func _fill_edges() -> void:
     for x in range(w):
         for y in range(h):
             var room = _boxes[_grid_get(Vector2(floor(x / TOTAL_CELL_SIZE), floor(y / TOTAL_CELL_SIZE)))]
-            var mngr = RoomTypes.get_edge_manager(room.type if room is RoomData else RoomTypes.RT.Hallway)
+            var mngr = room.edgetype
             if _flag_grid_get(Vector2(x, y), FLAG_EDGE_FURNITURE):
                 var direction = -1
                 if _room.is_wall_at(Vector2(x - 1, y)) and not is_blocked(Vector2(x + 1, y)) and not _flag_grid_get(Vector2(x + 1, y), FLAG_EDGE_FURNITURE):
@@ -645,11 +647,15 @@ func _fill_edges() -> void:
                     # Horizontal expand
                     while _flag_grid_get(Vector2(x + max_width, y), FLAG_EDGE_FURNITURE):
                         max_width += 1
-                var obj = mngr.generate_at_position(Vector2(x, y), direction, max_width)
-                if obj != null:
-                    var rect = Rect2(Vector2(x, y), obj.dims)
-                    if _can_put_furniture_at(rect) and not _is_blocking_doorway(rect):
-                        _add_entity(Vector2(x, y), obj)
+                var arr = mngr.generate_at_position(Vector2(x, y), direction, max_width)
+                if not (arr is Array):
+                    arr = [arr]
+                for obj in arr:
+                    if obj != null:
+                        var pos = Vector2(floor(obj.position.x / 32), floor(obj.position.y / 32))
+                        var rect = Rect2(pos, obj.dims)
+                        if _can_put_furniture_at(rect) and not _is_blocking_doorway(rect):
+                            _add_entity(pos, obj)
 
 func generate() -> Room:
     var w = _data['config']['width']
@@ -668,9 +674,9 @@ func generate() -> Room:
     _room.get_minimap().initialize(Vector2(w, h), _grid, _boxes, _connections)
     print(_grid)
     # DEBUG CODE
-    for k in _boxes:
-        _try_to_place(_boxes[k], tmp_TwinBedPlacement.new())
-        _try_to_place(_boxes[k], tmp_KingBedPlacement.new())
+    #for k in _boxes:
+    #    _try_to_place(_boxes[k], tmp_TwinBedPlacement.new())
+    #    _try_to_place(_boxes[k], tmp_KingBedPlacement.new())
     _fill_edges()
     #_debug_edges()
     #for i in range(_data['config']['width']):

@@ -16,6 +16,7 @@ const EdgeCabinetPlacement = preload("res://Furniture/Cabinet/EdgeCabinetPlaceme
 const EdgeDresserPlacement = preload("res://Furniture/Dresser/EdgeDresserPlacement.gd")
 const EdgeKitchenCounterPlacement = preload("res://Furniture/KitchenCounter/EdgeKitchenCounterPlacement.gd")
 const EdgeKitchenSinkPlacement = preload("res://Furniture/KitchenSink/EdgeKitchenSinkPlacement.gd")
+const EdgeWasherDryerPlacement = preload("res://Furniture/LaundryMachine/EdgeWasherDryerPlacement.gd")
 
 enum Tile {
     EmptyTile = 0, DebugFloor, DebugWall, TileFloor1, TileFloor2, LightGrayCarpet, GrayCarpet, DarkGrayCarpet, TileFloor3, WoodFloor1,
@@ -55,75 +56,263 @@ var _roomtypes: Dictionary = {
 var _config: Dictionary = {
     RT.Hallway: {
         "floors": [Tile.LightGrayCarpet, Tile.GrayCarpet, Tile.DarkGrayCarpet, Tile.WoodFloor1, Tile.WoodFloor2, Tile.WoodFloor3],
-        "walls": [Tile.StripedWall1, Tile.StripedWall2, Tile.ColumnedWall1, Tile.ColumnedWall2, Tile.ColumnedWall3]
+        "walls": [Tile.StripedWall1, Tile.StripedWall2, Tile.ColumnedWall1, Tile.ColumnedWall2, Tile.ColumnedWall3],
+        "edges": [
+            EdgePlacementManager.new([
+                {"placement": EdgeVacuousFurniturePlacement.new(), "chance": 30 },
+                {"placement": EdgeLongBookshelfPlacement.new(), "chance": 10 },
+                {"placement": EdgeBookshelfPlacement.new(), "chance": 10 }
+            ])
+        ]
     },
     RT.Bedroom: {
         "floors": [Tile.LightGrayCarpet, Tile.GrayCarpet, Tile.DarkGrayCarpet, Tile.WoodFloor1, Tile.WoodFloor2, Tile.WoodFloor3],
-        "walls": [Tile.StripedWall1, Tile.StripedWall2, Tile.ColumnedWall1, Tile.ColumnedWall2, Tile.ColumnedWall3]
+        "walls": [Tile.StripedWall1, Tile.StripedWall2, Tile.ColumnedWall1, Tile.ColumnedWall2, Tile.ColumnedWall3],
+        "edges": [
+            EdgePlacementManager.new([
+                {"placement": EdgeVacuousFurniturePlacement.new(), "chance": 20 },
+                {"placement": EdgeLongBookshelfPlacement.new(), "chance": 10 },
+                {"placement": EdgeBookshelfPlacement.new(), "chance": 10 },
+                {"placement": EdgeTelevisionPlacement.new(), "chance": 10 },
+                {"placement": EdgeSofaPlacement.new(), "chance": 20 },
+                {"placement": EdgeReclinerPlacement.new(), "chance": 30 },
+                {"placement": EdgeOfficeChairPlacement.new(), "chance": 10 },
+                {"placement": EdgeCabinetPlacement.new(), "chance": 20 },
+                {"placement": EdgeLongCabinetPlacement.new(), "chance": 20 },
+                {"placement": EdgeDresserPlacement.new(), "chance": 20 }
+            ])
+        ]
     },
     RT.MasterBedroom: {
         "floors": [Tile.LightGrayCarpet, Tile.GrayCarpet, Tile.DarkGrayCarpet, Tile.WoodFloor1, Tile.WoodFloor2, Tile.WoodFloor3],
-        "walls": [Tile.StripedWall1, Tile.StripedWall2, Tile.RedRegalWall, Tile.OrangeRegalWall]
+        "walls": [Tile.StripedWall1, Tile.StripedWall2, Tile.RedRegalWall, Tile.OrangeRegalWall],
+        "edges": [
+            EdgePlacementManager.new([
+                {"placement": EdgeVacuousFurniturePlacement.new(), "chance": 20 },
+                {"placement": EdgeLongBookshelfPlacement.new(), "chance": 15 },
+                {"placement": EdgeBookshelfPlacement.new(), "chance": 10 },
+                {"placement": EdgeTelevisionPlacement.new(), "chance": 10 },
+                {"placement": EdgeSofaPlacement.new(), "chance": 30 },
+                {"placement": EdgeReclinerPlacement.new(), "chance": 30 },
+                {"placement": EdgeOfficeChairPlacement.new(), "chance": 5 },
+                {"placement": EdgeCabinetPlacement.new(), "chance": 10 },
+                {"placement": EdgeLongCabinetPlacement.new(), "chance": 20 },
+                {"placement": EdgeDresserPlacement.new(), "chance": 20 }
+            ])
+        ]
     },
     RT.Bathroom: {
         "floors": [Tile.TileFloor1, Tile.TileFloor3],
-        "walls": [Tile.DiamondWall, Tile.CircleWall]
+        "walls": [Tile.DiamondWall, Tile.CircleWall],
+        "edges": [
+            EdgePlacementManager.new([
+                {"placement": EdgeVacuousFurniturePlacement.new(), "chance": 100 },
+                {"placement": EdgeToiletPlacement.new(), "chance": 10 }
+            ])
+        ]
     },
     RT.Washroom: {
         "floors": [Tile.TileFloor1, Tile.TileFloor3],
-        "walls": [Tile.DiamondWall, Tile.CircleWall]
+        "walls": [Tile.DiamondWall, Tile.CircleWall],
+        "edges": [
+            EdgePlacementManager.new([
+                {"placement": EdgeVacuousFurniturePlacement.new(), "chance": 50 },
+                {"placement": EdgeToiletPlacement.new(), "chance": 10 }
+            ])
+        ]
     },
     RT.WardrobeRoom: {
         "floors": [Tile.LightGrayCarpet, Tile.GrayCarpet, Tile.DarkGrayCarpet, Tile.WoodFloor1, Tile.WoodFloor2, Tile.WoodFloor3],
-        "walls": [Tile.StripedWall1, Tile.StripedWall2, Tile.ColumnedWall1, Tile.ColumnedWall2, Tile.ColumnedWall3]
+        "walls": [Tile.StripedWall1, Tile.StripedWall2, Tile.ColumnedWall1, Tile.ColumnedWall2, Tile.ColumnedWall3],
+        "edges": [
+            EdgePlacementManager.new([
+                {"placement": EdgeVacuousFurniturePlacement.new(), "chance": 20 },
+                {"placement": EdgeSofaPlacement.new(), "chance": 10 },
+                {"placement": EdgeReclinerPlacement.new(), "chance": 10 },
+                {"placement": EdgeDiningChairPlacement.new(), "chance": 20 },
+                {"placement": EdgeCabinetPlacement.new(), "chance": 40 },
+                {"placement": EdgeLongCabinetPlacement.new(), "chance": 40 },
+                {"placement": EdgeDresserPlacement.new(), "chance": 40 }
+            ])
+        ]
     },
     RT.Closet: {
         "floors": [Tile.LightGrayCarpet, Tile.GrayCarpet, Tile.DarkGrayCarpet, Tile.WoodFloor1, Tile.WoodFloor2, Tile.WoodFloor3],
-        "walls": [Tile.StripedWall1, Tile.StripedWall2, Tile.GradientWall1, Tile.GradientWall2, Tile.PipeWall]
+        "walls": [Tile.StripedWall1, Tile.StripedWall2, Tile.GradientWall1, Tile.GradientWall2, Tile.PipeWall],
+        "edges": [
+            EdgePlacementManager.new([
+                {"placement": EdgeVacuousFurniturePlacement.new(), "chance": 5 },
+                {"placement": EdgeLongBookshelfPlacement.new(), "chance": 5 },
+                {"placement": EdgeBookshelfPlacement.new(), "chance": 5 },
+                {"placement": EdgeDiningChairPlacement.new(), "chance": 10 },
+                {"placement": EdgeCabinetPlacement.new(), "chance": 20 },
+                {"placement": EdgeLongCabinetPlacement.new(), "chance": 20 },
+                {"placement": EdgeDresserPlacement.new(), "chance": 20 }
+            ])
+        ]
     },
     RT.LongCloset: {
         "floors": [Tile.LightGrayCarpet, Tile.GrayCarpet, Tile.DarkGrayCarpet, Tile.WoodFloor1, Tile.WoodFloor2, Tile.WoodFloor3],
-        "walls": [Tile.StripedWall1, Tile.StripedWall2, Tile.GradientWall1, Tile.GradientWall2, Tile.PipeWall]
+        "walls": [Tile.StripedWall1, Tile.StripedWall2, Tile.GradientWall1, Tile.GradientWall2, Tile.PipeWall],
+        "edges": [
+            EdgePlacementManager.new([
+                {"placement": EdgeVacuousFurniturePlacement.new(), "chance": 5 },
+                {"placement": EdgeLongBookshelfPlacement.new(), "chance": 5 },
+                {"placement": EdgeBookshelfPlacement.new(), "chance": 5 },
+                {"placement": EdgeDiningChairPlacement.new(), "chance": 10 },
+                {"placement": EdgeCabinetPlacement.new(), "chance": 30 },
+                {"placement": EdgeLongCabinetPlacement.new(), "chance": 30 },
+                {"placement": EdgeDresserPlacement.new(), "chance": 30 }
+            ])
+        ]
     },
     RT.Theater: {
         "floors": [Tile.LightGrayCarpet, Tile.GrayCarpet, Tile.DarkGrayCarpet, Tile.WoodFloor1, Tile.WoodFloor2, Tile.WoodFloor3],
-        "walls": [Tile.RedRegalWall, Tile.OrangeRegalWall]
+        "walls": [Tile.RedRegalWall, Tile.OrangeRegalWall],
+        "edges": [
+            EdgePlacementManager.new([
+                {"placement": EdgeVacuousFurniturePlacement.new(), "chance": 30 },
+                {"placement": EdgeLongBookshelfPlacement.new(), "chance": 20 },
+                {"placement": EdgeBookshelfPlacement.new(), "chance": 20 },
+                {"placement": EdgeTelevisionPlacement.new(), "chance": 15 },
+                {"placement": EdgeSofaPlacement.new(), "chance": 40 },
+                {"placement": EdgeReclinerPlacement.new(), "chance": 40 }
+            ])
+        ]
     },
     RT.Foyer: {
         "floors": [Tile.WoodFloor1, Tile.WoodFloor2, Tile.WoodFloor3],
-        "walls": [Tile.RedRegalWall, Tile.OrangeRegalWall]
+        "walls": [Tile.RedRegalWall, Tile.OrangeRegalWall],
+        "edges": [
+            EdgePlacementManager.new([
+                {"placement": EdgeVacuousFurniturePlacement.new(), "chance": 40 },
+                {"placement": EdgeLongBookshelfPlacement.new(), "chance": 20 },
+                {"placement": EdgeBookshelfPlacement.new(), "chance": 20 },
+                {"placement": EdgeTelevisionPlacement.new(), "chance": 20 },
+                {"placement": EdgeSofaPlacement.new(), "chance": 15 },
+                {"placement": EdgeReclinerPlacement.new(), "chance": 15 }
+            ])
+        ]
     },
     RT.Study: {
         "floors": [Tile.WoodFloor1, Tile.WoodFloor2, Tile.WoodFloor3],
-        "walls": [Tile.ColumnedWall1, Tile.ColumnedWall2, Tile.ColumnedWall3]
+        "walls": [Tile.ColumnedWall1, Tile.ColumnedWall2, Tile.ColumnedWall3],
+        "edges": [
+            EdgePlacementManager.new([
+                {"placement": EdgeVacuousFurniturePlacement.new(), "chance": 10 },
+                {"placement": EdgeLongBookshelfPlacement.new(), "chance": 50 },
+                {"placement": EdgeBookshelfPlacement.new(), "chance": 50 },
+                {"placement": EdgeTelevisionPlacement.new(), "chance": 10 },
+                {"placement": EdgeSofaPlacement.new(), "chance": 10 },
+                {"placement": EdgeReclinerPlacement.new(), "chance": 25 },
+                {"placement": EdgeDiningChairPlacement.new(), "chance": 20 },
+                {"placement": EdgeOfficeChairPlacement.new(), "chance": 10 },
+                {"placement": EdgeCabinetPlacement.new(), "chance": 15 },
+                {"placement": EdgeLongCabinetPlacement.new(), "chance": 15 },
+                {"placement": EdgeDresserPlacement.new(), "chance": 5 }
+            ])
+        ]
     },
     RT.SittingRoom: {
         "floors": [Tile.LightGrayCarpet, Tile.GrayCarpet, Tile.DarkGrayCarpet, Tile.WoodFloor1, Tile.WoodFloor2, Tile.WoodFloor3],
-        "walls": [Tile.StripedWall1, Tile.StripedWall2]
+        "walls": [Tile.StripedWall1, Tile.StripedWall2],
+        "edges": [
+            EdgePlacementManager.new([
+                {"placement": EdgeVacuousFurniturePlacement.new(), "chance": 10 },
+                {"placement": EdgeLongBookshelfPlacement.new(), "chance": 20 },
+                {"placement": EdgeBookshelfPlacement.new(), "chance": 10 },
+                {"placement": EdgeTelevisionPlacement.new(), "chance": 5 },
+                {"placement": EdgeSofaPlacement.new(), "chance": 50 },
+                {"placement": EdgeReclinerPlacement.new(), "chance": 50 },
+                {"placement": EdgeDiningChairPlacement.new(), "chance": 10 },
+                {"placement": EdgeOfficeChairPlacement.new(), "chance": 10 },
+                {"placement": EdgeCabinetPlacement.new(), "chance": 10 },
+                {"placement": EdgeLongCabinetPlacement.new(), "chance": 20 },
+                {"placement": EdgeDresserPlacement.new(), "chance": 15 }
+            ])
+        ]
     },
     RT.LaundryRoom: {
         "floors": [Tile.TileFloor1, Tile.TileFloor3, Tile.WoodFloor1, Tile.WoodFloor2, Tile.WoodFloor3, Tile.ConcreteFloor],
-        "walls": [Tile.StripedWall1, Tile.StripedWall2, Tile.GradientWall1, Tile.GradientWall2, Tile.RockyWall, Tile.PipeWall]
+        "walls": [Tile.StripedWall1, Tile.StripedWall2, Tile.GradientWall1, Tile.GradientWall2, Tile.RockyWall, Tile.PipeWall],
+        "edges": [
+            EdgePlacementManager.new([
+                {"placement": EdgeVacuousFurniturePlacement.new(), "chance": 20 },
+                {"placement": EdgeLaundryMachinePlacement.new(), "chance": 5 },
+                {"placement": EdgeDryerPlacement.new(), "chance": 5 },
+                {"placement": EdgeWasherDryerPlacement.new(), "chance": 30 },
+                {"placement": EdgeCabinetPlacement.new(), "chance": 10 },
+                {"placement": EdgeLongCabinetPlacement.new(), "chance": 10 },
+                {"placement": EdgeDresserPlacement.new(), "chance": 10 }
+            ])
+        ]
     },
     RT.Kitchen: {
         "floors": [Tile.TileFloor1, Tile.TileFloor3],
-        "walls": [Tile.DiamondWall, Tile.CircleWall]
+        "walls": [Tile.DiamondWall, Tile.CircleWall],
+        "edges": [
+            EdgePlacementManager.new([
+                {"placement": EdgeVacuousFurniturePlacement.new(), "chance": 50 },
+                {"placement": EdgeKitchenCounterPlacement.new(), "chance": 10 },
+                {"placement": EdgeKitchenSinkPlacement.new(), "chance": 10 }
+            ])
+        ]
     },
     RT.StorageRoom: {
         "floors": [Tile.WoodFloor1, Tile.WoodFloor2, Tile.WoodFloor3],
-        "walls": [Tile.GradientWall1, Tile.GradientWall2, Tile.RockyWall, Tile.PipeWall]
+        "walls": [Tile.GradientWall1, Tile.GradientWall2, Tile.RockyWall, Tile.PipeWall],
+        "edges": [
+            EdgePlacementManager.new([
+                {"placement": EdgeVacuousFurniturePlacement.new(), "chance": 10 },
+                {"placement": EdgeLongBookshelfPlacement.new(), "chance": 10 },
+                {"placement": EdgeBookshelfPlacement.new(), "chance": 10 },
+                {"placement": EdgeLaundryMachinePlacement.new(), "chance": 10 },
+                {"placement": EdgeDryerPlacement.new(), "chance": 10 },
+                {"placement": EdgeSofaPlacement.new(), "chance": 10 },
+                {"placement": EdgeReclinerPlacement.new(), "chance": 10 },
+                {"placement": EdgeDiningChairPlacement.new(), "chance": 10 },
+                {"placement": EdgeOfficeChairPlacement.new(), "chance": 10 },
+                {"placement": EdgeCabinetPlacement.new(), "chance": 10 },
+                {"placement": EdgeLongCabinetPlacement.new(), "chance": 10 },
+                {"placement": EdgeDresserPlacement.new(), "chance": 10 }
+            ])
+        ]
     },
     RT.DiningRoom: {
         "floors": [Tile.WoodFloor1, Tile.WoodFloor2, Tile.WoodFloor3],
-        "walls": [Tile.DiamondWall, Tile.CircleWall, Tile.RedRegalWall, Tile.OrangeRegalWall]
+        "walls": [Tile.DiamondWall, Tile.CircleWall, Tile.RedRegalWall, Tile.OrangeRegalWall],
+        "edges": [
+            EdgePlacementManager.new([
+                {"placement": EdgeVacuousFurniturePlacement.new(), "chance": 60 },
+                {"placement": EdgeDiningChairPlacement.new(), "chance": 10 }
+            ])
+        ]
     },
     RT.DiningHall: {
         "floors": [Tile.WoodFloor1, Tile.WoodFloor2, Tile.WoodFloor3],
-        "walls": [Tile.DiamondWall, Tile.CircleWall, Tile.RedRegalWall, Tile.OrangeRegalWall]
+        "walls": [Tile.DiamondWall, Tile.CircleWall, Tile.RedRegalWall, Tile.OrangeRegalWall],
+        "edges": [
+            EdgePlacementManager.new([
+                {"placement": EdgeVacuousFurniturePlacement.new(), "chance": 60 },
+                {"placement": EdgeDiningChairPlacement.new(), "chance": 10 }
+            ])
+        ]
     },
     RT.Garage: {
         "floors": [Tile.ConcreteFloor],
-        "walls": [Tile.GradientWall1, Tile.GradientWall2, Tile.RockyWall, Tile.PipeWall]
+        "walls": [Tile.GradientWall1, Tile.GradientWall2, Tile.RockyWall, Tile.PipeWall],
+        "edges": [
+            EdgePlacementManager.new([
+                {"placement": EdgeVacuousFurniturePlacement.new(), "chance": 10 },
+                {"placement": EdgeLongBookshelfPlacement.new(), "chance": 10 },
+                {"placement": EdgeBookshelfPlacement.new(), "chance": 10 },
+                {"placement": EdgeTelevisionPlacement.new(), "chance": 10 },
+                {"placement": EdgeLaundryMachinePlacement.new(), "chance": 5 },
+                {"placement": EdgeDryerPlacement.new(), "chance": 5 },
+                {"placement": EdgeWasherDryerPlacement.new(), "chance": 30 },
+                {"placement": EdgeDiningChairPlacement.new(), "chance": 20 }
+            ])
+        ]
     }
 }
 
@@ -139,6 +328,10 @@ func decide_floor_type(rtype: int) -> int:
 
 func decide_wall_type(rtype: int) -> int:
     var arr = _config[rtype]["walls"]
+    return arr[randi() % len(arr)]
+
+func decide_edge_manager(rtype: int) -> EdgePlacementManager:
+    var arr = _config[rtype]["edges"]
     return arr[randi() % len(arr)]
 
 var _tmp = null
