@@ -23,7 +23,7 @@
 ** EDGE FURNITURE
    + [X] Bookshelf
    + [ ] Desk
-   + [ ] Toilet
+   + [X] Toilet
    + [ ] Cabinet
    + [ ] Wardrobe
    + [ ] Coffee Table
