@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Furniture/Sofa/Sofa.gd" type="Script" id=1]
+[ext_resource path="res://Furniture/Sofa/Sofa.png" type="Texture" id=2]
+
+[node name="Sofa" type="Node2D"]
+script = ExtResource( 1 )
+dims = Vector2( 2, 1 )
+
+[node name="Sprite" type="Sprite" parent="."]
+position = Vector2( 32, 32 )
+texture = ExtResource( 2 )
+hframes = 4

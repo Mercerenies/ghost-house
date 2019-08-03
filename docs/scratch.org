@@ -33,3 +33,5 @@
    + [X] Washing Machine
    + [X] Dryer
    + [X] Television
+   + [X] Recliner
+   + [X] Sofa
