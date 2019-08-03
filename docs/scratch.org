@@ -35,3 +35,5 @@
    + [X] Television
    + [X] Recliner
    + [X] Sofa
+   + [X] Dining Chair
+   + [X] Office Chair

@@ -2,7 +2,7 @@ extends Furniture
 
 var interaction: Dictionary = {
         "start": [
-             { "command": "say", "text": "A comfy-looking recliner." }
+             { "command": "say", "text": "An old wooden chair." }
         ]
     }
 
