@@ -8,6 +8,7 @@ class HallwayData:
     var floortype: int
     var walltype: int
     var edgetype
+    var specialtype
     func _init(id: int, data: Array):
         self.id = id
         self.data = data
@@ -15,6 +16,7 @@ class HallwayData:
         self.floortype = RoomTypes.Tile.EmptyTile
         self.walltype = RoomTypes.Tile.DebugWall
         self.edgetype = null
+        self.specialtype = null
 
 class RoomData:
     var id: int
@@ -24,6 +26,7 @@ class RoomData:
     var floortype: int
     var walltype: int
     var edgetype
+    var specialtype
     func _init(id: int, box: Rect2):
         self.id = id
         self.box = box
@@ -32,6 +35,7 @@ class RoomData:
         self.floortype = RoomTypes.Tile.EmptyTile
         self.walltype = RoomTypes.Tile.DebugWall
         self.edgetype = null
+        self.specialtype = null
 
 class Graph:
     var adja: Dictionary = {}

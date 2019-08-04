@@ -502,10 +502,12 @@ func _determine_room_properties() -> void:
             v.floortype = RoomTypes.decide_floor_type(v.type)
             v.walltype = RoomTypes.decide_wall_type(v.type)
             v.edgetype = RoomTypes.decide_edge_manager(v.type)
+            v.specialtype = RoomTypes.decide_special_manager(v.type)
         else:
             v.floortype = RoomTypes.decide_floor_type(RoomTypes.RT.Hallway)
             v.walltype = RoomTypes.decide_wall_type(RoomTypes.RT.Hallway)
             v.edgetype = RoomTypes.decide_edge_manager(RoomTypes.RT.Hallway)
+            v.specialtype = RoomTypes.decide_special_manager(RoomTypes.RT.Hallway)
 
 func _grid_to_room() -> void:
     var w = _data['config']['width']
@@ -619,6 +621,12 @@ func _debug_edges() -> void:
                  var silly = tmp.instance()
                  _add_entity(Vector2(i, j), silly)
 
+func _fill_special() -> void:
+    for k in _boxes:
+        var v = _boxes[k]
+        for spec in v.specialtype:
+            _try_to_place(v, spec)
+
 func _fill_edges() -> void:
     var w = _data['config']['width'] * TOTAL_CELL_SIZE
     var h = _data['config']['height'] * TOTAL_CELL_SIZE
@@ -673,10 +681,7 @@ func generate() -> Room:
     _mark_safe_edge_cells()
     _room.get_minimap().initialize(Vector2(w, h), _grid, _boxes, _connections)
     print(_grid)
-    # DEBUG CODE
-    #for k in _boxes:
-    #    _try_to_place(_boxes[k], tmp_TwinBedPlacement.new())
-    #    _try_to_place(_boxes[k], tmp_KingBedPlacement.new())
+    _fill_special()
     _fill_edges()
     #_debug_edges()
     #for i in range(_data['config']['width']):

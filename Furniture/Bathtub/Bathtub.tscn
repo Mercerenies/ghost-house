@@ -10,4 +10,4 @@ dims = Vector2( 2, 1 )
 [node name="Sprite" type="Sprite" parent="."]
 position = Vector2( 32, 32 )
 texture = ExtResource( 2 )
-hframes = 4
+hframes = 2

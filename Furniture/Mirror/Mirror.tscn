@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Furniture/Mirror/Mirror.gd" type="Script" id=1]
+[ext_resource path="res://Furniture/Mirror/Mirror.png" type="Texture" id=2]
+
+[node name="Mirror" type="Node2D"]
+script = ExtResource( 1 )
+dims = Vector2( 1, 2 )
+
+[node name="Sprite" type="Sprite" parent="."]
+position = Vector2( 16, 32 )
+texture = ExtResource( 2 )
+hframes = 2

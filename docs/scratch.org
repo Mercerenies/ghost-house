@@ -17,18 +17,18 @@
 ** SPECIAL FURNITURE
    + [X] Twin Bed
    + [X] King Bed
-   + [ ] Shower *
-   + [ ] Bathtub *
+   + [X] Shower
+   + [X] Bathtub
    + [ ] Dining Table
-   + [ ] Mirror *
+   + [X] Mirror
 ** EDGE FURNITURE
    + [X] Bookshelf
    + [ ] Desk
    + [X] Toilet
    + [X] Cabinet
    + [ ] Wardrobe
-   + [ ] Coffee Table *
-   + [ ] Lamp **
+   + [X] Coffee Table
+   + [X] Lamp
    + [X] Kitchen Sink
    + [X] Bathroom Sink
    + [X] Washing Machine
@@ -39,3 +39,5 @@
    + [X] Dining Chair
    + [X] Office Chair
    + [X] Dresser
+   + [ ] Stove
+   + [ ] Dishwasher

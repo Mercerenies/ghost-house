@@ -19,6 +19,17 @@ const EdgeKitchenSinkPlacement = preload("res://Furniture/KitchenSink/EdgeKitche
 const EdgeWasherDryerPlacement = preload("res://Furniture/LaundryMachine/EdgeWasherDryerPlacement.gd")
 const EdgeBathroomCounterPlacement = preload("res://Furniture/BathroomCounter/EdgeBathroomCounterPlacement.gd")
 const EdgeBathroomSinkPlacement = preload("res://Furniture/BathroomSink/EdgeBathroomSinkPlacement.gd")
+const EdgeCoffeeTablePlacement = preload("res://Furniture/CoffeeTable/EdgeCoffeeTablePlacement.gd")
+const EdgeFloorLampPlacement = preload("res://Furniture/FloorLamp/EdgeFloorLampPlacement.gd")
+const EdgeDeskLampPlacement = preload("res://Furniture/DeskLamp/EdgeDeskLampPlacement.gd")
+
+const TwinBedPlacement = preload("res://Furniture/TwinBed/TwinBedPlacement.gd")
+const KingBedPlacement = preload("res://Furniture/KingBed/KingBedPlacement.gd")
+const ShowerPlacement = preload("res://Furniture/Shower/ShowerPlacement.gd")
+const BathtubPlacement = preload("res://Furniture/Bathtub/BathtubPlacement.gd")
+const ToiletPlacement = preload("res://Furniture/Toilet/ToiletPlacement.gd")
+const BathroomSinkPlacement = preload("res://Furniture/BathroomSink/BathroomSinkPlacement.gd")
+const MirrorPlacement = preload("res://Furniture/Mirror/MirrorPlacement.gd")
 
 enum Tile {
     EmptyTile = 0, DebugFloor, DebugWall, TileFloor1, TileFloor2, LightGrayCarpet, GrayCarpet, DarkGrayCarpet, TileFloor3, WoodFloor1,
@@ -32,6 +43,13 @@ enum RT {
     LaundryRoom, Kitchen, StorageRoom, DiningRoom, DiningHall,
     Garage
 }
+
+class UniformDistr extends SpecialPlacementManager:
+    var _values: Array
+    func _init(values: Array) -> void:
+        _values = values
+    func determine_placements() -> Array:
+        return _values[randi() % len(_values)]
 
 var walls: Array = [Tile.DebugWall, Tile.StripedWall1, Tile.StripedWall2, Tile.DiamondWall, Tile.CircleWall,
                     Tile.GradientWall1, Tile.GradientWall2, Tile.RockyWall, Tile.PipeWall, Tile.RedRegalWall,
@@ -61,11 +79,14 @@ var _config: Dictionary = {
         "walls": [Tile.StripedWall1, Tile.StripedWall2, Tile.ColumnedWall1, Tile.ColumnedWall2, Tile.ColumnedWall3],
         "edges": [
             EdgePlacementManager.new([
-                {"placement": EdgeVacuousFurniturePlacement.new(), "chance": 30 },
+                {"placement": EdgeVacuousFurniturePlacement.new(), "chance": 50 },
                 {"placement": EdgeLongBookshelfPlacement.new(), "chance": 10 },
-                {"placement": EdgeBookshelfPlacement.new(), "chance": 10 }
+                {"placement": EdgeBookshelfPlacement.new(), "chance": 10 },
+                {"placement": EdgeFloorLampPlacement.new(), "chance": 20 },
+                {"placement": EdgeDeskLampPlacement.new(), "chance": 20 }
             ])
-        ]
+        ],
+        "special": UniformDistr.new([[]])
     },
     RT.Bedroom: {
         "floors": [Tile.LightGrayCarpet, Tile.GrayCarpet, Tile.DarkGrayCarpet, Tile.WoodFloor1, Tile.WoodFloor2, Tile.WoodFloor3],
@@ -81,9 +102,20 @@ var _config: Dictionary = {
                 {"placement": EdgeOfficeChairPlacement.new(), "chance": 10 },
                 {"placement": EdgeCabinetPlacement.new(), "chance": 20 },
                 {"placement": EdgeLongCabinetPlacement.new(), "chance": 20 },
-                {"placement": EdgeDresserPlacement.new(), "chance": 20 }
+                {"placement": EdgeDresserPlacement.new(), "chance": 20 },
+                {"placement": EdgeCoffeeTablePlacement.new(), "chance": 10 },
+                {"placement": EdgeFloorLampPlacement.new(), "chance": 15 },
+                {"placement": EdgeDeskLampPlacement.new(), "chance": 15 }
             ])
-        ]
+        ],
+        "special": UniformDistr.new([
+            [TwinBedPlacement.new(), TwinBedPlacement.new()],
+            [TwinBedPlacement.new()],
+            [KingBedPlacement.new()],
+            [TwinBedPlacement.new(), TwinBedPlacement.new(), MirrorPlacement.new()],
+            [TwinBedPlacement.new(), MirrorPlacement.new()],
+            [KingBedPlacement.new(), MirrorPlacement.new()]
+        ])
     },
     RT.MasterBedroom: {
         "floors": [Tile.LightGrayCarpet, Tile.GrayCarpet, Tile.DarkGrayCarpet, Tile.WoodFloor1, Tile.WoodFloor2, Tile.WoodFloor3],
@@ -99,9 +131,20 @@ var _config: Dictionary = {
                 {"placement": EdgeOfficeChairPlacement.new(), "chance": 5 },
                 {"placement": EdgeCabinetPlacement.new(), "chance": 10 },
                 {"placement": EdgeLongCabinetPlacement.new(), "chance": 20 },
-                {"placement": EdgeDresserPlacement.new(), "chance": 20 }
+                {"placement": EdgeDresserPlacement.new(), "chance": 20 },
+                {"placement": EdgeCoffeeTablePlacement.new(), "chance": 10 },
+                {"placement": EdgeFloorLampPlacement.new(), "chance": 20 },
+                {"placement": EdgeDeskLampPlacement.new(), "chance": 30 }
             ])
-        ]
+        ],
+        "special": UniformDistr.new([
+            [TwinBedPlacement.new(), TwinBedPlacement.new()],
+            [KingBedPlacement.new(), TwinBedPlacement.new()],
+            [KingBedPlacement.new()],
+            [TwinBedPlacement.new(), TwinBedPlacement.new(), MirrorPlacement.new()],
+            [KingBedPlacement.new(), TwinBedPlacement.new(), MirrorPlacement.new()],
+            [KingBedPlacement.new(), MirrorPlacement.new()]
+        ])
     },
     RT.Bathroom: {
         "floors": [Tile.TileFloor1, Tile.TileFloor3],
@@ -109,11 +152,15 @@ var _config: Dictionary = {
         "edges": [
             EdgePlacementManager.new([
                 {"placement": EdgeVacuousFurniturePlacement.new(), "chance": 100 },
-                {"placement": EdgeToiletPlacement.new(), "chance": 10 },
+                {"placement": EdgeToiletPlacement.new(), "chance": 5 },
                 {"placement": EdgeBathroomCounterPlacement.new(), "chance": 10 },
-                {"placement": EdgeBathroomSinkPlacement.new(), "chance": 10 }
+                {"placement": EdgeBathroomSinkPlacement.new(), "chance": 5 }
             ])
-        ]
+        ],
+        "special": UniformDistr.new([
+            [BathtubPlacement.new(), MirrorPlacement.new()],
+            [ShowerPlacement.new(), MirrorPlacement.new()]
+        ])
     },
     RT.Washroom: {
         "floors": [Tile.TileFloor1, Tile.TileFloor3],
@@ -121,11 +168,15 @@ var _config: Dictionary = {
         "edges": [
             EdgePlacementManager.new([
                 {"placement": EdgeVacuousFurniturePlacement.new(), "chance": 50 },
-                {"placement": EdgeToiletPlacement.new(), "chance": 10 },
+                {"placement": EdgeToiletPlacement.new(), "chance": 5 },
                 {"placement": EdgeBathroomCounterPlacement.new(), "chance": 10 },
                 {"placement": EdgeBathroomSinkPlacement.new(), "chance": 10 }
             ])
-        ]
+        ],
+        "special": UniformDistr.new([
+            [ToiletPlacement.new(), BathroomSinkPlacement.new(), MirrorPlacement.new()],
+            [ToiletPlacement.new(), BathroomSinkPlacement.new(), ShowerPlacement.new(), MirrorPlacement.new()]
+        ])
     },
     RT.WardrobeRoom: {
         "floors": [Tile.LightGrayCarpet, Tile.GrayCarpet, Tile.DarkGrayCarpet, Tile.WoodFloor1, Tile.WoodFloor2, Tile.WoodFloor3],
@@ -138,9 +189,16 @@ var _config: Dictionary = {
                 {"placement": EdgeDiningChairPlacement.new(), "chance": 20 },
                 {"placement": EdgeCabinetPlacement.new(), "chance": 40 },
                 {"placement": EdgeLongCabinetPlacement.new(), "chance": 40 },
-                {"placement": EdgeDresserPlacement.new(), "chance": 40 }
+                {"placement": EdgeDresserPlacement.new(), "chance": 40 },
+                {"placement": EdgeCoffeeTablePlacement.new(), "chance": 10 },
+                {"placement": EdgeFloorLampPlacement.new(), "chance": 20 },
+                {"placement": EdgeDeskLampPlacement.new(), "chance": 20 }
             ])
-        ]
+        ],
+        "special": UniformDistr.new([
+            [MirrorPlacement.new()],
+            [MirrorPlacement.new(), MirrorPlacement.new()]
+        ])
     },
     RT.Closet: {
         "floors": [Tile.LightGrayCarpet, Tile.GrayCarpet, Tile.DarkGrayCarpet, Tile.WoodFloor1, Tile.WoodFloor2, Tile.WoodFloor3],
@@ -153,9 +211,12 @@ var _config: Dictionary = {
                 {"placement": EdgeDiningChairPlacement.new(), "chance": 10 },
                 {"placement": EdgeCabinetPlacement.new(), "chance": 20 },
                 {"placement": EdgeLongCabinetPlacement.new(), "chance": 20 },
-                {"placement": EdgeDresserPlacement.new(), "chance": 20 }
+                {"placement": EdgeDresserPlacement.new(), "chance": 20 },
+                {"placement": EdgeFloorLampPlacement.new(), "chance": 5 },
+                {"placement": EdgeDeskLampPlacement.new(), "chance": 5 }
             ])
-        ]
+        ],
+        "special": UniformDistr.new([[]])
     },
     RT.LongCloset: {
         "floors": [Tile.LightGrayCarpet, Tile.GrayCarpet, Tile.DarkGrayCarpet, Tile.WoodFloor1, Tile.WoodFloor2, Tile.WoodFloor3],
@@ -168,9 +229,12 @@ var _config: Dictionary = {
                 {"placement": EdgeDiningChairPlacement.new(), "chance": 10 },
                 {"placement": EdgeCabinetPlacement.new(), "chance": 30 },
                 {"placement": EdgeLongCabinetPlacement.new(), "chance": 30 },
-                {"placement": EdgeDresserPlacement.new(), "chance": 30 }
+                {"placement": EdgeDresserPlacement.new(), "chance": 30 },
+                {"placement": EdgeFloorLampPlacement.new(), "chance": 10 },
+                {"placement": EdgeDeskLampPlacement.new(), "chance": 10 }
             ])
-        ]
+        ],
+        "special": UniformDistr.new([[]])
     },
     RT.Theater: {
         "floors": [Tile.LightGrayCarpet, Tile.GrayCarpet, Tile.DarkGrayCarpet, Tile.WoodFloor1, Tile.WoodFloor2, Tile.WoodFloor3],
@@ -182,9 +246,13 @@ var _config: Dictionary = {
                 {"placement": EdgeBookshelfPlacement.new(), "chance": 20 },
                 {"placement": EdgeTelevisionPlacement.new(), "chance": 15 },
                 {"placement": EdgeSofaPlacement.new(), "chance": 40 },
-                {"placement": EdgeReclinerPlacement.new(), "chance": 40 }
+                {"placement": EdgeReclinerPlacement.new(), "chance": 40 },
+                {"placement": EdgeCoffeeTablePlacement.new(), "chance": 10 },
+                {"placement": EdgeFloorLampPlacement.new(), "chance": 20 },
+                {"placement": EdgeDeskLampPlacement.new(), "chance": 15 }
             ])
-        ]
+        ],
+        "special": UniformDistr.new([[]])
     },
     RT.Foyer: {
         "floors": [Tile.WoodFloor1, Tile.WoodFloor2, Tile.WoodFloor3],
@@ -196,9 +264,13 @@ var _config: Dictionary = {
                 {"placement": EdgeBookshelfPlacement.new(), "chance": 20 },
                 {"placement": EdgeTelevisionPlacement.new(), "chance": 20 },
                 {"placement": EdgeSofaPlacement.new(), "chance": 15 },
-                {"placement": EdgeReclinerPlacement.new(), "chance": 15 }
+                {"placement": EdgeReclinerPlacement.new(), "chance": 15 },
+                {"placement": EdgeCoffeeTablePlacement.new(), "chance": 20 },
+                {"placement": EdgeFloorLampPlacement.new(), "chance": 10 },
+                {"placement": EdgeDeskLampPlacement.new(), "chance": 10 }
             ])
-        ]
+        ],
+        "special": UniformDistr.new([[]])
     },
     RT.Study: {
         "floors": [Tile.WoodFloor1, Tile.WoodFloor2, Tile.WoodFloor3],
@@ -215,9 +287,13 @@ var _config: Dictionary = {
                 {"placement": EdgeOfficeChairPlacement.new(), "chance": 10 },
                 {"placement": EdgeCabinetPlacement.new(), "chance": 15 },
                 {"placement": EdgeLongCabinetPlacement.new(), "chance": 15 },
-                {"placement": EdgeDresserPlacement.new(), "chance": 5 }
+                {"placement": EdgeDresserPlacement.new(), "chance": 5 },
+                {"placement": EdgeCoffeeTablePlacement.new(), "chance": 10 },
+                {"placement": EdgeFloorLampPlacement.new(), "chance": 15 },
+                {"placement": EdgeDeskLampPlacement.new(), "chance": 20 }
             ])
-        ]
+        ],
+        "special": UniformDistr.new([[]])
     },
     RT.SittingRoom: {
         "floors": [Tile.LightGrayCarpet, Tile.GrayCarpet, Tile.DarkGrayCarpet, Tile.WoodFloor1, Tile.WoodFloor2, Tile.WoodFloor3],
@@ -234,9 +310,13 @@ var _config: Dictionary = {
                 {"placement": EdgeOfficeChairPlacement.new(), "chance": 10 },
                 {"placement": EdgeCabinetPlacement.new(), "chance": 10 },
                 {"placement": EdgeLongCabinetPlacement.new(), "chance": 20 },
-                {"placement": EdgeDresserPlacement.new(), "chance": 15 }
+                {"placement": EdgeDresserPlacement.new(), "chance": 15 },
+                {"placement": EdgeCoffeeTablePlacement.new(), "chance": 15 },
+                {"placement": EdgeFloorLampPlacement.new(), "chance": 20 },
+                {"placement": EdgeDeskLampPlacement.new(), "chance": 20 }
             ])
-        ]
+        ],
+        "special": UniformDistr.new([[]])
     },
     RT.LaundryRoom: {
         "floors": [Tile.TileFloor1, Tile.TileFloor3, Tile.WoodFloor1, Tile.WoodFloor2, Tile.WoodFloor3, Tile.ConcreteFloor],
@@ -251,7 +331,8 @@ var _config: Dictionary = {
                 {"placement": EdgeLongCabinetPlacement.new(), "chance": 10 },
                 {"placement": EdgeDresserPlacement.new(), "chance": 10 }
             ])
-        ]
+        ],
+        "special": UniformDistr.new([[]])
     },
     RT.Kitchen: {
         "floors": [Tile.TileFloor1, Tile.TileFloor3],
@@ -262,7 +343,8 @@ var _config: Dictionary = {
                 {"placement": EdgeKitchenCounterPlacement.new(), "chance": 10 },
                 {"placement": EdgeKitchenSinkPlacement.new(), "chance": 10 }
             ])
-        ]
+        ],
+        "special": UniformDistr.new([[]])
     },
     RT.StorageRoom: {
         "floors": [Tile.WoodFloor1, Tile.WoodFloor2, Tile.WoodFloor3],
@@ -280,9 +362,12 @@ var _config: Dictionary = {
                 {"placement": EdgeOfficeChairPlacement.new(), "chance": 10 },
                 {"placement": EdgeCabinetPlacement.new(), "chance": 10 },
                 {"placement": EdgeLongCabinetPlacement.new(), "chance": 10 },
-                {"placement": EdgeDresserPlacement.new(), "chance": 10 }
+                {"placement": EdgeDresserPlacement.new(), "chance": 10 },
+                {"placement": EdgeFloorLampPlacement.new(), "chance": 10 },
+                {"placement": EdgeDeskLampPlacement.new(), "chance": 5 }
             ])
-        ]
+        ],
+        "special": UniformDistr.new([[]])
     },
     RT.DiningRoom: {
         "floors": [Tile.WoodFloor1, Tile.WoodFloor2, Tile.WoodFloor3],
@@ -292,7 +377,8 @@ var _config: Dictionary = {
                 {"placement": EdgeVacuousFurniturePlacement.new(), "chance": 60 },
                 {"placement": EdgeDiningChairPlacement.new(), "chance": 10 }
             ])
-        ]
+        ],
+        "special": UniformDistr.new([[]])
     },
     RT.DiningHall: {
         "floors": [Tile.WoodFloor1, Tile.WoodFloor2, Tile.WoodFloor3],
@@ -302,7 +388,8 @@ var _config: Dictionary = {
                 {"placement": EdgeVacuousFurniturePlacement.new(), "chance": 60 },
                 {"placement": EdgeDiningChairPlacement.new(), "chance": 10 }
             ])
-        ]
+        ],
+        "special": UniformDistr.new([[]])
     },
     RT.Garage: {
         "floors": [Tile.ConcreteFloor],
@@ -318,7 +405,8 @@ var _config: Dictionary = {
                 {"placement": EdgeWasherDryerPlacement.new(), "chance": 30 },
                 {"placement": EdgeDiningChairPlacement.new(), "chance": 20 }
             ])
-        ]
+        ],
+        "special": UniformDistr.new([[]])
     }
 }
 
@@ -339,6 +427,10 @@ func decide_wall_type(rtype: int) -> int:
 func decide_edge_manager(rtype: int) -> EdgePlacementManager:
     var arr = _config[rtype]["edges"]
     return arr[randi() % len(arr)]
+
+func decide_special_manager(rtype: int) -> Array:
+    var arr = _config[rtype]["special"]
+    return arr.determine_placements()
 
 var _tmp = null
 
