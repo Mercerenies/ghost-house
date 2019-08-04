@@ -33,7 +33,7 @@ func initialize(dims: Vector2, grid: Array, boxes: Dictionary, connections: Arra
     update_map()
 
 func _find_player() -> Vector2:
-    for c in get_parent().get_parent().get_children():
+    for c in get_parent().get_parent().get_entities():
         if c is Player:
             return c.cell
     return Vector2(-1, -1)

@@ -11,3 +11,6 @@ func set_direction(a: int):
 
 func on_interact() -> void:
     get_room().show_dialogue(interaction)
+
+func lighting() -> Array:
+    return [{"position": position + Vector2(16, 16), "radius": 32}]

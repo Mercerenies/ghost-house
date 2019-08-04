@@ -50,3 +50,6 @@ func _process(delta: float) -> void:
             var target_entity = get_room().get_entity_cell(target_cell)
             if target_entity != null:
                 target_entity.on_interact()
+
+func lighting() -> Array:
+    return [{"position": position + Vector2(16, 16), "radius": 64}]

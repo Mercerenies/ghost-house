@@ -39,7 +39,7 @@ func _init(room_data: Dictionary):
     _data = room_data
 
 func _add_entity(pos: Vector2, entity: Object) -> void:
-    _room.add_child(entity)
+    _room.get_node("Entities").add_child(entity)
     entity.position = pos * 32
     entity.position_self()
 
@@ -428,8 +428,8 @@ func _open_doorways() -> void:
                 var transb = VerticalFloorTransition.instance()
                 transa.position = Vector2(xpos + 1, ypos - 1) * 32
                 transb.position = Vector2(xpos + 2, ypos - 1) * 32
-                _room.add_child(transa)
-                _room.add_child(transb)
+                _room.get_node("Decorations").add_child(transa)
+                _room.get_node("Decorations").add_child(transb)
         elif b - a == Vector2(1, 0):
             _room.set_tile_cell(Vector2(xpos - 1, ypos + 1), floorb)
             _room.set_tile_cell(Vector2(xpos - 1, ypos + 2), floorb)
@@ -442,8 +442,8 @@ func _open_doorways() -> void:
                 var transb = HorizontalFloorTransition.instance()
                 transa.position = Vector2(xpos - 1, ypos + 1) * 32
                 transb.position = Vector2(xpos - 1, ypos + 2) * 32
-                _room.add_child(transa)
-                _room.add_child(transb)
+                _room.get_node("Decorations").add_child(transa)
+                _room.get_node("Decorations").add_child(transb)
 
 func _open_all_doorways() -> void:
     # This code literally only exists for debugging purposes.

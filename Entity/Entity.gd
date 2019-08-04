@@ -2,7 +2,7 @@ extends Node2D
 class_name Entity
 
 func get_room():
-    return get_parent()
+    return get_parent().get_parent()
 
 func _ready():
     position_self()
@@ -12,3 +12,6 @@ func position_self() -> void:
 
 func on_interact() -> void:
     pass
+
+func lighting() -> Array:
+    return []
