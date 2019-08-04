@@ -52,4 +52,16 @@ func _process(delta: float) -> void:
                 target_entity.on_interact()
 
 func lighting() -> Array:
-    return [{"position": position + Vector2(16, 16), "radius": 64}]
+    return [
+        {
+            "type": "circle",
+            "position": position + Vector2(16, 16),
+            "radius": 64
+        },
+        {
+            "type": "flashlight",
+            "position": position + Vector2(16, 16) + Vector2(-16, 0).rotated(get_direction() * PI / 2.0),
+            "range": Vector2(192, 0).rotated(get_direction() * PI / 2.0),
+            "fov": PI * 0.45
+        }
+    ]
