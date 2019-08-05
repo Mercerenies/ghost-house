@@ -6,8 +6,6 @@ func _ready() -> void:
 func set_direction(a: int):
     $Sprite.frame = a % 4
 
-    pass
-
 func lighting() -> Array:
     var pos = position + Vector2(16, 16) + Vector2(-12, 0).rotated($Sprite.frame * PI / 2.0)
     if $Sprite.frame == 1:

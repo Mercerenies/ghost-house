@@ -1,11 +1,9 @@
 extends Furniture
 
 func _ready() -> void:
-    interaction = {
-        "idle": [
-             { "command": "say", "text": "A floor lamp." }
-        ]
-    }
+    interaction["idle"] = [
+         { "command": "say", "text": "A floor lamp." }
+    ]
 
 func set_direction(a: int):
     pass

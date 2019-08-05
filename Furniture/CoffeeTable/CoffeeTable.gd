@@ -1,11 +1,9 @@
 extends Furniture
 
 func _ready() -> void:
-    interaction = {
-        "idle": [
-             { "command": "say", "text": "A quaint coffee table." }
-        ]
-    }
+    interaction["idle"] = [
+         { "command": "say", "text": "A quaint coffee table." }
+    ]
     set_dims(Vector2(2, 1))
 
 func set_direction(a: int):

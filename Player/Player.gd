@@ -47,6 +47,7 @@ func _process(delta: float) -> void:
                 emit_signal("player_moved")
         elif Input.is_action_just_released("ui_accept"):
             var target_cell = cell + Vector2(1, 0).rotated(get_direction() * PI / 2)
+            target_cell = Vector2(round(target_cell.x), round(target_cell.y))
             var target_entity = get_room().get_entity_cell(target_cell)
             if target_entity != null:
                 target_entity.on_interact()
