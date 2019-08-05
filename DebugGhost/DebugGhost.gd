@@ -2,7 +2,7 @@ extends DialogueEntity
 
 func _ready():
     dialogue = {
-        "start": [
+        "idle": [
             {"command": "say", "speaker": "A Ghost", "text": "Hi, I'm a ghost :)"}
         ]
     }

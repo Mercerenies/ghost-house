@@ -6,7 +6,6 @@ func _ready() -> void:
 func set_direction(a: int):
     $Sprite.frame = a % 4
 
-func on_interact() -> void:
     pass
 
 func lighting() -> Array:

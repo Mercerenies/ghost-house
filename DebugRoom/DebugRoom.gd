@@ -3,7 +3,7 @@ extends Node2D
 # This is all DEBUG CODE, of course
 
 var _sample_dialogue = {
-    "start": [
+    "idle": [
         {"command": "say", "text": "Hi, I'm your friendly neighborhood dialogue box. I'm here to help. Press SPACEBAR and stuff will happen."},
 #        {"command": "say", "text": "You did it! You defeated me!"},
 #        {"command": "branch", "speaker": "Box", "text": "Are you done?", "options": [

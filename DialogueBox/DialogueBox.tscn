@@ -62,5 +62,4 @@ polygon = PoolVector2Array( -8, -8, -8, 8, 8, 8, 8, -8 )
 
 [node name="ShowTimer" type="Timer" parent="."]
 wait_time = 0.05
-
 [connection signal="timeout" from="ShowTimer" to="." method="_on_ShowTimer_timeout"]

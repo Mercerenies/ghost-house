@@ -31,8 +31,8 @@ func is_wall_at(pos: Vector2) -> bool:
 func is_showing_modal() -> bool:
     return get_dialogue_box().is_active()
 
-func show_dialogue(dia: Dictionary) -> void:
-    get_dialogue_box().popup(dia)
+func show_dialogue(dia: Dictionary, state: String = "start") -> void:
+    get_dialogue_box().popup(dia, state)
 
 func get_dialogue_box():
     return $CanvasLayer/DialogueBox

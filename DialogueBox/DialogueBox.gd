@@ -17,6 +17,7 @@ func popup(data: Dictionary, state: String = "start") -> void:
     _end_conversation_now()
     _data = data
     _index = -1
+    _state = state
     _advance_state()
 
 func _end_conversation() -> void:

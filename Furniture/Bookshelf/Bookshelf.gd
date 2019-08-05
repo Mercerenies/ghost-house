@@ -1,7 +1,8 @@
 extends Furniture
 
-var interaction: Dictionary = {
-        "start": [
+func _ready() -> void:
+    interaction = {
+        "idle": [
              { "command": "say", "text": "A shelf full of old books." }
         ]
     }
@@ -9,5 +10,3 @@ var interaction: Dictionary = {
 func set_direction(a: int):
     $Sprite.frame = (a + 1) % 2
 
-func on_interact() -> void:
-    get_room().show_dialogue(interaction)
