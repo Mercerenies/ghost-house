@@ -2,7 +2,12 @@ extends MobileEntity
 
 signal player_moved
 
+var base_speed: float
+var stamina_recovery_rate: float = 10
+var stamina_dash_cost: float = 5
+
 func _ready():
+    base_speed = speed
     $Sprite.visible = false
 
 func _input_dir_to_dir(v: Vector2) -> int:
@@ -38,11 +43,16 @@ func can_move_to(pos: Vector2) -> bool:
     return .can_move_to(pos)
 
 func _process(delta: float) -> void:
+    var stats = get_room().get_player_stats()
     var input_dir = get_input_direction()
     if _can_move_at_all():
         if input_dir != Vector2():
             var target_cell = cell + input_dir
             set_direction(_input_dir_to_dir(input_dir))
+            speed = base_speed
+            if Input.is_action_pressed("ui_dash") and stats.get_player_stamina() >= stamina_dash_cost:
+                speed *= 2
+                stats.add_player_stamina(- stamina_dash_cost)
             if try_move_to(target_cell):
                 emit_signal("player_moved")
         elif Input.is_action_just_released("ui_accept"):
@@ -51,6 +61,8 @@ func _process(delta: float) -> void:
             var target_entity = get_room().get_entity_cell(target_cell)
             if target_entity != null:
                 target_entity.on_interact()
+    if not Input.is_action_pressed("ui_dash"):
+        stats.add_player_stamina(stamina_recovery_rate * delta)
 
 func lighting() -> Array:
     return [

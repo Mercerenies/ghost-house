@@ -15,7 +15,9 @@ func find_player():
     return null
 
 func _process(_delta: float) -> void:
-    position = find_player().position
+    var player = find_player()
+    if player != null:
+        position = player.position
     update()
 
 func _draw() -> void:

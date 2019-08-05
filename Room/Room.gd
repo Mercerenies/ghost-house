@@ -40,6 +40,9 @@ func get_dialogue_box():
 func get_minimap():
     return $CanvasLayer/Minimap
 
+func get_player_stats():
+    return $CanvasLayer/PlayerStats
+
 func get_entities() -> Array:
     return $Entities.get_children()
 

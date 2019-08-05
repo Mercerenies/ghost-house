@@ -16,7 +16,9 @@ func _process(_delta: float) -> void:
     update()
 
 func _draw() -> void:
-    var transform = find_player().position - get_parent().get_parent().size / 2.0
+    var player = find_player()
+    var player_pos = player.position if player != null else Vector2()
+    var transform = player_pos - get_parent().get_parent().size / 2.0
     for ent in get_room().get_entities():
         var lighting = ent.lighting()
         for a in lighting:
