@@ -41,3 +41,4 @@
    + [X] Dresser
    + [ ] Stove
    + [ ] Dishwasher
+   + [X] Torch
