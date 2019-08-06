@@ -12,7 +12,8 @@ var decrease_in_alpha: float = 0.4
 func _ready():
     # DEBUG CODE
     interaction['evil'] = [
-         { "command": "say", "text": "Ouch!" }
+        { "command": "say", "text": "Ouch!" },
+        { "command": "action", "action": "harm_player", "arg": 1 }
     ]
 
 func _process(delta: float) -> void:
