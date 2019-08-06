@@ -16,3 +16,6 @@ func lighting() -> Array:
         "radius": 32,
         "color": Color(1, 1, 1, modulate.a)
     }]
+
+func chance_of_turning_evil() -> float:
+    return 0.10
