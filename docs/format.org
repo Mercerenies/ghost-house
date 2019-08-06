@@ -39,3 +39,6 @@
 *** ~height~ (required)
     Specifies the height of the room, in generator units. Must be an
     integer.
+*** ~percent_evil~ (required)
+    The percentage (0.00 to 1.00) of furniture that will be turned
+    vanishing and evil.

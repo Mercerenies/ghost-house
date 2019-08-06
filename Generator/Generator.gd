@@ -9,6 +9,8 @@ const PlayerScene = preload("res://Player/Player.tscn")
 const HorizontalFloorTransition = preload("res://RoomTransition/HorizontalFloorTransition.tscn")
 const VerticalFloorTransition = preload("res://RoomTransition/VerticalFloorTransition.tscn")
 
+const Player = preload("res://Player/Player.gd")
+
 # _grid IDs
 #   -3 - OOB
 #   -2 - Empty (dead cell marker)
@@ -42,6 +44,8 @@ func _add_entity(pos: Vector2, entity: Object) -> void:
     _room.get_node("Entities").add_child(entity)
     entity.position = pos * 32
     entity.position_self()
+    if entity is Player:
+        _room.get_marked_entities()["player"] = entity
 
 func _produce_grid_array() -> void:
     _grid = []
@@ -597,6 +601,11 @@ const tmp_EdgeLongBookshelfPlacement = preload("res://Furniture/LongBookshelf/Ed
 #                 var silly = tmp.instance()
 #                 _add_entity(Vector2(i, j), silly)
 
+func _consider_turning_evil(obj) -> void:
+    var chance = _data['config']['percent_evil'] * obj.chance_of_turning_evil()
+    if randf() < chance:
+        obj.turn_evil()
+
 func _try_to_place(room, placement) -> void:
     var positions = placement.enumerate(room)
     var valid_positions = []
@@ -611,6 +620,7 @@ func _try_to_place(room, placement) -> void:
     var obj = placement.spawn_at(chosen)
     if obj != null:
         _add_entity(placement.value_to_position(chosen).position, obj)
+        _consider_turning_evil(obj)
 
 func _debug_edges() -> void:
     var w = _data['config']['width'] * TOTAL_CELL_SIZE
@@ -664,6 +674,7 @@ func _fill_edges() -> void:
                         var rect = Rect2(pos, obj.dims)
                         if _can_put_furniture_at(rect) and not _is_blocking_doorway(rect):
                             _add_entity(pos, obj)
+                            _consider_turning_evil(obj)
 
 func generate() -> Room:
     var w = _data['config']['width']

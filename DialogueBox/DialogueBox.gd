@@ -4,6 +4,7 @@ var _data: Dictionary = {}
 var _state: String = "start"
 var _index: int = 0
 var _text: String = ""
+var _vars: Dictionary = {}
 var _active_branch: Array = []
 
 func _ready():
@@ -13,11 +14,12 @@ func _ready():
 func is_active() -> bool:
     return not _data.empty()
 
-func popup(data: Dictionary, state: String = "start") -> void:
+func popup(data: Dictionary, state: String = "start", vars: Dictionary = {}) -> void:
     _end_conversation_now()
     _data = data
     _index = -1
     _state = state
+    _vars = vars
     _advance_state()
 
 func _end_conversation() -> void:
@@ -34,6 +36,7 @@ func _end_conversation_now() -> void:
     $Branching.visible = false
     _state = "start"
     _index = 0
+    _vars = {}
     $ShowTimer.stop()
 
 func _end_conversation_deferred() -> void:

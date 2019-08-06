@@ -8,8 +8,6 @@
 [ext_resource path="res://Furniture/DebugGreenBox/DebugGreenBox.tscn" type="PackedScene" id=6]
 [ext_resource path="res://Furniture/Bookshelf/Bookshelf.tscn" type="PackedScene" id=7]
 
-
-
 [node name="DebugRoom" type="Node2D"]
 script = ExtResource( 1 )
 

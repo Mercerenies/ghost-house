@@ -4,6 +4,7 @@ class_name Room
 const Tile = RoomTypes.Tile
 
 var entities: Dictionary = {}
+var marked_entities: Dictionary = {}
 
 func get_tile_cell(pos: Vector2) -> int:
     var result = get_cellv(pos)
@@ -31,8 +32,8 @@ func is_wall_at(pos: Vector2) -> bool:
 func is_showing_modal() -> bool:
     return get_dialogue_box().is_active()
 
-func show_dialogue(dia: Dictionary, state: String = "start") -> void:
-    get_dialogue_box().popup(dia, state)
+func show_dialogue(dia: Dictionary, state: String = "start", vars: Dictionary = {}) -> void:
+    get_dialogue_box().popup(dia, state, vars)
 
 func get_dialogue_box():
     return $CanvasLayer/DialogueBox
@@ -45,6 +46,9 @@ func get_player_stats():
 
 func get_entities() -> Array:
     return $Entities.get_children()
+
+func get_marked_entities() -> Dictionary:
+    return marked_entities
 
 func _ready():
     pass

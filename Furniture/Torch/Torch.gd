@@ -18,3 +18,6 @@ func lighting() -> Array:
 
 func unposition_self() -> void:
     get_room().set_entity_cell(cell, null)
+
+func chance_of_turning_evil() -> float:
+    return 0.0
