@@ -13,7 +13,8 @@ func lighting() -> Array:
     return [{
         "type": "circle",
         "position": pos,
-        "radius": 24
+        "radius": 24,
+        "color": Color(1, 1, 1, 1)
     }]
 
 func unposition_self() -> void:

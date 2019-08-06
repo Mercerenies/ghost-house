@@ -24,7 +24,7 @@ func _draw() -> void:
         for a in lighting:
             match a['type']:
                 'circle':
-                    draw_circle(a['position'] - transform, a['radius'], Color(1, 1, 1, 1))
+                    draw_circle(a['position'] - transform, a['radius'], a['color'])
                 'flashlight':
                     var pos = a['position']
                     var fov = a['fov']
@@ -33,5 +33,5 @@ func _draw() -> void:
                     points.push_back(pos - transform)
                     points.push_back(pos + Vector2(range_.length(), range_.length() * tan(fov / 2.0)).rotated(range_.angle()) - transform)
                     points.push_back(pos + Vector2(range_.length(), - range_.length() * tan(fov / 2.0)).rotated(range_.angle()) - transform)
-                    var colors = PoolColorArray([Color(1, 1, 1, 1)])
+                    var colors = PoolColorArray([a['color']])
                     draw_polygon(points, colors)
