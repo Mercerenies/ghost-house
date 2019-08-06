@@ -6,7 +6,8 @@ var vars: Dictionary = {
     "vanishing": false
 }
 
-var change_in_alpha: float = 1.0
+var increase_in_alpha: float = 1.2
+var decrease_in_alpha: float = 0.4
 
 func _ready():
     # DEBUG CODE
@@ -21,7 +22,9 @@ func _process(delta: float) -> void:
         var dir = abs((position - player.position).angle_to(Vector2(1, 0).rotated(player.get_direction() * PI / 2.0)))
         var distance_a = clamp((1 / 128.0) * (192 - distance), 0, 1)
         var dir_a = clamp((4.0 / PI) * (PI / 2.0 - dir), 0, 1)
-        modulate.a = Util.toward(modulate.a, change_in_alpha * delta, max(distance_a, dir_a))
+        var target_a = round(max(distance_a, dir_a))
+        var change_a = increase_in_alpha if modulate.a < target_a else decrease_in_alpha
+        modulate.a = Util.toward(modulate.a, change_a * delta, target_a)
     else:
         modulate.a = 1.0
 
