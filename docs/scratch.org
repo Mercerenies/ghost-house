@@ -42,3 +42,12 @@
    + [ ] Stove
    + [ ] Dishwasher
    + [X] Torch
+* THOUGHTS
+** "Evil" Rooms
+   + Some rooms (very small probability) will randomly just have all
+     of the furniture be evil and maybe have more bad guys too.
+** More Exciting "Evil" Effects
+   + Vanishing Furniture that can attack on inspection is cool and
+     all, but some other stuff may be neat.
+     - Chairs that get up and throw themselves at you when you pass.
+     - Bookshelves that spawn books to fly at you.

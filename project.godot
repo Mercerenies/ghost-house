@@ -9,6 +9,11 @@
 config_version=4
 
 _global_script_classes=[ {
+"base": "Node",
+"class": "DialogueConstants",
+"language": "GDScript",
+"path": "res://DialogueBox/DialogueConstants.gd"
+}, {
 "base": "MobileEntity",
 "class": "DialogueEntity",
 "language": "GDScript",
@@ -70,6 +75,7 @@ _global_script_classes=[ {
 "path": "res://StaticEntity/StaticEntity.gd"
 } ]
 _global_script_class_icons={
+"DialogueConstants": "",
 "DialogueEntity": "",
 "EdgeFurniturePlacement": "",
 "EdgePlacementManager": "",

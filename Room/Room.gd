@@ -52,3 +52,10 @@ func get_marked_entities() -> Dictionary:
 
 func _ready():
     pass
+
+func _on_DialogueBox_do_action(action, arg):
+    match action:
+        "noop":
+            pass
+        "harm_player":
+            get_player_stats().add_player_health(- arg)

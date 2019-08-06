@@ -27,6 +27,15 @@
    + ~speaker~ (optional) - The speaker.
    + ~options~ (required) - An array of options. Each option should
      have a ~text~ key and a ~state~ key.
+** ~action~ Instruction
+   Performs an action in the game room.
+   + ~action~ (required) - The action to perform.
+   + ~arg~ (o / r) - An argument. May be required, depending on the action.
+*** ~noop~ Action
+    Does nothing. No argument necessary.
+*** ~harm_player~ Action
+    Deals damage to the player. ~arg~ is required and must be a
+    nonnegative integer.
 * ROOM FORMAT
   A room object specifies generation parameters for producing a room.
   It is a dictionary whose top-level keys are as follows. All of these

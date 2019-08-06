@@ -1,5 +1,7 @@
 extends Node2D
 
+signal do_action(action, arg)
+
 var _data: Dictionary = {}
 var _state: String = "start"
 var _index: int = 0
@@ -78,6 +80,14 @@ func _advance_state() -> void:
                 $ShowTimer.start()
                 visible = true
                 _active_branch = instr['options']
+            'action':
+                var arg
+                if instr.has('arg'):
+                    arg = instr['arg']
+                else:
+                    arg = null
+                emit_signal("do_action", instr['action'], arg)
+                _advance_state()
 
 func _text_shown() -> void:
     if not _active_branch.empty():

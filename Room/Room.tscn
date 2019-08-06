@@ -28,3 +28,4 @@ visible = false
 [node name="Entities" type="Node2D" parent="."]
 
 [node name="Lighting" parent="." instance=ExtResource( 6 )]
+[connection signal="do_action" from="CanvasLayer/DialogueBox" to="." method="_on_DialogueBox_do_action"]
