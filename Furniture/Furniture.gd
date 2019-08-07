@@ -12,8 +12,9 @@ var decrease_in_alpha: float = 0.4
 func _ready():
     # DEBUG CODE
     interaction['evil'] = [
-        { "command": "say", "text": "Ouch!" },
-        { "command": "action", "action": "harm_player", "arg": 1 }
+        { "command": "action", "action": "harm_player", "arg": 1 },
+        { "command": "action", "action": "furniture_drop", "arg": evil_drop_sprite() },
+        { "command": "say", "text": "Ouch!" }
     ]
 
 func _process(delta: float) -> void:
@@ -43,3 +44,6 @@ func chance_of_turning_evil() -> float:
 
 func turn_evil() -> void:
     vars['vanishing'] = true
+
+func evil_drop_sprite() -> Sprite:
+    return $Sprite as Sprite # God, I hope this exists. If it doesn't, override this method!

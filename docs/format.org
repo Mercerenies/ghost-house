@@ -36,6 +36,9 @@
 *** ~harm_player~ Action
     Deals damage to the player. ~arg~ is required and must be a
     nonnegative integer.
+*** ~furniture_drop~ Action
+    Performs the furniture drop visual effect. ~arg~ is required and
+    must be a sprite resource.
 * ROOM FORMAT
   A room object specifies generation parameters for producing a room.
   It is a dictionary whose top-level keys are as follows. All of these

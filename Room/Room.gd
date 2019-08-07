@@ -2,6 +2,7 @@ extends TileMap
 class_name Room
 
 const Tile = RoomTypes.Tile
+const FurnitureDropScene = preload("res://FurnitureDrop/FurnitureDrop.tscn")
 
 var entities: Dictionary = {}
 var marked_entities: Dictionary = {}
@@ -59,3 +60,8 @@ func _on_DialogueBox_do_action(action, arg):
             pass
         "harm_player":
             get_player_stats().add_player_health(- arg)
+        "furniture_drop":
+            var scene = FurnitureDropScene.instance()
+            scene.assign_sprite(arg)
+            $CanvasLayer.add_child(scene)
+            
