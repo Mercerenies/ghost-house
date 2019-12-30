@@ -63,6 +63,10 @@ func _process(delta: float) -> void:
                 target_entity.on_interact()
     if not Input.is_action_pressed("ui_dash"):
         stats.add_player_stamina(stamina_recovery_rate * delta)
+    if stats.has_iframe():
+        modulate.a = 0.5
+    else:
+        modulate.a = 1.0
 
 func lighting() -> Array:
     return [

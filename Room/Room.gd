@@ -59,9 +59,8 @@ func _on_DialogueBox_do_action(action, arg):
         "noop":
             pass
         "harm_player":
-            get_player_stats().add_player_health(- arg)
+            get_player_stats().damage_player(arg)
         "furniture_drop":
             var scene = FurnitureDropScene.instance()
             scene.assign_sprite(arg)
             $CanvasLayer.add_child(scene)
-            
