@@ -4,9 +4,21 @@ func _ready() -> void:
     interaction["idle"] = [
          { "command": "say", "text": "A shelf full of old books." }
     ]
+    vars["flying_books"] = false
+    $FlyingBookSpawner.set_entity(self)
     set_dims(Vector2(2, 1))
 
 func set_direction(a: int):
     $Sprite.frame = (a + 1) % 2
     set_dims(Vector2(2, 1) if a % 2 == 1 else Vector2(1, 2))
 
+func chance_of_turning_evil() -> float:
+    return 3.0
+
+func turn_evil() -> void:
+    # 80% chance of having flying books, 20% chance of being vanishing
+    if randf() < 0.8:
+        vars['flying_books'] = true
+        $FlyingBookSpawner.activate()
+    else:
+        .turn_evil()
