@@ -61,6 +61,13 @@ func _process(delta: float) -> void:
             var target_entity = get_room().get_entity_cell(target_cell)
             if target_entity != null:
                 target_entity.on_interact()
+        elif Input.is_action_just_released("ui_debug_tap"):
+            # DEBUG CODE
+            var target_cell = cell + Vector2(1, 0).rotated(get_direction() * PI / 2)
+            target_cell = Vector2(round(target_cell.x), round(target_cell.y))
+            var target_entity = get_room().get_entity_cell(target_cell)
+            if target_entity != null:
+                target_entity.on_debug_tap()
     if not Input.is_action_pressed("ui_dash"):
         stats.add_player_stamina(stamina_recovery_rate * delta)
     if stats.has_iframe():
