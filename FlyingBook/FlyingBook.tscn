@@ -20,4 +20,9 @@ hframes = 4
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 position = Vector2( 7.62939e-06, 2.26413 )
 shape = SubResource( 1 )
+
+[node name="StateTimer" type="Timer" parent="."]
+wait_time = 2.0
+autostart = true
 [connection signal="area_entered" from="Area2D" to="." method="_on_Area2D_area_entered"]
+[connection signal="timeout" from="StateTimer" to="." method="_on_StateTimer_timeout"]
