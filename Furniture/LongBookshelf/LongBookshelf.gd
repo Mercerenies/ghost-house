@@ -10,7 +10,14 @@ func _ready() -> void:
 
 func set_direction(a: int):
     $Sprite.frame = (a + 1) % 2
-    set_dims(Vector2(2, 1) if a % 2 == 1 else Vector2(1, 2))
+    if a % 2 == 1:
+        set_dims(Vector2(2, 1))
+        $FlyingBookSpawner.width = 64.0
+        $FlyingBookSpawner.height = 28.0
+    else:
+        set_dims(Vector2(1, 2))
+        $FlyingBookSpawner.width = 32.0
+        $FlyingBookSpawner.height = 60.0
 
 func chance_of_turning_evil() -> float:
     return 3.0
