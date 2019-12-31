@@ -27,8 +27,8 @@ func deactivate() -> void:
 
 func _on_CycleTimer_timeout():
     var player = get_room().get_marked_entities()['player']
-    var player_distance = (player.global_position - global_position).length()
-    var player_dir = abs((entity.position - player.position).angle_to(Vector2(1, 0).rotated(player.get_direction() * PI / 2.0)))
+    var player_distance = EnemyAI.distance_to_player(entity)
+    var player_dir = EnemyAI.player_line_of_sight(entity)
 
     if get_room().is_showing_modal():
         # Don't spawn if in dialogue mode

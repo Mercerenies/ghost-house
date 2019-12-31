@@ -20,8 +20,8 @@ func _ready():
 func _process(delta: float) -> void:
     var player = get_room().get_marked_entities()['player']
     if vars['vanishing']:
-        var distance = (player.position - position).length()
-        var dir = abs((position - player.position).angle_to(Vector2(1, 0).rotated(player.get_direction() * PI / 2.0)))
+        var distance = EnemyAI.distance_to_player(self)
+        var dir = EnemyAI.player_line_of_sight(self)
         var distance_a = clamp((1 / 128.0) * (192 - distance), 0, 1)
         var dir_a = clamp((4.0 / PI) * (PI / 2.0 - dir), 0, 1)
         var target_a = round(max(distance_a, dir_a))
