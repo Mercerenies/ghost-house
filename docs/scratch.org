@@ -23,6 +23,7 @@
    + [X] Mirror
 ** EDGE FURNITURE
    + [X] Bookshelf
+     - [X] "Flying Books" mode
    + [ ] Desk
    + [X] Toilet
    + [X] Cabinet
@@ -37,7 +38,9 @@
    + [X] Recliner
    + [X] Sofa
    + [X] Dining Chair
+     - [X] "Flying furniture" mode
    + [X] Office Chair
+     - [X] "Flying furniture" mode
    + [X] Dresser
    + [ ] Stove
    + [ ] Dishwasher
