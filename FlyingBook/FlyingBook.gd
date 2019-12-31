@@ -12,6 +12,9 @@ func _ready() -> void:
     modulate = VALID_COLORS[randi() % len(VALID_COLORS)]
 
 func _process(delta: float) -> void:
+    if get_room().is_showing_modal():
+        return
+
     if introducing:
         anim_index += INTRO_IMAGE_SPEED * delta
         if anim_index >= 4:

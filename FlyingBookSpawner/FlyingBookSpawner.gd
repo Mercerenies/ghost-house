@@ -30,6 +30,9 @@ func _on_CycleTimer_timeout():
     var player_distance = (player.global_position - global_position).length()
     var player_dir = abs((position - player.position).angle_to(Vector2(1, 0).rotated(player.get_direction() * PI / 2.0)))
 
+    if get_room().is_showing_modal():
+        # Don't spawn if in dialogue mode
+        return
     if book != null:
         # Only allow one book in play at a time
         return
