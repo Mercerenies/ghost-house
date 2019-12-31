@@ -2,10 +2,11 @@ extends Entity
 
 const Player = preload("res://Player/Player.gd")
 
-const INTRO_HOVER_SPEED = 32
+const INTRO_HOVER_SPEED = 24
 const LAUNCH_SPEED = 210
-const LAUNCH_ANGULAR_SPEED = 2 * PI
+const LAUNCH_ANGULAR_SPEED = 3 * PI
 const DISAPPEAR_SPEED = 2
+const MIN_LAUNCH_DISTANCE = 64
 
 enum State {
     Introducing,
@@ -18,6 +19,7 @@ var sprite = null
 var state: int = State.Introducing
 var attack_vector = Vector2()
 var attack_angle = 0
+var teeter_index = 0
 
 func _ready() -> void:
     $StateTimer.start(1)
@@ -25,9 +27,12 @@ func _ready() -> void:
 func _process(delta: float) -> void:
     match state:
         State.Introducing:
+            teeter_index += delta
             position.y -= INTRO_HOVER_SPEED * delta
+            sprite.rotation = PI / 8 * sin(teeter_index * PI)
         State.Stalling:
-            pass
+            teeter_index += delta
+            sprite.rotation = PI / 8 * sin(teeter_index * PI)
         State.Launching:
             position += attack_vector * LAUNCH_SPEED * delta
             sprite.rotation += attack_angle * LAUNCH_ANGULAR_SPEED * delta
@@ -63,8 +68,9 @@ func _on_StateTimer_timeout():
             $StateTimer.start(randf() * 2 + 1)
         State.Stalling:
             var player = EnemyAI.get_player(self)
+            var dist = EnemyAI.distance_to_player(self)
             var dir = EnemyAI.player_line_of_sight(self)
-            if dir > 3 * PI / 8:
+            if dir > 3 * PI / 8 and dist >= MIN_LAUNCH_DISTANCE:
                 attack_vector = (player.position + Vector2(16, 16) - self.position).normalized()
                 attack_angle = sign(attack_vector.x)
                 if attack_angle == 0:
