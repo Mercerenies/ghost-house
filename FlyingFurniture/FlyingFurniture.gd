@@ -25,6 +25,8 @@ func _ready() -> void:
     $StateTimer.start(1)
 
 func _process(delta: float) -> void:
+    if get_room().is_showing_modal():
+        return
     match state:
         State.Introducing:
             teeter_index += delta
@@ -62,6 +64,9 @@ func _on_Area2D_area_entered(area):
                 state = State.Disappearing
 
 func _on_StateTimer_timeout():
+    if get_room().is_showing_modal():
+        $StateTimer.start(1)
+        return
     match state:
         State.Introducing:
             state = State.Stalling

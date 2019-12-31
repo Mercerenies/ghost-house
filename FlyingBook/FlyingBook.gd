@@ -100,6 +100,8 @@ func _on_Area2D_area_entered(area):
 
 
 func _on_StateTimer_timeout():
+    if get_room().is_showing_modal():
+        return
     match state:
         State.Introducing:
             pass
