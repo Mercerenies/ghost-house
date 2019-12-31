@@ -88,6 +88,13 @@ func _advance_state() -> void:
                     arg = null
                 emit_signal("do_action", instr['action'], arg)
                 _advance_state()
+            'dump_vars':
+                _text = JSON.print(_vars)
+                if instr.has('speaker'):
+                    $SpeakerFrame.visible = true
+                    $SpeakerLabel.text = instr['speaker']
+                $ShowTimer.start()
+                visible = true
 
 func _text_shown() -> void:
     if not _active_branch.empty():
