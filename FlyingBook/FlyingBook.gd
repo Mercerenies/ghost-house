@@ -6,9 +6,15 @@ const VALID_COLORS = [Color(0xBA7153FF), Color(0x815D83FF), Color(0x945454FF), C
 const INTRO_IMAGE_SPEED = 8
 const IMAGE_SPEED = 8
 const DISAPPEAR_SPEED = 2
+const IDLE_MOVEMENT_SPEED = 10
 
-var introducing = true
-var disappearing = false
+enum State {
+    Introducing,
+    Idle,
+    Disappearing,
+}
+
+var state: int = State.Introducing
 var anim_index = 0.0
 var hover_index = 0.0
 
@@ -19,27 +25,30 @@ func _process(delta: float) -> void:
     if get_room().is_showing_modal():
         return
 
-    if introducing:
-        anim_index += INTRO_IMAGE_SPEED * delta
-        if anim_index >= 4:
-            introducing = false
-    else:
-        hover_index += delta
-        anim_index += IMAGE_SPEED * delta
-        anim_index = (fmod((anim_index - 4), 4)) + 4
-        $Sprite.position.y = 10 + 4 * sin(hover_index * 2 * PI)
-
-    if disappearing:
-        modulate.a = Util.toward(modulate.a, delta * DISAPPEAR_SPEED, 0)
-        if modulate.a == 0:
-            queue_free()
+    match state:
+        State.Introducing:
+            anim_index += INTRO_IMAGE_SPEED * delta
+            if anim_index >= 4:
+                state = State.Idle
+        State.Idle:
+            hover_index += delta
+            anim_index += IMAGE_SPEED * delta
+            anim_index = (fmod((anim_index - 4), 4)) + 4
+            $Sprite.position.y = 10 + 4 * sin(hover_index * 2 * PI)
+            var player = get_room().get_marked_entities()['player']
+            position += (player.global_position - global_position).normalized() * IDLE_MOVEMENT_SPEED * delta
+        State.Disappearing:
+            modulate.a = Util.toward(modulate.a, delta * DISAPPEAR_SPEED, 0)
+            if modulate.a == 0:
+                queue_free()
 
     $Sprite.frame = floor(anim_index)
 
 
 func _on_Area2D_area_entered(area):
-    if not (introducing or disappearing):
+    if state == State.Idle:
         if area.get_parent() is Player:
             var stats = get_room().get_player_stats()
             if stats.damage_player(1):
-                disappearing = true
+                state = State.Disappearing
+                
