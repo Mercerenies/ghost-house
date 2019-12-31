@@ -1,10 +1,12 @@
 extends Furniture
 
+func _init() -> void:
+    vars["flying_furniture"] = false
+
 func _ready() -> void:
     interaction["idle"] = [
          { "command": "say", "text": "An old wooden chair." }
     ]
-    vars["flying_furniture"] = false
     $FlyingFurnitureSpawner.set_entity(self)
     $FlyingFurnitureSpawner.set_sprite($Sprite)
 
