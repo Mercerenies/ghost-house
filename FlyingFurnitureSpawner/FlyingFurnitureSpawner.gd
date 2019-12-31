@@ -10,6 +10,13 @@ export var maximum_distance: float = 256
 var projectile = null
 var entity = null
 var sprite = null
+var fade_in = false
+
+func _process(delta: float) -> void:
+    if fade_in:
+        sprite.modulate.a = Util.toward(sprite.modulate.a, delta, 1)
+        if sprite.modulate.a == 1:
+            fade_in = false
 
 func set_entity(entity):
     self.entity = entity
@@ -69,7 +76,9 @@ func _on_FlyingFurniture_tree_exited():
 
 func _on_CooldownTimer_timeout():
     if EnemyAI.distance_to_player(entity) > RESPAWN_DISTANCE:
-        sprite.show() # TODO Make this a smooth transition
+        sprite.show()
+        sprite.modulate.a = 0
+        fade_in = true
         entity.position_self()
     else:
         $CooldownTimer.start()
