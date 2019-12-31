@@ -27,12 +27,14 @@ func add_player_health(a: float) -> void:
 func add_player_stamina(a: float) -> void:
     set_player_stamina(get_player_stamina() + a)
 
-func damage_player(a: float) -> void:
+func damage_player(a: float) -> bool:
     if has_iframe():
-        return
+        return false
     add_player_health(- a)
     if a > 0:
         trigger_iframe()
+        return true
+    return false
 
 func trigger_iframe() -> void:
     $PlayerIFrame.start()
