@@ -16,6 +16,9 @@ func _ready():
         { "command": "action", "action": "furniture_drop", "arg": evil_drop_sprite() },
         { "command": "say", "text": "Ouch!" }
     ]
+    interaction['debug_dump'] = [
+        { "command": "dump_vars" }
+    ]
 
 func _process(delta: float) -> void:
     var player = get_room().get_marked_entities()['player']
@@ -33,9 +36,12 @@ func _process(delta: float) -> void:
 func on_interact() -> void:
     if not interaction.empty():
         if vars['vanishing']:
-            get_room().show_dialogue(interaction, "evil")
+            get_room().show_dialogue(interaction, "evil", vars)
         else:
-            get_room().show_dialogue(interaction, "idle")
+            get_room().show_dialogue(interaction, "idle", vars)
+
+func on_debug_tap() -> void:
+    get_room().show_dialogue(interaction, "debug_dump", vars)
 
 func chance_of_turning_evil() -> float:
     # This is multiplied by the global room chance, so make it slightly larger or smaller than 1.0

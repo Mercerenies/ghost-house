@@ -13,5 +13,8 @@ func position_self() -> void:
 func on_interact() -> void:
     pass
 
+func on_debug_tap() -> void:
+    pass
+
 func lighting() -> Array:
     return []
