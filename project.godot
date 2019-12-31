@@ -34,11 +34,6 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Entity/Entity.gd"
 }, {
-"base": "Node2D",
-"class": "FlyingBookSpawner",
-"language": "GDScript",
-"path": "res://FlyingBookSpawner/FlyingBookSpawner.gd"
-}, {
 "base": "StaticEntity",
 "class": "Furniture",
 "language": "GDScript",
@@ -85,7 +80,6 @@ _global_script_class_icons={
 "EdgeFurniturePlacement": "",
 "EdgePlacementManager": "",
 "Entity": "",
-"FlyingBookSpawner": "",
 "Furniture": "",
 "FurniturePlacement": "",
 "GeneratorData": "",

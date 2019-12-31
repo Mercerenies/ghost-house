@@ -1,4 +1,3 @@
-class_name FlyingBookSpawner
 extends Node2D
 
 const FlyingBook = preload("res://FlyingBook/FlyingBook.tscn")
