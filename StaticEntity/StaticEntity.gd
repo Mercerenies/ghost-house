@@ -13,8 +13,9 @@ func position_self() -> void:
     cell = current_cell
 
 func unposition_self() -> void:
-    # ///// Not correct if dims > (1, 1)
-    get_room().set_entity_cell(cell, null)
+    for i in range(dims.x):
+        for j in range(dims.y):
+            get_room().set_entity_cell(cell + Vector2(i, j), null)
 
 func set_dims(vec: Vector2) -> void:
     dims = vec
