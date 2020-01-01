@@ -1,5 +1,8 @@
 extends Node2D
 
+# NOTE: For now, this should ONLY be used on 1x1 objects. We can make it work on bigger
+# ones, but it would require some work.
+
 const FlyingFurniture = preload("res://FlyingFurniture/FlyingFurniture.tscn")
 
 const RESPAWN_DISTANCE: float = 512.0
@@ -35,7 +38,6 @@ func deactivate() -> void:
     $StartDelayTimer.stop()
 
 func _on_CycleTimer_timeout():
-    var player = get_room().get_marked_entities()['player']
     var player_distance = EnemyAI.distance_to_player(entity)
     var player_dir = EnemyAI.player_line_of_sight(entity)
 
@@ -75,7 +77,8 @@ func _on_FlyingFurniture_tree_exited():
     $CooldownTimer.start()
 
 func _on_CooldownTimer_timeout():
-    if EnemyAI.distance_to_player(entity) > RESPAWN_DISTANCE:
+    var room = get_room()
+    if EnemyAI.distance_to_player(entity) > RESPAWN_DISTANCE and room.get_entity_cell(entity.cell) == null:
         sprite.show()
         sprite.modulate.a = 0
         fade_in = true
