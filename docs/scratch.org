@@ -36,6 +36,7 @@
    + [X] Dryer
    + [X] Television
    + [X] Recliner
+     - [X] "Flying furniture" mode
    + [X] Sofa
    + [X] Dining Chair
      - [X] "Flying furniture" mode
