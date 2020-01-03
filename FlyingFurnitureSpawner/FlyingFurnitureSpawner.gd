@@ -48,7 +48,7 @@ func _on_CycleTimer_timeout():
         # Only allow one entity in play at a time
         return
     if $CooldownTimer.time_left > 0:
-        # Cooling down after last book
+        # Cooling down after last launch
         return
     if player_distance < minimum_distance or player_distance >= maximum_distance:
         # Distance constraints are not satisfied

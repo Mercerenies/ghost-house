@@ -65,6 +65,10 @@ func _on_Area2D_area_entered(area):
 
 func _on_StateTimer_timeout():
     if get_room().is_showing_modal():
+        # TODO This is an approximation to make the game appear modal for these.
+        # We really need to make StateTimer be non-one-shot so that we can do a
+        # better job with this (it already is repeatable in FlyingFairy and
+        # FlyingBook)
         $StateTimer.start(1)
         return
     match state:
