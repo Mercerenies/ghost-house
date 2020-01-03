@@ -14,8 +14,8 @@ enum State {
 # TODO Camouflage
 
 const HUE_CHANGE_SPEED = 0.05
-const TOP_SPEED = 20.0
-const ACCELERATION = 2.5
+const TOP_SPEED = 35.0
+const ACCELERATION = 2.0
 const TARGET_RADIUS = 6
 const RETREAT_SPEED = 200.0
 const MIGRATE_SPEED = 15.0
@@ -162,7 +162,7 @@ func _on_StateTimer_timeout():
             pass
         State.Hiding:
             var player_dir = EnemyAI.player_line_of_sight(self)
-            if player_distance < BEGIN_STALK_DISTANCE and player_dir > PI / 2 and randf() < 0.6:
+            if player_distance < BEGIN_STALK_DISTANCE and player_dir > PI / 2 and randf() < 0.9:
                 state = State.Stalking
         State.Disappearing:
             pass
