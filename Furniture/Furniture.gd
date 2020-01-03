@@ -1,13 +1,24 @@
 extends StaticEntity
 class_name Furniture
 
+const FlyingFairySpawner = preload("res://FlyingFairySpawner/FlyingFairySpawner.tscn")
+
 var interaction: Dictionary = {}
 var vars: Dictionary = {
-    "vanishing": false
+    "vanishing": false,
+    "flying_fairy": false,
 }
+var fairy_spawner = null
 
 var increase_in_alpha: float = 1.2
 var decrease_in_alpha: float = 0.4
+
+func _init():
+    # Every furniture node gets a flying fairy spawner automatically. It's
+    # disabled by default
+    fairy_spawner = FlyingFairySpawner.instance()
+    fairy_spawner.set_entity(self)
+    add_child(fairy_spawner)
 
 func _ready():
     # DEBUG CODE
@@ -49,7 +60,13 @@ func chance_of_turning_evil() -> float:
     return 1.0
 
 func turn_evil() -> void:
-    vars['vanishing'] = true
+    # 10% chance of spawning fairies (if no natural light is emitted). In any other case,
+    # be vanishing
+    if (not naturally_emits_light()) and randf() < 0.10:
+        vars['flying_fairy'] = true
+        fairy_spawner.activate()
+    else:
+        vars['vanishing'] = true
 
 func evil_drop_sprite() -> Sprite:
     return $Sprite as Sprite # God, I hope this exists. If it doesn't, override this method!

@@ -55,3 +55,8 @@
      all, but some other stuff may be neat.
      - Chairs that get up and throw themselves at you when you pass.
      - Bookshelves that spawn books to fly at you.
+** Shadow Players
+  + Appears randomly several steps behind the player, mocks the
+    player's movements at a relatively slow fixed rate in an attempt
+    to catch up to them. Deals damage and disappears on contact, or
+    after a certain amount of time.

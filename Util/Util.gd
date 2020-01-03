@@ -11,3 +11,6 @@ func toward(value: float, delta: float, target: float) -> float:
     if abs(target - value) <= delta:
         return target
     return value + sign(target - value) * delta
+
+func choose(arr: Array):
+    return arr[randi() % len(arr)]
