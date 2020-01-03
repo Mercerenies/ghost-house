@@ -18,3 +18,6 @@ func on_debug_tap() -> void:
 
 func lighting() -> Array:
     return []
+
+func naturally_emits_light() -> bool:
+    return false

@@ -16,5 +16,8 @@ func lighting() -> Array:
         "color": Color(1, 1, 1, modulate.a)
     }]
 
+func naturally_emits_light() -> bool:
+    return true
+
 func chance_of_turning_evil() -> float:
     return 0.10
