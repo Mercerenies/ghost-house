@@ -11,9 +11,7 @@ enum State {
     Disappearing
 }
 
-# TODO Camouflage
-
-const HUE_CHANGE_SPEED = 0.05
+#const HUE_CHANGE_SPEED = 0.05
 const TOP_SPEED = 35.0
 const ACCELERATION = 2.0
 const TARGET_RADIUS = 6
@@ -25,12 +23,13 @@ const DISAPPEAR_SPEED = 2
 
 var state: int = State.Stalking
 var light_radius: float = 32
-var hue: float = 0.0
+#var hue: float = 0.0
 var speed: float = 0.0
 var target_position: Vector2 = Vector2()
 
 func _ready() -> void:
-    modulate = Color.from_hsv(hue, 1, 1)
+    #modulate = Color.from_hsv(hue, 1, 1)
+    camouflage_self()
 
 func _process(delta: float) -> void:
     if get_room().is_showing_modal():
@@ -58,6 +57,7 @@ func _process(delta: float) -> void:
             if (target_position - global_position).length() < MIGRATE_SPEED * delta:
                 global_position = target_position
                 state = State.Hiding
+                camouflage_self()
             else:
                 var player_dir = EnemyAI.player_line_of_sight(self)
                 if player_dir < PI / 2:
@@ -69,6 +69,7 @@ func _process(delta: float) -> void:
             if (target_position - global_position).length() < RETREAT_SPEED * delta:
                 global_position = target_position
                 state = State.Hiding
+                camouflage_self()
             else:
                 position += direction_vector * RETREAT_SPEED * delta
         State.Hiding:
@@ -78,8 +79,8 @@ func _process(delta: float) -> void:
             if modulate.a == 0:
                 queue_free()
 
-    hue = fmod(hue + HUE_CHANGE_SPEED * delta, 1)
-    modulate = Color.from_hsv(hue, 1, 1, modulate.a)
+    #hue = fmod(hue + HUE_CHANGE_SPEED * delta, 1)
+    #modulate = Color.from_hsv(hue, 1, 1, modulate.a)
 
 # The difference between the following two functions is simple. choose_retreat_target()
 # implies that the fairy is panicking and running away, hence it will always choose the
@@ -183,3 +184,11 @@ func lighting() -> Array:
 
 func naturally_emits_light() -> bool:
     return true
+
+func camouflage_self() -> void:
+    var occupied_cell = Vector2(floor(position.x / 32), floor(position.y / 32))
+    var furniture = get_room().get_entity_cell(occupied_cell)
+    if furniture != null and furniture is Furniture:
+        var color = AverageColors.get_color(furniture)
+        color.a = modulate.a
+        modulate = color

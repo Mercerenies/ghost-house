@@ -6,6 +6,8 @@ use 5.010;
 
 use Image::PNG::Libpng qw(read_png_file);
 use Image::PNG::Const qw(PNG_TRANSFORM_EXPAND PNG_COLOR_TYPE_RGB_ALPHA);
+use File::Find qw(find);
+use JSON qw(encode_json);
 
 # unpack_pixel($pixel)
 #
@@ -46,5 +48,21 @@ sub average_color {
     return $r * 16777216 + $g * 65536 + $b * 256 + 255;
 }
 
-printf "%#.8x\n", average_color('./Furniture/LongBookshelf/LongBookshelf.png');
+my @files;
+my %hash;
 
+sub wanted {
+    my $name = $File::Find::name;
+    push @files, $name if $name =~ /\.png$/;
+}
+
+find { wanted => \&wanted, no_chdir => 1 }, './Furniture';
+for my $filename (@files) {
+    my $color = average_color($filename);
+    $filename =~ m[/(\w*)\.png$];
+    $hash{$1} = $color;
+}
+
+#printf "%#.8x\n", average_color('./Furniture/LongBookshelf/LongBookshelf.png');
+
+say encode_json \%hash;

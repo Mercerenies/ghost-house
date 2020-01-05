@@ -101,6 +101,7 @@ config/icon="res://icon.png"
 Util="*res://Util/Util.gd"
 RoomTypes="*res://RoomTypes/RoomTypes.gd"
 EnemyAI="*res://EnemyAI/EnemyAI.gd"
+AverageColors="*res://AverageColors/AverageColors.gd"
 
 [input]
 
