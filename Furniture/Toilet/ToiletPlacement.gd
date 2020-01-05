@@ -27,3 +27,5 @@ func spawn_at(value):
     obj.position = value["position"] * 32
     obj.set_direction(value["direction"])
     return obj
+func get_furniture_name():
+    return "ToiletPlacement"

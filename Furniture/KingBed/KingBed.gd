@@ -8,3 +8,5 @@ func _ready() -> void:
 func set_direction(a: int):
     $Sprite.frame = a
 
+func get_furniture_name():
+    return "KingBed"

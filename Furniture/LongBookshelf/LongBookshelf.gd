@@ -31,3 +31,5 @@ func turn_evil() -> void:
         $FlyingBookSpawner.activate()
     else:
         .turn_evil()
+func get_furniture_name():
+    return "LongBookshelf"

@@ -20,3 +20,5 @@ func turn_evil() -> void:
         $FlyingFurnitureSpawner.activate()
     else:
         .turn_evil()
+func get_furniture_name():
+    return "DiningChair"

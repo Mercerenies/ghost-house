@@ -5,3 +5,5 @@ func _ready() -> void:
          { "command": "say", "text": "A strange green box. It does little of interest." }
     ]
 
+func get_furniture_name():
+    return "DebugGreenBox"

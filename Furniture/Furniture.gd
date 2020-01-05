@@ -19,6 +19,7 @@ func _init():
     fairy_spawner = FlyingFairySpawner.instance()
     fairy_spawner.set_entity(self)
     add_child(fairy_spawner)
+    vars['furniture_name']  = get_furniture_name()
 
 func _ready():
     # DEBUG CODE
@@ -70,3 +71,6 @@ func turn_evil() -> void:
 
 func evil_drop_sprite() -> Sprite:
     return $Sprite as Sprite # God, I hope this exists. If it doesn't, override this method!
+
+func get_furniture_name():
+    return "Furniture"

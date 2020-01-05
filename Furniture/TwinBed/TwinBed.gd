@@ -10,3 +10,5 @@ func set_direction(a: int):
     $Sprite.frame = a
     set_dims(Vector2(2, 1) if a % 2 == 0 else Vector2(1, 2))
 
+func get_furniture_name():
+    return "TwinBed"

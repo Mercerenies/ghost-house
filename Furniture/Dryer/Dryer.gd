@@ -8,3 +8,5 @@ func _ready() -> void:
 func set_direction(a: int):
     $Sprite.frame = (5 - a) % 4
 
+func get_furniture_name():
+    return "Dryer"
