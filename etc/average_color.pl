@@ -5,6 +5,7 @@ use warnings;
 use 5.010;
 
 use Image::PNG::Libpng qw(read_png_file);
+use Image::PNG::Const qw(PNG_TRANSFORM_EXPAND PNG_COLOR_TYPE_RGB_ALPHA);
 
 # unpack_pixel($pixel)
 #
@@ -14,8 +15,8 @@ sub unpack_pixel {
     my $r = ord substr $pixel, 0, 1;
     my $g = ord substr $pixel, 1, 1;
     my $b = ord substr $pixel, 2, 1;
-    #my $a = ord substr $pixel, 3, 1;
-    return ($r, $g, $b);
+    my $a = ord substr($pixel, 3, 1) . chr 1; # Default to 1 if not provided
+    return ($r, $g, $b, $a);
 }
 
 # average_color($filename)
@@ -23,19 +24,20 @@ sub unpack_pixel {
 # Returns an integer 0xRRGGBBAA.
 sub average_color {
     my $filename = shift;
-    my $png = read_png_file($filename);
+    my $png = read_png_file($filename, transforms => PNG_TRANSFORM_EXPAND);
     my $rows = $png->get_rows();
     my ($rs, $gs, $bs) = (0, 0, 0);
     my $count = 0;
+    my $alpha_exists = ($png->get_channels() == 4);
+    my $increment = $alpha_exists ? 4 : 3;
     for my $row (@$rows) {
-        for (my $index = 0; $index + 3 <= length $row; $index += 3) {
-            my $pixel = substr $row, $index, 3;
-            my ($r, $g, $b) = unpack_pixel($pixel);
-            print "$pixel\n";
-            $rs += $r ** 2;
-            $gs += $g ** 2;
-            $bs += $b ** 2;
-            $count += 1;
+        for (my $index = 0; $index + $increment <= length $row; $index += $increment) {
+            my $pixel = substr $row, $index, $increment;
+            my ($r, $g, $b, $a) = unpack_pixel($pixel);
+            $rs += $r ** 2 * $a;
+            $gs += $g ** 2 * $a;
+            $bs += $b ** 2 * $a;
+            $count += $a;
         }
     }
     my $r = int sqrt($rs / $count);
@@ -44,9 +46,5 @@ sub average_color {
     return $r * 16777216 + $g * 65536 + $b * 256 + 255;
 }
 
-# ///// I'm making assumptions about the channels that just aren't
-# true (note that the DebugGreenBox image has no alpha channel, which
-# puts a wedge in some things. Test with that picture too)
-
-printf "%#x\n", average_color('./Furniture/DebugGreenBox/DebugGreenBox.png');
+printf "%#.8x\n", average_color('./Furniture/LongBookshelf/LongBookshelf.png');
 
