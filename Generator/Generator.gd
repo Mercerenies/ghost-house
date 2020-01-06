@@ -56,24 +56,12 @@ func _produce_grid_array() -> void:
     _grid = GeneratorGrid.new(w, h, ID_EMPTY, ID_OOB)
     _flag_grid = GeneratorGrid.new(w * TOTAL_CELL_SIZE, h * TOTAL_CELL_SIZE, 0, 0)
 
-func _grid_get(pos: Vector2) -> int:
-    return _grid.get_value(pos)
-
-func _grid_set(pos: Vector2, value: int) -> void:
-    _grid.set_value(pos, value)
-
-func _flag_grid_get(pos: Vector2, bit: int) -> bool:
-    return _flag_grid.get_flag(pos, bit)
-
-func _flag_grid_set(pos: Vector2, bit: int, value: bool) -> void:
-    _flag_grid.set_flag(pos, bit, value)
-
 func _can_draw_hypothetical_box(box: Rect2, hypo_box: Rect2) -> bool:
     if box.intersects(hypo_box):
         return false
     for i in range(box.size.x):
         for j in range(box.size.y):
-            var pos = _grid_get(Vector2(box.position.x + i, box.position.y + j))
+            var pos = _grid.get_value(Vector2(box.position.x + i, box.position.y + j))
             if pos == ID_OOB or pos >= ID_HALLS:
                 return false
     return true
@@ -100,32 +88,32 @@ func _mark_dead_cells() -> void:
     var h = _data['config']['height']
     for i in range(w):
         for j in range(h):
-            if _grid_get(Vector2(i, j)) == ID_EMPTY and _is_cell_dead(Vector2(i, j)):
-                _grid_set(Vector2(i, j), ID_DEAD)
+            if _grid.get_value(Vector2(i, j)) == ID_EMPTY and _is_cell_dead(Vector2(i, j)):
+                _grid.set_value(Vector2(i, j), ID_DEAD)
 
 func _creates_dead_cells(box: Rect2) -> bool:
     var pos
     # Top and bottom edges
     for i in range(-1, box.size.x + 1):
         pos = box.position + Vector2(i, -1)
-        if _grid_get(pos) == ID_EMPTY and _is_cell_hypothetically_dead(pos, box):
+        if _grid.get_value(pos) == ID_EMPTY and _is_cell_hypothetically_dead(pos, box):
             return true
         pos = box.end - Vector2(i + 1, 0)
-        if _grid_get(pos) == ID_EMPTY and _is_cell_hypothetically_dead(pos, box):
+        if _grid.get_value(pos) == ID_EMPTY and _is_cell_hypothetically_dead(pos, box):
             return true
     # Left and right edges
     for i in range(-1, box.size.y + 1):
         pos = box.position + Vector2(-1, i)
-        if _grid_get(pos) == ID_EMPTY and _is_cell_hypothetically_dead(pos, box):
+        if _grid.get_value(pos) == ID_EMPTY and _is_cell_hypothetically_dead(pos, box):
             return true
         pos = box.end - Vector2(0, i + 1)
-        if _grid_get(pos) == ID_EMPTY and _is_cell_hypothetically_dead(pos, box):
+        if _grid.get_value(pos) == ID_EMPTY and _is_cell_hypothetically_dead(pos, box):
             return true
     return false
 
 func _paint_hallway(hw: HallwayData) -> void:
     for pos in hw.data:
-        _grid_set(pos, hw.id)
+        _grid.set_value(pos, hw.id)
     _boxes[hw.id] = hw
 
 func _enumerate_rectangles(pos: Vector2) -> Dictionary:
@@ -151,7 +139,7 @@ func _enumerate_rectangles(pos: Vector2) -> Dictionary:
 func _paint_room(id: int, rect: Rect2) -> void:
     for x in range(rect.position.x, rect.end.x):
         for y in range(rect.position.y, rect.end.y):
-            _grid_set(Vector2(x, y), id)
+            _grid.set_value(Vector2(x, y), id)
     _boxes[id] = RoomData.new(id, rect)
 
 func _produce_live_rooms(start_id: int = ID_ROOMS) -> int:
@@ -163,12 +151,12 @@ func _produce_live_rooms(start_id: int = ID_ROOMS) -> int:
     var cells = []
     for i in range(w):
         for j in range(h):
-            if _grid_get(Vector2(i, j)) == ID_EMPTY:
+            if _grid.get_value(Vector2(i, j)) == ID_EMPTY:
                 cells.append(Vector2(i, j))
     cells.shuffle()
 
     for pos in cells:
-        if _grid_get(pos) != ID_EMPTY:
+        if _grid.get_value(pos) != ID_EMPTY:
             continue
         var rects = _enumerate_rectangles(pos)
         var dead = rects['dead']
@@ -193,17 +181,17 @@ func _produce_dead_rooms(start_id: int) -> int:
 
     for x in range(w):
         for y in range(h):
-            if _grid_get(Vector2(x, y)) < ID_HALLS and not _grid_get(Vector2(x, y)) == ID_OOB:
+            if _grid.get_value(Vector2(x, y)) < ID_HALLS and not _grid.get_value(Vector2(x, y)) == ID_OOB:
                 if randf() < 0.5:
                     # Expand to the right
                     var ww = 1
-                    while ww < 4 and _grid_get(Vector2(x + ww, y)) < ID_HALLS and not _grid_get(Vector2(x + ww, y)) == ID_OOB:
+                    while ww < 4 and _grid.get_value(Vector2(x + ww, y)) < ID_HALLS and not _grid.get_value(Vector2(x + ww, y)) == ID_OOB:
                         ww += 1
                     _paint_room(current_id, Rect2(x, y, ww, 1))
                 else:
                     # Expand to the bottom
                     var hh = 1
-                    while hh < 4 and _grid_get(Vector2(x, y + hh)) < ID_HALLS and not _grid_get(Vector2(x, y + hh)) == ID_OOB:
+                    while hh < 4 and _grid.get_value(Vector2(x, y + hh)) < ID_HALLS and not _grid.get_value(Vector2(x, y + hh)) == ID_OOB:
                         hh += 1
                     _paint_room(current_id, Rect2(x, y, 1, hh))
                 current_id += 1
@@ -217,9 +205,9 @@ func _produce_adjacency_graph() -> Graph:
     var adja = graph.adja
     for x in range(w):
         for y in range(h):
-            var a = _grid_get(Vector2(x, y))
-            var b = _grid_get(Vector2(x + 1, y))
-            var c = _grid_get(Vector2(x, y + 1))
+            var a = _grid.get_value(Vector2(x, y))
+            var b = _grid.get_value(Vector2(x + 1, y))
+            var c = _grid.get_value(Vector2(x, y + 1))
             if a >= ID_HALLS and not adja.has(a):
                 adja[a] = []
             if b >= ID_HALLS and not adja.has(b):
@@ -239,7 +227,7 @@ func _produce_adjacency_graph() -> Graph:
 func _draw_base_room(pos: Vector2) -> void:
     var xpos = pos.x * TOTAL_CELL_SIZE + WALL_SIZE
     var ypos = pos.y * TOTAL_CELL_SIZE + WALL_SIZE
-    var cell = _grid_get(pos)
+    var cell = _grid.get_value(pos)
     var floortype = _boxes[cell].floortype
     var walltype = _boxes[cell].walltype
     if cell >= 0:
@@ -250,49 +238,49 @@ func _draw_base_room(pos: Vector2) -> void:
         # Now draw the walls
         # Top Wall
         for i in range(CELL_SIZE):
-            if _grid_get(pos + Vector2(0, -1)) == cell:
+            if _grid.get_value(pos + Vector2(0, -1)) == cell:
                 _room.set_tile_cell(Vector2(xpos + i, ypos - 1), floortype)
             else:
                 _room.set_tile_cell(Vector2(xpos + i, ypos - 1), walltype)
         # Bottom Wall
         for i in range(CELL_SIZE):
-            if _grid_get(pos + Vector2(0, 1)) == cell:
+            if _grid.get_value(pos + Vector2(0, 1)) == cell:
                 _room.set_tile_cell(Vector2(xpos + i, ypos + CELL_SIZE), floortype)
             else:
                 _room.set_tile_cell(Vector2(xpos + i, ypos + CELL_SIZE), _room.Tile.DebugWall)
         # Left Wall
         for i in range(CELL_SIZE):
-            if _grid_get(pos + Vector2(-1, 0)) == cell:
+            if _grid.get_value(pos + Vector2(-1, 0)) == cell:
                 _room.set_tile_cell(Vector2(xpos - 1, ypos + i), floortype)
             else:
                 _room.set_tile_cell(Vector2(xpos - 1, ypos + i), _room.Tile.DebugWall)
         # Right Wall
         for i in range(CELL_SIZE):
-            if _grid_get(pos + Vector2(1, 0)) == cell:
+            if _grid.get_value(pos + Vector2(1, 0)) == cell:
                 _room.set_tile_cell(Vector2(xpos + CELL_SIZE, ypos + i), floortype)
             else:
                 _room.set_tile_cell(Vector2(xpos + CELL_SIZE, ypos + i), _room.Tile.DebugWall)
         # Upper Left Wall
-        if _grid_get(pos + Vector2(-1, 0)) == cell and _grid_get(pos + Vector2(0, -1)) == cell and _grid_get(pos + Vector2(-1, -1)) == cell:
+        if _grid.get_value(pos + Vector2(-1, 0)) == cell and _grid.get_value(pos + Vector2(0, -1)) == cell and _grid.get_value(pos + Vector2(-1, -1)) == cell:
             _room.set_tile_cell(Vector2(xpos - 1, ypos - 1), floortype)
-        elif _grid_get(pos + Vector2(-1, 0)) != cell:
+        elif _grid.get_value(pos + Vector2(-1, 0)) != cell:
             _room.set_tile_cell(Vector2(xpos - 1, ypos - 1), _room.Tile.DebugWall)
         else:
             _room.set_tile_cell(Vector2(xpos - 1, ypos - 1), walltype)
         # Upper Right Wall
-        if _grid_get(pos + Vector2(1, 0)) == cell and _grid_get(pos + Vector2(0, -1)) == cell and _grid_get(pos + Vector2(1, -1)) == cell:
+        if _grid.get_value(pos + Vector2(1, 0)) == cell and _grid.get_value(pos + Vector2(0, -1)) == cell and _grid.get_value(pos + Vector2(1, -1)) == cell:
             _room.set_tile_cell(Vector2(xpos + CELL_SIZE, ypos - 1), floortype)
-        elif _grid_get(pos + Vector2(1, 0)) != cell:
+        elif _grid.get_value(pos + Vector2(1, 0)) != cell:
             _room.set_tile_cell(Vector2(xpos + CELL_SIZE, ypos - 1), _room.Tile.DebugWall)
         else:
             _room.set_tile_cell(Vector2(xpos + CELL_SIZE, ypos - 1), walltype)
         # Lower Left Wall
-        if _grid_get(pos + Vector2(-1, 0)) == cell and _grid_get(pos + Vector2(0, 1)) == cell and _grid_get(pos + Vector2(-1, 1)) == cell:
+        if _grid.get_value(pos + Vector2(-1, 0)) == cell and _grid.get_value(pos + Vector2(0, 1)) == cell and _grid.get_value(pos + Vector2(-1, 1)) == cell:
             _room.set_tile_cell(Vector2(xpos - 1, ypos + CELL_SIZE), floortype)
         else:
             _room.set_tile_cell(Vector2(xpos - 1, ypos + CELL_SIZE), _room.Tile.DebugWall)
         # Lower Right Wall
-        if _grid_get(pos + Vector2(1, 0)) == cell and _grid_get(pos + Vector2(0, 1)) == cell and _grid_get(pos + Vector2(1, 1)) == cell:
+        if _grid.get_value(pos + Vector2(1, 0)) == cell and _grid.get_value(pos + Vector2(0, 1)) == cell and _grid.get_value(pos + Vector2(1, 1)) == cell:
             _room.set_tile_cell(Vector2(xpos + CELL_SIZE, ypos + CELL_SIZE), floortype)
         else:
             _room.set_tile_cell(Vector2(xpos + CELL_SIZE, ypos + CELL_SIZE), _room.Tile.DebugWall)
@@ -308,20 +296,20 @@ func _mark_safe_edge_cells() -> void:
             var walled = (int(_room.is_wall_at(Vector2(x + 1, y))) + int(_room.is_wall_at(Vector2(x, y + 1))) +
                           int(_room.is_wall_at(Vector2(x - 1, y))) + int(_room.is_wall_at(Vector2(x, y - 1))))
             if walled == 1:
-                _flag_grid_set(Vector2(x, y), FLAG_EDGE_FURNITURE, true)
+                _flag_grid.set_flag(Vector2(x, y), FLAG_EDGE_FURNITURE, true)
     # Conditionally add back in the corners
     for x in range(w):
         for y in range(h):
-            if _room.is_wall_at(Vector2(x, y)) or _flag_grid_get(Vector2(x, y), FLAG_EDGE_FURNITURE):
+            if _room.is_wall_at(Vector2(x, y)) or _flag_grid.get_flag(Vector2(x, y), FLAG_EDGE_FURNITURE):
                 continue
             var walled = (int(_room.is_wall_at(Vector2(x + 1, y))) + int(_room.is_wall_at(Vector2(x, y + 1))) +
                           int(_room.is_wall_at(Vector2(x - 1, y))) + int(_room.is_wall_at(Vector2(x, y - 1))))
-            var edged = (int(_flag_grid_get(Vector2(x + 1, y), FLAG_EDGE_FURNITURE)) +
-                         int(_flag_grid_get(Vector2(x - 1, y), FLAG_EDGE_FURNITURE)) +
-                         int(_flag_grid_get(Vector2(x, y + 1), FLAG_EDGE_FURNITURE)) +
-                         int(_flag_grid_get(Vector2(x, y - 1), FLAG_EDGE_FURNITURE)))
+            var edged = (int(_flag_grid.get_flag(Vector2(x + 1, y), FLAG_EDGE_FURNITURE)) +
+                         int(_flag_grid.get_flag(Vector2(x - 1, y), FLAG_EDGE_FURNITURE)) +
+                         int(_flag_grid.get_flag(Vector2(x, y + 1), FLAG_EDGE_FURNITURE)) +
+                         int(_flag_grid.get_flag(Vector2(x, y - 1), FLAG_EDGE_FURNITURE)))
             if walled == 2 and edged < 2:
-                _flag_grid_set(Vector2(x, y), FLAG_EDGE_FURNITURE, true)
+                _flag_grid.set_flag(Vector2(x, y), FLAG_EDGE_FURNITURE, true)
 
 func _open_doorways() -> void:
     # Assumes all connections are of the form [a, b] where b is either
@@ -329,10 +317,10 @@ func _open_doorways() -> void:
     for conn in _connections:
         var a = conn.pos[0]
         var b = conn.pos[1]
-        var floora = _boxes[_grid_get(a)].floortype
-        var floorb = _boxes[_grid_get(b)].floortype
-        var walla = _boxes[_grid_get(a)].walltype
-        var wallb = _boxes[_grid_get(b)].walltype
+        var floora = _boxes[_grid.get_value(a)].floortype
+        var floorb = _boxes[_grid.get_value(b)].floortype
+        var walla = _boxes[_grid.get_value(a)].walltype
+        var wallb = _boxes[_grid.get_value(b)].walltype
         var xpos = b.x * TOTAL_CELL_SIZE + WALL_SIZE
         var ypos = b.y * TOTAL_CELL_SIZE + WALL_SIZE
         if b - a == Vector2(0, 1):
@@ -382,7 +370,7 @@ func _open_all_doorways() -> void:
 func _connect_rooms() -> void:
     var graph = _produce_adjacency_graph()
     var total_nodes = len(graph.adja.keys())
-    var visited = [_grid_get(Vector2(0, 0))]
+    var visited = [_grid.get_value(Vector2(0, 0))]
     var edges = []
     for es in graph.adja.values():
         for e in es:
@@ -393,8 +381,8 @@ func _connect_rooms() -> void:
         var i = 0
         while i < edge_count:
             var edge = edges[i]
-            var a = _grid_get(edge.pos[0])
-            var b = _grid_get(edge.pos[1])
+            var a = _grid.get_value(edge.pos[0])
+            var b = _grid.get_value(edge.pos[1])
             if visited.has(a) != visited.has(b):
                 _connections.append(edge)
                 if not visited.has(a):
@@ -471,19 +459,19 @@ func _is_doorway_at_position(pos: Vector2) -> bool:
         # Left edge
         var cell = Vector2(floor(pos.x / TOTAL_CELL_SIZE), floor(pos.y / TOTAL_CELL_SIZE))
         if int(pos.x) % TOTAL_CELL_SIZE == 0:
-            if _grid_get(cell) != _grid_get(cell + Vector2(-1, 0)):
+            if _grid.get_value(cell) != _grid.get_value(cell + Vector2(-1, 0)):
                 return true
         # Right edge
         if int(pos.x) % TOTAL_CELL_SIZE == TOTAL_CELL_SIZE - 1:
-            if _grid_get(cell) != _grid_get(cell + Vector2(1, 0)):
+            if _grid.get_value(cell) != _grid.get_value(cell + Vector2(1, 0)):
                 return true
         # Top Edge
         if int(pos.y) % TOTAL_CELL_SIZE == 0:
-            if _grid_get(cell) != _grid_get(cell + Vector2(0, -1)):
+            if _grid.get_value(cell) != _grid.get_value(cell + Vector2(0, -1)):
                 return true
         # Bottom Edge
         if int(pos.y) % TOTAL_CELL_SIZE == TOTAL_CELL_SIZE - 1:
-            if _grid_get(cell) != _grid_get(cell + Vector2(0, 1)):
+            if _grid.get_value(cell) != _grid.get_value(cell + Vector2(0, 1)):
                 return true
     return false
 
@@ -540,7 +528,7 @@ func _debug_edges() -> void:
     var h = _data['config']['height'] * TOTAL_CELL_SIZE
     for i in range(w):
         for j in range(h):
-            if _flag_grid_get(Vector2(i, j), FLAG_EDGE_FURNITURE) and _can_put_furniture_at(Rect2(i, j, 1, 1)) and not _is_blocking_doorway(Rect2(i, j, 1, 1)):
+            if _flag_grid.get_flag(Vector2(i, j), FLAG_EDGE_FURNITURE) and _can_put_furniture_at(Rect2(i, j, 1, 1)) and not _is_blocking_doorway(Rect2(i, j, 1, 1)):
                  var silly = tmp.instance()
                  _add_entity(Vector2(i, j), silly)
 
@@ -555,28 +543,28 @@ func _fill_edges() -> void:
     var h = _data['config']['height'] * TOTAL_CELL_SIZE
     for x in range(w):
         for y in range(h):
-            var room = _boxes[_grid_get(Vector2(floor(x / TOTAL_CELL_SIZE), floor(y / TOTAL_CELL_SIZE)))]
+            var room = _boxes[_grid.get_value(Vector2(floor(x / TOTAL_CELL_SIZE), floor(y / TOTAL_CELL_SIZE)))]
             var mngr = room.edgetype
-            if _flag_grid_get(Vector2(x, y), FLAG_EDGE_FURNITURE):
+            if _flag_grid.get_flag(Vector2(x, y), FLAG_EDGE_FURNITURE):
                 var direction = -1
-                if _room.is_wall_at(Vector2(x - 1, y)) and not is_blocked(Vector2(x + 1, y)) and not _flag_grid_get(Vector2(x + 1, y), FLAG_EDGE_FURNITURE):
+                if _room.is_wall_at(Vector2(x - 1, y)) and not is_blocked(Vector2(x + 1, y)) and not _flag_grid.get_flag(Vector2(x + 1, y), FLAG_EDGE_FURNITURE):
                     direction = 0
-                elif _room.is_wall_at(Vector2(x, y - 1)) and not is_blocked(Vector2(x, y + 1)) and not _flag_grid_get(Vector2(x, y + 1), FLAG_EDGE_FURNITURE):
+                elif _room.is_wall_at(Vector2(x, y - 1)) and not is_blocked(Vector2(x, y + 1)) and not _flag_grid.get_flag(Vector2(x, y + 1), FLAG_EDGE_FURNITURE):
                     direction = 1
-                elif _room.is_wall_at(Vector2(x + 1, y)) and not is_blocked(Vector2(x - 1, y)) and not _flag_grid_get(Vector2(x - 1, y), FLAG_EDGE_FURNITURE):
+                elif _room.is_wall_at(Vector2(x + 1, y)) and not is_blocked(Vector2(x - 1, y)) and not _flag_grid.get_flag(Vector2(x - 1, y), FLAG_EDGE_FURNITURE):
                     direction = 2
-                elif _room.is_wall_at(Vector2(x, y + 1)) and not is_blocked(Vector2(x, y - 1)) and not _flag_grid_get(Vector2(x, y - 1), FLAG_EDGE_FURNITURE):
+                elif _room.is_wall_at(Vector2(x, y + 1)) and not is_blocked(Vector2(x, y - 1)) and not _flag_grid.get_flag(Vector2(x, y - 1), FLAG_EDGE_FURNITURE):
                     direction = 3
                 else:
                     continue
                 var max_width = 1
                 if direction % 2 == 0:
                     # Vertical expand
-                    while _flag_grid_get(Vector2(x, y + max_width), FLAG_EDGE_FURNITURE):
+                    while _flag_grid.get_flag(Vector2(x, y + max_width), FLAG_EDGE_FURNITURE):
                         max_width += 1
                 else:
                     # Horizontal expand
-                    while _flag_grid_get(Vector2(x + max_width, y), FLAG_EDGE_FURNITURE):
+                    while _flag_grid.get_flag(Vector2(x + max_width, y), FLAG_EDGE_FURNITURE):
                         max_width += 1
                 var arr = mngr.generate_at_position(Vector2(x, y), direction, max_width)
                 if not (arr is Array):
@@ -608,7 +596,7 @@ func generate() -> Room:
     _grid_to_room()
     _mark_safe_edge_cells()
     _room.get_minimap().initialize(Vector2(w, h), _grid, _boxes, _connections)
-    print(_grid) # DEBUG CODE
+    #print(_grid)
     _fill_special()
     _fill_edges()
     #_debug_edges()
