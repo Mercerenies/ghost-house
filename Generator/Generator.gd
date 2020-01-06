@@ -6,6 +6,7 @@ const Graph = GeneratorData.Graph
 
 const HallwayGenerator = preload("res://Generator/HallwayGenerator.gd")
 const LiveRoomGenerator = preload("res://Generator/LiveRoomGenerator.gd")
+const DeadRoomGenerator = preload("res://Generator/DeadRoomGenerator.gd")
 
 const GeneratorGrid = preload("res://GeneratorGrid/GeneratorGrid.gd")
 const GeneratorPainter = preload("res://GeneratorPainter/GeneratorPainter.gd")
@@ -58,30 +59,6 @@ func _paint_room(id: int, rect: Rect2) -> void:
         for y in range(rect.position.y, rect.end.y):
             _grid.set_value(Vector2(x, y), id)
     _boxes[id] = RoomData.new(id, rect)
-
-func _produce_dead_rooms(start_id: int) -> int:
-    var current_id = start_id
-    var w = _data['config']['width']
-    var h = _data['config']['height']
-
-    for x in range(w):
-        for y in range(h):
-            if _grid.get_value(Vector2(x, y)) < ID_HALLS and not _grid.get_value(Vector2(x, y)) == ID_OOB:
-                if randf() < 0.5:
-                    # Expand to the right
-                    var ww = 1
-                    while ww < 4 and _grid.get_value(Vector2(x + ww, y)) < ID_HALLS and not _grid.get_value(Vector2(x + ww, y)) == ID_OOB:
-                        ww += 1
-                    _paint_room(current_id, Rect2(x, y, ww, 1))
-                else:
-                    # Expand to the bottom
-                    var hh = 1
-                    while hh < 4 and _grid.get_value(Vector2(x, y + hh)) < ID_HALLS and not _grid.get_value(Vector2(x, y + hh)) == ID_OOB:
-                        hh += 1
-                    _paint_room(current_id, Rect2(x, y, 1, hh))
-                current_id += 1
-
-    return current_id
 
 func _produce_adjacency_graph() -> Graph:
     var w = _data['config']['width']
@@ -476,11 +453,12 @@ func generate() -> Room:
 
     var hallway_generator = HallwayGenerator.new(_data, painter)
     var live_room_generator = LiveRoomGenerator.new(_data, _grid, painter)
+    var dead_room_generator = DeadRoomGenerator.new(_data, _grid, painter)
 
     hallway_generator.run(ID_HALLS)
     var next_id = live_room_generator.run(ID_ROOMS)
+    dead_room_generator.run(next_id)
 
-    _produce_dead_rooms(next_id)
     _connect_rooms()
     _determine_room_properties()
     _grid_to_room()
