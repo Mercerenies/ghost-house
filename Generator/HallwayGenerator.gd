@@ -6,7 +6,6 @@ extends Reference
 
 const HallwayData = GeneratorData.HallwayData
 
-const GeneratorGrid = preload("res://GeneratorGrid/GeneratorGrid.gd")
 const GeneratorPainter = preload("res://GeneratorPainter/GeneratorPainter.gd")
 
 var _data: Dictionary = {}

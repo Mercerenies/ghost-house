@@ -7,6 +7,7 @@ const Graph = GeneratorData.Graph
 const HallwayGenerator = preload("res://Generator/HallwayGenerator.gd")
 const LiveRoomGenerator = preload("res://Generator/LiveRoomGenerator.gd")
 const DeadRoomGenerator = preload("res://Generator/DeadRoomGenerator.gd")
+const ConnectionGenerator = preload("res://Generator/ConnectionGenerator.gd")
 
 const GeneratorGrid = preload("res://GeneratorGrid/GeneratorGrid.gd")
 const GeneratorPainter = preload("res://GeneratorPainter/GeneratorPainter.gd")
@@ -59,32 +60,6 @@ func _paint_room(id: int, rect: Rect2) -> void:
         for y in range(rect.position.y, rect.end.y):
             _grid.set_value(Vector2(x, y), id)
     _boxes[id] = RoomData.new(id, rect)
-
-func _produce_adjacency_graph() -> Graph:
-    var w = _data['config']['width']
-    var h = _data['config']['height']
-    var graph = Graph.new()
-    var adja = graph.adja
-    for x in range(w):
-        for y in range(h):
-            var a = _grid.get_value(Vector2(x, y))
-            var b = _grid.get_value(Vector2(x + 1, y))
-            var c = _grid.get_value(Vector2(x, y + 1))
-            if a >= ID_HALLS and not adja.has(a):
-                adja[a] = []
-            if b >= ID_HALLS and not adja.has(b):
-                adja[b] = []
-            if c >= ID_HALLS and not adja.has(c):
-                adja[c] = []
-            if a >= ID_HALLS and b >= ID_HALLS and a != b:
-                var link = [Vector2(x, y), Vector2(x + 1, y)]
-                adja[a].append({ "pos": link, "value": b })
-                adja[b].append({ "pos": link, "value": a })
-            if a >= ID_HALLS and c >= ID_HALLS and a != c:
-                var link = [Vector2(x, y), Vector2(x, y + 1)]
-                adja[a].append({ "pos": link, "value": c })
-                adja[c].append({ "pos": link, "value": a })
-    return graph
 
 func _draw_base_room(pos: Vector2) -> void:
     var xpos = pos.x * TOTAL_CELL_SIZE + WALL_SIZE
@@ -228,39 +203,6 @@ func _open_all_doorways() -> void:
             _room.set_tile_cell(Vector2(xpos + 4, ypos + 2), _room.Tile.DebugFloor)
             _room.set_tile_cell(Vector2(xpos + 1, ypos + 4), _room.Tile.DebugFloor)
             _room.set_tile_cell(Vector2(xpos + 2, ypos + 4), _room.Tile.DebugFloor)
-
-func _connect_rooms() -> void:
-    var graph = _produce_adjacency_graph()
-    var total_nodes = len(graph.adja.keys())
-    var visited = [_grid.get_value(Vector2(0, 0))]
-    var edges = []
-    for es in graph.adja.values():
-        for e in es:
-            edges.append(e)
-    edges.shuffle()
-    var edge_count = len(edges)
-    while len(visited) < total_nodes:
-        var i = 0
-        while i < edge_count:
-            var edge = edges[i]
-            var a = _grid.get_value(edge.pos[0])
-            var b = _grid.get_value(edge.pos[1])
-            if visited.has(a) != visited.has(b):
-                _connections.append(edge)
-                if not visited.has(a):
-                    visited.append(a)
-                if not visited.has(b):
-                    visited.append(b)
-                edge_count -= 1
-                edges[i] = edges[edge_count]
-                edges[edge_count] = edge
-            else:
-                i += 1
-    for i in range(edge_count):
-        # Add 5% of the extras back
-        var edge = edges[i]
-        if randf() < 0.05:
-            _connections.append(edge)
 
 func _determine_room_properties() -> void:
     for v in _boxes.values():
@@ -454,12 +396,13 @@ func generate() -> Room:
     var hallway_generator = HallwayGenerator.new(_data, painter)
     var live_room_generator = LiveRoomGenerator.new(_data, _grid, painter)
     var dead_room_generator = DeadRoomGenerator.new(_data, _grid, painter)
+    var connection_generator = ConnectionGenerator.new(_data, _grid)
 
     hallway_generator.run(ID_HALLS)
     var next_id = live_room_generator.run(ID_ROOMS)
     dead_room_generator.run(next_id)
+    _connections = connection_generator.run()
 
-    _connect_rooms()
     _determine_room_properties()
     _grid_to_room()
     _mark_safe_edge_cells()
