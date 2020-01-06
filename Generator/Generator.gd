@@ -9,14 +9,13 @@ const LiveRoomGenerator = preload("res://Generator/LiveRoomGenerator.gd")
 const DeadRoomGenerator = preload("res://Generator/DeadRoomGenerator.gd")
 const ConnectionGenerator = preload("res://Generator/ConnectionGenerator.gd")
 const PropertiesGenerator = preload("res://Generator/PropertiesGenerator.gd")
+const ActualizingGenerator = preload("res://Generator/ActualizingGenerator.gd")
 
 const GeneratorGrid = preload("res://GeneratorGrid/GeneratorGrid.gd")
 const GeneratorPainter = preload("res://GeneratorPainter/GeneratorPainter.gd")
 
 const RoomScene = preload("res://Room/Room.tscn")
 const PlayerScene = preload("res://Player/Player.tscn")
-const HorizontalFloorTransition = preload("res://RoomTransition/HorizontalFloorTransition.tscn")
-const VerticalFloorTransition = preload("res://RoomTransition/VerticalFloorTransition.tscn")
 
 const Player = preload("res://Player/Player.gd")
 
@@ -62,67 +61,6 @@ func _paint_room(id: int, rect: Rect2) -> void:
             _grid.set_value(Vector2(x, y), id)
     _boxes[id] = RoomData.new(id, rect)
 
-func _draw_base_room(pos: Vector2) -> void:
-    var xpos = pos.x * TOTAL_CELL_SIZE + WALL_SIZE
-    var ypos = pos.y * TOTAL_CELL_SIZE + WALL_SIZE
-    var cell = _grid.get_value(pos)
-    var floortype = _boxes[cell].floortype
-    var walltype = _boxes[cell].walltype
-    if cell >= 0:
-        # Draw the contents of the room
-        for i in range(CELL_SIZE):
-            for j in range(CELL_SIZE):
-                _room.set_tile_cell(Vector2(xpos + i, ypos + j), floortype)
-        # Now draw the walls
-        # Top Wall
-        for i in range(CELL_SIZE):
-            if _grid.get_value(pos + Vector2(0, -1)) == cell:
-                _room.set_tile_cell(Vector2(xpos + i, ypos - 1), floortype)
-            else:
-                _room.set_tile_cell(Vector2(xpos + i, ypos - 1), walltype)
-        # Bottom Wall
-        for i in range(CELL_SIZE):
-            if _grid.get_value(pos + Vector2(0, 1)) == cell:
-                _room.set_tile_cell(Vector2(xpos + i, ypos + CELL_SIZE), floortype)
-            else:
-                _room.set_tile_cell(Vector2(xpos + i, ypos + CELL_SIZE), _room.Tile.DebugWall)
-        # Left Wall
-        for i in range(CELL_SIZE):
-            if _grid.get_value(pos + Vector2(-1, 0)) == cell:
-                _room.set_tile_cell(Vector2(xpos - 1, ypos + i), floortype)
-            else:
-                _room.set_tile_cell(Vector2(xpos - 1, ypos + i), _room.Tile.DebugWall)
-        # Right Wall
-        for i in range(CELL_SIZE):
-            if _grid.get_value(pos + Vector2(1, 0)) == cell:
-                _room.set_tile_cell(Vector2(xpos + CELL_SIZE, ypos + i), floortype)
-            else:
-                _room.set_tile_cell(Vector2(xpos + CELL_SIZE, ypos + i), _room.Tile.DebugWall)
-        # Upper Left Wall
-        if _grid.get_value(pos + Vector2(-1, 0)) == cell and _grid.get_value(pos + Vector2(0, -1)) == cell and _grid.get_value(pos + Vector2(-1, -1)) == cell:
-            _room.set_tile_cell(Vector2(xpos - 1, ypos - 1), floortype)
-        elif _grid.get_value(pos + Vector2(-1, 0)) != cell:
-            _room.set_tile_cell(Vector2(xpos - 1, ypos - 1), _room.Tile.DebugWall)
-        else:
-            _room.set_tile_cell(Vector2(xpos - 1, ypos - 1), walltype)
-        # Upper Right Wall
-        if _grid.get_value(pos + Vector2(1, 0)) == cell and _grid.get_value(pos + Vector2(0, -1)) == cell and _grid.get_value(pos + Vector2(1, -1)) == cell:
-            _room.set_tile_cell(Vector2(xpos + CELL_SIZE, ypos - 1), floortype)
-        elif _grid.get_value(pos + Vector2(1, 0)) != cell:
-            _room.set_tile_cell(Vector2(xpos + CELL_SIZE, ypos - 1), _room.Tile.DebugWall)
-        else:
-            _room.set_tile_cell(Vector2(xpos + CELL_SIZE, ypos - 1), walltype)
-        # Lower Left Wall
-        if _grid.get_value(pos + Vector2(-1, 0)) == cell and _grid.get_value(pos + Vector2(0, 1)) == cell and _grid.get_value(pos + Vector2(-1, 1)) == cell:
-            _room.set_tile_cell(Vector2(xpos - 1, ypos + CELL_SIZE), floortype)
-        else:
-            _room.set_tile_cell(Vector2(xpos - 1, ypos + CELL_SIZE), _room.Tile.DebugWall)
-        # Lower Right Wall
-        if _grid.get_value(pos + Vector2(1, 0)) == cell and _grid.get_value(pos + Vector2(0, 1)) == cell and _grid.get_value(pos + Vector2(1, 1)) == cell:
-            _room.set_tile_cell(Vector2(xpos + CELL_SIZE, ypos + CELL_SIZE), floortype)
-        else:
-            _room.set_tile_cell(Vector2(xpos + CELL_SIZE, ypos + CELL_SIZE), _room.Tile.DebugWall)
-
 func _mark_safe_edge_cells() -> void:
     var w = _data['config']['width'] * TOTAL_CELL_SIZE
     var h = _data['config']['height'] * TOTAL_CELL_SIZE
@@ -149,45 +87,6 @@ func _mark_safe_edge_cells() -> void:
             if walled == 2 and edged < 2:
                 _flag_grid.set_flag(Vector2(x, y), FLAG_EDGE_FURNITURE, true)
 
-func _open_doorways() -> void:
-    # Assumes all connections are of the form [a, b] where b is either
-    # strictly one to the right or strictly one below a.
-    for conn in _connections:
-        var a = conn.pos[0]
-        var b = conn.pos[1]
-        var floora = _boxes[_grid.get_value(a)].floortype
-        var floorb = _boxes[_grid.get_value(b)].floortype
-        var walla = _boxes[_grid.get_value(a)].walltype
-        var wallb = _boxes[_grid.get_value(b)].walltype
-        var xpos = b.x * TOTAL_CELL_SIZE + WALL_SIZE
-        var ypos = b.y * TOTAL_CELL_SIZE + WALL_SIZE
-        if b - a == Vector2(0, 1):
-            _room.set_tile_cell(Vector2(xpos + 1, ypos - 1), floorb)
-            _room.set_tile_cell(Vector2(xpos + 2, ypos - 1), floorb)
-            _room.set_tile_cell(Vector2(xpos + 1, ypos - 2), floora)
-            _room.set_tile_cell(Vector2(xpos + 2, ypos - 2), floora)
-            if floora != floorb:
-                var transa = VerticalFloorTransition.instance()
-                var transb = VerticalFloorTransition.instance()
-                transa.position = Vector2(xpos + 1, ypos - 1) * 32
-                transb.position = Vector2(xpos + 2, ypos - 1) * 32
-                _room.get_node("Decorations").add_child(transa)
-                _room.get_node("Decorations").add_child(transb)
-        elif b - a == Vector2(1, 0):
-            _room.set_tile_cell(Vector2(xpos - 1, ypos + 1), floorb)
-            _room.set_tile_cell(Vector2(xpos - 1, ypos + 2), floorb)
-            _room.set_tile_cell(Vector2(xpos - 2, ypos + 1), floora)
-            _room.set_tile_cell(Vector2(xpos - 2, ypos + 2), floora)
-            _room.set_tile_cell(Vector2(xpos - 2, ypos    ), walla )
-            _room.set_tile_cell(Vector2(xpos - 1, ypos    ), wallb )
-            if floora != floorb:
-                var transa = HorizontalFloorTransition.instance()
-                var transb = HorizontalFloorTransition.instance()
-                transa.position = Vector2(xpos - 1, ypos + 1) * 32
-                transb.position = Vector2(xpos - 1, ypos + 2) * 32
-                _room.get_node("Decorations").add_child(transa)
-                _room.get_node("Decorations").add_child(transb)
-
 func _open_all_doorways() -> void:
     # This code literally only exists for debugging purposes.
     var w = _data['config']['width']
@@ -204,14 +103,6 @@ func _open_all_doorways() -> void:
             _room.set_tile_cell(Vector2(xpos + 4, ypos + 2), _room.Tile.DebugFloor)
             _room.set_tile_cell(Vector2(xpos + 1, ypos + 4), _room.Tile.DebugFloor)
             _room.set_tile_cell(Vector2(xpos + 2, ypos + 4), _room.Tile.DebugFloor)
-
-func _grid_to_room() -> void:
-    var w = _data['config']['width']
-    var h = _data['config']['height']
-    for x in range(w):
-        for y in range(h):
-            _draw_base_room(Vector2(x, y))
-    _open_doorways()
 
 func is_blocked(pos: Vector2) -> bool:
     return _room.is_wall_at(pos) or _room.get_entity_cell(pos) != null
@@ -371,10 +262,8 @@ func _fill_edges() -> void:
 func generate() -> Room:
     var w = _data['config']['width']
     var h = _data['config']['height']
-    _room = RoomScene.instance()
-    _boxes = {}
-    _connections = []
 
+    _boxes = {}
     _grid = GeneratorGrid.new(w, h, ID_EMPTY, ID_OOB)
     _flag_grid = GeneratorGrid.new(w * TOTAL_CELL_SIZE, h * TOTAL_CELL_SIZE, 0, 0)
 
@@ -385,14 +274,15 @@ func generate() -> Room:
     var dead_room_generator = DeadRoomGenerator.new(_data, _grid, painter)
     var connection_generator = ConnectionGenerator.new(_data, _grid)
     var properties_generator = PropertiesGenerator.new(_data, _boxes)
+    var actualizing_generator = ActualizingGenerator.new(_data, _grid, _boxes)
 
     hallway_generator.run(ID_HALLS)
     var next_id = live_room_generator.run(ID_ROOMS)
     dead_room_generator.run(next_id)
     _connections = connection_generator.run()
     properties_generator.run()
+    _room = actualizing_generator.run(_connections)
 
-    _grid_to_room()
     _mark_safe_edge_cells()
     _room.get_minimap().initialize(Vector2(w, h), _grid, _boxes, _connections)
     #print(_grid)
