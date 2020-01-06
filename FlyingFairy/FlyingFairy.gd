@@ -27,6 +27,8 @@ var light_radius: float = 32
 var speed: float = 0.0
 var target_position: Vector2 = Vector2()
 
+# TODO Different dialogue if you inspect the furniture cell that the fairy happens to be on perhaps?
+
 func _ready() -> void:
     #modulate = Color.from_hsv(hue, 1, 1)
     camouflage_self()

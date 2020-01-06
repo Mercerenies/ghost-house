@@ -13,6 +13,9 @@ func _ready() -> void:
 func set_direction(a: int):
     $Sprite.frame = (5 - a) % 4
 
+func chance_of_turning_evil() -> float:
+    return 2.0
+
 func turn_evil() -> void:
     # 60% chance of launching self, 40% chance of being vanishing
     if randf() < 0.6:
@@ -20,5 +23,6 @@ func turn_evil() -> void:
         $FlyingFurnitureSpawner.activate()
     else:
         .turn_evil()
+
 func get_furniture_name():
     return "DiningChair"

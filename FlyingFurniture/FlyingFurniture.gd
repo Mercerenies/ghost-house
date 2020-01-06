@@ -7,6 +7,7 @@ const LAUNCH_SPEED = 210
 const LAUNCH_ANGULAR_SPEED = 3 * PI
 const DISAPPEAR_SPEED = 2
 const MIN_LAUNCH_DISTANCE = 64
+const MAX_LAUNCH_DISTANCE = 384
 
 enum State {
     Introducing,
@@ -79,7 +80,7 @@ func _on_StateTimer_timeout():
             var player = EnemyAI.get_player(self)
             var dist = EnemyAI.distance_to_player(self)
             var dir = EnemyAI.player_line_of_sight(self)
-            if dir > 3 * PI / 8 and dist >= MIN_LAUNCH_DISTANCE:
+            if dir > 3 * PI / 8 and dist >= MIN_LAUNCH_DISTANCE and dist < MAX_LAUNCH_DISTANCE:
                 attack_vector = (player.position + Vector2(16, 16) - self.position).normalized()
                 attack_angle = sign(attack_vector.x)
                 if attack_angle == 0:
