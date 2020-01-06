@@ -691,7 +691,7 @@ func generate() -> Room:
     _grid_to_room()
     _mark_safe_edge_cells()
     _room.get_minimap().initialize(Vector2(w, h), _grid, _boxes, _connections)
-    print(_grid)
+    print(_grid) # DEBUG CODE
     _fill_special()
     _fill_edges()
     #_debug_edges()
