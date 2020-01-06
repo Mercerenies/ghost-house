@@ -1,4 +1,4 @@
-extends Node
+extends Reference
 
 const HallwayData = GeneratorData.HallwayData
 const RoomData = GeneratorData.RoomData
