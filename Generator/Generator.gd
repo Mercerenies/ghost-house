@@ -8,6 +8,7 @@ const HallwayGenerator = preload("res://Generator/HallwayGenerator.gd")
 const LiveRoomGenerator = preload("res://Generator/LiveRoomGenerator.gd")
 const DeadRoomGenerator = preload("res://Generator/DeadRoomGenerator.gd")
 const ConnectionGenerator = preload("res://Generator/ConnectionGenerator.gd")
+const PropertiesGenerator = preload("res://Generator/PropertiesGenerator.gd")
 
 const GeneratorGrid = preload("res://GeneratorGrid/GeneratorGrid.gd")
 const GeneratorPainter = preload("res://GeneratorPainter/GeneratorPainter.gd")
@@ -204,20 +205,6 @@ func _open_all_doorways() -> void:
             _room.set_tile_cell(Vector2(xpos + 1, ypos + 4), _room.Tile.DebugFloor)
             _room.set_tile_cell(Vector2(xpos + 2, ypos + 4), _room.Tile.DebugFloor)
 
-func _determine_room_properties() -> void:
-    for v in _boxes.values():
-        if v is RoomData:
-            v.type = RoomTypes.decide_room_type(v.box.size)
-            v.floortype = RoomTypes.decide_floor_type(v.type)
-            v.walltype = RoomTypes.decide_wall_type(v.type)
-            v.edgetype = RoomTypes.decide_edge_manager(v.type)
-            v.specialtype = RoomTypes.decide_special_manager(v.type)
-        else:
-            v.floortype = RoomTypes.decide_floor_type(RoomTypes.RT.Hallway)
-            v.walltype = RoomTypes.decide_wall_type(RoomTypes.RT.Hallway)
-            v.edgetype = RoomTypes.decide_edge_manager(RoomTypes.RT.Hallway)
-            v.specialtype = RoomTypes.decide_special_manager(RoomTypes.RT.Hallway)
-
 func _grid_to_room() -> void:
     var w = _data['config']['width']
     var h = _data['config']['height']
@@ -397,13 +384,14 @@ func generate() -> Room:
     var live_room_generator = LiveRoomGenerator.new(_data, _grid, painter)
     var dead_room_generator = DeadRoomGenerator.new(_data, _grid, painter)
     var connection_generator = ConnectionGenerator.new(_data, _grid)
+    var properties_generator = PropertiesGenerator.new(_data, _boxes)
 
     hallway_generator.run(ID_HALLS)
     var next_id = live_room_generator.run(ID_ROOMS)
     dead_room_generator.run(next_id)
     _connections = connection_generator.run()
+    properties_generator.run()
 
-    _determine_room_properties()
     _grid_to_room()
     _mark_safe_edge_cells()
     _room.get_minimap().initialize(Vector2(w, h), _grid, _boxes, _connections)
