@@ -1,21 +1,20 @@
 extends Reference
 
-#
-# STAGE 1 - HALLWAY GENERATION
-#
+################################
+# STAGE 1 - HALLWAY GENERATION #
+################################
 
 const HallwayData = GeneratorData.HallwayData
 
 const GeneratorGrid = preload("res://GeneratorGrid/GeneratorGrid.gd")
+const GeneratorPainter = preload("res://GeneratorPainter/GeneratorPainter.gd")
 
 var _data: Dictionary = {}
-var _grid: GeneratorGrid = null
-var _boxes: Dictionary = {}
+var _painter: GeneratorPainter
 
-func _init(room_data: Dictionary, grid: GeneratorGrid, boxes: Dictionary):
+func _init(room_data: Dictionary, painter: GeneratorPainter):
     _data = room_data
-    _grid = grid
-    _boxes = boxes
+    _painter = painter
 
 func _produce_hallway_attempt():
     var w = _data['config']['width']
@@ -78,12 +77,7 @@ func _produce_hallways(start_id: int) -> Array:
     # the same ID value. _merge_hallways ensures this by modifying the array.
     return _merge_hallways(hws)
 
-func _paint_hallway(hw: HallwayData) -> void:
-    for pos in hw.data:
-        _grid.set_value(pos, hw.id)
-    _boxes[hw.id] = hw
-
 func run(start_id: int) -> void:
     var hws =  _produce_hallways(start_id)
     for hw in hws:
-        _paint_hallway(hw)
+        _painter.paint(hw)

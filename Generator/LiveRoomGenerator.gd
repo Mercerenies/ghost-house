@@ -1,8 +1,13 @@
 extends Reference
 
+##################################
+# STAGE 2 - LIVE ROOM GENERATION #
+##################################
+
 const RoomData = GeneratorData.RoomData
 
 const GeneratorGrid = preload("res://GeneratorGrid/GeneratorGrid.gd")
+const GeneratorPainter = preload("res://GeneratorPainter/GeneratorPainter.gd")
 
 const ID_OOB = GeneratorData.ID_OOB
 const ID_DEAD = GeneratorData.ID_DEAD
@@ -12,12 +17,12 @@ const ID_ROOMS = GeneratorData.ID_ROOMS
 
 var _data: Dictionary = {}
 var _grid: GeneratorGrid = null
-var _boxes: Dictionary = {}
+var _painter: GeneratorPainter = null
 
-func _init(room_data: Dictionary, grid: GeneratorGrid, boxes: Dictionary):
+func _init(room_data: Dictionary, grid: GeneratorGrid, painter: GeneratorPainter):
     _data = room_data
     _grid = grid
-    _boxes = boxes
+    _painter = painter
 
 func _can_draw_hypothetical_box(box: Rect2, hypo_box: Rect2) -> bool:
     if box.intersects(hypo_box):
@@ -120,17 +125,11 @@ func _produce_live_rooms(start_id: int) -> int:
         else:
             #print("DEAD")
             rect = dead[randi() % len(dead)]
-        _paint_room(current_id, rect)
+        _painter.paint(RoomData.new(current_id, rect))
         current_id += 1
         _mark_dead_cells()
 
     return current_id
-
-func _paint_room(id: int, rect: Rect2) -> void:
-    for x in range(rect.position.x, rect.end.x):
-        for y in range(rect.position.y, rect.end.y):
-            _grid.set_value(Vector2(x, y), id)
-    _boxes[id] = RoomData.new(id, rect)
 
 func run(start_id: int) -> int:
     return _produce_live_rooms(start_id)

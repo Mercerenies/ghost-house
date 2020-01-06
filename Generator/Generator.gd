@@ -8,6 +8,8 @@ const HallwayGenerator = preload("res://Generator/HallwayGenerator.gd")
 const LiveRoomGenerator = preload("res://Generator/LiveRoomGenerator.gd")
 
 const GeneratorGrid = preload("res://GeneratorGrid/GeneratorGrid.gd")
+const GeneratorPainter = preload("res://GeneratorPainter/GeneratorPainter.gd")
+
 const RoomScene = preload("res://Room/Room.tscn")
 const PlayerScene = preload("res://Player/Player.tscn")
 const HorizontalFloorTransition = preload("res://RoomTransition/HorizontalFloorTransition.tscn")
@@ -470,8 +472,10 @@ func generate() -> Room:
     _grid = GeneratorGrid.new(w, h, ID_EMPTY, ID_OOB)
     _flag_grid = GeneratorGrid.new(w * TOTAL_CELL_SIZE, h * TOTAL_CELL_SIZE, 0, 0)
 
-    var hallway_generator = HallwayGenerator.new(_data, _grid, _boxes)
-    var live_room_generator = LiveRoomGenerator.new(_data, _grid, _boxes)
+    var painter = GeneratorPainter.new(_grid, _boxes)
+
+    var hallway_generator = HallwayGenerator.new(_data, painter)
+    var live_room_generator = LiveRoomGenerator.new(_data, _grid, painter)
 
     hallway_generator.run(ID_HALLS)
     var next_id = live_room_generator.run(ID_ROOMS)
