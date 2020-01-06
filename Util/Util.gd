@@ -14,3 +14,15 @@ func toward(value: float, delta: float, target: float) -> float:
 
 func choose(arr: Array):
     return arr[randi() % len(arr)]
+
+func random_dir() -> Vector2:
+    match randi() % 4:
+        0:
+            return Vector2(1, 0)
+        1:
+            return Vector2(-1, 0)
+        2:
+            return Vector2(0, 1)
+        3:
+            return Vector2(0, -1)
+    return Vector2(1, 0) # Idk

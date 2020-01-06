@@ -4,6 +4,8 @@ const HallwayData = GeneratorData.HallwayData
 const RoomData = GeneratorData.RoomData
 const Graph = GeneratorData.Graph
 
+const HallwayGenerator = preload("res://Generator/HallwayGenerator.gd")
+
 const RoomScene = preload("res://Room/Room.tscn")
 const PlayerScene = preload("res://Player/Player.tscn")
 const HorizontalFloorTransition = preload("res://RoomTransition/HorizontalFloorTransition.tscn")
@@ -135,85 +137,10 @@ func _creates_dead_cells(box: Rect2) -> bool:
             return true
     return false
 
-func _random_dir() -> Vector2:
-    match randi() % 4:
-        0:
-            return Vector2(1, 0)
-        1:
-            return Vector2(-1, 0)
-        2:
-            return Vector2(0, 1)
-        3:
-            return Vector2(0, -1)
-    return Vector2(1, 0) # Idk
-
-func _produce_hallway_attempt():
-    var w = _data['config']['width']
-    var h = _data['config']['height']
-    var hall_length = Util.randi_range(4, min(w, h))
-    var arr = []
-    var startx = randi() % w
-    var starty = randi() % h
-    var x = startx
-    var y = starty
-    var dir = _random_dir()
-    for _i in range(hall_length):
-        if x < 2 or x >= w - 2 or y < 2 or y >= h - 2:
-            return null # Out of bounds failure!
-        arr.append(Vector2(x, y))
-        if randf() < 0.10:
-            dir = _random_dir()
-        x += dir.x
-        y += dir.y
-    return arr
-
-func _produce_hallway():
-    for _attempt in range(20): # Try 20 times, then give up
-        var hw = _produce_hallway_attempt()
-        if hw != null:
-            return hw
-    return null
-
 func _paint_hallway(hw: HallwayData) -> void:
     for pos in hw.data:
         _grid_set(pos, hw.id)
     _boxes[hw.id] = hw
-
-func _merge_hallways(hws: Array) -> Array:
-    var cache = {}
-    var accepted = hws.duplicate()
-    for hw in hws:
-        for pos in hw.data:
-            if cache.has(pos):
-                # Merge: change every old_id into new_id
-                var old_id = cache[pos].id
-                var new_id = hw.id
-                #print("Merging {} into {}".format([old_id, new_id], "{}"))
-                for hwc in hws:
-                    if hwc.id == old_id:
-                        hwc.id = new_id
-                        for v in hwc.data:
-                            if not hw.data.has(v):
-                                hw.data.append(v)
-                            var f = accepted.find(hwc)
-                            if f:
-                                accepted.remove(f)
-            else:
-                cache[pos] = hw
-    return accepted
-
-func _produce_hallways(start_id: int = ID_HALLS) -> void:
-    var hws = []
-    for i in range(start_id, start_id + 3):
-        var hw = _produce_hallway()
-        if hw != null:
-            hws.append(HallwayData.new(i, hw))
-    # It is always possible that the hallways generated overlapping one another. It's fine
-    # if they did, but in that case we need to make sure the two overlapping hallways have
-    # the same ID value. _merge_hallways ensures this by modifying the array.
-    hws = _merge_hallways(hws)
-    for hw in hws:
-        _paint_hallway(hw)
 
 func _enumerate_rectangles(pos: Vector2) -> Dictionary:
     # This is an absolute BS O(n^4) (at least in principle) algorithm right now.
@@ -683,7 +610,11 @@ func generate() -> Room:
     _boxes = {}
     _connections = []
     _produce_grid_array()
-    _produce_hallways()
+
+    var hws = HallwayGenerator.new(_data).run(ID_HALLS)
+    for hw in hws:
+        _paint_hallway(hw)
+
     var id = _produce_live_rooms()
     _produce_dead_rooms(id)
     _connect_rooms()
