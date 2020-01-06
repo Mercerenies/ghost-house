@@ -5,7 +5,6 @@ extends Reference
 #
 
 const HallwayData = GeneratorData.HallwayData
-const RoomData = GeneratorData.RoomData
 
 var _data: Dictionary = {}
 

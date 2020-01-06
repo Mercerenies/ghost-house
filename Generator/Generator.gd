@@ -6,6 +6,7 @@ const Graph = GeneratorData.Graph
 
 const HallwayGenerator = preload("res://Generator/HallwayGenerator.gd")
 
+const GeneratorGrid = preload("res://GeneratorGrid/GeneratorGrid.gd")
 const RoomScene = preload("res://Room/Room.tscn")
 const PlayerScene = preload("res://Player/Player.tscn")
 const HorizontalFloorTransition = preload("res://RoomTransition/HorizontalFloorTransition.tscn")
@@ -29,8 +30,8 @@ const ID_ROOMS = GeneratorData.ID_ROOMS
 const FLAG_EDGE_FURNITURE = GeneratorData.FLAG_EDGE_FURNITURE
 
 var _data: Dictionary = {}
-var _grid: Array = [] # Row major (y + x * h)
-var _flag_grid: Array = []
+var _grid: GeneratorGrid = null
+var _flag_grid: GeneratorGrid = null
 var _room: Room = null
 var _boxes: Dictionary = {}
 var _connections: Array = []
@@ -50,37 +51,22 @@ func _add_entity(pos: Vector2, entity: Object) -> void:
         _room.get_marked_entities()["player"] = entity
 
 func _produce_grid_array() -> void:
-    _grid = []
-    for i in range(_data['config']['width'] * _data['config']['height']):
-        _grid.append(ID_EMPTY)
-    _flag_grid = []
-    for i in range(_data['config']['width'] * TOTAL_CELL_SIZE * _data['config']['height'] * TOTAL_CELL_SIZE):
-        _flag_grid.append(0)
-
-func _grid_get(pos: Vector2) -> int:
     var w = _data['config']['width']
     var h = _data['config']['height']
-    if pos.x < 0 or pos.y < 0 or pos.x >= w or pos.y >= h:
-        return ID_OOB
-    return _grid[pos.y + pos.x * h]
+    _grid = GeneratorGrid.new(w, h, ID_EMPTY, ID_OOB)
+    _flag_grid = GeneratorGrid.new(w * TOTAL_CELL_SIZE, h * TOTAL_CELL_SIZE, 0, 0)
+
+func _grid_get(pos: Vector2) -> int:
+    return _grid.get_value(pos)
 
 func _grid_set(pos: Vector2, value: int) -> void:
-    var h = _data['config']['height']
-    _grid[pos.y + pos.x * h] = value
+    _grid.set_value(pos, value)
 
 func _flag_grid_get(pos: Vector2, bit: int) -> bool:
-    var w = _data['config']['width'] * TOTAL_CELL_SIZE
-    var h = _data['config']['height'] * TOTAL_CELL_SIZE
-    if pos.x < 0 or pos.y < 0 or pos.x >= w or pos.y >= h:
-        return false
-    return _flag_grid[pos.y + pos.x * h] & (1 << bit)
+    return _flag_grid.get_flag(pos, bit)
 
 func _flag_grid_set(pos: Vector2, bit: int, value: bool) -> void:
-    var h = _data['config']['height'] * TOTAL_CELL_SIZE
-    if value:
-        _flag_grid[pos.y + pos.x * h] |= (1 << bit)
-    else:
-        _flag_grid[pos.y + pos.x * h] &= ~(1 << bit)
+    _flag_grid.set_flag(pos, bit, value)
 
 func _can_draw_hypothetical_box(box: Rect2, hypo_box: Rect2) -> bool:
     if box.intersects(hypo_box):

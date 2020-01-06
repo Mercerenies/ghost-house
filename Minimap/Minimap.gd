@@ -3,9 +3,10 @@ extends Node2D
 const GRID_CELL_SIZE = 16
 const DOOR_DRAW_RADIUS = 4
 const Player = preload("res://Player/Player.gd")
+const GeneratorGrid = preload("res://GeneratorGrid/GeneratorGrid.gd")
 
 var _dims: Vector2 = Vector2(0, 0)
-var _grid: Array = []
+var _grid: GeneratorGrid = null
 var _boxes: Dictionary = {}
 var _connections: Array = []
 var _discovered: Dictionary = {}
@@ -13,18 +14,7 @@ var _discovered: Dictionary = {}
 func _ready():
     pass
 
-func _grid_get(pos: Vector2) -> int:
-    var w = _dims.x
-    var h = _dims.y
-    if pos.x < 0 or pos.y < 0 or pos.x >= w or pos.y >= h:
-        return GeneratorData.ID_OOB
-    return _grid[pos.y + pos.x * h]
-
-func _grid_set(pos: Vector2, value: int) -> void:
-    var h = _dims.y
-    _grid[pos.y + pos.x * h] = value
-
-func initialize(dims: Vector2, grid: Array, boxes: Dictionary, connections: Array) -> void:
+func initialize(dims: Vector2, grid: GeneratorGrid, boxes: Dictionary, connections: Array) -> void:
     _dims = dims
     _grid = grid
     _boxes = boxes
@@ -47,12 +37,12 @@ func _draw() -> void:
     var playerrpos = playerpos / GeneratorData.TOTAL_CELL_SIZE
     playerrpos.x = floor(playerrpos.x)
     playerrpos.y = floor(playerrpos.y)
-    var playerroom = _grid_get(playerrpos)
+    var playerroom = _grid.get_value(playerrpos)
     _discovered[playerroom] = true
     # Background
     for i in range(_dims.x):
         for j in range(_dims.y):
-            var cell = _grid_get(Vector2(i, j))
+            var cell = _grid.get_value(Vector2(i, j))
             if _discovered.has(cell):
                 var color = Color(1, 1, 1, 0.25)
                 if cell == playerroom:
@@ -67,16 +57,16 @@ func _draw() -> void:
             for point in v.data:
                 var cellpos = point * GRID_CELL_SIZE + upperleft
                 # Up
-                if _grid_get(point + Vector2(0, -1)) != v.id:
+                if _grid.get_value(point + Vector2(0, -1)) != v.id:
                     draw_line(cellpos, cellpos + Vector2(GRID_CELL_SIZE, 0), trblack)
                 # Left
-                if _grid_get(point + Vector2(-1, 0)) != v.id:
+                if _grid.get_value(point + Vector2(-1, 0)) != v.id:
                     draw_line(cellpos, cellpos + Vector2(0, GRID_CELL_SIZE), trblack)
                 # Down
-                if _grid_get(point + Vector2(0, 1)) != v.id:
+                if _grid.get_value(point + Vector2(0, 1)) != v.id:
                     draw_line(cellpos + Vector2(0, GRID_CELL_SIZE), cellpos + Vector2(GRID_CELL_SIZE, GRID_CELL_SIZE), trblack)
                 # Right
-                if _grid_get(point + Vector2(1, 0)) != v.id:
+                if _grid.get_value(point + Vector2(1, 0)) != v.id:
                     draw_line(cellpos + Vector2(GRID_CELL_SIZE, 0), cellpos + Vector2(GRID_CELL_SIZE, GRID_CELL_SIZE), trblack)
         elif v is GeneratorData.RoomData:
             var rect = v.box
@@ -85,8 +75,8 @@ func _draw() -> void:
     # Doors
     for c in _connections:
         var pos = c.pos
-        var a = _grid_get(pos[0])
-        var b = _grid_get(pos[1])
+        var a = _grid.get_value(pos[0])
+        var b = _grid.get_value(pos[1])
         if _discovered.has(a) or _discovered.has(b):
             var cellpos = pos[0] * GRID_CELL_SIZE + upperleft
             var center = Vector2(-128, -128) # Off-screen to start with, just in case
