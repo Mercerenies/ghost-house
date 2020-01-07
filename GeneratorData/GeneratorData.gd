@@ -52,5 +52,13 @@ const CELL_SIZE = 4
 const WALL_SIZE = 1
 const TOTAL_CELL_SIZE = CELL_SIZE + WALL_SIZE * 2
 
+# Two special furniture placement values. PLACEMENT_INVALID will
+# always register as an invalid placement and will forbid that
+# placement rule from triggering. PLACEMENT_SAFE, conversely, will
+# always register as safe and moves the responsibility of safety
+# checking from the generator to the placement rule itself.
+const PLACEMENT_INVALID = Rect2(-65536, -65536, 1, 1)
+const PLACEMENT_SAFE = Rect2(-65536, -65536, 2, 2)
+
 func _ready():
     pass

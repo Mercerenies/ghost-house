@@ -7,7 +7,7 @@ func enumerate(room) -> Array:
     return []
 
 func value_to_position(value) -> Rect2:
-    return Rect2(-99, -99, 1, 1) # Please override me. This behavior is not desired.
+    return GeneratorData.PLACEMENT_INVALID
 
 func spawn_at(value):
     pass

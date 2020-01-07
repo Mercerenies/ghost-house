@@ -20,6 +20,15 @@ func _try_to_place(room, placement) -> void:
     var valid_positions = []
     for value in positions:
         var pos = placement.value_to_position(value)
+        if pos == GeneratorData.PLACEMENT_INVALID:
+            # Invalid no matter what.
+            continue
+        if pos == GeneratorData.PLACEMENT_SAFE:
+            # A return value of PLACEMENT_SAFE is the rule's promise
+            # that it will handle safety considerations itself, so we
+            # don't need to do anything here.
+            valid_positions.append(value)
+            continue
         if _helper.can_put_furniture_at(pos):
             if placement.can_block_doorways() or not _helper.is_blocking_doorway(pos):
                 valid_positions.append(value)
