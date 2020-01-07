@@ -68,13 +68,13 @@ func _fill_edges() -> void:
             var mngr = room.edgetype
             if _flag_grid.get_flag(Vector2(x, y), FLAG_EDGE_FURNITURE):
                 var direction = -1
-                if _room.is_wall_at(Vector2(x - 1, y)) and not _helper.is_blocked(Vector2(x + 1, y)) and not _flag_grid.get_flag(Vector2(x + 1, y), FLAG_EDGE_FURNITURE):
+                if _room.is_wall_at(Vector2(x - 1, y)) and not _helper.is_blocked(_room, Vector2(x + 1, y)) and not _flag_grid.get_flag(Vector2(x + 1, y), FLAG_EDGE_FURNITURE):
                     direction = 0
-                elif _room.is_wall_at(Vector2(x, y - 1)) and not _helper.is_blocked(Vector2(x, y + 1)) and not _flag_grid.get_flag(Vector2(x, y + 1), FLAG_EDGE_FURNITURE):
+                elif _room.is_wall_at(Vector2(x, y - 1)) and not _helper.is_blocked(_room, Vector2(x, y + 1)) and not _flag_grid.get_flag(Vector2(x, y + 1), FLAG_EDGE_FURNITURE):
                     direction = 1
-                elif _room.is_wall_at(Vector2(x + 1, y)) and not _helper.is_blocked(Vector2(x - 1, y)) and not _flag_grid.get_flag(Vector2(x - 1, y), FLAG_EDGE_FURNITURE):
+                elif _room.is_wall_at(Vector2(x + 1, y)) and not _helper.is_blocked(_room, Vector2(x - 1, y)) and not _flag_grid.get_flag(Vector2(x - 1, y), FLAG_EDGE_FURNITURE):
                     direction = 2
-                elif _room.is_wall_at(Vector2(x, y + 1)) and not _helper.is_blocked(Vector2(x, y - 1)) and not _flag_grid.get_flag(Vector2(x, y - 1), FLAG_EDGE_FURNITURE):
+                elif _room.is_wall_at(Vector2(x, y + 1)) and not _helper.is_blocked(_room, Vector2(x, y - 1)) and not _flag_grid.get_flag(Vector2(x, y - 1), FLAG_EDGE_FURNITURE):
                     direction = 3
                 else:
                     continue
@@ -94,7 +94,7 @@ func _fill_edges() -> void:
                     if obj != null:
                         var pos = Vector2(floor(obj.position.x / 32), floor(obj.position.y / 32))
                         var rect = Rect2(pos, obj.dims)
-                        if _helper.can_put_furniture_at(rect) and not _helper.is_blocking_doorway(rect):
+                        if _helper.can_put_furniture_at(_room, rect) and not _helper.is_blocking_doorway(rect):
                             _helper.add_entity(pos, obj)
                             _helper.consider_turning_evil(obj)
 

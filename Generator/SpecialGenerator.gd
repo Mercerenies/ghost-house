@@ -7,12 +7,14 @@ extends Reference
 const GeneratorPlacementHelper = preload("res://GeneratorPlacementHelper/GeneratorPlacementHelper.gd")
 
 var _data: Dictionary = {}
+var _room: Room
 var _boxes: Dictionary = {}
 var _helper: GeneratorPlacementHelper
 
-func _init(room_data: Dictionary, boxes: Dictionary, helper: GeneratorPlacementHelper):
+func _init(room_data: Dictionary, boxes: Dictionary, room: Room, helper: GeneratorPlacementHelper):
     _data = room_data
     _boxes = boxes
+    _room = room
     _helper = helper
 
 func _try_to_place(room, placement) -> void:
@@ -29,7 +31,7 @@ func _try_to_place(room, placement) -> void:
             # don't need to do anything here.
             valid_positions.append(value)
             continue
-        if _helper.can_put_furniture_at(pos):
+        if _helper.can_put_furniture_at(_room, pos):
             if placement.can_block_doorways() or not _helper.is_blocking_doorway(pos):
                 valid_positions.append(value)
     if len(valid_positions) == 0:

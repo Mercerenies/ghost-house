@@ -16,37 +16,39 @@ func _init(room_data: Dictionary, grid: GeneratorGrid, room: Room):
     _grid = grid
     _room = room
 
-func is_blocked(pos: Vector2) -> bool:
-    return _room.is_wall_at(pos) or _room.get_entity_cell(pos) != null
+static func is_blocked(room: Room, pos: Vector2) -> bool:
+    return room.is_wall_at(pos) or room.get_entity_cell(pos) != null
 
-func can_put_furniture_at(rect: Rect2) -> bool:
+static func can_put_furniture_at(room: Room, rect: Rect2) -> bool:
     # Check the position we want to put it at first
     for i in range(rect.size.x):
         for j in range(rect.size.y):
-            if is_blocked(rect.position + Vector2(i, j)):
+            if is_blocked(room, rect.position + Vector2(i, j)):
                 return false
     var transitions = 0
     # Top edge
     for i in range(rect.size.x + 1):
         var pos = Vector2(rect.position.x - 1 + i, rect.position.y - 1)
-        if is_blocked(pos) != is_blocked(pos + Vector2(1, 0)):
+        if is_blocked(room, pos) != is_blocked(room, pos + Vector2(1, 0)):
             transitions += 1
     # Right edge
     for i in range(rect.size.y + 1):
         var pos = Vector2(rect.end.x, rect.position.y - 1 + i)
-        if is_blocked(pos) != is_blocked(pos + Vector2(0, 1)):
+        if is_blocked(room, pos) != is_blocked(room, pos + Vector2(0, 1)):
             transitions += 1
     # Bottom edge
     for i in range(rect.size.x + 1):
         var pos = Vector2(rect.end.x - i, rect.end.y)
-        if is_blocked(pos) != is_blocked(pos + Vector2(-1, 0)):
+        if is_blocked(room, pos) != is_blocked(room, pos + Vector2(-1, 0)):
             transitions += 1
     # Left edge
     for i in range(rect.size.y + 1):
         var pos = Vector2(rect.position.x - 1, rect.end.y - i)
-        if is_blocked(pos) != is_blocked(pos + Vector2(0, -1)):
+        if is_blocked(room, pos) != is_blocked(room, pos + Vector2(0, -1)):
             transitions += 1
     return transitions <= 2
+
+# TODO A few more of these could be made static as well
 
 func is_doorway_at_position(pos: Vector2) -> bool:
     if not _room.is_wall_at(pos):

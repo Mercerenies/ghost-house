@@ -69,7 +69,7 @@ func generate() -> Room:
     var connection_generator = ConnectionGenerator.new(_data, _grid)
     var properties_generator = PropertiesGenerator.new(_data, _boxes)
     var actualizing_generator = ActualizingGenerator.new(_data, _grid, _boxes, _room)
-    var special_generator = SpecialGenerator.new(_data, _boxes, helper)
+    var special_generator = SpecialGenerator.new(_data, _boxes, _room, helper)
     var edge_generator = EdgeGenerator.new(_data, _grid, _flag_grid, _boxes, _room, helper)
 
     hallway_generator.run(ID_HALLS)
