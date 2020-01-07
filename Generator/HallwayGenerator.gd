@@ -59,7 +59,7 @@ func _merge_hallways(hws: Array) -> Array:
                             if not hw.data.has(v):
                                 hw.data.append(v)
                             var f = accepted.find(hwc)
-                            if f:
+                            if f >= 0:
                                 accepted.remove(f)
             else:
                 cache[pos] = hw
