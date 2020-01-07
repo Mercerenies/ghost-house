@@ -322,8 +322,10 @@ var _config: Dictionary = {
                 {"placement": EdgeTorchPlacement.new(), "chance": 20 }
             ])
         ],
-        "special": UniformDistr.new([
-            [Study.HorizontalRows.new()]
+        "special": WeightedDistr.new([
+            { "result": [Study.HorizontalRows.new()], "weight": 10 },
+            { "result": [Study.VerticalRows.new()], "weight": 10 },
+            { "result": [Study.Labyrinth.new()], "weight": 3 },
         ])
     },
     RT.SittingRoom: {
