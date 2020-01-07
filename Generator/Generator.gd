@@ -10,9 +10,11 @@ const DeadRoomGenerator = preload("res://Generator/DeadRoomGenerator.gd")
 const ConnectionGenerator = preload("res://Generator/ConnectionGenerator.gd")
 const PropertiesGenerator = preload("res://Generator/PropertiesGenerator.gd")
 const ActualizingGenerator = preload("res://Generator/ActualizingGenerator.gd")
+const SpecialGenerator = preload("res://Generator/SpecialGenerator.gd")
 
 const GeneratorGrid = preload("res://GeneratorGrid/GeneratorGrid.gd")
 const GeneratorPainter = preload("res://GeneratorPainter/GeneratorPainter.gd")
+const GeneratorPlacementHelper = preload("res://GeneratorPlacementHelper/GeneratorPlacementHelper.gd")
 
 const RoomScene = preload("res://Room/Room.tscn")
 const PlayerScene = preload("res://Player/Player.tscn")
@@ -264,29 +266,32 @@ func generate() -> Room:
     var h = _data['config']['height']
 
     _boxes = {}
+    _room = RoomScene.instance()
     _grid = GeneratorGrid.new(w, h, ID_EMPTY, ID_OOB)
     _flag_grid = GeneratorGrid.new(w * TOTAL_CELL_SIZE, h * TOTAL_CELL_SIZE, 0, 0)
 
     var painter = GeneratorPainter.new(_grid, _boxes)
+    var helper = GeneratorPlacementHelper.new(_data, _grid, _room)
 
     var hallway_generator = HallwayGenerator.new(_data, painter)
     var live_room_generator = LiveRoomGenerator.new(_data, _grid, painter)
     var dead_room_generator = DeadRoomGenerator.new(_data, _grid, painter)
     var connection_generator = ConnectionGenerator.new(_data, _grid)
     var properties_generator = PropertiesGenerator.new(_data, _boxes)
-    var actualizing_generator = ActualizingGenerator.new(_data, _grid, _boxes)
+    var actualizing_generator = ActualizingGenerator.new(_data, _grid, _boxes, _room)
+    var special_generator = SpecialGenerator.new(_data, _boxes, helper)
 
     hallway_generator.run(ID_HALLS)
     var next_id = live_room_generator.run(ID_ROOMS)
     dead_room_generator.run(next_id)
     _connections = connection_generator.run()
     properties_generator.run()
-    _room = actualizing_generator.run(_connections)
+    actualizing_generator.run(_connections)
+    special_generator.run()
+
+    _room.get_minimap().initialize(Vector2(w, h), _grid, _boxes, _connections)
 
     _mark_safe_edge_cells()
-    _room.get_minimap().initialize(Vector2(w, h), _grid, _boxes, _connections)
-    #print(_grid)
-    _fill_special()
     _fill_edges()
     #_debug_edges()
     #for i in range(_data['config']['width']):

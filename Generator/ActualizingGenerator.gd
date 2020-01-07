@@ -6,7 +6,6 @@ extends Reference
 
 const GeneratorGrid = preload("res://GeneratorGrid/GeneratorGrid.gd")
 const RoomScene = preload("res://Room/Room.tscn")
-const Room = preload("res://Room/Room.gd")
 
 const HorizontalFloorTransition = preload("res://RoomTransition/HorizontalFloorTransition.tscn")
 const VerticalFloorTransition = preload("res://RoomTransition/VerticalFloorTransition.tscn")
@@ -21,10 +20,11 @@ var _boxes: Dictionary = {}
 var _connections: Array = []
 var _room: Room
 
-func _init(room_data: Dictionary, grid: GeneratorGrid, boxes: Dictionary):
+func _init(room_data: Dictionary, grid: GeneratorGrid, boxes: Dictionary, room: Room):
     _data = room_data
     _grid = grid
     _boxes = boxes
+    _room = room
 
 func _open_doorways() -> void:
     # Assumes all connections are of the form [a, b] where b is either
@@ -134,8 +134,6 @@ func _grid_to_room() -> void:
             _draw_base_room(Vector2(x, y))
     _open_doorways()
 
-func run(conn: Array) -> Room:
+func run(conn: Array):
     _connections = conn
-    _room = RoomScene.instance()
     _grid_to_room()
-    return _room
