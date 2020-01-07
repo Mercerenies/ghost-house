@@ -11,6 +11,7 @@ const ConnectionGenerator = preload("res://Generator/ConnectionGenerator.gd")
 const PropertiesGenerator = preload("res://Generator/PropertiesGenerator.gd")
 const ActualizingGenerator = preload("res://Generator/ActualizingGenerator.gd")
 const SpecialGenerator = preload("res://Generator/SpecialGenerator.gd")
+const EdgeGenerator = preload("res://Generator/EdgeGenerator.gd")
 
 const GeneratorGrid = preload("res://GeneratorGrid/GeneratorGrid.gd")
 const GeneratorPainter = preload("res://GeneratorPainter/GeneratorPainter.gd")
@@ -62,32 +63,6 @@ func _paint_room(id: int, rect: Rect2) -> void:
         for y in range(rect.position.y, rect.end.y):
             _grid.set_value(Vector2(x, y), id)
     _boxes[id] = RoomData.new(id, rect)
-
-func _mark_safe_edge_cells() -> void:
-    var w = _data['config']['width'] * TOTAL_CELL_SIZE
-    var h = _data['config']['height'] * TOTAL_CELL_SIZE
-    # Find non-corner walls
-    for x in range(w):
-        for y in range(h):
-            if _room.is_wall_at(Vector2(x, y)):
-                continue
-            var walled = (int(_room.is_wall_at(Vector2(x + 1, y))) + int(_room.is_wall_at(Vector2(x, y + 1))) +
-                          int(_room.is_wall_at(Vector2(x - 1, y))) + int(_room.is_wall_at(Vector2(x, y - 1))))
-            if walled == 1:
-                _flag_grid.set_flag(Vector2(x, y), FLAG_EDGE_FURNITURE, true)
-    # Conditionally add back in the corners
-    for x in range(w):
-        for y in range(h):
-            if _room.is_wall_at(Vector2(x, y)) or _flag_grid.get_flag(Vector2(x, y), FLAG_EDGE_FURNITURE):
-                continue
-            var walled = (int(_room.is_wall_at(Vector2(x + 1, y))) + int(_room.is_wall_at(Vector2(x, y + 1))) +
-                          int(_room.is_wall_at(Vector2(x - 1, y))) + int(_room.is_wall_at(Vector2(x, y - 1))))
-            var edged = (int(_flag_grid.get_flag(Vector2(x + 1, y), FLAG_EDGE_FURNITURE)) +
-                         int(_flag_grid.get_flag(Vector2(x - 1, y), FLAG_EDGE_FURNITURE)) +
-                         int(_flag_grid.get_flag(Vector2(x, y + 1), FLAG_EDGE_FURNITURE)) +
-                         int(_flag_grid.get_flag(Vector2(x, y - 1), FLAG_EDGE_FURNITURE)))
-            if walled == 2 and edged < 2:
-                _flag_grid.set_flag(Vector2(x, y), FLAG_EDGE_FURNITURE, true)
 
 func _open_all_doorways() -> void:
     # This code literally only exists for debugging purposes.
@@ -280,6 +255,7 @@ func generate() -> Room:
     var properties_generator = PropertiesGenerator.new(_data, _boxes)
     var actualizing_generator = ActualizingGenerator.new(_data, _grid, _boxes, _room)
     var special_generator = SpecialGenerator.new(_data, _boxes, helper)
+    var edge_generator = EdgeGenerator.new(_data, _grid, _flag_grid, _boxes, _room, helper)
 
     hallway_generator.run(ID_HALLS)
     var next_id = live_room_generator.run(ID_ROOMS)
@@ -288,11 +264,10 @@ func generate() -> Room:
     properties_generator.run()
     actualizing_generator.run(_connections)
     special_generator.run()
+    edge_generator.run()
 
     _room.get_minimap().initialize(Vector2(w, h), _grid, _boxes, _connections)
 
-    _mark_safe_edge_cells()
-    _fill_edges()
     #_debug_edges()
     #for i in range(_data['config']['width']):
     #    for j in range(_data['config']['height']):

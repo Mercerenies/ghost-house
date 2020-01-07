@@ -1,7 +1,7 @@
 extends Reference
 
 ##########################################
-# STAGE 6 - SPECIAL FURNITURE GENERATION #
+# STAGE 7 - SPECIAL FURNITURE GENERATION #
 ##########################################
 
 const GeneratorPlacementHelper = preload("res://GeneratorPlacementHelper/GeneratorPlacementHelper.gd")
