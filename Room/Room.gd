@@ -7,6 +7,9 @@ const FurnitureDropScene = preload("res://FurnitureDrop/FurnitureDrop.tscn")
 var entities: Dictionary = {}
 var marked_entities: Dictionary = {}
 
+func is_in_bounds(pos: Vector2) -> bool:
+    return (get_cellv(pos) >= 0)
+
 func get_tile_cell(pos: Vector2) -> int:
     var result = get_cellv(pos)
     return Tile.EmptyTile if result < 0 else result

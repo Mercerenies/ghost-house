@@ -20,6 +20,9 @@ static func is_blocked(room: Room, pos: Vector2) -> bool:
     return room.is_wall_at(pos) or room.get_entity_cell(pos) != null
 
 static func can_put_furniture_at(room: Room, rect: Rect2) -> bool:
+    # Check room bounds
+    if not (room.is_in_bounds(rect.position) and room.is_in_bounds(rect.end)):
+        return false
     # Check the position we want to put it at first
     for i in range(rect.size.x):
         for j in range(rect.size.y):
