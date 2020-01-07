@@ -32,6 +32,8 @@ const ToiletPlacement = preload("res://Furniture/Toilet/ToiletPlacement.gd")
 const BathroomSinkPlacement = preload("res://Furniture/BathroomSink/BathroomSinkPlacement.gd")
 const MirrorPlacement = preload("res://Furniture/Mirror/MirrorPlacement.gd")
 
+const Study = preload("res://RoomTypes/Study.gd")
+
 enum Tile {
     EmptyTile = 0, DebugFloor, DebugWall, TileFloor1, TileFloor2, LightGrayCarpet, GrayCarpet, DarkGrayCarpet, TileFloor3, WoodFloor1,
     WoodFloor2, WoodFloor3, ConcreteFloor, StripedWall1, StripedWall2, DiamondWall, CircleWall, GradientWall1, GradientWall2, RockyWall,
@@ -302,7 +304,9 @@ var _config: Dictionary = {
                 {"placement": EdgeTorchPlacement.new(), "chance": 20 }
             ])
         ],
-        "special": UniformDistr.new([[]])
+        "special": UniformDistr.new([
+            [Study.HorizontalRows.new()]
+        ])
     },
     RT.SittingRoom: {
         "floors": [Tile.LightGrayCarpet, Tile.GrayCarpet, Tile.DarkGrayCarpet, Tile.WoodFloor1, Tile.WoodFloor2, Tile.WoodFloor3],
