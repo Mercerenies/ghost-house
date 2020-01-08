@@ -34,6 +34,7 @@ const BathroomSinkPlacement = preload("res://Furniture/BathroomSink/BathroomSink
 const MirrorPlacement = preload("res://Furniture/Mirror/MirrorPlacement.gd")
 
 const Study = preload("res://RoomTypes/Study.gd")
+const SittingRoom = preload("res://RoomTypes/SittingRoom.gd")
 
 const UniformDistr = SpecialPlacement.UniformDistr
 const WeightedDistr = SpecialPlacement.WeightedDistr
@@ -334,7 +335,9 @@ var _config: Dictionary = {
                 {"placement": EdgeTorchPlacement.new(), "chance": 20 }
             ])
         ],
-        "special": UniformDistr.new([[]])
+        "special": UniformDistr.new([
+            [SittingRoom.CornerSeat.new()],
+        ])
     },
     RT.LaundryRoom: {
         "floors": [Tile.TileFloor1, Tile.TileFloor3, Tile.WoodFloor1, Tile.WoodFloor2, Tile.WoodFloor3, Tile.ConcreteFloor],
