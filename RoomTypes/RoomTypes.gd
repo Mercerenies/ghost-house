@@ -34,6 +34,9 @@ const MirrorPlacement = preload("res://Furniture/Mirror/MirrorPlacement.gd")
 
 const Study = preload("res://RoomTypes/Study.gd")
 
+const UniformDistr = SpecialPlacement.UniformDistr
+const WeightedDistr = SpecialPlacement.WeightedDistr
+
 enum Tile {
     EmptyTile = 0, DebugFloor, DebugWall, TileFloor1, TileFloor2, LightGrayCarpet, GrayCarpet, DarkGrayCarpet, TileFloor3, WoodFloor1,
     WoodFloor2, WoodFloor3, ConcreteFloor, StripedWall1, StripedWall2, DiamondWall, CircleWall, GradientWall1, GradientWall2, RockyWall,
@@ -46,31 +49,6 @@ enum RT {
     LaundryRoom, Kitchen, StorageRoom, DiningRoom, DiningHall,
     Garage
 }
-
-# TODO Make UniformDistr and WeightedDistr return managers themselves
-# so they can be composed with other managers.
-
-class UniformDistr extends SpecialPlacementManager:
-    var _values: Array
-    func _init(values: Array) -> void:
-        _values = values
-    func determine_placements() -> Array:
-        return _values[randi() % len(_values)]
-
-class WeightedDistr extends SpecialPlacementManager:
-    var _values: Array
-    func _init(values: Array) -> void:
-        _values = values
-    func determine_placements() -> Array:
-        var total = 0
-        for v in _values:
-            total += v["weight"]
-        var choice = randi() % int(total)
-        for v in _values:
-            choice -= v["weight"]
-            if choice < 0:
-                return v["result"]
-        return [] # This shouldn't happen
 
 var walls: Array = [Tile.DebugWall, Tile.StripedWall1, Tile.StripedWall2, Tile.DiamondWall, Tile.CircleWall,
                     Tile.GradientWall1, Tile.GradientWall2, Tile.RockyWall, Tile.PipeWall, Tile.RedRegalWall,
