@@ -6,15 +6,21 @@ class_name SpecialPlacement
 
 class UniformDistr extends SpecialPlacementManager:
     var _values: Array
+
     func _init(values: Array) -> void:
         _values = values
+
     func determine_placements() -> Array:
         return _values[randi() % len(_values)]
 
+# Expects each entry to be { "result": result, "weight": weight }.
+# Weights should be nonnegative integers.
 class WeightedDistr extends SpecialPlacementManager:
     var _values: Array
+
     func _init(values: Array) -> void:
         _values = values
+
     func determine_placements() -> Array:
         var total = 0
         for v in _values:
@@ -25,3 +31,17 @@ class WeightedDistr extends SpecialPlacementManager:
             if choice < 0:
                 return v["result"]
         return [] # This shouldn't happen
+
+class Trivial extends SpecialPlacementManager:
+    var _values: Array
+
+    func _init(values: Array) -> void:
+        _values = values
+
+    func determine_placements() -> Array:
+        return _values
+
+class Nothing extends SpecialPlacementManager:
+
+    func determine_placements() -> Array:
+        return []
