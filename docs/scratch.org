@@ -22,6 +22,7 @@
    + [ ] Dining Table
    + [X] Mirror
 ** EDGE FURNITURE
+   + [X] Bench
    + [X] Bookshelf
      - [X] "Flying Books" mode
    + [ ] Desk
@@ -55,6 +56,7 @@
      all, but some other stuff may be neat.
      - Chairs that get up and throw themselves at you when you pass.
      - Bookshelves that spawn books to fly at you.
+     - Fairies that emit light and "hide" in furniture.
 ** Shadow Players
   + Appears randomly several steps behind the player, mocks the
     player's movements at a relatively slow fixed rate in an attempt
