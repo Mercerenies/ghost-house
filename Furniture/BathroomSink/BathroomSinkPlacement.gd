@@ -22,10 +22,8 @@ func enumerate(room) -> Array:
 func value_to_position(value) -> Rect2:
     return Rect2(value["position"], Vector2(1, 2) if value["direction"] % 2 == 0 else Vector2(2, 1))
 
-func spawn_at(value):
+func spawn_at(_room, value):
     var obj = BathroomSinkScene.instance()
     obj.position = value["position"] * 32
     obj.set_direction(value["direction"])
     return obj
-func get_furniture_name():
-    return "BathroomSinkPlacement"

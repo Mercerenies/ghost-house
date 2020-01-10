@@ -9,7 +9,7 @@ func enumerate(room) -> Array:
 func value_to_position(value) -> Rect2:
     return GeneratorData.PLACEMENT_INVALID
 
-func spawn_at(value):
+func spawn_at(room, value):
     pass
 
 func can_block_doorways() -> bool:
