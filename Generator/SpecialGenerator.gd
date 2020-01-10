@@ -45,21 +45,22 @@ func _try_to_place(room, placement) -> void:
     if not (arr is Array):
         arr = [arr]
     for obj in arr:
-        if obj != null:
-            # This bit of redundancy is necessary for
-            # PLACEMENT_SAFE-style rules.
-            var pos = placement.value_to_position(chosen).position
-            if obj is Dictionary:
-                pos = obj['position']
-                obj = obj['object']
-            var rect = Rect2(pos, obj.get_dims())
-            if _helper.can_put_furniture_at(_room, rect):
-                if placement.can_block_doorways() or not _helper.is_blocking_doorway(rect):
-                    _helper.add_entity(pos, obj)
-                    _helper.consider_turning_evil(obj)
-                    continue
-            # If we couldn't place it, free it.
-            obj.free()
+        # This bit of redundancy is necessary for
+        # PLACEMENT_SAFE-style rules.
+        var pos = placement.value_to_position(chosen).position
+        if obj is Dictionary:
+            pos = obj['position']
+            obj = obj['object']
+        if obj == null:
+            continue
+        var rect = Rect2(pos, obj.get_dims())
+        if _helper.can_put_furniture_at(_room, rect):
+            if placement.can_block_doorways() or not _helper.is_blocking_doorway(rect):
+                _helper.add_entity(pos, obj)
+                _helper.consider_turning_evil(obj)
+                continue
+        # If we couldn't place it, free it.
+        obj.free()
 
 func _fill_special() -> void:
     for k in _boxes:
