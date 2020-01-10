@@ -45,6 +45,7 @@ func can_move_to(pos: Vector2) -> bool:
 func _process(delta: float) -> void:
     var stats = get_room().get_player_stats()
     var input_dir = get_input_direction()
+    var is_running = false
     if _can_move_at_all():
         if input_dir != Vector2():
             var target_cell = cell + input_dir
@@ -52,9 +53,11 @@ func _process(delta: float) -> void:
             speed = base_speed
             if Input.is_action_pressed("ui_dash") and stats.get_player_stamina() >= stamina_dash_cost:
                 speed *= 2
-                stats.add_player_stamina(- stamina_dash_cost)
+                is_running = true
             if try_move_to(target_cell):
                 emit_signal("player_moved")
+                if is_running:
+                    stats.add_player_stamina(- stamina_dash_cost)
         elif Input.is_action_just_released("ui_accept"):
             var target_cell = cell + Vector2(1, 0).rotated(get_direction() * PI / 2)
             target_cell = Vector2(round(target_cell.x), round(target_cell.y))
