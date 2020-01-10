@@ -46,17 +46,16 @@ class HorizontalRows extends FurniturePlacement:
 
     func enumerate(room) -> Array:
         return [
-            {"room": room, "strictness": Strictness.MANY_OTHERS },
-            {"room": room, "strictness": Strictness.FEW_OTHERS },
-            {"room": room, "strictness": Strictness.ONLY_LONG_SHELVES },
-            {"room": room, "strictness": Strictness.ONLY_SHELVES },
+            { "strictness": Strictness.MANY_OTHERS },
+            { "strictness": Strictness.FEW_OTHERS },
+            { "strictness": Strictness.ONLY_LONG_SHELVES },
+            { "strictness": Strictness.ONLY_SHELVES },
         ]
 
     func value_to_position(value) -> Rect2:
         return GeneratorData.PLACEMENT_SAFE
 
-    func spawn_at(_room, value):
-        var room = value['room']
+    func spawn_at(room, value):
         var box = room.box
 
         var cells = Rect2(box.position * TOTAL_CELL_SIZE, box.size * TOTAL_CELL_SIZE)
@@ -100,17 +99,16 @@ class VerticalRows extends FurniturePlacement:
 
     func enumerate(room) -> Array:
         return [
-            {"room": room, "strictness": Strictness.MANY_OTHERS },
-            {"room": room, "strictness": Strictness.FEW_OTHERS },
-            {"room": room, "strictness": Strictness.ONLY_LONG_SHELVES },
-            {"room": room, "strictness": Strictness.ONLY_SHELVES },
+            { "strictness": Strictness.MANY_OTHERS },
+            { "strictness": Strictness.FEW_OTHERS },
+            { "strictness": Strictness.ONLY_LONG_SHELVES },
+            { "strictness": Strictness.ONLY_SHELVES },
         ]
 
     func value_to_position(value) -> Rect2:
         return GeneratorData.PLACEMENT_SAFE
 
-    func spawn_at(_room, value):
-        var room = value['room']
+    func spawn_at(room, value):
         var box = room.box
 
         var cells = Rect2(box.position * TOTAL_CELL_SIZE, box.size * TOTAL_CELL_SIZE)
@@ -153,13 +151,13 @@ class VerticalRows extends FurniturePlacement:
 class Labyrinth extends FurniturePlacement:
 
     func enumerate(room) -> Array:
-        return [{"room": room}]
+        # Placeholder value. It just needs to exist
+        return [0]
 
-    func value_to_position(value) -> Rect2:
+    func value_to_position(_value) -> Rect2:
         return GeneratorData.PLACEMENT_SAFE
 
-    func spawn_at(_room, value):
-        var room = value['room']
+    func spawn_at(room, _value):
         var box = room.box
         var cells = Rect2(box.position * TOTAL_CELL_SIZE, box.size * TOTAL_CELL_SIZE)
 

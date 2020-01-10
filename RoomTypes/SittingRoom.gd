@@ -49,15 +49,14 @@ class InnerCircle extends FurniturePlacement:
         for strictness in [Strictness.MANY_OTHERS, Strictness.FEW_OTHERS,
                            Strictness.ONLY_CHAIRS, Strictness.ONLY_CHAIRS]:
             for mask in direction_masks:
-                arr.append({ "room": room, "direction_mask": mask, "strictness": strictness })
+                arr.append({ "direction_mask": mask, "strictness": strictness })
         return arr
 
     func value_to_position(value) -> Rect2:
         return GeneratorData.PLACEMENT_SAFE
 
-    func spawn_at(_room, value):
+    func spawn_at(room, value):
 
-        var room = value['room']
         var box = room.box
         var i
         var dir_mask = value['direction_mask']
