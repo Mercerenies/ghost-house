@@ -62,3 +62,7 @@
     player's movements at a relatively slow fixed rate in an attempt
     to catch up to them. Deals damage and disappears on contact, or
     after a certain amount of time.
+** Running into the Wall
+   Minor bug with the player running. If holding the run button, the
+   player continues to consume stamina even if facing a wall or other
+   impassible object. Need to fix this.

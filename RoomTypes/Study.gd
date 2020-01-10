@@ -2,6 +2,10 @@ extends Node
 
 const LongBookshelf = preload("res://Furniture/LongBookshelf/LongBookshelf.tscn")
 const Bookshelf = preload("res://Furniture/Bookshelf/Bookshelf.tscn")
+const Recliner = preload("res://Furniture/Recliner/Recliner.tscn")
+const Sofa = preload("res://Furniture/Sofa/Sofa.tscn")
+const DeskLamp = preload("res://Furniture/DeskLamp/DeskLamp.tscn")
+const FloorLamp = preload("res://Furniture/FloorLamp/FloorLamp.tscn")
 
 const CELL_SIZE = GeneratorData.CELL_SIZE
 const WALL_SIZE = GeneratorData.WALL_SIZE
@@ -9,15 +13,32 @@ const TOTAL_CELL_SIZE = GeneratorData.TOTAL_CELL_SIZE
 
 # TODO Sometimes spawn some sofas or recliners in the middle too?
 enum Strictness {
-    ONLY_SHELVES = 1,
-    ONLY_LONG_SHELVES = 2,
+    MANY_OTHERS = 0,
+    FEW_OTHERS = 1,
+    ONLY_SHELVES = 2,
+    ONLY_LONG_SHELVES = 3,
 }
 
 # Can't access static functions in an outer scope but can in a class
 # that appears in outer scope (??)
 class _Helper:
 
+    static func _make_variety_furniture():
+        match randi() % 10:
+            0:
+                return { "object": Sofa.instance(), "length": 2 }
+            1, 2, 3:
+                return { "object": Recliner.instance(), "length": 1 }
+            4, 5, 6:
+                return { "object": DeskLamp.instance(), "length": 1 }
+            7, 8, 9:
+                return { "object": FloorLamp.instance(), "length": 1 }
+
     static func _make_furniture(strictness):
+        if strictness <= Strictness.MANY_OTHERS and randf() < 0.15:
+            return _make_variety_furniture()
+        if strictness <= Strictness.FEW_OTHERS and randf() < 0.1:
+            return _make_variety_furniture()
         if strictness <= Strictness.ONLY_SHELVES and randf() < 0.1:
             return { "object": Bookshelf.instance(), "length": 1 }
         return { "object": LongBookshelf.instance(), "length": 2 }
@@ -26,6 +47,8 @@ class HorizontalRows extends FurniturePlacement:
 
     func enumerate(room) -> Array:
         return [
+            {"room": room, "strictness": Strictness.MANY_OTHERS },
+            {"room": room, "strictness": Strictness.FEW_OTHERS },
             {"room": room, "strictness": Strictness.ONLY_LONG_SHELVES },
             {"room": room, "strictness": Strictness.ONLY_SHELVES },
         ]
@@ -78,6 +101,8 @@ class VerticalRows extends FurniturePlacement:
 
     func enumerate(room) -> Array:
         return [
+            {"room": room, "strictness": Strictness.MANY_OTHERS },
+            {"room": room, "strictness": Strictness.FEW_OTHERS },
             {"room": room, "strictness": Strictness.ONLY_LONG_SHELVES },
             {"room": room, "strictness": Strictness.ONLY_SHELVES },
         ]
