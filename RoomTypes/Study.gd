@@ -11,7 +11,6 @@ const CELL_SIZE = GeneratorData.CELL_SIZE
 const WALL_SIZE = GeneratorData.WALL_SIZE
 const TOTAL_CELL_SIZE = GeneratorData.TOTAL_CELL_SIZE
 
-# TODO Sometimes spawn some sofas or recliners in the middle too?
 enum Strictness {
     MANY_OTHERS = 0,
     FEW_OTHERS = 1,

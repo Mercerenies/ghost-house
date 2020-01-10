@@ -2,14 +2,33 @@ extends Node
 
 const Sofa = preload("res://Furniture/Sofa/Sofa.tscn")
 const Recliner = preload("res://Furniture/Recliner/Recliner.tscn")
+const DeskLamp = preload("res://Furniture/DeskLamp/DeskLamp.tscn")
+const FloorLamp = preload("res://Furniture/FloorLamp/FloorLamp.tscn")
 
 const CELL_SIZE = GeneratorData.CELL_SIZE
 const WALL_SIZE = GeneratorData.WALL_SIZE
 const TOTAL_CELL_SIZE = GeneratorData.TOTAL_CELL_SIZE
 
+enum Strictness {
+    MANY_OTHERS = 0,
+    FEW_OTHERS = 1,
+    ONLY_CHAIRS = 2,
+}
+
 class _Helper:
 
-    static func _make_furniture(max_len):
+    static func _make_variety_furniture():
+        match randi() % 2:
+            0:
+                return { "object": DeskLamp.instance(), "length": 1 }
+            1:
+                return { "object": FloorLamp.instance(), "length": 1 }
+
+    static func _make_furniture(max_len, strictness):
+        if strictness <= Strictness.MANY_OTHERS and randf() < 0.15:
+            return _make_variety_furniture()
+        if strictness <= Strictness.FEW_OTHERS and randf() < 0.1:
+            return _make_variety_furniture()
         if max_len >= 2 and randf() < 0.9:
             return { "object": Sofa.instance(), "length": 2 }
         return { "object": Recliner.instance(), "length": 1 }
@@ -19,12 +38,18 @@ class InnerCircle extends FurniturePlacement:
     func enumerate(room) -> Array:
         # Direction mask specifies which sides to put seats on. Bit 0
         # is right side, bit 1 is bottom, etc.
+        var direction_masks = [
+            15, # Full circle
+             3, # Lower right
+             6, # Lower left
+            12, # Upper right
+             9, # Upper left
+        ]
         var arr = []
-        arr.append({ "room": room, "direction_mask": 15 }) # Full circle
-        arr.append({ "room": room, "direction_mask":  3 }) # Lower right
-        arr.append({ "room": room, "direction_mask":  6 }) # Lower left
-        arr.append({ "room": room, "direction_mask": 12 }) # Upper right
-        arr.append({ "room": room, "direction_mask":  9 }) # Upper left
+        for strictness in [Strictness.MANY_OTHERS, Strictness.FEW_OTHERS,
+                           Strictness.ONLY_CHAIRS, Strictness.ONLY_CHAIRS]:
+            for mask in direction_masks:
+                arr.append({ "room": room, "direction_mask": mask, "strictness": strictness })
         return arr
 
     func value_to_position(value) -> Rect2:
@@ -36,6 +61,7 @@ class InnerCircle extends FurniturePlacement:
         var box = room.box
         var i
         var dir_mask = value['direction_mask']
+        var strictness = value['strictness']
 
         var cells = Rect2(box.position * TOTAL_CELL_SIZE, box.size * TOTAL_CELL_SIZE)
         var exterior_padding = Util.randi_range(0, 4)
@@ -60,7 +86,7 @@ class InnerCircle extends FurniturePlacement:
             i = 1
             while i < lengthx - 1:
                 var max_len = max(lengthx - 1 - i, 1)
-                var furniture = _Helper._make_furniture(max_len)
+                var furniture = _Helper._make_furniture(max_len, strictness)
                 furniture["object"].set_direction(1)
                 arr.append({ "object": furniture["object"], "position": pos + Vector2(i, 0) })
                 i += furniture["length"]
@@ -70,7 +96,7 @@ class InnerCircle extends FurniturePlacement:
             i = 1
             while i < lengthx - 1:
                 var max_len = max(lengthx - 1 - i, 1)
-                var furniture = _Helper._make_furniture(max_len)
+                var furniture = _Helper._make_furniture(max_len, strictness)
                 furniture["object"].set_direction(3)
                 arr.append({ "object": furniture["object"], "position": pos + Vector2(i, lengthy - 1) })
                 i += furniture["length"]
@@ -80,7 +106,7 @@ class InnerCircle extends FurniturePlacement:
             i = 1
             while i < lengthy - 1:
                 var max_len = max(lengthy - 1 - i, 1)
-                var furniture = _Helper._make_furniture(max_len)
+                var furniture = _Helper._make_furniture(max_len, strictness)
                 furniture["object"].set_direction(0)
                 arr.append({ "object": furniture["object"], "position": pos + Vector2(0, i) })
                 i += furniture["length"]
@@ -90,7 +116,7 @@ class InnerCircle extends FurniturePlacement:
             i = 1
             while i < lengthy - 1:
                 var max_len = max(lengthy - 1 - i, 1)
-                var furniture = _Helper._make_furniture(max_len)
+                var furniture = _Helper._make_furniture(max_len, strictness)
                 furniture["object"].set_direction(2)
                 arr.append({ "object": furniture["object"], "position": pos + Vector2(lengthx - 1, i) })
                 i += furniture["length"]
