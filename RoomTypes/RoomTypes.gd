@@ -336,7 +336,7 @@ var _config: Dictionary = {
             ])
         ],
         "special": UniformDistr.new([
-            [SittingRoom.CornerSeat.new()],
+            [SittingRoom.InnerCircle.new()],
         ])
     },
     RT.LaundryRoom: {

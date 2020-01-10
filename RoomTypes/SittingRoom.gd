@@ -14,77 +14,86 @@ class _Helper:
             return { "object": Sofa.instance(), "length": 2 }
         return { "object": Recliner.instance(), "length": 1 }
 
-class CornerSeat extends FurniturePlacement:
+class InnerCircle extends FurniturePlacement:
 
     func enumerate(room) -> Array:
-        if not (room is GeneratorData.RoomData):
-            return []
-
-        var rect = Rect2(room.box.position * TOTAL_CELL_SIZE, room.box.size * TOTAL_CELL_SIZE)
+        # Direction mask specifies which sides to put seats on. Bit 0
+        # is right side, bit 1 is bottom, etc.
         var arr = []
-        for i in range(rect.size.x):
-            for j in range(rect.size.y):
-                arr.append({
-                    "position": rect.position + Vector2(i, j),
-                    "length": 4,
-                })
+        arr.append({ "room": room, "direction_mask": 15 }) # Full circle
+        arr.append({ "room": room, "direction_mask":  3 }) # Lower right
+        arr.append({ "room": room, "direction_mask":  6 }) # Lower left
+        arr.append({ "room": room, "direction_mask": 12 }) # Upper right
+        arr.append({ "room": room, "direction_mask":  9 }) # Upper left
         return arr
 
     func value_to_position(value) -> Rect2:
-        var pos = value["position"]
-        var size = Vector2(value["length"], value["length"])
-        return Rect2(pos, size)
+        return GeneratorData.PLACEMENT_SAFE
 
     func spawn_at(value):
 
-        # Direction is the direction of the first set of sofas, second
-        # set is clockwise (positive angle) from there.
-        var dir1 = randi() % 4
-        var dir2 = (dir1 + 1) % 4
-        var length = value["length"]
-        var pos = value["position"]
+        var room = value['room']
+        var box = room.box
         var i
+        var dir_mask = value['direction_mask']
 
+        var cells = Rect2(box.position * TOTAL_CELL_SIZE, box.size * TOTAL_CELL_SIZE)
+        var exterior_padding = Util.randi_range(0, 4)
+        exterior_padding = min(exterior_padding, min(cells.size.x / 2 - 4, cells.size.y / 2 - 4))
+
+        if exterior_padding == 1 and dir_mask == 15:
+            # This combination of parameters pretty much eliminates all edge furniture
+            # and leaves an awkward one-cell boundary around the whole edge, so forbid it
+            exterior_padding = 0
+
+        cells.position += Vector2(WALL_SIZE + exterior_padding, WALL_SIZE + exterior_padding)
+        cells.size -= 2 * Vector2(WALL_SIZE + exterior_padding, WALL_SIZE + exterior_padding)
+
+        var length
         var arr = []
+        var pos = cells.position
+        var lengthx = cells.size.x
+        var lengthy = cells.size.y
 
         # Top
-        if dir1 == 3 or dir2 == 3:
+        if dir_mask & 8:
             i = 1
-            while i < length - 1:
-                var max_len = max(length - 1 - i, 1)
+            while i < lengthx - 1:
+                var max_len = max(lengthx - 1 - i, 1)
                 var furniture = _Helper._make_furniture(max_len)
                 furniture["object"].set_direction(1)
                 arr.append({ "object": furniture["object"], "position": pos + Vector2(i, 0) })
                 i += furniture["length"]
 
         # Bottom
-        if dir1 == 1 or dir2 == 1:
+        if dir_mask & 2:
             i = 1
-            while i < length - 1:
-                var max_len = max(length - 1 - i, 1)
+            while i < lengthx - 1:
+                var max_len = max(lengthx - 1 - i, 1)
                 var furniture = _Helper._make_furniture(max_len)
                 furniture["object"].set_direction(3)
-                arr.append({ "object": furniture["object"], "position": pos + Vector2(i, length - 1) })
+                arr.append({ "object": furniture["object"], "position": pos + Vector2(i, lengthy - 1) })
                 i += furniture["length"]
 
         # Left
-        if dir1 == 2 or dir2 == 2:
+        if dir_mask & 4:
             i = 1
-            while i < length - 1:
-                var max_len = max(length - 1 - i, 1)
+            while i < lengthy - 1:
+                var max_len = max(lengthy - 1 - i, 1)
                 var furniture = _Helper._make_furniture(max_len)
                 furniture["object"].set_direction(0)
                 arr.append({ "object": furniture["object"], "position": pos + Vector2(0, i) })
                 i += furniture["length"]
 
         # Right
-        if dir1 == 0 or dir2 == 0:
+        if dir_mask & 1:
             i = 1
-            while i < length - 1:
-                var max_len = max(length - 1 - i, 1)
+            while i < lengthy - 1:
+                var max_len = max(lengthy - 1 - i, 1)
                 var furniture = _Helper._make_furniture(max_len)
                 furniture["object"].set_direction(2)
-                arr.append({ "object": furniture["object"], "position": pos + Vector2(length - 1, i) })
+                arr.append({ "object": furniture["object"], "position": pos + Vector2(lengthx - 1, i) })
                 i += furniture["length"]
 
+        arr.shuffle()
         return arr
