@@ -37,6 +37,7 @@ const MirrorPlacement = preload("res://Furniture/Mirror/MirrorPlacement.gd")
 
 const Study = preload("res://RoomTypes/Study.gd")
 const SittingRoom = preload("res://RoomTypes/SittingRoom.gd")
+const Washroom = preload("res://RoomTypes/Washroom.gd")
 
 const UniformDistr = SpecialPlacement.UniformDistr
 const WeightedDistr = SpecialPlacement.WeightedDistr
@@ -184,8 +185,8 @@ var _config: Dictionary = {
             ])
         ],
         "special": UniformDistr.new([
-            [ToiletPlacement.new(), BathroomSinkPlacement.new(), MirrorPlacement.new()],
-            [ToiletPlacement.new(), BathroomSinkPlacement.new(), ShowerPlacement.new(), MirrorPlacement.new()]
+            [Washroom.CentralBar.new(), ToiletPlacement.new(), BathroomSinkPlacement.new(), MirrorPlacement.new()],
+            [Washroom.CentralBar.new(), ToiletPlacement.new(), BathroomSinkPlacement.new(), ShowerPlacement.new(), MirrorPlacement.new()]
         ])
     },
     RT.WardrobeRoom: {
