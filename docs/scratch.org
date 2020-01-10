@@ -25,10 +25,11 @@
    + [X] Bench
    + [X] Bookshelf
      - [X] "Flying Books" mode
+   + [X] Cardboard Box
    + [ ] Desk
    + [X] Toilet
    + [X] Cabinet
-   + [ ] Wardrobe
+   + [X] Wardrobe
    + [X] Coffee Table
    + [X] Lamp
    + [X] Kitchen Sink
