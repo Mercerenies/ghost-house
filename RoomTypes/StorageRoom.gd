@@ -17,6 +17,7 @@ const Bench = preload("res://Furniture/Bench/Bench.tscn")
 const CardboardBox = preload("res://Furniture/CardboardBox/CardboardBox.tscn")
 const Wardrobe = preload("res://Furniture/Wardrobe/Wardrobe.tscn")
 const ClothesRack = preload("res://Furniture/ClothesRack/ClothesRack.tscn")
+const Workbench = preload("res://Furniture/Workbench/Workbench.tscn")
 
 const CELL_SIZE = GeneratorData.CELL_SIZE
 const WALL_SIZE = GeneratorData.WALL_SIZE
@@ -25,7 +26,7 @@ const TOTAL_CELL_SIZE = GeneratorData.TOTAL_CELL_SIZE
 const FURNITURE = [LongBookshelf, Bookshelf, LaundryMachine, Dryer,
                    Sofa, Recliner, DiningChair, OfficeChair, Cabinet,
                    LongCabinet, Dresser, FloorLamp, DeskLamp, Bench,
-                   CardboardBox, Wardrobe]
+                   CardboardBox, Wardrobe, ClothesRack, Workbench]
 
 class _Helper:
 

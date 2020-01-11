@@ -27,6 +27,7 @@ const EdgeBenchPlacement = preload("res://Furniture/Bench/EdgeBenchPlacement.gd"
 const EdgeCardboardBoxPlacement = preload("res://Furniture/CardboardBox/EdgeCardboardBoxPlacement.gd")
 const EdgeWardrobePlacement = preload("res://Furniture/Wardrobe/EdgeWardrobePlacement.gd")
 const EdgeClothesRackPlacement = preload("res://Furniture/ClothesRack/EdgeClothesRackPlacement.gd")
+const EdgeWorkbenchPlacement = preload("res://Furniture/Workbench/EdgeWorkbenchPlacement.gd")
 
 const TwinBedPlacement = preload("res://Furniture/TwinBed/TwinBedPlacement.gd")
 const KingBedPlacement = preload("res://Furniture/KingBed/KingBedPlacement.gd")
@@ -377,7 +378,8 @@ var _config: Dictionary = {
                 {"placement": EdgeBenchPlacement.new(), "chance": 10 },
                 {"placement": EdgeCardboardBoxPlacement.new(), "chance": 5 },
                 {"placement": EdgeWardrobePlacement.new(), "chance": 10 },
-                {"placement": EdgeClothesRackPlacement.new(), "chance": 10 }
+                {"placement": EdgeClothesRackPlacement.new(), "chance": 10 },
+                {"placement": EdgeWorkbenchPlacement.new(), "chance": 10 }
             ])
         ],
         "special": UniformDistr.new([[]])
@@ -416,7 +418,8 @@ var _config: Dictionary = {
                 {"placement": EdgeBenchPlacement.new(), "chance": 10 },
                 {"placement": EdgeCardboardBoxPlacement.new(), "chance": 15 },
                 {"placement": EdgeWardrobePlacement.new(), "chance": 10 },
-                {"placement": EdgeClothesRackPlacement.new(), "chance": 5 }
+                {"placement": EdgeClothesRackPlacement.new(), "chance": 10 },
+                {"placement": EdgeWorkbenchPlacement.new(), "chance": 10 }
             ])
         ],
         "special": UniformDistr.new([
@@ -460,7 +463,8 @@ var _config: Dictionary = {
                 {"placement": EdgeDryerPlacement.new(), "chance": 5 },
                 {"placement": EdgeWasherDryerPlacement.new(), "chance": 30 },
                 {"placement": EdgeDiningChairPlacement.new(), "chance": 20 },
-                {"placement": EdgeCardboardBoxPlacement.new(), "chance": 15 }
+                {"placement": EdgeCardboardBoxPlacement.new(), "chance": 15 },
+                {"placement": EdgeWorkbenchPlacement.new(), "chance": 20 }
             ])
         ],
         "special": UniformDistr.new([[]])

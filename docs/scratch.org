@@ -49,6 +49,7 @@
    + [ ] Dishwasher
    + [X] Torch
    + [X] Clothes Rack
+   + [X] Workbench
 * ROOM TYPES
   + [X] Hallway
     + [X] Edge
