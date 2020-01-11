@@ -16,6 +16,7 @@ const DeskLamp = preload("res://Furniture/DeskLamp/DeskLamp.tscn")
 const Bench = preload("res://Furniture/Bench/Bench.tscn")
 const CardboardBox = preload("res://Furniture/CardboardBox/CardboardBox.tscn")
 const Wardrobe = preload("res://Furniture/Wardrobe/Wardrobe.tscn")
+const ClothesRack = preload("res://Furniture/ClothesRack/ClothesRack.tscn")
 
 const CELL_SIZE = GeneratorData.CELL_SIZE
 const WALL_SIZE = GeneratorData.WALL_SIZE

@@ -26,6 +26,7 @@ const EdgeTorchPlacement = preload("res://Furniture/Torch/EdgeTorchPlacement.gd"
 const EdgeBenchPlacement = preload("res://Furniture/Bench/EdgeBenchPlacement.gd")
 const EdgeCardboardBoxPlacement = preload("res://Furniture/CardboardBox/EdgeCardboardBoxPlacement.gd")
 const EdgeWardrobePlacement = preload("res://Furniture/Wardrobe/EdgeWardrobePlacement.gd")
+const EdgeClothesRackPlacement = preload("res://Furniture/ClothesRack/EdgeClothesRackPlacement.gd")
 
 const TwinBedPlacement = preload("res://Furniture/TwinBed/TwinBedPlacement.gd")
 const KingBedPlacement = preload("res://Furniture/KingBed/KingBedPlacement.gd")
@@ -114,7 +115,8 @@ var _config: Dictionary = {
                 {"placement": EdgeDeskLampPlacement.new(), "chance": 15 },
                 {"placement": EdgeTorchPlacement.new(), "chance": 15 },
                 {"placement": EdgeBenchPlacement.new(), "chance": 10 },
-                {"placement": EdgeWardrobePlacement.new(), "chance": 20 }
+                {"placement": EdgeWardrobePlacement.new(), "chance": 20 },
+                {"placement": EdgeClothesRackPlacement.new(), "chance": 5 }
             ])
         ],
         "special": UniformDistr.new([
@@ -146,7 +148,8 @@ var _config: Dictionary = {
                 {"placement": EdgeDeskLampPlacement.new(), "chance": 30 },
                 {"placement": EdgeTorchPlacement.new(), "chance": 20 },
                 {"placement": EdgeBenchPlacement.new(), "chance": 10 },
-                {"placement": EdgeWardrobePlacement.new(), "chance": 15 }
+                {"placement": EdgeWardrobePlacement.new(), "chance": 15 },
+                {"placement": EdgeClothesRackPlacement.new(), "chance": 5 }
             ])
         ],
         "special": UniformDistr.new([
@@ -207,7 +210,8 @@ var _config: Dictionary = {
                 {"placement": EdgeDeskLampPlacement.new(), "chance": 20 },
                 {"placement": EdgeBenchPlacement.new(), "chance": 30 },
                 {"placement": EdgeCardboardBoxPlacement.new(), "chance": 5 },
-                {"placement": EdgeWardrobePlacement.new(), "chance": 40 }
+                {"placement": EdgeWardrobePlacement.new(), "chance": 40 },
+                {"placement": EdgeClothesRackPlacement.new(), "chance": 30 }
             ])
         ],
         "special": UniformDistr.new([
@@ -232,7 +236,8 @@ var _config: Dictionary = {
                 {"placement": EdgeTorchPlacement.new(), "chance": 5 },
                 {"placement": EdgeBenchPlacement.new(), "chance": 10 },
                 {"placement": EdgeCardboardBoxPlacement.new(), "chance": 10 },
-                {"placement": EdgeWardrobePlacement.new(), "chance": 20 }
+                {"placement": EdgeWardrobePlacement.new(), "chance": 20 },
+                {"placement": EdgeClothesRackPlacement.new(), "chance": 20 }
             ])
         ],
         "special": UniformDistr.new([[]])
@@ -254,7 +259,8 @@ var _config: Dictionary = {
                 {"placement": EdgeTorchPlacement.new(), "chance": 5 },
                 {"placement": EdgeBenchPlacement.new(), "chance": 10 },
                 {"placement": EdgeCardboardBoxPlacement.new(), "chance": 10 },
-                {"placement": EdgeWardrobePlacement.new(), "chance": 20 }
+                {"placement": EdgeWardrobePlacement.new(), "chance": 20 },
+                {"placement": EdgeClothesRackPlacement.new(), "chance": 20 }
             ])
         ],
         "special": UniformDistr.new([[]])
@@ -367,7 +373,8 @@ var _config: Dictionary = {
                 {"placement": EdgeDresserPlacement.new(), "chance": 10 },
                 {"placement": EdgeBenchPlacement.new(), "chance": 10 },
                 {"placement": EdgeCardboardBoxPlacement.new(), "chance": 5 },
-                {"placement": EdgeWardrobePlacement.new(), "chance": 10 }
+                {"placement": EdgeWardrobePlacement.new(), "chance": 10 },
+                {"placement": EdgeClothesRackPlacement.new(), "chance": 10 }
             ])
         ],
         "special": UniformDistr.new([[]])
@@ -405,7 +412,8 @@ var _config: Dictionary = {
                 {"placement": EdgeDeskLampPlacement.new(), "chance": 5 },
                 {"placement": EdgeBenchPlacement.new(), "chance": 10 },
                 {"placement": EdgeCardboardBoxPlacement.new(), "chance": 15 },
-                {"placement": EdgeWardrobePlacement.new(), "chance": 10 }
+                {"placement": EdgeWardrobePlacement.new(), "chance": 10 },
+                {"placement": EdgeClothesRackPlacement.new(), "chance": 5 }
             ])
         ],
         "special": UniformDistr.new([

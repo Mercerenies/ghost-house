@@ -48,6 +48,7 @@
    + [ ] Stove
    + [ ] Dishwasher
    + [X] Torch
+   + [X] Clothes Rack
 * ROOM TYPES
   + [X] Hallway
     + [X] Edge
