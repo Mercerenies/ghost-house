@@ -42,6 +42,7 @@ const SittingRoom = preload("res://RoomTypes/SittingRoom.gd")
 const Washroom = preload("res://RoomTypes/Washroom.gd")
 const StorageRoom = preload("res://RoomTypes/StorageRoom.gd")
 const WardrobeRoom = preload("res://RoomTypes/WardrobeRoom.gd")
+const Garage = preload("res://RoomTypes/Garage.gd")
 
 const UniformDistr = SpecialPlacement.UniformDistr
 const WeightedDistr = SpecialPlacement.WeightedDistr
@@ -467,7 +468,9 @@ var _config: Dictionary = {
                 {"placement": EdgeWorkbenchPlacement.new(), "chance": 20 }
             ])
         ],
-        "special": UniformDistr.new([[]])
+        "special": UniformDistr.new([
+            [Garage.GarageRandomStorage.new(4, 4)]
+        ])
     }
 }
 
