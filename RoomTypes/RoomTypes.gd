@@ -40,6 +40,7 @@ const Study = preload("res://RoomTypes/Study.gd")
 const SittingRoom = preload("res://RoomTypes/SittingRoom.gd")
 const Washroom = preload("res://RoomTypes/Washroom.gd")
 const StorageRoom = preload("res://RoomTypes/StorageRoom.gd")
+const WardrobeRoom = preload("res://RoomTypes/WardrobeRoom.gd")
 
 const UniformDistr = SpecialPlacement.UniformDistr
 const WeightedDistr = SpecialPlacement.WeightedDistr
@@ -215,8 +216,10 @@ var _config: Dictionary = {
             ])
         ],
         "special": UniformDistr.new([
-            [MirrorPlacement.new()],
-            [MirrorPlacement.new(), MirrorPlacement.new()]
+            [WardrobeRoom.HorizontalRows.new(), MirrorPlacement.new()],
+            [WardrobeRoom.HorizontalRows.new(), MirrorPlacement.new(), MirrorPlacement.new()],
+            [WardrobeRoom.VerticalRows.new(), MirrorPlacement.new()],
+            [WardrobeRoom.VerticalRows.new(), MirrorPlacement.new(), MirrorPlacement.new()],
         ])
     },
     RT.Closet: {

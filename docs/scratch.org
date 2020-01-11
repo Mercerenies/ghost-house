@@ -74,18 +74,14 @@
     + [ ] Rugs
   + [-] Wardrobe Room
     + [X] Edge
-    + [ ] Basic Layout
+    + [X] Basic Layout
     + [ ] Refined Layout
     + [ ] Rugs
   + [-] Closet
     + [X] Edge
-    + [ ] Basic Layout
-    + [ ] Refined Layout
     + [ ] Rugs
   + [-] Long Closet
     + [X] Edge
-    + [ ] Basic Layout
-    + [ ] Refined Layout
     + [ ] Rugs
   + [ ] Theater
     + [ ] Edge
