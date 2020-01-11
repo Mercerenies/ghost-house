@@ -1,5 +1,7 @@
 extends Node
 
+const SimpleRows = preload("SimpleRows.gd")
+
 const LongBookshelf = preload("res://Furniture/LongBookshelf/LongBookshelf.tscn")
 const Bookshelf = preload("res://Furniture/Bookshelf/Bookshelf.tscn")
 const Recliner = preload("res://Furniture/Recliner/Recliner.tscn")
@@ -42,7 +44,21 @@ class _Helper:
             return { "object": Bookshelf.instance(), "length": 1 }
         return { "object": LongBookshelf.instance(), "length": 2 }
 
-class HorizontalRows extends FurniturePlacement:
+class HorizontalRows extends SimpleRows:
+
+    func generate_furniture(value):
+        var obj = _Helper._make_furniture(value['strictness'])
+        obj["object"].set_direction(1 if randf() < 0.5 else 3)
+        return obj
+
+    func get_orientation():
+        return SimpleRows.Orientation.HORIZONTAL
+
+    func get_gap_size():
+        if randf() < 0.1:
+            return 4
+        else:
+            return 3
 
     func enumerate(room) -> Array:
         return [
@@ -52,50 +68,21 @@ class HorizontalRows extends FurniturePlacement:
             { "strictness": Strictness.ONLY_SHELVES },
         ]
 
-    func value_to_position(value) -> Rect2:
-        return GeneratorData.PLACEMENT_SAFE
+class VerticalRows extends SimpleRows:
 
-    func spawn_at(room, value):
-        var box = room.box
+    func generate_furniture(value):
+        var obj = _Helper._make_furniture(value['strictness'])
+        obj["object"].set_direction(0 if randf() < 0.5 else 2)
+        return obj
 
-        var cells = Rect2(box.position * TOTAL_CELL_SIZE, box.size * TOTAL_CELL_SIZE)
-        cells.position += Vector2(WALL_SIZE, WALL_SIZE)
-        cells.size -= 2 * Vector2(WALL_SIZE, WALL_SIZE)
+    func get_orientation():
+        return SimpleRows.Orientation.VERTICAL
 
-        var shelves = []
-
-        var pos = cells.position
-        var xvel = 1
-        var yvel = 3
+    func get_gap_size():
         if randf() < 0.1:
-            yvel = 4
-
-        if randf() < 0.5:
-            pos.x = cells.end.x - 1
-            xvel *= -1
-
-        pos += Vector2(sign(xvel) * (randi() % 2), randi() % 3)
-
-        while pos.y < cells.end.y:
-            var choice = _Helper._make_furniture(value['strictness'])
-            var obj = choice['object']
-            obj.position = pos * 32
-            obj.set_direction(1)
-            shelves.append({ "object": obj, "position": pos })
-            pos.x += choice['length'] * xvel
-            if xvel > 0:
-                if pos.x >= cells.end.x:
-                    pos.y += yvel
-                    xvel *= -1
-            else:
-                if pos.x < cells.position.x:
-                    pos.y += yvel
-                    xvel *= -1
-
-        shelves.shuffle()
-        return shelves
-
-class VerticalRows extends FurniturePlacement:
+            return 4
+        else:
+            return 3
 
     func enumerate(room) -> Array:
         return [
@@ -104,49 +91,6 @@ class VerticalRows extends FurniturePlacement:
             { "strictness": Strictness.ONLY_LONG_SHELVES },
             { "strictness": Strictness.ONLY_SHELVES },
         ]
-
-    func value_to_position(value) -> Rect2:
-        return GeneratorData.PLACEMENT_SAFE
-
-    func spawn_at(room, value):
-        var box = room.box
-
-        var cells = Rect2(box.position * TOTAL_CELL_SIZE, box.size * TOTAL_CELL_SIZE)
-        cells.position += Vector2(WALL_SIZE, WALL_SIZE)
-        cells.size -= 2 * Vector2(WALL_SIZE, WALL_SIZE)
-
-        var shelves = []
-
-        var pos = cells.position
-        var yvel = 1
-        var xvel = 3
-        if randf() < 0.1:
-            xvel = 4
-
-        if randf() < 0.5:
-            pos.y = cells.end.y - 1
-            yvel *= -1
-
-        pos += Vector2(randi() % 3, sign(yvel) * (randi() % 2))
-
-        while pos.x < cells.end.x:
-            var choice = _Helper._make_furniture(value['strictness'])
-            var obj = choice['object']
-            obj.position = pos * 32
-            obj.set_direction(0)
-            shelves.append({ "object": obj, "position": pos })
-            pos.y += choice['length'] * yvel
-            if yvel > 0:
-                if pos.y >= cells.end.y:
-                    pos.x += xvel
-                    yvel *= -1
-            else:
-                if pos.y < cells.position.y:
-                    pos.x += xvel
-                    yvel *= -1
-
-        shelves.shuffle()
-        return shelves
 
 class Labyrinth extends FurniturePlacement:
 
