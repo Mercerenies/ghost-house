@@ -116,11 +116,10 @@
     + [ ] Basic Layout
     + [ ] Refined Layout
     + [ ] Rugs
-  + [-] Storage Room
+  + [X] Storage Room
     + [X] Edge
-    + [ ] Basic Layout
-    + [ ] Refined Layout
-    + [ ] Rugs
+    + [X] Basic Layout
+    + [X] Refined Layout
   + [ ] Dining Room
     + [ ] Edge
     + [ ] Basic Layout

@@ -38,6 +38,7 @@ const MirrorPlacement = preload("res://Furniture/Mirror/MirrorPlacement.gd")
 const Study = preload("res://RoomTypes/Study.gd")
 const SittingRoom = preload("res://RoomTypes/SittingRoom.gd")
 const Washroom = preload("res://RoomTypes/Washroom.gd")
+const StorageRoom = preload("res://RoomTypes/StorageRoom.gd")
 
 const UniformDistr = SpecialPlacement.UniformDistr
 const WeightedDistr = SpecialPlacement.WeightedDistr
@@ -407,7 +408,9 @@ var _config: Dictionary = {
                 {"placement": EdgeWardrobePlacement.new(), "chance": 10 }
             ])
         ],
-        "special": UniformDistr.new([[]])
+        "special": UniformDistr.new([
+            [StorageRoom.RandomStorage.new(false)]
+        ])
     },
     RT.DiningRoom: {
         "floors": [Tile.WoodFloor1, Tile.WoodFloor2, Tile.WoodFloor3],
