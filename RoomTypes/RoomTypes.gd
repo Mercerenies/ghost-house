@@ -469,7 +469,7 @@ var _config: Dictionary = {
             ])
         ],
         "special": UniformDistr.new([
-            [Garage.GarageRandomStorage.new(4, 4)]
+            [Garage.GarageRandomStorage.new()]
         ])
     }
 }
