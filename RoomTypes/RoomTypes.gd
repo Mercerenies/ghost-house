@@ -423,7 +423,7 @@ var _config: Dictionary = {
             ])
         ],
         "special": UniformDistr.new([
-            [StorageRoom.RandomStorage.new(false)]
+            [StorageRoom.FullRoomRandomStorage.new()]
         ])
     },
     RT.DiningRoom: {

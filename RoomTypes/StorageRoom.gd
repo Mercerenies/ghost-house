@@ -39,24 +39,12 @@ class _Helper:
 # regard for organization. Useful for storage rooms where it's
 # supposed to look like things are just sitting there collecting dust.
 class RandomStorage extends FurniturePlacement:
-    var _reserve_placement: bool = false
 
-    func _init(reserve_placement: bool):
-        _reserve_placement = reserve_placement
-
-    func enumerate(room) -> Array:
-        var box = room.box
-        var bounds = Rect2(box.position * TOTAL_CELL_SIZE, box.size * TOTAL_CELL_SIZE)
-        bounds.position += Vector2(WALL_SIZE, WALL_SIZE)
-        bounds.size -= 2 * Vector2(WALL_SIZE, WALL_SIZE)
-        return [
-            { "region": bounds, "box_rate": 0.85 },
-            { "region": bounds, "box_rate": 0.50 },
-            { "region": bounds, "box_rate": 0.00 },
-        ]
+    func should_reserve_placement():
+        return false
 
     func value_to_position(value):
-        if _reserve_placement:
+        if should_reserve_placement():
             return value['region']
         else:
             return GeneratorData.PLACEMENT_SAFE
@@ -73,4 +61,47 @@ class RandomStorage extends FurniturePlacement:
                 arr.append({ "object": furn, "position": Vector2(i, j) })
 
         arr.shuffle()
+        return arr
+
+class FullRoomRandomStorage extends RandomStorage:
+
+    func should_reserve_placement():
+        return false
+
+    func enumerate(room) -> Array:
+        var box = room.box
+        var bounds = Rect2(box.position * TOTAL_CELL_SIZE, box.size * TOTAL_CELL_SIZE)
+        bounds.position += Vector2(WALL_SIZE, WALL_SIZE)
+        bounds.size -= 2 * Vector2(WALL_SIZE, WALL_SIZE)
+        return [
+            { "region": bounds, "box_rate": 0.85 },
+            { "region": bounds, "box_rate": 0.50 },
+            { "region": bounds, "box_rate": 0.00 },
+        ]
+
+class RegionRandomStorage extends RandomStorage:
+
+    func should_reserve_placement():
+        return true
+
+    func get_box_rates() -> Array:
+        return [0.85, 0.50, 0.00]
+
+    func get_size() -> Vector2:
+        return Vector2(3, 3)
+
+    func enumerate(room) -> Array:
+        var box = room.box
+        var bounds = Rect2(box.position * TOTAL_CELL_SIZE, box.size * TOTAL_CELL_SIZE)
+        bounds.position += Vector2(WALL_SIZE, WALL_SIZE)
+        bounds.size -= 2 * Vector2(WALL_SIZE, WALL_SIZE)
+        var box_rates = get_box_rates()
+        var dims = get_size()
+
+        var arr = []
+        for i in range(bounds.position.x, bounds.end.x - dims.x):
+            for j in range(bounds.position.y, bounds.end.y - dims.y):
+                for rate in box_rates:
+                    arr.append({ "region": Rect2(Vector2(i, j), dims),
+                                 "box_rate": rate })
         return arr
