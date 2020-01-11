@@ -48,6 +48,94 @@
    + [ ] Stove
    + [ ] Dishwasher
    + [X] Torch
+* ROOM TYPES
+  + [X] Hallway
+    + [X] Edge
+  + [-] Bedroom
+    + [X] Edge
+    + [ ] Basic Layout
+    + [ ] Refined Layout
+    + [ ] Rugs
+  + [-] MasterBedroom
+    + [X] Edge
+    + [ ] Basic Layout
+    + [ ] Refined Layout
+    + [ ] Rugs
+  + [ ] Bathroom
+    + [ ] Edge
+    + [ ] Basic Layout
+    + [ ] Refined Layout
+    + [ ] Rugs
+  + [-] Washroom
+    + [X] Edge
+    + [X] Basic Layout
+    + [X] Refined Layout
+    + [ ] Rugs
+  + [-] Wardrobe Room
+    + [X] Edge
+    + [ ] Basic Layout
+    + [ ] Refined Layout
+    + [ ] Rugs
+  + [-] Closet
+    + [X] Edge
+    + [ ] Basic Layout
+    + [ ] Refined Layout
+    + [ ] Rugs
+  + [-] Long Closet
+    + [X] Edge
+    + [ ] Basic Layout
+    + [ ] Refined Layout
+    + [ ] Rugs
+  + [ ] Theater
+    + [ ] Edge
+    + [ ] Basic Layout
+    + [ ] Refined Layout
+    + [ ] Rugs
+  + [ ] Foyer
+    + [ ] Edge
+    + [ ] Basic Layout
+    + [ ] Refined Layout
+    + [ ] Rugs
+  + [-] Study
+    + [X] Edge
+    + [X] Basic Layout
+    + [X] Refined Layout
+    + [ ] Rugs
+  + [-] Sitting Room
+    + [X] Edge
+    + [X] Basic Layout
+    + [ ] Refined Layout
+    + [ ] Rugs
+  + [-] Laundry Room
+    + [X] Edge
+    + [ ] Basic Layout
+    + [ ] Refined Layout
+    + [ ] Rugs
+  + [ ] Kitchen
+    + [ ] Edge
+    + [ ] Basic Layout
+    + [ ] Refined Layout
+    + [ ] Rugs
+  + [-] Storage Room
+    + [X] Edge
+    + [ ] Basic Layout
+    + [ ] Refined Layout
+    + [ ] Rugs
+  + [ ] Dining Room
+    + [ ] Edge
+    + [ ] Basic Layout
+    + [ ] Refined Layout
+    + [ ] Rugs
+  + [ ] Dining Hall
+    + [ ] Edge
+    + [ ] Basic Layout
+    + [ ] Refined Layout
+    + [ ] Rugs
+  + [-] Garage
+    + [X] Edge
+    + [ ] Basic Layout
+    + [ ] Refined Layout
+    + [ ] Rugs
 * THOUGHTS
 ** "Evil" Rooms
    + Some rooms (very small probability) will randomly just have all
