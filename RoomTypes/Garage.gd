@@ -30,16 +30,6 @@ class CarSpawner extends Reference:
         result.set_image_type(_image_index)
         return result
 
-class _Helper_Garage:
-
-    static func _make_furniture_maybe():
-        if randf() < 0.15:
-            return null
-        return _make_furniture()
-
-    static func _make_furniture():
-        return Automobile.instance()
-
 class RandomStorage extends StorageRoom.RegionRandomStorage:
 
     func get_box_rates() -> Array:
