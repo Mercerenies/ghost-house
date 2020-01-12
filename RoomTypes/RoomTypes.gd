@@ -36,6 +36,7 @@ const BathtubPlacement = preload("res://Furniture/Bathtub/BathtubPlacement.gd")
 const ToiletPlacement = preload("res://Furniture/Toilet/ToiletPlacement.gd")
 const BathroomSinkPlacement = preload("res://Furniture/BathroomSink/BathroomSinkPlacement.gd")
 const MirrorPlacement = preload("res://Furniture/Mirror/MirrorPlacement.gd")
+const AutomobilePlacement = preload("res://Furniture/Automobile/AutomobilePlacement.gd")
 
 const Study = preload("res://RoomTypes/Study.gd")
 const SittingRoom = preload("res://RoomTypes/SittingRoom.gd")
@@ -469,7 +470,7 @@ var _config: Dictionary = {
             ])
         ],
         "special": UniformDistr.new([
-            [Garage.GarageRandomStorage.new()]
+            [AutomobilePlacement.new(), Garage.GarageRandomStorage.new()]
         ])
     }
 }

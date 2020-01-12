@@ -21,6 +21,7 @@
    + [X] Bathtub
    + [ ] Dining Table
    + [X] Mirror
+   + [X] Automobile
 ** EDGE FURNITURE
    + [X] Bench
    + [X] Bookshelf
