@@ -20,11 +20,17 @@ func get_gap_size():
     # Abstract method; override me
     pass
 
+func spawn_prologue(value):
+    # Not abstract, but feel free to override if needed. This will get
+    # called once at the beginning of spawn_at.
+    pass
+
 func value_to_position(value) -> Rect2:
     return GeneratorData.PLACEMENT_SAFE
 
 func spawn_at(room, value):
     var box = room.box
+    spawn_prologue(value)
 
     var cells = Rect2(box.position * TOTAL_CELL_SIZE, box.size * TOTAL_CELL_SIZE)
     cells.position += Vector2(WALL_SIZE, WALL_SIZE)
@@ -56,10 +62,11 @@ func spawn_at(room, value):
     while pos.y < cells.end.y:
         var choice = generate_furniture(value)
         var obj = choice['object']
-        var transformed_pos = pos
-        if orientation == Orientation.VERTICAL:
-            transformed_pos = Util.transpose_v(transformed_pos)
-        arr.append({ "object": obj, "position": transformed_pos })
+        if obj != null:
+            var transformed_pos = pos
+            if orientation == Orientation.VERTICAL:
+                transformed_pos = Util.transpose_v(transformed_pos)
+            arr.append({ "object": obj, "position": transformed_pos })
         pos.x += choice['length'] * xvel
         if xvel > 0:
             if pos.x >= cells.end.x:

@@ -7,11 +7,28 @@ const Automobile = preload("res://Furniture/Automobile/Automobile.tscn")
 
 const AutomobilePlacement = preload("res://Furniture/Automobile/AutomobilePlacement.gd")
 
+const TYPES_OF_CARS = 4 # TODO Put this constant somewhere more appropriate
+
 # These constants are necessary; see Godot issue #35025
 const CELL_SIZE = GeneratorData.CELL_SIZE
 const WALL_SIZE = GeneratorData.WALL_SIZE
 const TOTAL_CELL_SIZE = GeneratorData.TOTAL_CELL_SIZE
 const _Helper = StorageRoom._Helper
+
+class CarSpawner extends Reference:
+    var _failure_chance: float
+    var _image_index: int
+
+    func _init(failure_chance: float, image_index: int = -1):
+        _failure_chance = failure_chance
+        _image_index = image_index
+
+    func generate_furniture():
+        if randf() < _failure_chance:
+            return null
+        var result = Automobile.instance()
+        result.set_image_type(_image_index)
+        return result
 
 class _Helper_Garage:
 
@@ -64,6 +81,10 @@ class CarsAgainstWall extends FurniturePlacement:
 
         var dir_mask = value['direction_mask']
         var off_by_one = (randf() < 0.5)
+        var index = -1
+        if randf() < 0.25:
+            index = randi() % TYPES_OF_CARS
+        var spawner = CarSpawner.new(0.15, index)
 
         var arr = []
 
@@ -73,7 +94,7 @@ class CarsAgainstWall extends FurniturePlacement:
             if off_by_one:
                 i += 1
             while i < cells.size.y - 1:
-                var furn = _Helper_Garage._make_furniture_maybe()
+                var furn = spawner.generate_furniture()
                 if furn != null:
                     furn.set_direction(dir)
                     arr.append({ "object": furn, "position": cells.position + Vector2(cells.size.x - 2, i) })
@@ -85,7 +106,7 @@ class CarsAgainstWall extends FurniturePlacement:
             if off_by_one:
                 i += 1
             while i < cells.size.x - 1:
-                var furn = _Helper_Garage._make_furniture_maybe()
+                var furn = spawner.generate_furniture()
                 if furn != null:
                     furn.set_direction(dir)
                     arr.append({ "object": furn, "position": cells.position + Vector2(i, cells.size.y - 2) })
@@ -97,7 +118,7 @@ class CarsAgainstWall extends FurniturePlacement:
             if off_by_one:
                 i += 1
             while i < cells.size.y - 1:
-                var furn = _Helper_Garage._make_furniture_maybe()
+                var furn = spawner.generate_furniture()
                 if furn != null:
                     furn.set_direction(dir)
                     arr.append({ "object": furn, "position": cells.position + Vector2(0, i) })
@@ -109,7 +130,7 @@ class CarsAgainstWall extends FurniturePlacement:
             if off_by_one:
                 i += 1
             while i < cells.size.x - 1:
-                var furn = _Helper_Garage._make_furniture_maybe()
+                var furn = spawner.generate_furniture()
                 if furn != null:
                     furn.set_direction(dir)
                     arr.append({ "object": furn, "position": cells.position + Vector2(i, 0) })
@@ -126,7 +147,7 @@ class CarsAgainstWall extends FurniturePlacement:
 class HorizontalRows extends SimpleRows:
 
     func generate_furniture(value):
-        var obj = _Helper_Garage._make_furniture()
+        var obj = value["spawner"].generate_furniture()
         obj.set_direction(value["dir"])
         return { "object": obj, "length": 2 }
 
@@ -142,6 +163,12 @@ class HorizontalRows extends SimpleRows:
         else:
             return 5
 
+    func spawn_prologue(value):
+        var index = -1
+        if randf() < 0.25:
+            index = randi() % TYPES_OF_CARS
+        value["spawner"] = CarSpawner.new(0.00, index)
+
     func enumerate(room) -> Array:
         var arr = []
         for dir in range(4):
@@ -151,7 +178,7 @@ class HorizontalRows extends SimpleRows:
 class VerticalRows extends SimpleRows:
 
     func generate_furniture(value):
-        var obj = _Helper_Garage._make_furniture()
+        var obj = value["spawner"].generate_furniture()
         obj.set_direction(value["dir"])
         return { "object": obj, "length": 2 }
 
@@ -166,6 +193,12 @@ class VerticalRows extends SimpleRows:
             return 4
         else:
             return 5
+
+    func spawn_prologue(value):
+        var index = -1
+        if randf() < 0.25:
+            index = randi() % TYPES_OF_CARS
+        value["spawner"] = CarSpawner.new(0.00, index)
 
     func enumerate(room) -> Array:
         var arr = []
