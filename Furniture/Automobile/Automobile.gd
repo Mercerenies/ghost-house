@@ -6,7 +6,7 @@ func _ready() -> void:
     interaction["idle"] = [
          { "command": "say", "text": "An old-fashioned automobile." }
     ]
-    _image_type = randi() % 2
+    _image_type = randi() % $Sprite.vframes
     $Sprite.frame = 4 * _image_type + ($Sprite.frame % 4)
 
 func set_direction(a: int):
