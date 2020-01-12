@@ -469,9 +469,7 @@ var _config: Dictionary = {
                 {"placement": EdgeWorkbenchPlacement.new(), "chance": 20 }
             ])
         ],
-        "special": UniformDistr.new([
-            [AutomobilePlacement.new(), Garage.GarageRandomStorage.new()]
-        ])
+        "special": Garage.PlacementManager.new()
     }
 }
 

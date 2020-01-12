@@ -131,9 +131,10 @@
     + [ ] Rugs
   + [-] Garage
     + [X] Edge
-    + [ ] Basic Layout
+    + [X] Basic Layout
     + [ ] Refined Layout
     + [ ] Rugs
+    + [ ] Parking Spots
 * THOUGHTS
 ** "Evil" Rooms
    + Some rooms (very small probability) will randomly just have all
