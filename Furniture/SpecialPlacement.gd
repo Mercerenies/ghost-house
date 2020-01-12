@@ -10,7 +10,7 @@ class UniformDistr extends SpecialPlacementManager:
     func _init(values: Array) -> void:
         _values = values
 
-    func determine_placements() -> Array:
+    func determine_placements(_size: Vector2) -> Array:
         return _values[randi() % len(_values)]
 
 # Expects each entry to be { "result": result, "weight": weight }.
@@ -21,7 +21,7 @@ class WeightedDistr extends SpecialPlacementManager:
     func _init(values: Array) -> void:
         _values = values
 
-    func determine_placements() -> Array:
+    func determine_placements(_size: Vector2) -> Array:
         var total = 0
         for v in _values:
             total += v["weight"]
@@ -38,10 +38,10 @@ class Trivial extends SpecialPlacementManager:
     func _init(values: Array) -> void:
         _values = values
 
-    func determine_placements() -> Array:
+    func determine_placements(_size: Vector2) -> Array:
         return _values
 
 class Nothing extends SpecialPlacementManager:
 
-    func determine_placements() -> Array:
+    func determine_placements(_size: Vector2) -> Array:
         return []

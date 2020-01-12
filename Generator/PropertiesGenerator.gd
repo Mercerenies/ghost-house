@@ -21,12 +21,12 @@ func _determine_room_properties() -> void:
             v.floortype = RoomTypes.decide_floor_type(v.type)
             v.walltype = RoomTypes.decide_wall_type(v.type)
             v.edgetype = RoomTypes.decide_edge_manager(v.type)
-            v.specialtype = RoomTypes.decide_special_manager(v.type)
+            v.specialtype = RoomTypes.decide_special_manager(v.box.size, v.type)
         elif v is HallwayData:
             v.floortype = RoomTypes.decide_floor_type(RoomTypes.RT.Hallway)
             v.walltype = RoomTypes.decide_wall_type(RoomTypes.RT.Hallway)
             v.edgetype = RoomTypes.decide_edge_manager(RoomTypes.RT.Hallway)
-            v.specialtype = RoomTypes.decide_special_manager(RoomTypes.RT.Hallway)
+            v.specialtype = RoomTypes.decide_special_manager(Vector2(), RoomTypes.RT.Hallway)
         else:
             # Welp
             pass

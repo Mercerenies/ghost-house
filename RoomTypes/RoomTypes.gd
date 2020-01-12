@@ -493,9 +493,9 @@ func decide_edge_manager(rtype: int) -> EdgePlacementManager:
     var arr = _config[rtype]["edges"]
     return arr[randi() % len(arr)]
 
-func decide_special_manager(rtype: int) -> Array:
+func decide_special_manager(dims: Vector2, rtype: int) -> Array:
     var arr = _config[rtype]["special"]
-    return arr.determine_placements()
+    return arr.determine_placements(dims)
 
 var _tmp = null
 
