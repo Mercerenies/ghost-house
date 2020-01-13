@@ -2,8 +2,7 @@
 * DIALOGUE FORMAT
   A dialogue object is a dictionary. Its elements are the various
   dialogue states, whose respective names are the dictionary keys. The
-  values are arrays of instructions. A conversation always begins in
-  the ~start~ state.
+  values are arrays of instructions.
 
   An instruction is a dictionary. Instructions always have a ~command~
   key. All of the other keys depend on which instruction is being executed.
@@ -47,3 +46,14 @@
   A room object specifies generation parameters for producing a room.
   It is a dictionary whose top-level keys are as follows. All of these
   are required. See ~room.json~.
+** ~config~ (required)
+   A dictionary specifying various configuration data.
+*** ~width~ (required)
+    Specifies the width of the room, in generator units. Must be an
+    integer.
+*** ~height~ (required)
+    Specifies the height of the room, in generator units. Must be an
+    integer.
+*** ~percent_evil~ (required)
+    The percentage (0.00 to 1.00) of furniture that will be turned
+    vanishing and evil.
