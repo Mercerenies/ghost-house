@@ -19,7 +19,7 @@
    + [X] King Bed
    + [X] Shower
    + [X] Bathtub
-   + [ ] Dining Table
+   + [X] Dining Table
    + [X] Mirror
    + [X] Automobile
 ** EDGE FURNITURE
