@@ -47,10 +47,12 @@ func _try_to_place(room, placement) -> void:
     for obj in arr:
         # This bit of redundancy is necessary for
         # PLACEMENT_SAFE-style rules.
-        var pos = placement.value_to_position(chosen).position
+        var pos
         if obj is Dictionary:
             pos = obj['position']
             obj = obj['object']
+        elif obj != null:
+            pos = obj.position / 32
         if obj == null:
             continue
         var rect = Rect2(pos, obj.get_dims())
