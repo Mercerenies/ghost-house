@@ -39,6 +39,8 @@ func update_map() -> void:
     self.update()
 
 func _draw() -> void:
+    if _grid == null:
+        return
     var upperleft = Vector2(get_viewport_rect().size.x - GRID_CELL_SIZE * _dims.x, 0)
     var playerpos = _find_player()
     var playerrpos = playerpos / GeneratorData.TOTAL_CELL_SIZE
