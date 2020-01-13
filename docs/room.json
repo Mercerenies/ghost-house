@@ -1,0 +1,35 @@
+{
+  "$schema": "http://json-schema.org/schema#",
+  "$id": "http://mercerenies.com/json/schemas/ghost-house/room.json",
+  "title": "Generator Room Configuration",
+  "type": "object",
+  "properties": {
+    "config": {
+      "title": "Top-Level Configuration Parameters",
+      "description": "Various global configuration parameters that affect the whole generation process.",
+      "type": "object",
+      "properties": {
+        "width": {
+          "type": "integer",
+          "description": "The width of the room, in generator units.",
+          "minimum": 1
+        },
+        "height":  {
+          "type": "integer",
+          "description": "The height of the room, in generator units.",
+          "minimum": 1
+        },
+        "percent_evil": {
+          "type": "number",
+          "description": "The percentage of furniture that will be turned evil in some form.",
+          "minimum": 0,
+          "maximum": 1
+        }
+      },
+      "additionalProperties": false,
+      "required": ["width", "height", "percent_evil"]
+    }
+  },
+  "additionalProperties": false,
+  "required": ["config"]
+}

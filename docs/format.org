@@ -46,15 +46,4 @@
 * ROOM FORMAT
   A room object specifies generation parameters for producing a room.
   It is a dictionary whose top-level keys are as follows. All of these
-  are required.
-** ~config~ (required)
-   A dictionary specifying various configuration data.
-*** ~width~ (required)
-    Specifies the width of the room, in generator units. Must be an
-    integer.
-*** ~height~ (required)
-    Specifies the height of the room, in generator units. Must be an
-    integer.
-*** ~percent_evil~ (required)
-    The percentage (0.00 to 1.00) of furniture that will be turned
-    vanishing and evil.
+  are required. See ~room.json~.
