@@ -332,11 +332,7 @@ var _config: Dictionary = {
                 {"placement": EdgeWardrobePlacement.new(), "chance": 5 }
             ])
         ],
-        "special": WeightedDistr.new([
-            { "result": [Study.HorizontalRows.new()], "weight": 10 },
-            { "result": [Study.VerticalRows.new()], "weight": 10 },
-            { "result": [Study.Labyrinth.new()], "weight": 3 },
-        ])
+        "special": Study.PlacementManager.new()
     },
     RT.SittingRoom: {
         "floors": [Tile.LightGrayCarpet, Tile.GrayCarpet, Tile.DarkGrayCarpet, Tile.WoodFloor1, Tile.WoodFloor2, Tile.WoodFloor3],

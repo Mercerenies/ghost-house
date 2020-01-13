@@ -125,3 +125,15 @@ class Labyrinth extends FurniturePlacement:
 
         shelves.shuffle()
         return shelves
+
+class PlacementManager extends SpecialPlacementManager:
+
+    func determine_placements(size: Vector2) -> Array:
+        var min_dim = min(size.x, size.y)
+        var max_dim = max(size.x, size.y)
+
+        if randf() < 0.1 and max_dim >= 3:
+            return [Labyrinth.new()]
+        elif randf() < 0.2 and min_dim >= 3:
+            return [Labyrinth.new()]
+        return [HorizontalRows.new() if randf() < 0.5 else VerticalRows.new()]
