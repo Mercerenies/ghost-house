@@ -20,6 +20,7 @@
    + [X] Shower
    + [X] Bathtub
    + [X] Dining Table
+   + [X] (Circular) Dining Table
    + [X] Mirror
    + [X] Automobile
 ** EDGE FURNITURE
