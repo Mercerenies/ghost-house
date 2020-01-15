@@ -21,4 +21,4 @@ func spawn_at(_room, value):
     var obj = AutomobileScene.instance()
     obj.position = value["position"] * 32
     obj.set_direction(randi() % 4)
-    return obj
+    return [obj]

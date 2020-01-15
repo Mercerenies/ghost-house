@@ -34,4 +34,4 @@ func spawn_at(_room, value):
     var obj = KingBedScene.instance()
     obj.position = value["position"] * 32
     obj.set_direction(value["direction"])
-    return obj
+    return [obj]

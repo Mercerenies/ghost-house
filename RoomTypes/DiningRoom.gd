@@ -40,8 +40,6 @@ class SurroundedInChairs extends FurniturePlacement:
 
     func spawn_at(room, value):
         var arr = _inner.spawn_at(room, value)
-        if not (arr is Array):
-            arr = [arr]
 
         var bounds = _inner.value_to_position(value)
         var upperleft = bounds.position - Vector2(1, 1)

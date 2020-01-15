@@ -42,8 +42,6 @@ func _try_to_place(room, placement) -> void:
     # preferable if returning more than one object. If position is not specified,
     # the value_to_position will be used.
     var arr = placement.spawn_at(room, chosen)
-    if not (arr is Array):
-        arr = [arr]
     for obj in arr:
         # This bit of redundancy is necessary for
         # PLACEMENT_SAFE-style rules.

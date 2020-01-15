@@ -31,4 +31,4 @@ func spawn_at(_room, value):
     var obj = DiningTable.instance()
     obj.set_dims(_dims)
     obj.position = value["position"] * 32
-    return obj
+    return [obj]

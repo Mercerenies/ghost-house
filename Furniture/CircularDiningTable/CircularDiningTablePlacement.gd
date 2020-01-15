@@ -18,4 +18,4 @@ func value_to_position(value) -> Rect2:
 func spawn_at(_room, value):
     var obj = CircularDiningTable.instance()
     obj.position = value["position"] * 32
-    return obj
+    return [obj]
