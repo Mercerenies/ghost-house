@@ -155,3 +155,12 @@
    Minor bug with the player running. If holding the run button, the
    player continues to consume stamina even if facing a wall or other
    impassible object. Need to fix this.
+** Stuff on Tabletops
+   Surfaces like dining tables or dressers may be able to contain
+   things. Generally for decoration purposes, but these things may
+   also produce light.
+
+   Possible "things" to be on surfaces
+   + [ ] Torches
+   + [ ] Lamps
+   + [ ] Books
