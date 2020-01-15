@@ -120,9 +120,9 @@
     + [X] Edge
     + [X] Basic Layout
     + [X] Refined Layout
-  + [ ] Dining Room
-    + [ ] Edge
-    + [ ] Basic Layout
+  + [-] Dining Room
+    + [X] Edge
+    + [X] Basic Layout
     + [ ] Refined Layout
     + [ ] Rugs
   + [ ] Dining Hall
