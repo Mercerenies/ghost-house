@@ -37,22 +37,13 @@ func _try_to_place(room, placement) -> void:
     if len(valid_positions) == 0:
         return
     var chosen = valid_positions[randi() % len(valid_positions)]
-    # The returned values can be either objects (likely Furniture subclasses) or
-    # dictionaries { "object": obj, "position": pos }. Obviously, the latter is
-    # preferable if returning more than one object. If position is not specified,
-    # the value_to_position will be used.
     var arr = placement.spawn_at(room, chosen)
     for obj in arr:
         # This bit of redundancy is necessary for
         # PLACEMENT_SAFE-style rules.
-        var pos
-        if obj is Dictionary:
-            pos = obj['position']
-            obj = obj['object']
-        elif obj != null:
-            pos = obj.position / 32
         if obj == null:
             continue
+        var pos = obj.position / 32
         var rect = Rect2(pos, obj.get_dims())
         if _helper.can_put_furniture_at(_room, rect):
             if placement.can_block_doorways() or not _helper.is_blocking_doorway(rect):

@@ -87,7 +87,8 @@ class CarsAgainstWall extends FurniturePlacement:
                 var furn = spawner.generate_furniture()
                 if furn != null:
                     furn.set_direction(dir)
-                    arr.append({ "object": furn, "position": cells.position + Vector2(cells.size.x - 2, i) })
+                    furn.position = 32 * (cells.position + Vector2(cells.size.x - 2, i))
+                    arr.append(furn)
                 i += 2
 
         if dir_mask & 2:
@@ -99,7 +100,8 @@ class CarsAgainstWall extends FurniturePlacement:
                 var furn = spawner.generate_furniture()
                 if furn != null:
                     furn.set_direction(dir)
-                    arr.append({ "object": furn, "position": cells.position + Vector2(i, cells.size.y - 2) })
+                    furn.position = 32 * (cells.position + Vector2(i, cells.size.y - 2))
+                    arr.append(furn)
                 i += 2
 
         if dir_mask & 4:
@@ -111,7 +113,8 @@ class CarsAgainstWall extends FurniturePlacement:
                 var furn = spawner.generate_furniture()
                 if furn != null:
                     furn.set_direction(dir)
-                    arr.append({ "object": furn, "position": cells.position + Vector2(0, i) })
+                    furn.position = 32 * (cells.position + Vector2(0, i))
+                    arr.append(furn)
                 i += 2
 
         if dir_mask & 8:
@@ -122,8 +125,8 @@ class CarsAgainstWall extends FurniturePlacement:
             while i < cells.size.x - 1:
                 var furn = spawner.generate_furniture()
                 if furn != null:
-                    furn.set_direction(dir)
-                    arr.append({ "object": furn, "position": cells.position + Vector2(i, 0) })
+                    furn.position = 32 * (cells.position + Vector2(i, 0))
+                    arr.append(furn)
                 i += 2
 
         # Shuffling is currently mostly unproductive as the cars are

@@ -117,11 +117,14 @@ class Labyrinth extends FurniturePlacement:
                 var vert = LongBookshelf.instance()
                 var center = Bookshelf.instance()
                 horiz.set_direction(1)
+                horiz.position = 32 * (upperleft + Vector2(1, 0))
                 vert.set_direction(0)
+                vert.position = 32 * (upperleft + Vector2(0, 1))
                 center.set_direction(randi() % 2)
-                shelves.append({ "object": horiz, "position": upperleft + Vector2(1, 0) })
-                shelves.append({ "object": vert, "position": upperleft + Vector2(0, 1) })
-                shelves.append({ "object": center, "position": upperleft })
+                center.position = 32 * upperleft
+                shelves.append(horiz)
+                shelves.append(vert)
+                shelves.append(center)
 
         shelves.shuffle()
         return shelves

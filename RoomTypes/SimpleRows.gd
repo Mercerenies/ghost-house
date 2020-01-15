@@ -66,7 +66,8 @@ func spawn_at(room, value):
             var transformed_pos = pos
             if orientation == Orientation.VERTICAL:
                 transformed_pos = Util.transpose_v(transformed_pos)
-            arr.append({ "object": obj, "position": transformed_pos })
+            obj.position = transformed_pos * 32
+            arr.append(obj)
         pos.x += choice['length'] * xvel
         if xvel > 0:
             if pos.x >= cells.end.x:

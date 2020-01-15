@@ -87,7 +87,8 @@ class InnerCircle extends FurniturePlacement:
                 var max_len = max(lengthx - 1 - i, 1)
                 var furniture = _Helper._make_furniture(max_len, strictness)
                 furniture["object"].set_direction(1)
-                arr.append({ "object": furniture["object"], "position": pos + Vector2(i, 0) })
+                furniture["object"].position = 32 * (pos + Vector2(i, 0))
+                arr.append(furniture["object"])
                 i += furniture["length"]
 
         # Bottom
@@ -97,7 +98,8 @@ class InnerCircle extends FurniturePlacement:
                 var max_len = max(lengthx - 1 - i, 1)
                 var furniture = _Helper._make_furniture(max_len, strictness)
                 furniture["object"].set_direction(3)
-                arr.append({ "object": furniture["object"], "position": pos + Vector2(i, lengthy - 1) })
+                furniture["object"].position = 32 * (pos + Vector2(i, lengthy - 1))
+                arr.append(furniture["object"])
                 i += furniture["length"]
 
         # Left
@@ -107,7 +109,8 @@ class InnerCircle extends FurniturePlacement:
                 var max_len = max(lengthy - 1 - i, 1)
                 var furniture = _Helper._make_furniture(max_len, strictness)
                 furniture["object"].set_direction(0)
-                arr.append({ "object": furniture["object"], "position": pos + Vector2(0, i) })
+                furniture["object"].position = 32 * (pos + Vector2(0, i))
+                arr.append(furniture["object"])
                 i += furniture["length"]
 
         # Right
@@ -117,7 +120,8 @@ class InnerCircle extends FurniturePlacement:
                 var max_len = max(lengthy - 1 - i, 1)
                 var furniture = _Helper._make_furniture(max_len, strictness)
                 furniture["object"].set_direction(2)
-                arr.append({ "object": furniture["object"], "position": pos + Vector2(lengthx - 1, i) })
+                furniture["object"].position = 32 * (pos + Vector2(lengthx - 1, i))
+                arr.append(furniture["object"])
                 i += furniture["length"]
 
         arr.shuffle()

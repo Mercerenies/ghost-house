@@ -61,14 +61,16 @@ class CentralBar extends FurniturePlacement:
             while i < cells.size.x:
                 var furn = _Helper._make_furniture(strictness)
                 furn["object"].set_direction(3)
-                arr.append({ "object": furn["object"], "position": cells.position + Vector2(i, j) })
+                furn["object"].position = 32 * (cells.position + Vector2(i, j))
+                arr.append(furn["object"])
                 i += furn["length"]
             i = 0
             j += 1
             while i < cells.size.x:
                 var furn = _Helper._make_furniture(strictness)
                 furn["object"].set_direction(1)
-                arr.append({ "object": furn["object"], "position": cells.position + Vector2(i, j) })
+                furn["object"].position = 32 * (cells.position + Vector2(i, j))
+                arr.append(furn["object"])
                 i += furn["length"]
 
         # Vertical Line
@@ -78,14 +80,16 @@ class CentralBar extends FurniturePlacement:
             while j < cells.size.x:
                 var furn = _Helper._make_furniture(strictness)
                 furn["object"].set_direction(2)
-                arr.append({ "object": furn["object"], "position": cells.position + Vector2(i, j) })
+                furn["object"].position = 32 * (cells.position + Vector2(i, j))
+                arr.append(furn["object"])
                 j += furn["length"]
             i += 1
             j = 0
             while j < cells.size.x:
                 var furn = _Helper._make_furniture(strictness)
                 furn["object"].set_direction(0)
-                arr.append({ "object": furn["object"], "position": cells.position + Vector2(i, j) })
+                furn["object"].position = 32 * (cells.position + Vector2(i, j))
+                arr.append(furn["object"])
                 j += furn["length"]
 
         arr.shuffle()

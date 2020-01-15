@@ -58,7 +58,8 @@ class RandomStorage extends FurniturePlacement:
             for j in range(region.position.y, region.end.y):
                 var furn = _Helper._make_furniture(box_rate)
                 furn.set_direction(randi() % 4)
-                arr.append({ "object": furn, "position": Vector2(i, j) })
+                furn.position = 32 * Vector2(i, j)
+                arr.append(furn)
 
         arr.shuffle()
         return arr

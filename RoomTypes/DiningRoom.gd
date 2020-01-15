@@ -13,7 +13,7 @@ class _Helper:
         var chair = DiningChair.instance()
         chair.position = pos * 32
         chair.set_direction(dir)
-        return { "object": chair, "position": pos }
+        return chair
 
 class SurroundedInChairs extends FurniturePlacement:
     var _inner: FurniturePlacement
