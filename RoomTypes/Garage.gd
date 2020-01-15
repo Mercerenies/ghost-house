@@ -62,7 +62,7 @@ class CarsAgainstWall extends FurniturePlacement:
     func value_to_position(value) -> Rect2:
         return GeneratorData.PLACEMENT_SAFE
 
-    func spawn_at(room, value):
+    func spawn_at(room, value, cb):
         var dir = randi() % 4
 
         var cells = Rect2(room.box.position * TOTAL_CELL_SIZE, room.box.size * TOTAL_CELL_SIZE)
@@ -135,7 +135,8 @@ class CarsAgainstWall extends FurniturePlacement:
         # would. This may change. Watch this space.
 
         #arr.shuffle()
-        return arr
+        for obj in arr:
+            cb.call(obj)
 
 class HorizontalRows extends SimpleRows:
 

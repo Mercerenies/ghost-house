@@ -28,7 +28,7 @@ func spawn_prologue(value):
 func value_to_position(value) -> Rect2:
     return GeneratorData.PLACEMENT_SAFE
 
-func spawn_at(room, value):
+func spawn_at(room, value, cb):
     var box = room.box
     spawn_prologue(value)
 
@@ -79,4 +79,5 @@ func spawn_at(room, value):
                 xvel *= -1
 
     arr.shuffle()
-    return arr
+    for obj in arr:
+        cb.call(obj)

@@ -15,7 +15,7 @@ func enumerate(room) -> Array:
 func value_to_position(value) -> Rect2:
     return Rect2(value["position"], Vector2(2, 2))
 
-func spawn_at(_room, value):
+func spawn_at(_room, value, cb):
     var obj = CircularDiningTable.instance()
     obj.position = value["position"] * 32
-    return [obj]
+    cb.call(obj)

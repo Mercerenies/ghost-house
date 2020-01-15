@@ -49,7 +49,7 @@ class RandomStorage extends FurniturePlacement:
         else:
             return GeneratorData.PLACEMENT_SAFE
 
-    func spawn_at(_room, value):
+    func spawn_at(_room, value, cb):
         var region = value['region']
         var box_rate = value['box_rate']
 
@@ -62,7 +62,8 @@ class RandomStorage extends FurniturePlacement:
                 arr.append(furn)
 
         arr.shuffle()
-        return arr
+        for obj in arr:
+            cb.call(obj)
 
 class FullRoomRandomStorage extends RandomStorage:
 

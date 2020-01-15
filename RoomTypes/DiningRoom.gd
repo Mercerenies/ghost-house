@@ -38,8 +38,8 @@ class SurroundedInChairs extends FurniturePlacement:
             return result # Pass through
         return Rect2(result.position - Vector2(1, 1), result.size + Vector2(2, 2))
 
-    func spawn_at(room, value):
-        var arr = _inner.spawn_at(room, value)
+    func spawn_at(room, value, cb):
+        _inner.spawn_at(room, value, cb)
 
         var bounds = _inner.value_to_position(value)
         var upperleft = bounds.position - Vector2(1, 1)
@@ -47,15 +47,13 @@ class SurroundedInChairs extends FurniturePlacement:
         # Top and Bottom
         for i in range(bounds.size.x):
             if randf() < _rate:
-                arr.append(_Helper._make_chair_facing(upperleft + Vector2(i + 1, 0), 1))
+                cb.call(_Helper._make_chair_facing(upperleft + Vector2(i + 1, 0), 1))
             if randf() < _rate:
-                arr.append(_Helper._make_chair_facing(upperleft + Vector2(i + 1, bounds.size.y + 1), 3))
+                cb.call(_Helper._make_chair_facing(upperleft + Vector2(i + 1, bounds.size.y + 1), 3))
 
         # Left and Right
         for i in range(bounds.size.y):
             if randf() < _rate:
-                arr.append(_Helper._make_chair_facing(upperleft + Vector2(0, i + 1), 0))
+                cb.call(_Helper._make_chair_facing(upperleft + Vector2(0, i + 1), 0))
             if randf() < _rate:
-                arr.append(_Helper._make_chair_facing(upperleft + Vector2(bounds.size.x + 1, i + 1), 2))
-
-        return arr
+                cb.call(_Helper._make_chair_facing(upperleft + Vector2(bounds.size.x + 1, i + 1), 2))

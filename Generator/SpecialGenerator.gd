@@ -11,6 +11,31 @@ var _room: Room
 var _boxes: Dictionary = {}
 var _helper: GeneratorPlacementHelper
 
+class Callback extends Reference:
+    var _room
+    var _helper
+    var _placement
+
+    func _init(room, helper, placement) -> void:
+        _room = room
+        _helper = helper
+        _placement = placement
+
+    # Returns true if successful. Frees the object and returns false
+    # if not.
+    func call(obj) -> bool:
+        if obj == null:
+            return false
+        var pos = obj.position / 32
+        var rect = Rect2(pos, obj.get_dims())
+        if _helper.can_put_furniture_at(_room, rect):
+            if _placement.can_block_doorways() or not _helper.is_blocking_doorway(rect):
+                _helper.add_entity(pos, obj)
+                _helper.consider_turning_evil(obj)
+                return true
+        obj.free()
+        return false
+
 func _init(room_data: Dictionary, boxes: Dictionary, room: Room, helper: GeneratorPlacementHelper):
     _data = room_data
     _boxes = boxes
@@ -37,21 +62,8 @@ func _try_to_place(room, placement) -> void:
     if len(valid_positions) == 0:
         return
     var chosen = valid_positions[randi() % len(valid_positions)]
-    var arr = placement.spawn_at(room, chosen)
-    for obj in arr:
-        # This bit of redundancy is necessary for
-        # PLACEMENT_SAFE-style rules.
-        if obj == null:
-            continue
-        var pos = obj.position / 32
-        var rect = Rect2(pos, obj.get_dims())
-        if _helper.can_put_furniture_at(_room, rect):
-            if placement.can_block_doorways() or not _helper.is_blocking_doorway(rect):
-                _helper.add_entity(pos, obj)
-                _helper.consider_turning_evil(obj)
-                continue
-        # If we couldn't place it, free it.
-        obj.free()
+    var callback = Callback.new(_room, _helper, placement)
+    placement.spawn_at(room, chosen, callback)
 
 func _fill_special() -> void:
     for k in _boxes:

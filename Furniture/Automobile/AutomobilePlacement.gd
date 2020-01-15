@@ -17,8 +17,8 @@ func enumerate(room) -> Array:
 func value_to_position(value) -> Rect2:
     return Rect2(value["position"], Vector2(2, 2))
 
-func spawn_at(_room, value):
+func spawn_at(_room, value, cb):
     var obj = AutomobileScene.instance()
     obj.position = value["position"] * 32
     obj.set_direction(randi() % 4)
-    return [obj]
+    cb.call(obj)

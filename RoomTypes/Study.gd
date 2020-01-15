@@ -105,7 +105,7 @@ class Labyrinth extends FurniturePlacement:
     func value_to_position(_value) -> Rect2:
         return GeneratorData.PLACEMENT_SAFE
 
-    func spawn_at(room, _value):
+    func spawn_at(room, _value, cb):
         var box = room.box
         var cells = Rect2(box.position * TOTAL_CELL_SIZE, box.size * TOTAL_CELL_SIZE)
 
@@ -127,7 +127,8 @@ class Labyrinth extends FurniturePlacement:
                 shelves.append(center)
 
         shelves.shuffle()
-        return shelves
+        for obj in shelves:
+            cb.call(obj)
 
 class PlacementManager extends SpecialPlacementManager:
 

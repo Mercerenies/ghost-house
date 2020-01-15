@@ -55,7 +55,7 @@ class InnerCircle extends FurniturePlacement:
     func value_to_position(value) -> Rect2:
         return GeneratorData.PLACEMENT_SAFE
 
-    func spawn_at(room, value):
+    func spawn_at(room, value, cb):
 
         var box = room.box
         var i
@@ -125,4 +125,5 @@ class InnerCircle extends FurniturePlacement:
                 i += furniture["length"]
 
         arr.shuffle()
-        return arr
+        for obj in arr:
+            cb.call(obj)
