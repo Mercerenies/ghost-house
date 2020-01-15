@@ -435,9 +435,7 @@ var _config: Dictionary = {
                 {"placement": EdgeTorchPlacement.new(), "chance": 30 }
             ])
         ],
-        "special": UniformDistr.new([
-            [DiningRoom.SurroundedInChairs.new(DiningRoom.CircularDiningTablePlacement.new(), 1.0)]
-        ])
+        "special": DiningRoom.PlacementManager.new()
     },
     RT.DiningHall: {
         "floors": [Tile.WoodFloor1, Tile.WoodFloor2, Tile.WoodFloor3],
