@@ -12,6 +12,7 @@ const PropertiesGenerator = preload("res://Generator/PropertiesGenerator.gd")
 const ActualizingGenerator = preload("res://Generator/ActualizingGenerator.gd")
 const SpecialGenerator = preload("res://Generator/SpecialGenerator.gd")
 const EdgeGenerator = preload("res://Generator/EdgeGenerator.gd")
+const PlayerGenerator = preload("res://Generator/PlayerGenerator.gd")
 
 const GeneratorGrid = preload("res://GeneratorGrid/GeneratorGrid.gd")
 const GeneratorPainter = preload("res://GeneratorPainter/GeneratorPainter.gd")
@@ -71,6 +72,7 @@ func generate() -> Room:
     var actualizing_generator = ActualizingGenerator.new(_data, _grid, _boxes, _room)
     var special_generator = SpecialGenerator.new(_data, _boxes, _room, helper)
     var edge_generator = EdgeGenerator.new(_data, _grid, _flag_grid, _boxes, _room, helper)
+    var player_generator = PlayerGenerator.new(_data, _grid, _boxes, _room, helper)
 
     hallway_generator.run(ID_HALLS)
     var next_id = live_room_generator.run(ID_ROOMS)
@@ -83,17 +85,6 @@ func generate() -> Room:
 
     _room.get_minimap().initialize(Vector2(w, h), _grid, _boxes, _connections)
 
-    var player = PlayerScene.instance()
-    # DEBUG CODE We'll clean this up later; it's quick and dirty player placement right now
-    var playercheck = false
-    for i in range(100):
-        for j in range(100):
-            if _room.get_entity_cell(Vector2(i + 2, j + 2)) == null:
-                helper.add_entity(Vector2(i + 2, j + 2), player)
-                playercheck = true
-                break
-        if playercheck:
-            break
-    player.connect("player_moved", _room.get_minimap(), "update_map")
+    player_generator.run()
 
     return _room
