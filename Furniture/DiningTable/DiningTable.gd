@@ -13,6 +13,17 @@ func set_dims(v: Vector2) -> void:
     .set_dims(v)
     update()
 
+func chance_of_turning_evil() -> float:
+    # It looks weird if a table too large goes vanishing, and it
+    # messes with the idea of "looking" at furniture (as the point
+    # used for reference is the top left corner) and you get into
+    # situations where you can be standing next to it and it's still
+    # disappeared entirely. Bottom line: sufficiently large furniture
+    # shouldn't vanish.
+    var dims = get_dims()
+    var max_dim = max(dims.x, dims.y)
+    return 1.0 if max_dim < 5 else 0.0
+
 func _draw() -> void:
     var dims = get_dims()
     var tex = $Sprite.get_texture()
