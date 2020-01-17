@@ -174,7 +174,7 @@ var _config: Dictionary = {
         "walls": [Tile.DiamondWall, Tile.CircleWall],
         "edges": [
             EdgePlacementManager.new([
-                {"placement": EdgeVacuousFurniturePlacement.new(), "chance": 100 },
+                {"placement": EdgeVacuousFurniturePlacement.new(), "chance": 50 },
                 {"placement": EdgeToiletPlacement.new(), "chance": 5 },
                 {"placement": EdgeBathroomCounterPlacement.new(), "chance": 10 },
                 {"placement": EdgeBathroomSinkPlacement.new(), "chance": 5 },
@@ -191,7 +191,7 @@ var _config: Dictionary = {
         "walls": [Tile.DiamondWall, Tile.CircleWall],
         "edges": [
             EdgePlacementManager.new([
-                {"placement": EdgeVacuousFurniturePlacement.new(), "chance": 50 },
+                {"placement": EdgeVacuousFurniturePlacement.new(), "chance": 60 },
                 {"placement": EdgeToiletPlacement.new(), "chance": 5 },
                 {"placement": EdgeBathroomCounterPlacement.new(), "chance": 10 },
                 {"placement": EdgeBathroomSinkPlacement.new(), "chance": 10 },
