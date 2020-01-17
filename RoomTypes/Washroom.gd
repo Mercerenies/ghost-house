@@ -31,7 +31,7 @@ class CentralBar extends FurniturePlacement:
             return []
         # Mask has bit 0 set for horizontal line, bit 1 for vertical
         var arr = []
-        for mask in range(1, 4):
+        for mask in range(0, 4):
             arr.append({ "strictness": Strictness.FEW_OTHERS, "mask": mask })
             arr.append({ "strictness": Strictness.SINKS_AND_COUNTERS, "mask": mask })
         return arr
