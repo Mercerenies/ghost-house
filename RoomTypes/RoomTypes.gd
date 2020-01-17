@@ -29,6 +29,7 @@ const EdgeWardrobePlacement = preload("res://Furniture/Wardrobe/EdgeWardrobePlac
 const EdgeClothesRackPlacement = preload("res://Furniture/ClothesRack/EdgeClothesRackPlacement.gd")
 const EdgeWorkbenchPlacement = preload("res://Furniture/Workbench/EdgeWorkbenchPlacement.gd")
 const EdgeLaundryBasketPlacement = preload("res://Furniture/LaundryBasket/EdgeLaundryBasketPlacement.gd")
+const EdgeDishwasherPlacement = preload("res://Furniture/Dishwasher/EdgeDishwasherPlacement.gd")
 
 const TwinBedPlacement = preload("res://Furniture/TwinBed/TwinBedPlacement.gd")
 const KingBedPlacement = preload("res://Furniture/KingBed/KingBedPlacement.gd")
@@ -403,7 +404,8 @@ var _config: Dictionary = {
             EdgePlacementManager.new([
                 {"placement": EdgeVacuousFurniturePlacement.new(), "chance": 50 },
                 {"placement": EdgeKitchenCounterPlacement.new(), "chance": 10 },
-                {"placement": EdgeKitchenSinkPlacement.new(), "chance": 10 }
+                {"placement": EdgeKitchenSinkPlacement.new(), "chance": 10 },
+                {"placement": EdgeDishwasherPlacement.new(), "chance": 10 }
             ])
         ],
         "special": UniformDistr.new([[]])

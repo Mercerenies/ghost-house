@@ -48,7 +48,7 @@
      - [X] "Flying furniture" mode
    + [X] Dresser
    + [ ] Stove
-   + [ ] Dishwasher
+   + [X] Dishwasher
    + [X] Torch
    + [X] Clothes Rack
    + [X] Workbench
@@ -174,3 +174,8 @@
    + Flipping all chairs to face the opposite way
    + Flipping all chairs upside down
    + Changing the designs of the rugs
+** Coherence
+   If matching counters or sinks are next to each other, consider
+   having them change images to look like they're part of a larger
+   piece.
+   + Note: Probably not if they're vanishing though.
