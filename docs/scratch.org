@@ -47,7 +47,7 @@
    + [X] Office Chair
      - [X] "Flying furniture" mode
    + [X] Dresser
-   + [ ] Stove
+   + [X] Stove
    + [X] Dishwasher
    + [X] Torch
    + [X] Clothes Rack
