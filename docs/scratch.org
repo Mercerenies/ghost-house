@@ -109,8 +109,8 @@
     + [ ] Rugs
   + [-] Laundry Room
     + [X] Edge
-    + [ ] Basic Layout
-    + [ ] Refined Layout
+    + [X] Basic Layout
+    + [X] Refined Layout
     + [ ] Rugs
   + [ ] Kitchen
     + [ ] Edge

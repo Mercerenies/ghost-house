@@ -47,6 +47,7 @@ const WardrobeRoom = preload("res://RoomTypes/WardrobeRoom.gd")
 const Garage = preload("res://RoomTypes/Garage.gd")
 const DiningRoom = preload("res://RoomTypes/DiningRoom.gd")
 const DiningHall = preload("res://RoomTypes/DiningHall.gd")
+const LaundryRoom = preload("res://RoomTypes/LaundryRoom.gd")
 
 const UniformDistr = SpecialPlacement.UniformDistr
 const WeightedDistr = SpecialPlacement.WeightedDistr
@@ -389,7 +390,10 @@ var _config: Dictionary = {
                 {"placement": EdgeLaundryBasketPlacement.new(), "chance": 10 }
             ])
         ],
-        "special": UniformDistr.new([[]])
+        "special": WeightedDistr.new([
+            { "result": [LaundryRoom.CentralBar.new()], "weight": 5 },
+            { "result": [], "weight": 8 },
+        ])
     },
     RT.Kitchen: {
         "floors": [Tile.TileFloor1, Tile.TileFloor3],
