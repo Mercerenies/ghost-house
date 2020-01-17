@@ -112,9 +112,9 @@
     + [X] Basic Layout
     + [X] Refined Layout
     + [ ] Rugs
-  + [ ] Kitchen
-    + [ ] Edge
-    + [ ] Basic Layout
+  + [-] Kitchen
+    + [X] Edge
+    + [X] Basic Layout
     + [ ] Refined Layout
     + [ ] Rugs
   + [X] Storage Room

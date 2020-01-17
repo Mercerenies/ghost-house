@@ -51,6 +51,7 @@ const DiningRoom = preload("res://RoomTypes/DiningRoom.gd")
 const DiningHall = preload("res://RoomTypes/DiningHall.gd")
 const LaundryRoom = preload("res://RoomTypes/LaundryRoom.gd")
 const Bathroom = preload("res://RoomTypes/Bathroom.gd")
+const Kitchen = preload("res://RoomTypes/Kitchen.gd")
 
 const UniformDistr = SpecialPlacement.UniformDistr
 const WeightedDistr = SpecialPlacement.WeightedDistr
@@ -403,14 +404,16 @@ var _config: Dictionary = {
         "walls": [Tile.DiamondWall, Tile.CircleWall],
         "edges": [
             EdgePlacementManager.new([
-                {"placement": EdgeVacuousFurniturePlacement.new(), "chance": 50 },
+                {"placement": EdgeVacuousFurniturePlacement.new(), "chance": 40 },
                 {"placement": EdgeKitchenCounterPlacement.new(), "chance": 10 },
                 {"placement": EdgeKitchenSinkPlacement.new(), "chance": 10 },
                 {"placement": EdgeDishwasherPlacement.new(), "chance": 10 },
                 {"placement": EdgeStovePlacement.new(), "chance": 10 }
             ])
         ],
-        "special": UniformDistr.new([[]])
+        "special": UniformDistr.new([
+            [Kitchen.BarAcross.new()]
+        ])
     },
     RT.StorageRoom: {
         "floors": [Tile.WoodFloor1, Tile.WoodFloor2, Tile.WoodFloor3],
