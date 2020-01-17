@@ -52,6 +52,7 @@
    + [X] Torch
    + [X] Clothes Rack
    + [X] Workbench
+   + [X] Laundry Basket
 * ROOM TYPES
   + [X] Hallway
     + [X] Edge

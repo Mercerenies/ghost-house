@@ -3,6 +3,7 @@ extends Node
 const BathroomCounter = preload("res://Furniture/BathroomCounter/BathroomCounter.tscn")
 const BathroomSink = preload("res://Furniture/BathroomSink/BathroomSink.tscn")
 const Toilet = preload("res://Furniture/Toilet/Toilet.tscn")
+const LaundryBasket = preload("res://Furniture/LaundryBasket/LaundryBasket.tscn")
 
 const CELL_SIZE = GeneratorData.CELL_SIZE
 const WALL_SIZE = GeneratorData.WALL_SIZE
@@ -18,6 +19,8 @@ class _Helper:
     static func _make_furniture(strictness):
         if randf() < 0.1 and strictness <= Strictness.FEW_OTHERS:
             return { "object": Toilet.instance(), "length": 1 }
+        if randf() < 0.1 and strictness <= Strictness.FEW_OTHERS:
+            return { "object": LaundryBasket.instance(), "length": 1 }
         if randf() < 0.5:
             return { "object": BathroomCounter.instance(), "length": 2 }
         else:

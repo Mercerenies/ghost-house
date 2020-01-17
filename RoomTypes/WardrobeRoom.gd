@@ -8,6 +8,7 @@ const FloorLamp = preload("res://Furniture/FloorLamp/FloorLamp.tscn")
 const Bench = preload("res://Furniture/Bench/Bench.tscn")
 const DiningChair = preload("res://Furniture/DiningChair/DiningChair.tscn")
 const CardboardBox = preload("res://Furniture/CardboardBox/CardboardBox.tscn")
+const LaundryBasket = preload("res://Furniture/LaundryBasket/LaundryBasket.tscn")
 
 const CELL_SIZE = GeneratorData.CELL_SIZE
 const WALL_SIZE = GeneratorData.WALL_SIZE
@@ -35,6 +36,8 @@ class _Helper:
                 return { "object": DiningChair.instance(), "length": 1 }
             11:
                 return { "object": CardboardBox.instance(), "length": 1 }
+            12:
+                return { "object": LaundryBasket.instance(), "length": 1 }
 
     static func _make_furniture(strictness):
         if strictness <= Strictness.MANY_OTHERS and randf() < 0.15:
