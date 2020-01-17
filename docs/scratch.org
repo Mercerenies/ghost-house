@@ -125,9 +125,9 @@
     + [X] Basic Layout
     + [ ] Refined Layout
     + [ ] Rugs
-  + [ ] Dining Hall
-    + [ ] Edge
-    + [ ] Basic Layout
+  + [-] Dining Hall
+    + [X] Edge
+    + [X] Basic Layout
     + [ ] Refined Layout
     + [ ] Rugs
   + [-] Garage

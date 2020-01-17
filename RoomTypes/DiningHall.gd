@@ -86,15 +86,17 @@ class VerticalLongRow extends Reference:
     func spawn_at_position(room, pos, cb) -> int:
         var length = min(room.box.size.y * TOTAL_CELL_SIZE, _max_len)
         var table
-        while length > 3:
+        var success = false
+        while length >= 3:
             table = DiningTable.instance()
             table.set_dims(Vector2(_width, length))
             table.position = 32 * pos
             if cb.call(table):
                 # Success
+                success = true
                 break
             length -= 1
-        if length <= 3:
+        if not success:
             return -1 # Too small
         # Put chairs left and right
         for i in range(length):
@@ -121,7 +123,7 @@ class LongRowWithBreaks extends Reference:
         var rowtype = VerticalLongRow if _orientation == Orientation.VERTICAL else HorizontalLongRow
         var direction = Vector2(0, 1) if _orientation == Orientation.VERTICAL else Vector2(1, 0)
 
-        var total_length
+        var total_length: int
         if _orientation == Orientation.VERTICAL:
             total_length = bottomright.y - pos.y
         else:
@@ -139,16 +141,23 @@ class LongRowWithBreaks extends Reference:
 
         while from_start < total_length:
             var current_gap = 99999
+            while index < len(gaps) and gaps[index] < from_start:
+                index += 1
             if index < len(gaps):
                 current_gap = gaps[index] - from_start
             var row = rowtype.new(_rate, _width, current_gap)
             var current_length = row.spawn_at_position(room, pos + from_start * direction, cb)
-            from_start += current_length + gap_size
+            if current_length >= 0:
+                from_start += current_length + gap_size
+            else:
+                from_start += gap_size
 
 class LongRows extends FurniturePlacement:
+    var _rate: float
     var _orientation: int
 
-    func _init(orientation: int) -> void:
+    func _init(rate: float, orientation: int) -> void:
+        _rate = rate
         _orientation = orientation
 
     func enumerate(_room) -> Array:
@@ -164,11 +173,34 @@ class LongRows extends FurniturePlacement:
         cells.size -= 2 * Vector2(WALL_SIZE, WALL_SIZE)
 
         var pos = cells.position
-        var dir = Vector2(0, 1) if _orientation == Orientation.VERTICAL else Vector2(1, 0)
+        var dir = Vector2(1, 0) if _orientation == Orientation.VERTICAL else Vector2(0, 1)
 
-        pass # /////
+        var jump_speed = 6
+        if randf() < 0.1:
+            jump_speed = 7
+
+        pos += dir
+        if randf() < 0.25:
+            pos += dir
+
+        var longrow = LongRowWithBreaks.new(_rate, 2, _orientation)
+
+        while pos.x < cells.end.x and pos.y < cells.end.y:
+            longrow.spawn_at_position(room, pos, cb)
+            pos += jump_speed * dir
 
 class PlacementManager extends SpecialPlacementManager:
 
     func determine_placements(size: Vector2) -> Array:
-        return []
+        var orientation
+        if size.x == size.y:
+            # Dims are equal so pick randomly
+            orientation = Orientation.VERTICAL if randf() < 0.5 else Orientation.HORIZONTAL
+        elif size.x > size.y:
+            # Longways horizontal
+            orientation = Orientation.VERTICAL if randf() < 0.2 else Orientation.HORIZONTAL
+        else:
+            # Longways vertical
+            orientation = Orientation.VERTICAL if randf() < 0.8 else Orientation.HORIZONTAL
+        var rate = Util.choose([0.0, 0.5, 0.5, 0.5, 0.75, 1.0, 1.0])
+        return [LongRows.new(rate, orientation)]
