@@ -66,9 +66,9 @@
     + [ ] Basic Layout
     + [ ] Refined Layout
     + [ ] Rugs
-  + [ ] Bathroom
-    + [ ] Edge
-    + [ ] Basic Layout
+  + [-] Bathroom
+    + [X] Edge
+    + [X] Basic Layout
     + [ ] Refined Layout
     + [ ] Rugs
   + [-] Washroom

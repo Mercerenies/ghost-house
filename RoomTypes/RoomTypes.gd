@@ -48,6 +48,7 @@ const Garage = preload("res://RoomTypes/Garage.gd")
 const DiningRoom = preload("res://RoomTypes/DiningRoom.gd")
 const DiningHall = preload("res://RoomTypes/DiningHall.gd")
 const LaundryRoom = preload("res://RoomTypes/LaundryRoom.gd")
+const Bathroom = preload("res://RoomTypes/Bathroom.gd")
 
 const UniformDistr = SpecialPlacement.UniformDistr
 const WeightedDistr = SpecialPlacement.WeightedDistr
@@ -182,8 +183,8 @@ var _config: Dictionary = {
             ])
         ],
         "special": UniformDistr.new([
-            [BathtubPlacement.new(), MirrorPlacement.new()],
-            [ShowerPlacement.new(), MirrorPlacement.new()]
+            [Bathroom.BarAcross.new(), BathtubPlacement.new(), MirrorPlacement.new()],
+            [Bathroom.BarAcross.new(), ShowerPlacement.new(), MirrorPlacement.new()]
         ])
     },
     RT.Washroom: {
