@@ -165,3 +165,12 @@
    + [ ] Torches
    + [ ] Lamps
    + [ ] Books
+** The Leprechaun
+   So not an actual enemy. Just a persistent background object that
+   runs around to different rooms doing fun stuff when the player's
+   viewport leaves the room.
+   + Opening and closing all boxes in the room
+   + Filling or emptying all laundry baskets in the room
+   + Flipping all chairs to face the opposite way
+   + Flipping all chairs upside down
+   + Changing the designs of the rugs
