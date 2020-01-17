@@ -1,9 +1,5 @@
 extends Node
 
-# TODO Make a custom SpecialPlacementManager for libraries to only
-# allow the labyrinth to spawn in big rooms (similar to what we're
-# doing in Garage)
-
 const SimpleRows = preload("SimpleRows.gd")
 
 const LongBookshelf = preload("res://Furniture/LongBookshelf/LongBookshelf.tscn")
