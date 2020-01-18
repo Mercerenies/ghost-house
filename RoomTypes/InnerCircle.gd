@@ -19,9 +19,21 @@ func determine_exterior_padding() -> int:
     # Abstract, override me
     return 0
 
+func determine_starting_offset() -> int:
+    # Abstract, override me
+    return 0
+
 func generate_furniture(max_len, params):
     # Abstract; override me
     pass
+
+func set_furniture_direction(obj, dir, params):
+    # Can be overridden but the default behavior is sensible
+    obj.set_direction(dir)
+
+func get_short_edge() -> int:
+    # Can be overridden; default is 1
+    return 1
 
 func enumerate(room) -> Array:
     var direction_masks = direction_masks()
@@ -58,48 +70,54 @@ func spawn_at(room, value, cb):
     var lengthx = cells.size.x
     var lengthy = cells.size.y
 
+    var starting_offset = determine_starting_offset()
+
     # Top
     if dir_mask & 8:
-        i = 1
+        i = starting_offset
         while i < lengthx - 1:
             var max_len = max(lengthx - 1 - i, 1)
             var furniture = generate_furniture(max_len, params)
-            furniture["object"].set_direction(1)
-            furniture["object"].position = 32 * (pos + Vector2(i, 0))
-            arr.append(furniture["object"])
+            if furniture["object"] != null:
+                set_furniture_direction(furniture["object"], 1, params)
+                furniture["object"].position = 32 * (pos + Vector2(i, 0))
+                arr.append(furniture["object"])
             i += furniture["length"]
 
     # Bottom
     if dir_mask & 2:
-        i = 1
+        i = starting_offset
         while i < lengthx - 1:
             var max_len = max(lengthx - 1 - i, 1)
             var furniture = generate_furniture(max_len, params)
-            furniture["object"].set_direction(3)
-            furniture["object"].position = 32 * (pos + Vector2(i, lengthy - 1))
-            arr.append(furniture["object"])
+            if furniture["object"] != null:
+                set_furniture_direction(furniture["object"], 3, params)
+                furniture["object"].position = 32 * (pos + Vector2(i, lengthy - get_short_edge()))
+                arr.append(furniture["object"])
             i += furniture["length"]
 
     # Left
     if dir_mask & 4:
-        i = 1
+        i = starting_offset
         while i < lengthy - 1:
             var max_len = max(lengthy - 1 - i, 1)
             var furniture = generate_furniture(max_len, params)
-            furniture["object"].set_direction(0)
-            furniture["object"].position = 32 * (pos + Vector2(0, i))
-            arr.append(furniture["object"])
+            if furniture["object"] != null:
+                set_furniture_direction(furniture["object"], 0, params)
+                furniture["object"].position = 32 * (pos + Vector2(0, i))
+                arr.append(furniture["object"])
             i += furniture["length"]
 
     # Right
     if dir_mask & 1:
-        i = 1
+        i = starting_offset
         while i < lengthy - 1:
             var max_len = max(lengthy - 1 - i, 1)
             var furniture = generate_furniture(max_len, params)
-            furniture["object"].set_direction(2)
-            furniture["object"].position = 32 * (pos + Vector2(lengthx - 1, i))
-            arr.append(furniture["object"])
+            if furniture["object"] != null:
+                set_furniture_direction(furniture["object"], 2, params)
+                furniture["object"].position = 32 * (pos + Vector2(lengthx - get_short_edge(), i))
+                arr.append(furniture["object"])
             i += furniture["length"]
 
     arr.shuffle()

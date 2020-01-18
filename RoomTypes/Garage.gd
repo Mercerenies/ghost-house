@@ -2,9 +2,9 @@ extends Node
 
 const StorageRoom = preload("StorageRoom.gd")
 const SimpleRows = preload("SimpleRows.gd")
+const InnerCircle = preload("InnerCircle.gd")
 
 const Automobile = preload("res://Furniture/Automobile/Automobile.tscn")
-
 const AutomobilePlacement = preload("res://Furniture/Automobile/AutomobilePlacement.gd")
 
 const TYPES_OF_CARS = 4 # TODO Put this constant somewhere more appropriate
@@ -38,14 +38,10 @@ class RandomStorage extends StorageRoom.RegionRandomStorage:
     func get_size() -> Vector2:
         return Vector2(4, 4)
 
-# TODO Can this be consolidated into a common base class with
-# SittingRoom.InnerCircle?
-class CarsAgainstWall extends FurniturePlacement:
+class CarsAgainstWall extends InnerCircle:
 
-    func enumerate(room) -> Array:
-        # Direction mask specifies which sides to put seats on. Bit 0
-        # is right side, bit 1 is bottom, etc.
-        var direction_masks = [
+    func direction_masks() -> Array:
+        return [
              1, # Right
              2, # Bottom
              4, # Left
@@ -54,89 +50,31 @@ class CarsAgainstWall extends FurniturePlacement:
             10, # Top / Bottom
         ]
 
-        var arr = []
-        for mask in direction_masks:
-            arr.append({ "direction_mask": mask })
-        return arr
-
-    func value_to_position(value) -> Rect2:
-        return GeneratorData.PLACEMENT_SAFE
-
-    func spawn_at(room, value, cb):
-        var dir = randi() % 4
-
-        var cells = Rect2(room.box.position * TOTAL_CELL_SIZE, room.box.size * TOTAL_CELL_SIZE)
-        cells.position += Vector2(WALL_SIZE, WALL_SIZE)
-        cells.size -= 2 * Vector2(WALL_SIZE, WALL_SIZE)
-
-        var dir_mask = value['direction_mask']
-        var off_by_one = (randf() < 0.5)
+    func determine_params():
         var index = -1
         if randf() < 0.25:
             index = randi() % TYPES_OF_CARS
         var spawner = CarSpawner.new(0.15, index)
+        var dir = randi() % 4
+        return { "spawner": spawner, "direction": dir }
 
-        var arr = []
+    func determine_exterior_padding() -> int:
+        return 0
 
-        if dir_mask & 1:
-            # Right
-            var i = 0
-            if off_by_one:
-                i += 1
-            while i < cells.size.y - 1:
-                var furn = spawner.generate_furniture()
-                if furn != null:
-                    furn.set_direction(dir)
-                    furn.position = 32 * (cells.position + Vector2(cells.size.x - 2, i))
-                    arr.append(furn)
-                i += 2
+    func determine_starting_offset() -> int:
+        return 0 if randf() < 0.5 else 1
 
-        if dir_mask & 2:
-            # Bottom
-            var i = 0
-            if off_by_one:
-                i += 1
-            while i < cells.size.x - 1:
-                var furn = spawner.generate_furniture()
-                if furn != null:
-                    furn.set_direction(dir)
-                    furn.position = 32 * (cells.position + Vector2(i, cells.size.y - 2))
-                    arr.append(furn)
-                i += 2
+    func generate_furniture(max_len, params):
+        var furniture = params["spawner"].generate_furniture()
+        return { "object": furniture,
+                 "length": 2 }
 
-        if dir_mask & 4:
-            # Left
-            var i = 0
-            if off_by_one:
-                i += 1
-            while i < cells.size.y - 1:
-                var furn = spawner.generate_furniture()
-                if furn != null:
-                    furn.set_direction(dir)
-                    furn.position = 32 * (cells.position + Vector2(0, i))
-                    arr.append(furn)
-                i += 2
+    func set_furniture_direction(obj, _dir, params):
+        # Enforce that all cars face the same way
+        obj.set_direction(params["direction"])
 
-        if dir_mask & 8:
-            # Top
-            var i = 0
-            if off_by_one:
-                i += 1
-            while i < cells.size.x - 1:
-                var furn = spawner.generate_furniture()
-                if furn != null:
-                    furn.position = 32 * (cells.position + Vector2(i, 0))
-                    arr.append(furn)
-                i += 2
-
-        # Shuffling is currently mostly unproductive as the cars are
-        # all against a wall and thus aren't fighting for control over
-        # room space like, say, bookshelves in the middle of a room
-        # would. This may change. Watch this space.
-
-        #arr.shuffle()
-        for obj in arr:
-            cb.call(obj)
+    func get_short_edge() -> int:
+        return 2
 
 class HorizontalRows extends SimpleRows:
 

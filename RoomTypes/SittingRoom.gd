@@ -54,6 +54,9 @@ class RoomInnerCircle extends InnerCircle:
     func determine_exterior_padding() -> int:
         return Util.randi_range(0, 4)
 
+    func determine_starting_offset() -> int:
+        return 1
+
     func generate_furniture(max_len, params):
         var strictness = params["strictness"]
         return _Helper._make_furniture(max_len, strictness)
