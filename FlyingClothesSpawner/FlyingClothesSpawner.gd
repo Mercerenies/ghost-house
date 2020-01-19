@@ -6,7 +6,7 @@ export var width: float = 16
 export var height: float = 16
 
 export var minimum_distance: float = 64
-export var maximum_distance: float = 256
+export var maximum_distance: float = 384
 
 var clothes = null
 var entity = null

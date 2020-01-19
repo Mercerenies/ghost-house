@@ -31,6 +31,7 @@ enum State {
 var state: int = State.Introducing
 var target_position: Vector2
 var attack_vector = Vector2()
+var rotate_index = 0.0
 
 func _ready() -> void:
     scale.x = 0
@@ -105,6 +106,21 @@ func _process(delta: float) -> void:
             modulate.a = Util.toward(modulate.a, delta * DISAPPEAR_SPEED, 0)
             if modulate.a == 0:
                 queue_free()
+
+    match state:
+        State.Retreating:
+            rotate_index += delta / 2
+        State.Fleeing, State.Attacking:
+            rotate_index += delta
+        State.Disappearing:
+            if attack_vector != Vector2():
+                rotate_index += delta
+            else:
+                continue
+        _:
+            var target_index = ceil(rotate_index * 2) / 2
+            rotate_index = Util.toward(rotate_index, delta / 2, target_index)
+    rotation = (PI / 6) * sin(rotate_index * 2 * PI)
 
 func _on_Area2D_area_entered(area):
     if state != State.Introducing and state != State.Disappearing:
