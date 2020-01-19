@@ -26,7 +26,7 @@
 ** EDGE FURNITURE
    + [X] Bench
    + [X] Bookshelf
-     - [X] "Flying Books" mode
+     - [X] "Flying books" mode
    + [X] Cardboard Box
    + [ ] Desk
    + [X] Toilet
@@ -51,8 +51,10 @@
    + [X] Dishwasher
    + [X] Torch
    + [X] Clothes Rack
+     - [X] "Flying clothes" mode
    + [X] Workbench
    + [X] Laundry Basket
+     - [X] "Flying clothes" mode
 * ROOM TYPES
   + [X] Hallway
     + [X] Edge
