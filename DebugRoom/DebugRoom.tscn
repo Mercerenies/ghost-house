@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://DebugRoom/DebugRoom.gd" type="Script" id=1]
 [ext_resource path="res://Room/Room.tscn" type="PackedScene" id=2]
@@ -10,6 +10,7 @@
 [ext_resource path="res://Furniture/OfficeChair/OfficeChair.tscn" type="PackedScene" id=8]
 [ext_resource path="res://Furniture/DiningTable/DiningTable.tscn" type="PackedScene" id=9]
 [ext_resource path="res://Furniture/CircularDiningTable/CircularDiningTable.tscn" type="PackedScene" id=10]
+[ext_resource path="res://Ghost/Ghost.tscn" type="PackedScene" id=11]
 
 [node name="DebugRoom" type="Node2D"]
 script = ExtResource( 1 )
@@ -41,6 +42,9 @@ dims = Vector2( 3, 3 )
 
 [node name="CircularDiningTable" parent="Room/Entities" index="7" instance=ExtResource( 10 )]
 position = Vector2( 64, 192 )
+
+[node name="Ghost" parent="Room/Entities" index="8" instance=ExtResource( 11 )]
+position = Vector2( 160, 128 )
 [connection signal="player_moved" from="Room/Entities/Player" to="." method="_on_Player_player_moved"]
 
 [editable path="Room"]
