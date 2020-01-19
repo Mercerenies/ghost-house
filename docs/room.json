@@ -28,6 +28,9 @@
       },
       "additionalProperties": false,
       "required": ["width", "height", "percent_evil"]
+    },
+    "puzzle": {
+      "$ref": "puzzle.json"
     }
   },
   "additionalProperties": false,

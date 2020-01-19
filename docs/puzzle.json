@@ -1,0 +1,65 @@
+{
+  "$schema": "http://json-schema.org/schema#",
+  "$id": "http://mercerenies.com/json/schemas/ghost-house/puzzle.json",
+
+  "definitions": {
+    "conditional": {
+      "anyOf": [
+        { "type": "string" },
+        {
+          "type": "object",
+          "properties": {
+            "op": { "const": "not" },
+            "target": { "$ref": "#/definitions/conditional" }
+          },
+          "additionalProperties": false,
+          "required": ["op", "target"]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "op": { "enum": ["and", "or"] },
+            "target": {
+              "type": "array",
+              "items": { "$ref": "#/definitions/conditional" }
+            }
+          },
+          "additionalProperties": false,
+          "required": ["op", "target"]
+        }
+      ]
+    }
+  },
+
+  "title": "Puzzle Description Object",
+  "type": "object",
+  "properties": {
+    "players": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "statement": {
+            "$ref": "#/definitions/conditional"
+          }
+        },
+        "additionalProperties": false,
+        "required": ["statement"]
+      }
+    },
+    "solution": {
+      "type": "object",
+      "properties": {
+        "truth": {
+          "type": "array",
+          "items": { "type": "string" },
+          "uniqueItems": true
+        }
+      },
+      "additionalProperties": false,
+      "required": ["truth"]
+    }
+  },
+  "additionalProperties": false,
+  "required": ["players", "solution"]
+}
