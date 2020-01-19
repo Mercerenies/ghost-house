@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://Furniture/LaundryBasket/LaundryBasket.gd" type="Script" id=1]
 [ext_resource path="res://Furniture/LaundryBasket/LaundryBasket.png" type="Texture" id=2]
+[ext_resource path="res://FlyingClothesSpawner/FlyingClothesSpawner.tscn" type="PackedScene" id=3]
 
 [node name="LaundryBasket" type="Node2D"]
 script = ExtResource( 1 )
@@ -10,3 +11,6 @@ script = ExtResource( 1 )
 position = Vector2( 16, 16 )
 texture = ExtResource( 2 )
 hframes = 2
+
+[node name="FlyingClothesSpawner" parent="." instance=ExtResource( 3 )]
+position = Vector2( 8, 8 )
