@@ -36,7 +36,7 @@ func _ready() -> void:
 func _process(delta: float) -> void:
     if get_room().is_showing_modal():
         return
-    
+
     match state:
         State.Stalking:
             var player = EnemyAI.get_player(self)
