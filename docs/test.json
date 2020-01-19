@@ -1,0 +1,29 @@
+{
+  "config": {
+    "width": 12,
+    "height": 12,
+    "percent_evil": 0.05
+  },
+  "puzzle": {
+    "players": {
+      "J": {
+        "statement": "S"
+      },
+      "S": {
+        "statement": {
+          "op": "or",
+          "target": [
+            { "op": "not", "target": "J" },
+            { "op": "not", "target": "A" }
+          ]
+        }
+      },
+      "A": {
+        "statement": { "op": "not", "target": "J" }
+      }
+    },
+    "solution": {
+      "truth": []
+    }
+  }
+}
