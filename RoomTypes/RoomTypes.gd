@@ -1,5 +1,8 @@
 extends Node
 
+# TODO We still need proper layouts for MasterBedroom, Foyer, and
+# Theater.
+
 const EdgeBookshelfPlacement = preload("res://Furniture/Bookshelf/EdgeBookshelfPlacement.gd")
 const EdgeLongBookshelfPlacement = preload("res://Furniture/LongBookshelf/EdgeLongBookshelfPlacement.gd")
 const EdgeTelevisionPlacement = preload("res://Furniture/Television/EdgeTelevisionPlacement.gd")
@@ -52,6 +55,7 @@ const DiningHall = preload("res://RoomTypes/DiningHall.gd")
 const LaundryRoom = preload("res://RoomTypes/LaundryRoom.gd")
 const Bathroom = preload("res://RoomTypes/Bathroom.gd")
 const Kitchen = preload("res://RoomTypes/Kitchen.gd")
+const Bedroom = preload("res://RoomTypes/Bedroom.gd")
 
 const UniformDistr = SpecialPlacement.UniformDistr
 const WeightedDistr = SpecialPlacement.WeightedDistr
@@ -132,12 +136,12 @@ var _config: Dictionary = {
             ])
         ],
         "special": UniformDistr.new([
-            [TwinBedPlacement.new(), TwinBedPlacement.new()],
-            [TwinBedPlacement.new()],
-            [KingBedPlacement.new()],
-            [TwinBedPlacement.new(), TwinBedPlacement.new(), MirrorPlacement.new()],
-            [TwinBedPlacement.new(), MirrorPlacement.new()],
-            [KingBedPlacement.new(), MirrorPlacement.new()]
+            [TwinBedPlacement.new(), TwinBedPlacement.new(), Bedroom.RoomInnerCircle.new()],
+            [TwinBedPlacement.new(), Bedroom.RoomInnerCircle.new()],
+            [KingBedPlacement.new(), Bedroom.RoomInnerCircle.new()],
+            [TwinBedPlacement.new(), TwinBedPlacement.new(), MirrorPlacement.new(), Bedroom.RoomInnerCircle.new()],
+            [TwinBedPlacement.new(), MirrorPlacement.new(), Bedroom.RoomInnerCircle.new()],
+            [KingBedPlacement.new(), MirrorPlacement.new(), Bedroom.RoomInnerCircle.new()]
         ])
     },
     RT.MasterBedroom: {

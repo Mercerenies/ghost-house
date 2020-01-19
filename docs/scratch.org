@@ -58,7 +58,7 @@
     + [X] Edge
   + [-] Bedroom
     + [X] Edge
-    + [ ] Basic Layout
+    + [X] Basic Layout
     + [ ] Refined Layout
     + [ ] Rugs
   + [-] MasterBedroom
