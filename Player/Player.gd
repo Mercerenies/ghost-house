@@ -97,3 +97,16 @@ func lighting() -> Array:
 
 func naturally_emits_light() -> bool:
     return true
+
+func flashlight_triangle() -> PoolVector2Array:
+    var arr = PoolVector2Array()
+    var base_point = position + Vector2(16, 16) + Vector2(-16, 0).rotated(get_direction() * PI / 2.0)
+    var range_ = Vector2(192, 0).rotated(get_direction() * PI / 2.0)
+    var fov = PI * 0.45
+    arr.append(base_point)
+    arr.append(base_point + Vector2(range_.length(),   range_.length() * tan(fov / 2.0)).rotated(range_.angle()))
+    arr.append(base_point + Vector2(range_.length(), - range_.length() * tan(fov / 2.0)).rotated(range_.angle()))
+    return arr
+
+func base_flashlight_radius() -> int:
+    return 64
