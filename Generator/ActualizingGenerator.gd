@@ -127,8 +127,8 @@ func _draw_base_room(pos: Vector2) -> void:
             _room.set_tile_cell(Vector2(xpos + CELL_SIZE, ypos + CELL_SIZE), _room.Tile.DebugWall)
 
 func _grid_to_room() -> void:
-    var w = _data['config']['width']
-    var h = _data['config']['height']
+    var w = int(_data['config']['width'])
+    var h = int(_data['config']['height'])
     for x in range(w):
         for y in range(h):
             _draw_base_room(Vector2(x, y))

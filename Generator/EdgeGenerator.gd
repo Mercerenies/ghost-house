@@ -34,8 +34,8 @@ func _init(room_data: Dictionary,
     _helper = helper
 
 func _mark_safe_edge_cells() -> void:
-    var w = _data['config']['width'] * TOTAL_CELL_SIZE
-    var h = _data['config']['height'] * TOTAL_CELL_SIZE
+    var w = int(_data['config']['width']) * TOTAL_CELL_SIZE
+    var h = int(_data['config']['height']) * TOTAL_CELL_SIZE
     # Find non-corner walls
     for x in range(w):
         for y in range(h):
@@ -60,8 +60,8 @@ func _mark_safe_edge_cells() -> void:
                 _flag_grid.set_flag(Vector2(x, y), FLAG_EDGE_FURNITURE, true)
 
 func _fill_edges() -> void:
-    var w = _data['config']['width'] * TOTAL_CELL_SIZE
-    var h = _data['config']['height'] * TOTAL_CELL_SIZE
+    var w = int(_data['config']['width']) * TOTAL_CELL_SIZE
+    var h = int(_data['config']['height']) * TOTAL_CELL_SIZE
     for x in range(w):
         for y in range(h):
             var room = _boxes[_grid.get_value(Vector2(floor(x / TOTAL_CELL_SIZE), floor(y / TOTAL_CELL_SIZE)))]

@@ -17,8 +17,8 @@ func _init(room_data: Dictionary, grid: GeneratorGrid):
     _grid = grid
 
 func _produce_adjacency_graph() -> Graph:
-    var w = _data['config']['width']
-    var h = _data['config']['height']
+    var w = int(_data['config']['width'])
+    var h = int(_data['config']['height'])
     var graph = Graph.new()
     var adja = graph.adja
     for x in range(w):

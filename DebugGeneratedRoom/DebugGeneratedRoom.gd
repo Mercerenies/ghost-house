@@ -4,6 +4,14 @@ const Generator = preload("res://Generator/Generator.gd")
 
 func _ready():
     randomize()
-    var gen = Generator.new({ 'config': { 'width': 12, 'height': 12, "percent_evil": 0.05 } })
+
+    var data = {}
+    var file = File.new()
+    file.open("res://DebugGeneratedRoom/test.json", File.READ)
+    var result = JSON.parse(file.get_as_text())
+    if result.error == OK:
+        data = result.result
+
+    var gen = Generator.new(data)
     var room = gen.generate()
     add_child(room)

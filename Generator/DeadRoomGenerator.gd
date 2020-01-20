@@ -26,8 +26,8 @@ func _init(room_data: Dictionary, grid: GeneratorGrid, painter: GeneratorPainter
 
 func _produce_dead_rooms(start_id: int) -> int:
     var current_id = start_id
-    var w = _data['config']['width']
-    var h = _data['config']['height']
+    var w = int(_data['config']['width'])
+    var h = int(_data['config']['height'])
 
     for x in range(w):
         for y in range(h):

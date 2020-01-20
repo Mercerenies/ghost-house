@@ -53,8 +53,8 @@ func _init(room_data: Dictionary):
     _data = room_data
 
 func generate() -> Room:
-    var w = _data['config']['width']
-    var h = _data['config']['height']
+    var w = int(_data['config']['width'])
+    var h = int(_data['config']['height'])
 
     _boxes = {}
     _room = RoomScene.instance()
