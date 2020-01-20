@@ -44,7 +44,8 @@ func _get_valid_room_ids(excluded_room_ids: Array) -> Array:
     var arr = []
     for key in _boxes:
         if _boxes[key] is RoomData and not (key in excluded_room_ids):
-            arr.append(key)
+            if _boxes[key].box.size.x > 1 and _boxes[key].box.size.y > 1:
+                arr.append(key)
     return arr
 
 func _place_ghosts(order: Array) -> void:
