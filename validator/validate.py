@@ -11,6 +11,7 @@
 import json
 import sys
 import os.path
+import subprocess
 from jsonschema import Draft7Validator, RefResolver
 
 class LocalResolver(RefResolver):
@@ -42,13 +43,21 @@ if len(sys.argv) < 3:
 schema_path = sys.argv[1]
 target_path = sys.argv[2]
 
+print("Loading JSON Schema...")
 with open(schema_path) as f:
     schema = json.load(f)
 
+print("Loading JSON Target...")
 with open(target_path) as f:
     target = json.load(f)
 
 base = os.path.dirname(schema_path)
 
+print("Validating...")
 validator = Draft7Validator(schema, resolver=LocalResolver(base, schema))
 validator.validate(target, schema)
+
+if schema["$id"].endswith("room.json"):
+    print("Finding Puzzle Solutions...")
+    dir_path = os.path.dirname(os.path.realpath(__file__))
+    subprocess.run([os.path.join(dir_path, "validate_puzzle.pl"), target_path], check=True)
