@@ -40,8 +40,8 @@ func _on_CycleTimer_timeout():
         return
 
     fairy = FlyingFairy.instance()
-    get_room().get_node("Entities").add_child(fairy)
     fairy.position = entity.position + Vector2(16, 16)
+    get_room().get_node("Entities").add_child(fairy)
     fairy.connect("tree_exited", self, "_on_FlyingFairy_tree_exited")
 
 func _on_StartDelayTimer_timeout():
