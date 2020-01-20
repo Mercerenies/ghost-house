@@ -32,3 +32,19 @@ func transpose_v(vec: Vector2) -> Vector2:
 
 func transpose_r(rect: Rect2) -> Rect2:
     return Rect2(transpose_v(rect.position), transpose_v(rect.size))
+
+# https://stackoverflow.com/questions/2049582/how-to-determine-if-a-point-is-in-a-2d-triangle
+func point_in_polygon(point: Vector2, poly: Array) -> bool:
+    var pos = false
+    var neg = false
+    for i in range(len(poly)):
+        var p1 = poly[i]
+        var p2 = poly[(i + 1) % len(poly)]
+        var det = (point.x - p2.x) * (p1.y - p2.y) - (p1.x - p2.x) * (point.y - p2.y)
+        if det < 0:
+            neg = true
+        else:
+            pos = true
+        if neg and pos:
+            return false
+    return true
