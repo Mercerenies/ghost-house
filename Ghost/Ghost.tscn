@@ -12,3 +12,8 @@ texture = ExtResource( 2 )
 offset = Vector2( 16, 16 )
 vframes = 4
 hframes = 4
+
+[node name="AppearParticleTimer" type="Timer" parent="."]
+wait_time = 0.2
+autostart = true
+[connection signal="timeout" from="AppearParticleTimer" to="." method="_on_AppearParticleTimer_timeout"]

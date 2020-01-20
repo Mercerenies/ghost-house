@@ -1,5 +1,8 @@
 extends DialogueEntity
 
+const GhostVisibilityParticle = preload("GhostVisibilityParticle.tscn")
+
+var appearing: bool = false
 var invisible: bool = true
 
 func _ready() -> void:
@@ -24,14 +27,18 @@ func _process(delta: float) -> void:
         var in_triangle = Util.point_in_polygon(position + Vector2(16, 16), flashlight)
         var in_circle = player_dist < flashlight_rad
         if in_triangle or in_circle:
-            modulate.a = Util.toward(modulate.a, delta / 2, 1)
+            appearing = true
+            modulate.a = Util.toward(modulate.a, delta / 4, 1)
             var current_cell = Vector2(floor(position.x / 32), floor(position.y / 32))
             var cell_entity = get_room().get_entity_cell(current_cell)
             if modulate.a == 1 and cell_entity == null:
                 get_room().set_entity_cell(current_cell, self)
                 cell = current_cell
+                invisible = false
+                $AppearParticleTimer.stop()
         else:
-            modulate.a = Util.toward(modulate.a, delta / 4, 0)
+            appearing = false
+            modulate.a = Util.toward(modulate.a, delta / 8, 0)
 
 func on_interact() -> void:
     var player = get_room().get_marked_entities()['player']
@@ -40,3 +47,9 @@ func on_interact() -> void:
     dir = fmod(dir + 4, 4)
     set_direction(dir)
     get_room().show_dialogue(dialogue, "idle")
+
+func _on_AppearParticleTimer_timeout():
+    if appearing and invisible:
+        var part = GhostVisibilityParticle.instance()
+        part.position = Vector2(randf() * 32, randf() * 32)
+        self.add_child(part)
