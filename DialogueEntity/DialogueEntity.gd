@@ -1,7 +1,7 @@
 extends MobileEntity
 class_name DialogueEntity
 
-export var dialogue: Dictionary = {}
+var dialogue: Dictionary = {}
 
 func _ready() -> void:
     pass

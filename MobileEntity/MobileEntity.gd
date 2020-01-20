@@ -40,6 +40,10 @@ func position_self() -> void:
     cell = current_cell
     target_pos = position
 
+func unposition_self() -> void:
+    get_room().set_entity_cell(cell, null)
+    cell = Vector2(-999, -999)
+
 func _ready() -> void:
 
     sprite = Sprite.new()
@@ -68,3 +72,6 @@ func _process(delta: float) -> void:
 
 func _on_Timer_timeout() -> void:
     _image_index = (_image_index + 1) % 4
+
+func get_sprite() -> Sprite:
+    return sprite

@@ -16,6 +16,7 @@ func unposition_self() -> void:
     for i in range(dims.x):
         for j in range(dims.y):
             get_room().set_entity_cell(cell + Vector2(i, j), null)
+    cell = Vector2(-999, -999)
 
 func set_dims(vec: Vector2) -> void:
     dims = vec
