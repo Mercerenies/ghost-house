@@ -80,15 +80,47 @@ get_filename(Filename) :-
         halt(1)
     ).
 
-% TODO Compare against the given solution in the file.
+analyze_solutions_check(Given_Soln, K-0) :-
+    atom_string(K, K1),
+    \+ member(K1, Given_Soln.truth).
+analyze_solutions_check(Given_Soln, K-1) :-
+    atom_string(K, K1),
+    member(K1, Given_Soln.truth).
+
+analyze_solutions1(Given_Soln, [Soln], correct) :-
+    dict_pairs(Soln, _, Pairs),
+    maplist(analyze_solutions_check(Given_Soln), Pairs).
+analyze_solutions1(_, [Soln], incorrect_given(Soln)).
+analyze_solutions1(_, Solns, ambiguous(Solns)).
+
+% analyze_solutions(+Given_Soln, +Solns, ?Verdict)
+analyze_solutions(Given_Soln, Solns, Verdict) :-
+    once(analyze_solutions1(Given_Soln, Solns, Verdict)).
+
+% output_verdict(?Verdict, ?Exit_Code)
+output_verdict(correct, 0).
+output_verdict(incorrect_given(Soln), 1) :-
+    write(user_error, "Incorrect solution, correct answer is: "),
+    write(user_error, Soln),
+    nl(user_error).
+output_verdict(ambiguous(Solns), 1) :-
+    write(user_error, "Ambiguous puzzle, possible solutions are: "),
+    write(user_error, Solns),
+    nl(user_error).
+
 :-
+    % Read the file and extract the puzzle.
     get_filename(Filename),
     read_file(Filename, Dict),
     Puzzle = (Dict.puzzle),
+    % Construct a dictionary of keys to contain the solution.
     instantiate_player_keys(Puzzle, Player_Keys),
+    % Extract the clues from each player.
     get_players(Puzzle, Players),
     dict_pairs(Players, _, Player_List),
     maplist(main_helper(Player_Keys), Player_List, Stmts),
+    % Find all solutions.
     solve_constraints(Player_Keys, Stmts, Solns),
-    writeln(Solns),
-    halt.
+    analyze_solutions(Puzzle.solution, Solns, Verdict),
+    output_verdict(Verdict, Exit_Code),
+    halt(Exit_Code).
