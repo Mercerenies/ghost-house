@@ -13,6 +13,7 @@ const ActualizingGenerator = preload("res://Generator/ActualizingGenerator.gd")
 const SpecialGenerator = preload("res://Generator/SpecialGenerator.gd")
 const EdgeGenerator = preload("res://Generator/EdgeGenerator.gd")
 const PlayerGenerator = preload("res://Generator/PlayerGenerator.gd")
+const GhostGenerator = preload("res://Generator/GhostGenerator.gd")
 
 const GeneratorGrid = preload("res://GeneratorGrid/GeneratorGrid.gd")
 const GeneratorPainter = preload("res://GeneratorPainter/GeneratorPainter.gd")
@@ -73,6 +74,7 @@ func generate() -> Room:
     var special_generator = SpecialGenerator.new(_data, _boxes, _room, helper)
     var edge_generator = EdgeGenerator.new(_data, _grid, _flag_grid, _boxes, _room, helper)
     var player_generator = PlayerGenerator.new(_data, _grid, _boxes, _room, helper)
+    var ghost_generator = GhostGenerator.new(_data, _grid, _boxes, _room, helper)
 
     hallway_generator.run(ID_HALLS)
     var next_id = live_room_generator.run(ID_ROOMS)
@@ -85,6 +87,10 @@ func generate() -> Room:
 
     _room.get_minimap().initialize(Vector2(w, h), _grid, _boxes, _connections)
 
-    player_generator.run()
+    var player = player_generator.run()
+    var player_pos = player.cell / TOTAL_CELL_SIZE
+    player_pos = Vector2(floor(player_pos.x), floor(player_pos.y))
+    var player_room_id = _grid.get_value(player_pos)
+    ghost_generator.run([player_room_id])
 
     return _room
