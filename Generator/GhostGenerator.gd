@@ -51,20 +51,31 @@ func _get_valid_room_ids(excluded_room_ids: Array) -> Array:
 func _place_ghosts(order: Array) -> void:
     assert(len(order) > 0)
 
+    var minimap = _room.get_minimap()
+
+    # DEBUG CODE We're just counting forward on the minimap images
+    # right now. Later, we'll use the actual appropriate letters of
+    # the ghost names.
+    var icon_index = Icons.Index.FIRST_GHOST
+
     var index = 0
     var players = _data["puzzle"]["players"]
     for _p in players:
         var rect = _get_rect_from_room_id(order[index])
         var valid_positions = []
         var ghost = Ghost.instance()
+
         for i in range(rect.position.x, rect.end.x):
             for j in range(rect.position.y, rect.end.y):
                 if _room.get_entity_cell(Vector2(i, j)) == null and not _room.is_wall_at(Vector2(i, j)):
                     valid_positions.append(Vector2(i, j))
         var pos = Util.choose(valid_positions)
         _helper.add_entity(pos, ghost)
-        print(pos)
+
+        minimap.add_icon(order[index], icon_index)
+
         index = (index + 1) % len(order)
+        icon_index += 1 # DEBUG CODE
 
 func run(excluded_room_ids: Array) -> void:
     if not ("puzzle" in _data):
