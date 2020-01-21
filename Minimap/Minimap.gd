@@ -4,12 +4,15 @@ const GRID_CELL_SIZE = 16
 const DOOR_DRAW_RADIUS = 4
 const Player = preload("res://Player/Player.gd")
 const GeneratorGrid = preload("res://GeneratorGrid/GeneratorGrid.gd")
+const Icons = preload("res://Minimap/Icons.png")
+const ICONS_PER_ROW = 8
 
 var _dims: Vector2 = Vector2(0, 0)
 var _grid: GeneratorGrid = null
 var _boxes: Dictionary = {}
 var _connections: Array = []
 var _discovered: Dictionary = {}
+var _icons: Dictionary = {}
 
 func _ready():
     pass
@@ -97,3 +100,28 @@ func _draw() -> void:
                             Vector2(DOOR_DRAW_RADIUS, DOOR_DRAW_RADIUS) * 2),
                       trblack,
                       true)
+    # Icons
+    for v in _boxes.values():
+        if not _discovered.has(v.id):
+            continue
+        if v is GeneratorData.RoomData:
+            if not (v.id in _icons):
+                continue
+            var icons = _icons[v.id]
+            var rect = v.box
+            var screen_rect = Rect2(rect.position * GRID_CELL_SIZE + upperleft, rect.size * GRID_CELL_SIZE)
+            var draw_pos = screen_rect.position + screen_rect.size / 2
+            draw_pos -= (Vector2(6, 0) if len(icons) == 1 else Vector2(12, 0))
+            draw_pos -= Vector2(0, 6) * ceil((len(icons) + 1) / 2)
+            var offset = Vector2()
+            for ico in icons:
+                var coords = Vector2(ico % ICONS_PER_ROW, floor(ico / ICONS_PER_ROW))
+                draw_texture_rect_region(Icons,
+                                         Rect2(draw_pos + offset, Vector2(12, 12)),
+                                         Rect2(coords, Vector2(12, 12)),
+                                         Color(1, 1, 1, 0.25))
+                if offset.x > 0:
+                    offset.x = 0
+                    offset.y += 12
+                else:
+                    offset.x += 12
