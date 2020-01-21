@@ -4,7 +4,6 @@ const GRID_CELL_SIZE = 16
 const DOOR_DRAW_RADIUS = 4
 const Player = preload("res://Player/Player.gd")
 const GeneratorGrid = preload("res://GeneratorGrid/GeneratorGrid.gd")
-const Icons = preload("res://Minimap/Icons.png")
 const ICONS_PER_ROW = 8
 
 var _dims: Vector2 = Vector2(0, 0)
@@ -40,6 +39,18 @@ func _find_player() -> Vector2:
 
 func update_map() -> void:
     self.update()
+
+func add_icon(room_id: int, icon_id: int) -> void:
+    if not (room_id in _icons):
+        _icons[room_id] = []
+    _icons[room_id].append(icon_id)
+
+# TODO A function to remove one particular icon (e.g., when the player
+# collects a key)
+
+func clear_icons(room_id: int) -> void:
+    if (room_id in _icons):
+        _icons[room_id] = []
 
 func _draw() -> void:
     if _grid == null:
@@ -115,8 +126,8 @@ func _draw() -> void:
             draw_pos -= Vector2(0, 6) * ceil((len(icons) + 1) / 2)
             var offset = Vector2()
             for ico in icons:
-                var coords = Vector2(ico % ICONS_PER_ROW, floor(ico / ICONS_PER_ROW))
-                draw_texture_rect_region(Icons,
+                var coords = 12 * Vector2(ico % ICONS_PER_ROW, floor(ico / ICONS_PER_ROW))
+                draw_texture_rect_region(Icons.Image,
                                          Rect2(draw_pos + offset, Vector2(12, 12)),
                                          Rect2(coords, Vector2(12, 12)),
                                          Color(1, 1, 1, 0.25))
