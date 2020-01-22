@@ -6,6 +6,7 @@ extends Reference
 
 const GeneratorGrid = preload("res://GeneratorGrid/GeneratorGrid.gd")
 const GeneratorPlacementHelper = preload("res://GeneratorPlacementHelper/GeneratorPlacementHelper.gd")
+const GhostNamer = preload("res://GhostNamer/GhostNamer.gd")
 
 const Ghost = preload("res://Ghost/Ghost.tscn")
 
@@ -23,6 +24,7 @@ var _grid: GeneratorGrid = null
 var _boxes: Dictionary = {}
 var _room: Room
 var _helper: GeneratorPlacementHelper
+var _ghost_info: Dictionary
 
 func _init(room_data: Dictionary,
            grid: GeneratorGrid,
@@ -34,6 +36,17 @@ func _init(room_data: Dictionary,
     _boxes = boxes
     _room = room
     _helper = helper
+    _ghost_info = {}
+
+func _make_ghost_info() -> void:
+    var namer = GhostNamer.new()
+    var players = _data["puzzle"]["players"]
+    for p in players:
+        var generated = namer.generate_name(randi() % 2)
+        _ghost_info[p] = {
+            "icon_index": generated["index"],
+            "name": generated["name"],
+        }
 
 func _get_rect_from_room_id(id: int) -> Rect2:
     var room = _boxes[id]
@@ -53,14 +66,9 @@ func _place_ghosts(order: Array) -> void:
 
     var minimap = _room.get_minimap()
 
-    # DEBUG CODE We're just counting forward on the minimap images
-    # right now. Later, we'll use the actual appropriate letters of
-    # the ghost names.
-    var icon_index = Icons.Index.FIRST_GHOST
-
     var index = 0
     var players = _data["puzzle"]["players"]
-    for _p in players:
+    for key in players:
         var rect = _get_rect_from_room_id(order[index])
         var valid_positions = []
         var ghost = Ghost.instance()
@@ -72,15 +80,16 @@ func _place_ghosts(order: Array) -> void:
         var pos = Util.choose(valid_positions)
         _helper.add_entity(pos, ghost)
 
-        minimap.add_icon(order[index], icon_index)
+        minimap.add_icon(order[index], Icons.Index.FIRST_GHOST + _ghost_info[key]["icon_index"])
+        ghost.set_name(_ghost_info[key]["name"])
 
         index = (index + 1) % len(order)
-        icon_index += 1 # DEBUG CODE
 
 func run(excluded_room_ids: Array) -> void:
     if not ("puzzle" in _data):
         # No puzzle supplied so don't spawn any ghosts
         return
+    _make_ghost_info()
     var ids = _get_valid_room_ids(excluded_room_ids)
     ids.shuffle()
     _place_ghosts(ids)

@@ -4,17 +4,25 @@ const GhostVisibilityParticle = preload("GhostVisibilityParticle.tscn")
 
 var appearing: bool = false
 var invisible: bool = true
+var ghost_name: String = ""
 
 func _ready() -> void:
     $Sprite.visible = false
-    dialogue = {
-        "idle": [
-            {"command": "say", "speaker": "A Ghost", "text": "Hi, I'm a ghost :)"}
-        ]
-    }
+    _update_dialogue()
     unposition_self()
     modulate.a = 0
     invisible = true
+
+func set_name(name: String) -> void:
+    ghost_name = name
+    _update_dialogue()
+
+func _update_dialogue() -> void:
+    dialogue = {
+        "idle": [
+            {"command": "say", "speaker": ghost_name, "text": "Hi, I'm a ghost. My name is " + ghost_name + " :)"}
+        ]
+    }
 
 func _process(delta: float) -> void:
 
