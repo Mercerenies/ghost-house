@@ -9,6 +9,8 @@ const GeneratorPlacementHelper = preload("res://GeneratorPlacementHelper/Generat
 const GhostNamer = preload("res://GhostNamer/GhostNamer.gd")
 
 const Ghost = preload("res://Ghost/Ghost.tscn")
+const FemaleGhost = preload("res://Ghost/FemaleGhost.png")
+const MaleGhost = preload("res://Ghost/MaleGhost.png")
 
 const HallwayData = GeneratorData.HallwayData
 const RoomData = GeneratorData.RoomData
@@ -42,10 +44,12 @@ func _make_ghost_info() -> void:
     var namer = GhostNamer.new()
     var players = _data["puzzle"]["players"]
     for p in players:
-        var generated = namer.generate_name(randi() % 2)
+        var gender = randi() % 2
+        var generated = namer.generate_name(gender)
         _ghost_info[p] = {
             "icon_index": generated["index"],
             "name": generated["name"],
+            "gender": gender,
         }
 
 func _get_rect_from_room_id(id: int) -> Rect2:
@@ -82,6 +86,7 @@ func _place_ghosts(order: Array) -> void:
 
         minimap.add_icon(order[index], Icons.Index.FIRST_GHOST + _ghost_info[key]["icon_index"])
         ghost.set_name(_ghost_info[key]["name"])
+        ghost.texture = MaleGhost if _ghost_info[key]["gender"] == GhostNamer.Gender.Male else FemaleGhost
 
         index = (index + 1) % len(order)
 
