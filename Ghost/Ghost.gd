@@ -5,6 +5,7 @@ const GhostVisibilityParticle = preload("GhostVisibilityParticle.tscn")
 var appearing: bool = false
 var invisible: bool = true
 var ghost_name: String = ""
+var ghost_clue = null
 
 func _ready() -> void:
     $Sprite.visible = false
@@ -17,12 +18,20 @@ func set_name(name: String) -> void:
     ghost_name = name
     _update_dialogue()
 
+func set_clue(clue) -> void:
+    ghost_clue = clue
+    _update_dialogue()
+
 func _update_dialogue() -> void:
-    dialogue = {
-        "idle": [
-            {"command": "say", "speaker": ghost_name, "text": "Hi, I'm a ghost. My name is " + ghost_name + " :)"}
+    dialogue = {}
+    dialogue['idle'] = [
+        { "command": "say", "speaker": ghost_name, "text": "Hi, I'm a ghost. My name is " + ghost_name + " :)" }, # DEBUG CODE
+    ]
+    if ghost_clue != null:
+        var clue_text = StatementPrinter.translate(ghost_clue)
+        dialogue['clue'] = [
+            { "command": "say", "speaker": ghost_name, "text": clue_text + "." }
         ]
-    }
 
 func _process(delta: float) -> void:
 
@@ -54,7 +63,10 @@ func on_interact() -> void:
     dir = round(fmod((4 * dir) / (2 * PI), 4))
     dir = fmod(dir + 4, 4)
     set_direction(dir)
-    get_room().show_dialogue(dialogue, "idle")
+    if "clue" in dialogue:
+        get_room().show_dialogue(dialogue, "clue")
+    else:
+        get_room().show_dialogue(dialogue, "idle")
 
 func _on_AppearParticleTimer_timeout():
     if appearing and invisible:

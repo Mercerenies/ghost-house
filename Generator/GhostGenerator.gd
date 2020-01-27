@@ -65,6 +65,10 @@ func _get_valid_room_ids(excluded_room_ids: Array) -> Array:
                 arr.append(key)
     return arr
 
+func _get_ghost_name(id: String) -> String:
+    assert(id in _ghost_info)
+    return _ghost_info[id]["name"]
+
 func _place_ghosts(order: Array) -> void:
     assert(len(order) > 0)
 
@@ -83,6 +87,9 @@ func _place_ghosts(order: Array) -> void:
                     valid_positions.append(Vector2(i, j))
         var pos = Util.choose(valid_positions)
         _helper.add_entity(pos, ghost)
+
+        var clue = players[key]["statement"]
+        ghost.set_clue(StatementPrinter.batch_rename(clue, self, "_get_ghost_name"))
 
         minimap.add_icon(order[index], Icons.Index.FIRST_GHOST + _ghost_info[key]["icon_index"])
         ghost.set_name(_ghost_info[key]["name"])
