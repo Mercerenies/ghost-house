@@ -55,9 +55,29 @@ func _all_match(arr: Array):
             return null
     return orientation
 
+func _batch_rename(s, obj, funcname):
+    if s is String:
+        return obj.call(funcname, s)
+    match s['op']:
+        'not':
+            s['target'] = _batch_rename(s['target'], obj, funcname)
+        'and', 'or':
+            for i in range(len(s['target'])):
+                s['target'][i] = _batch_rename(s['target'][i], obj, funcname)
+    return s
+
+# Accepts any valid argument to translate(). The function should take
+# one argument (a string) and return the new name. A new JSON datum is
+# returned, with structure identical to the first except that names
+# have been altered.
+func batch_rename(s, obj, funcname):
+    assert(s is Dictionary or s is String)
+    var s1 = Util.deep_copy(s)
+    return _batch_rename(s1, obj, funcname)
+
 func translate(s) -> String:
 
-    assert(s is Dictionary or s is String);
+    assert(s is Dictionary or s is String)
 
     # Simple positive
     if is_simple_positive(s):
