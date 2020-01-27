@@ -45,7 +45,6 @@ class CentralBar extends FurniturePlacement:
         return GeneratorData.PLACEMENT_SAFE
 
     func spawn_at(room, value, cb):
-        print("OOOHHH")
 
         var box = room.box
         var strictness = value['strictness']
