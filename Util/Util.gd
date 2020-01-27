@@ -48,3 +48,9 @@ func point_in_polygon(point: Vector2, poly: Array) -> bool:
         if neg and pos:
             return false
     return true
+
+func map(obj, funcname, xs) -> Array:
+    var arr = []
+    for x in xs:
+        arr.append(obj.call(funcname, x))
+    return arr
