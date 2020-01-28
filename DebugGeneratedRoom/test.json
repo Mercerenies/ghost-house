@@ -7,19 +7,19 @@
   "puzzle": {
     "players": {
       "J": {
-        "statement": "S"
+        "statement": { "op": "atomic", "name": "S", "query": "truth" }
       },
       "S": {
         "statement": {
           "op": "or",
           "target": [
-            { "op": "not", "target": "J" },
-            { "op": "not", "target": "A" }
+            { "op": "not", "target": { "op": "atomic", "name": "J", "query": "truth" } },
+            { "op": "not", "target": { "op": "atomic", "name": "A", "query": "truth" } }
           ]
         }
       },
       "A": {
-        "statement": { "op": "not", "target": "J" }
+        "statement": { "op": "not", "target": { "op": "atomic", "name": "J", "query": "truth" } }
       }
     },
     "solution": {

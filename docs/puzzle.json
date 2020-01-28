@@ -5,7 +5,16 @@
   "definitions": {
     "conditional": {
       "anyOf": [
-        { "type": "string" },
+        {
+          "type": "object",
+          "properties": {
+            "op": { "const": "atomic" },
+            "name": { "type": "string" },
+            "query": { "enum": ["truth"] }
+          },
+          "additionalProperties": false,
+          "required": ["op", "name", "query"]
+        },
         {
           "type": "object",
           "properties": {

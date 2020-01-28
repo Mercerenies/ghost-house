@@ -48,11 +48,17 @@ dict_dissect(Dict, Tag, Keys, Values) :-
     dict_pairs(Dict, Tag, Pairs),
     maplist(dict_helper, Keys, Values, Pairs).
 
+% player_key_access(?Key, ?Query, ?Value)
+player_key_access(Key, truth, Value) :-
+    player_key_truth(Key, Value).
+
 % json_expr(+Player_Keys, +Json_Statement, -Expr)
-json_expr(Player_Keys, Json_Statement, Expr) :-
-    player_key_truth(Player_Keys.Key, Expr),
-    string(Json_Statement),
-    atom_string(Key, Json_Statement).
+json_expr(Player_Keys, _{ op: "atomic", name: Player_Name, query: Query }, Expr) :-
+    player_key_access(Player_Keys.Key, Query_Atom, Expr),
+    string(Player_Name),
+    string(Query),
+    atom_string(Query_Atom, Query),
+    atom_string(Key, Player_Name).
 json_expr(Player_Keys, _{ op: "not", target: Json_Statement }, ~Expr) :-
     json_expr(Player_Keys, Json_Statement, Expr).
 json_expr(Player_Keys, _{ op: "or", target: Json_Array }, Expr) :-
