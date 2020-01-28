@@ -14,7 +14,11 @@
     use_module(library(record)).
 
 :-
-    record player_key(truth).
+    record player_key(truth, guilt).
+
+% make_empty_player_key(?PK)
+make_empty_player_key(PK) :-
+    make_player_key([truth(_), guilt(_)], PK).
 
 % read_file(+Filename, -Dict)
 read_file(Filename, Dict) :-
@@ -33,7 +37,7 @@ instantiate_player_keys(Puzzle, Player_Keys) :-
 
 player_keys_bind(Player, V, Out) :-
     atom_string(Key, Player),
-    make_player_key([truth(_)], V),
+    make_empty_player_key(V),
     (Key=V) = Out.
 
 % get_players(+Puzzle, -Players)
@@ -51,6 +55,8 @@ dict_dissect(Dict, Tag, Keys, Values) :-
 % player_key_access(?Key, ?Query, ?Value)
 player_key_access(Key, truth, Value) :-
     player_key_truth(Key, Value).
+player_key_access(Key, guilt, Value) :-
+    player_key_guilt(Key, Value).
 
 % json_expr(+Player_Keys, +Json_Statement, -Expr)
 json_expr(Player_Keys, _{ op: "atomic", name: Player_Name, query: Query }, Expr) :-
@@ -68,23 +74,53 @@ json_expr(Player_Keys, _{ op: "and", target: Json_Array }, Expr) :-
     maplist(json_expr(Player_Keys), Json_Array, Conj_Array),
     Expr = *(Conj_Array).
 
-% concat_map(+F, +Input, -Output)
+% concat_mapd(+F, +Input, -Output)
 % (F should provide difference lists; output will be a difference list)
-concat_map(_, [], T0-T0).
-concat_map(F, [H|T], H0-T0) :-
+concat_mapd(_, [], T0-T0).
+concat_mapd(F, [H|T], H0-T0) :-
     call(F, H, H0-X),
-    concat_map(F, T, X-T0).
+    concat_mapd(F, T, X-T0).
+
+% mapd(+F, +Input, -Output)
+% (like maplist/3 but operates on difference lists)
+mapd(_, T0-T0, T1-T1).
+mapd(F, [H0|T0]-T1, [H2|T2]-T3) :-
+    call(F, H0, H2),
+    mapd(F, T0-T1, T2-T3).
 
 extract_vars_from_key(Key, Vars-T) :-
     player_key_truth(Key, V1),
-    Vars = [V1|T].
+    player_key_guilt(Key, V2),
+    Vars = [V1,V2|T].
+
+axiom_of_guilty_liar_helper(PK, G =< ~T) :-
+    player_key_truth(PK, T),
+    player_key_guilt(PK, G).
+
+% The guilty party is lying
+axiom_of_guilty_liar(Player_Keys, Axioms) :-
+    dict_dissect(Player_Keys, _, _, Values),
+    mapd(axiom_of_guilty_liar_helper, Values-[], Axioms).
+
+% Exactly one party is guilty
+axiom_of_singular_guilt(Player_Keys, [Axiom|T]-T) :-
+    dict_dissect(Player_Keys, _, _, Values),
+    maplist(player_key_guilt, Values, Guilts),
+    Axiom = card([1], Guilts).
+
+% standard_axioms(+Player_Keys, -Axioms)
+% (produces a difference list)
+standard_axioms(Player_Keys, Axioms-T) :-
+    axiom_of_singular_guilt(Player_Keys, Axioms-T0),
+    axiom_of_guilty_liar(Player_Keys, T0-T).
 
 % solve_constraints(+Player_Keys, +Stmts, -Solns)
 solve_constraints(Player_Keys, Stmts, Solns) :-
     dict_dissect(Player_Keys, _, _, Values),
-    concat_map(extract_vars_from_key, Values, Vars-[]),
+    standard_axioms(Player_Keys, All_Axioms-Stmts),
+    concat_mapd(extract_vars_from_key, Values, Vars-[]),
     findall(Player_Keys,
-            ( maplist(sat, Stmts), labeling(Vars) ),
+            ( maplist(sat, All_Axioms), labeling(Vars) ),
             Solns).
 
 main_helper(Player_Keys, Name-Player, Stmt) :-
@@ -106,9 +142,18 @@ analyze_solutions_truth(Given_Soln, K, 1) :-
     atom_string(K, K1),
     member(K1, Given_Soln.truth).
 
+analyze_solutions_guilt(Given_Soln, K, 0) :-
+    atom_string(K, K1),
+    K1 \= (Given_Soln.guilty).
+analyze_solutions_guilt(Given_Soln, K, 1) :-
+    atom_string(K, K1),
+    K1 = (Given_Soln.guilty).
+
 analyze_solutions_check(Given_Soln, K-V) :-
     player_key_truth(V, Truth),
-    analyze_solutions_truth(Given_Soln, K, Truth).
+    player_key_guilt(V, Guilt),
+    analyze_solutions_truth(Given_Soln, K, Truth),
+    analyze_solutions_guilt(Given_Soln, K, Guilt).
 
 analyze_solutions1(Given_Soln, [Soln], correct) :-
     dict_pairs(Soln, _, Pairs),

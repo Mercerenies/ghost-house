@@ -10,7 +10,7 @@
           "properties": {
             "op": { "const": "atomic" },
             "name": { "type": "string" },
-            "query": { "enum": ["truth"] }
+            "query": { "enum": ["truth", "guilt"] }
           },
           "additionalProperties": false,
           "required": ["op", "name", "query"]
@@ -63,10 +63,11 @@
           "type": "array",
           "items": { "type": "string" },
           "uniqueItems": true
-        }
+        },
+        "guilty": { "type": "string" }
       },
       "additionalProperties": false,
-      "required": ["truth"]
+      "required": ["truth", "guilty"]
     }
   },
   "additionalProperties": false,

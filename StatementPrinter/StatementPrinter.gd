@@ -98,12 +98,16 @@ func translate(s) -> String:
         match extract_query(s):
             "truth":
                 return "{0} is telling the truth".format([extract_name(s)])
+            "guilt":
+                return "{0} is guilty".format([extract_name(s)])
 
     # Simple negative
     if is_simple_negative(s):
         match extract_query(s):
             "truth":
                 return "{0} is lying".format([extract_name(s)])
+            "guilt":
+                return "{0} is innocent".format([extract_name(s)])
 
     # Trivial logical ops
     if s['op'] == "and" and len(s['target']) == 0:
@@ -142,6 +146,11 @@ func translate(s) -> String:
                         return "{0} are all telling the truth".format([comma_list(names, "and")])
                     else:
                         return "{0} are all lying".format([comma_list(names, "and")])
+                "guilt":
+                    if result["orientation"]:
+                        return "{0} are all guilty".format([comma_list(names, "and")])
+                    else:
+                        return "{0} are all innocent".format([comma_list(names, "and")])
 
     # OR-const compound
     if s['op'] == "or":
@@ -154,6 +163,12 @@ func translate(s) -> String:
                         return "At least one of {0} is telling the truth".format([comma_list(names, "or")])
                     else:
                         return "At least one of {0} is lying".format([comma_list(names, "or")])
+
+                "guilt":
+                    if result["orientation"]:
+                        return "One of {0} is guilty".format([comma_list(names, "or")])
+                    else:
+                        return "At least one of {0} is innocent".format([comma_list(names, "or")])
 
     # Generic AND
     if s['op'] == "and":

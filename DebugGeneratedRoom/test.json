@@ -23,7 +23,8 @@
       }
     },
     "solution": {
-      "truth": ["J", "S"]
+      "truth": ["J", "S"],
+      "guilty": "A"
     }
   }
 }
