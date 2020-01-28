@@ -10,7 +10,11 @@
 
 :-
     use_module(library(http/json)),
-    use_module(library(clpb)).
+    use_module(library(clpb)),
+    use_module(library(record)).
+
+:-
+    record player_key(truth).
 
 % read_file(+Filename, -Dict)
 read_file(Filename, Dict) :-
@@ -29,6 +33,7 @@ instantiate_player_keys(Puzzle, Player_Keys) :-
 
 player_keys_bind(Player, V, Out) :-
     atom_string(Key, Player),
+    make_player_key([truth(_)], V),
     (Key=V) = Out.
 
 % get_players(+Puzzle, -Players)
@@ -44,7 +49,8 @@ dict_dissect(Dict, Tag, Keys, Values) :-
     maplist(dict_helper, Keys, Values, Pairs).
 
 % json_expr(+Player_Keys, +Json_Statement, -Expr)
-json_expr(Player_Keys, Json_Statement, Player_Keys.Key) :-
+json_expr(Player_Keys, Json_Statement, Expr) :-
+    player_key_truth(Player_Keys.Key, Expr),
     string(Json_Statement),
     atom_string(Key, Json_Statement).
 json_expr(Player_Keys, _{ op: "not", target: Json_Statement }, ~Expr) :-
@@ -56,16 +62,29 @@ json_expr(Player_Keys, _{ op: "and", target: Json_Array }, Expr) :-
     maplist(json_expr(Player_Keys), Json_Array, Conj_Array),
     Expr = *(Conj_Array).
 
+% concat_map(+F, +Input, -Output)
+% (F should provide difference lists; output will be a difference list)
+concat_map(_, [], T0-T0).
+concat_map(F, [H|T], H0-T0) :-
+    call(F, H, H0-X),
+    concat_map(F, T, X-T0).
+
+extract_vars_from_key(Key, Vars-T) :-
+    player_key_truth(Key, V1),
+    Vars = [V1|T].
+
 % solve_constraints(+Player_Keys, +Stmts, -Solns)
 solve_constraints(Player_Keys, Stmts, Solns) :-
     dict_dissect(Player_Keys, _, _, Values),
+    concat_map(extract_vars_from_key, Values, Vars-[]),
     findall(Player_Keys,
-            ( maplist(sat, Stmts), labeling(Values) ),
+            ( maplist(sat, Stmts), labeling(Vars) ),
             Solns).
 
 main_helper(Player_Keys, Name-Player, Stmt) :-
     json_expr(Player_Keys, Player.statement, Expr),
-    Stmt = (Player_Keys.Name =:= Expr).
+    player_key_truth(Player_Keys.Name, Own_Truth),
+    Stmt = (Own_Truth =:= Expr).
 
 get_filename(Filename) :-
     current_prolog_flag(argv, Argv),
@@ -74,12 +93,16 @@ get_filename(Filename) :-
         halt(1)
     ).
 
-analyze_solutions_check(Given_Soln, K-0) :-
+analyze_solutions_truth(Given_Soln, K, 0) :-
     atom_string(K, K1),
     \+ member(K1, Given_Soln.truth).
-analyze_solutions_check(Given_Soln, K-1) :-
+analyze_solutions_truth(Given_Soln, K, 1) :-
     atom_string(K, K1),
     member(K1, Given_Soln.truth).
+
+analyze_solutions_check(Given_Soln, K-V) :-
+    player_key_truth(V, Truth),
+    analyze_solutions_truth(Given_Soln, K, Truth).
 
 analyze_solutions1(Given_Soln, [Soln], correct) :-
     dict_pairs(Soln, _, Pairs),
