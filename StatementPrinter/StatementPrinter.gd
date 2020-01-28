@@ -85,13 +85,13 @@ func _batch_rename(s, obj, funcname):
 # returned, with structure identical to the first except that names
 # have been altered.
 func batch_rename(s, obj, funcname):
-    assert(s is Dictionary or s is String)
+    assert(s is Dictionary)
     var s1 = Util.deep_copy(s)
     return _batch_rename(s1, obj, funcname)
 
 func translate(s) -> String:
 
-    assert(s is Dictionary or s is String)
+    assert(s is Dictionary)
 
     # Simple positive
     if is_simple_positive(s):
