@@ -43,12 +43,6 @@ dict_dissect(Dict, Tag, Keys, Values) :-
     dict_pairs(Dict, Tag, Pairs),
     maplist(dict_helper, Keys, Values, Pairs).
 
-json_expr_or_helper(D, Acc, Expr) :-
-    D + Acc = Expr.
-
-json_expr_and_helper(D, Acc, Expr) :-
-    D * Acc = Expr.
-
 % json_expr(+Player_Keys, +Json_Statement, -Expr)
 json_expr(Player_Keys, Json_Statement, Player_Keys.Key) :-
     string(Json_Statement),
@@ -57,10 +51,10 @@ json_expr(Player_Keys, _{ op: "not", target: Json_Statement }, ~Expr) :-
     json_expr(Player_Keys, Json_Statement, Expr).
 json_expr(Player_Keys, _{ op: "or", target: Json_Array }, Expr) :-
     maplist(json_expr(Player_Keys), Json_Array, Disj_Array),
-    foldl(json_expr_or_helper, Disj_Array, 0, Expr).
+    Expr = +(Disj_Array).
 json_expr(Player_Keys, _{ op: "and", target: Json_Array }, Expr) :-
-    maplist(json_expr(Player_Keys), Json_Array, Disj_Array),
-    foldl(json_expr_and_helper, Disj_Array, 1, Expr).
+    maplist(json_expr(Player_Keys), Json_Array, Conj_Array),
+    Expr = *(Conj_Array).
 
 % solve_constraints(+Player_Keys, +Stmts, -Solns)
 solve_constraints(Player_Keys, Stmts, Solns) :-
