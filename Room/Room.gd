@@ -48,6 +48,9 @@ func get_minimap():
 func get_player_stats():
     return $CanvasLayer/PlayerStats
 
+func get_pause_menu():
+    return $CanvasLayer/PauseMenu
+
 func get_entities() -> Array:
     return $Entities.get_children()
 

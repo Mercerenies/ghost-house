@@ -1,11 +1,12 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://RoomTileset/RoomTileset.tres" type="TileSet" id=1]
 [ext_resource path="res://Room/Room.gd" type="Script" id=2]
 [ext_resource path="res://DialogueBox/DialogueBox.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Minimap/Minimap.tscn" type="PackedScene" id=4]
 [ext_resource path="res://PlayerStats/PlayerStats.tscn" type="PackedScene" id=5]
-[ext_resource path="res://Lighting/Lighting.tscn" type="PackedScene" id=6]
+[ext_resource path="res://PauseMenu/PauseMenu.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Lighting/Lighting.tscn" type="PackedScene" id=7]
 
 [node name="Room" type="TileMap"]
 tile_set = ExtResource( 1 )
@@ -23,9 +24,12 @@ visible = false
 
 [node name="PlayerStats" parent="CanvasLayer" instance=ExtResource( 5 )]
 
+[node name="PauseMenu" parent="CanvasLayer" instance=ExtResource( 6 )]
+visible = false
+
 [node name="Decorations" type="Node2D" parent="."]
 
 [node name="Entities" type="Node2D" parent="."]
 
-[node name="Lighting" parent="." instance=ExtResource( 6 )]
+[node name="Lighting" parent="." instance=ExtResource( 7 )]
 [connection signal="do_action" from="CanvasLayer/DialogueBox" to="." method="_on_DialogueBox_do_action"]
