@@ -16,4 +16,8 @@ hframes = 4
 [node name="AppearParticleTimer" type="Timer" parent="."]
 wait_time = 0.2
 autostart = true
+
+[node name="WanderTimer" type="Timer" parent="."]
+wait_time = 5.0
 [connection signal="timeout" from="AppearParticleTimer" to="." method="_on_AppearParticleTimer_timeout"]
+[connection signal="timeout" from="WanderTimer" to="." method="_on_WanderTimer_timeout"]

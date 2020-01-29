@@ -37,6 +37,18 @@ func _find_player() -> Vector2:
     # Can't find the player
     return Vector2(-1, -1)
 
+func is_initialized() -> bool:
+    # Any number of these instance variables would suffice. This one
+    # is just easy to check.
+    return _dims.x > 0
+
+func get_room_id_at_pos(pos: Vector2):
+    if not is_initialized():
+        return null
+    if not (pos in _grid):
+        return null
+    return _grid.get_value(pos)
+
 func update_map() -> void:
     self.update()
 

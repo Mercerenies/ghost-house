@@ -53,6 +53,7 @@ func _process(delta: float) -> void:
                 cell = current_cell
                 invisible = false
                 $AppearParticleTimer.stop()
+                $WanderTimer.start()
         else:
             appearing = false
             modulate.a = Util.toward(modulate.a, delta / 8, 0)
@@ -73,3 +74,24 @@ func _on_AppearParticleTimer_timeout():
         var part = GhostVisibilityParticle.instance()
         part.position = Vector2(randf() * 32, randf() * 32)
         self.add_child(part)
+
+func _on_WanderTimer_timeout():
+    if get_room().is_showing_modal():
+        return
+
+    var minimap = get_room().get_minimap()
+    var dir = randi() % 4
+    var destination
+    for _i in range(4):
+        dir = (dir + 1) % 4
+        destination = self.cell + Vector2(1, 0).rotated(dir * PI / 2)
+        if not can_move_to(destination):
+            continue
+        if minimap.is_initialized():
+            var p0 = Vector2(floor(self.cell.x / 32), floor(self.cell.y / 32))
+            var p1 = Vector2(floor(destination.x / 32), floor(destination.y / 32))
+            if minimap.get_room_id_at_pos(p0) != minimap.get_room_id_at_pos(p1):
+                continue
+        set_direction(dir)
+        if try_move_to(destination):
+            break
