@@ -4,7 +4,7 @@ var _data: Dictionary = {}
 
 func _ready():
     var file = File.new()
-    file.open("res://AverageColors/average_colors.json", File.READ)
+    file.open("res://Singleton/average_colors.json", File.READ)
     var result = JSON.parse(file.get_as_text())
     if result.error == OK:
         _data = result.result

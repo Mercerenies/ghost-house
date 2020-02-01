@@ -110,12 +110,12 @@ config/icon="res://icon.png"
 
 [autoload]
 
-Util="*res://Util/Util.gd"
+Util="*res://Singleton/Util.gd"
 RoomTypes="*res://RoomTypes/RoomTypes.gd"
-EnemyAI="*res://EnemyAI/EnemyAI.gd"
-AverageColors="*res://AverageColors/AverageColors.gd"
+EnemyAI="*res://Singleton/EnemyAI.gd"
+AverageColors="*res://Singleton/AverageColors.gd"
 Icons="*res://Minimap/Icons.gd"
-StatementPrinter="*res://StatementPrinter/StatementPrinter.gd"
+StatementPrinter="*res://Singleton/StatementPrinter.gd"
 
 [input]
 
