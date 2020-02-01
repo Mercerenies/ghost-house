@@ -50,6 +50,7 @@ func _ready() -> void:
     sprite = Sprite.new()
     add_child(sprite)
     sprite.texture = texture
+    sprite.modulate = color
     sprite.hframes = 4
     sprite.vframes = 4
     sprite.frame = 0
