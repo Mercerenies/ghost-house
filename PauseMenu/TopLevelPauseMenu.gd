@@ -44,13 +44,10 @@ func handle_input(input_type: String) -> bool:
             _option += 1
             _option = (_option % len(_options) + len(_options)) % len(_options)
             _update_self()
-            return true
         "ui_up":
             _option -= 1
             _option = (_option % len(_options) + len(_options)) % len(_options)
             _update_self()
-            return true
         "ui_accept":
             emit_signal("option_selected", get_chosen_option())
-            return true
-    return false
+    return true # Modal
