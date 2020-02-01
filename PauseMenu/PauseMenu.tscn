@@ -1,6 +1,8 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://PauseMenu/PauseMenu.gd" type="Script" id=1]
+[ext_resource path="res://PauseMenu/TopLevelPauseMenu.tscn" type="PackedScene" id=2]
+[ext_resource path="res://PauseMenu/TopLevelOptions.gd" type="Script" id=3]
 
 [node name="PauseMenu" type="Node2D"]
 pause_mode = 2
@@ -10,3 +12,9 @@ script = ExtResource( 1 )
 margin_right = 40.0
 margin_bottom = 14.0
 text = "PAUSED"
+
+[node name="TopLevelPauseMenu" parent="." instance=ExtResource( 2 )]
+
+[node name="TopLevelOptions" type="Node" parent="."]
+script = ExtResource( 3 )
+[connection signal="option_selected" from="TopLevelPauseMenu" to="TopLevelOptions" method="_on_TopLevelPauseMenu_option_selected"]
