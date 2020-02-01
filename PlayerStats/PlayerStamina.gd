@@ -14,3 +14,6 @@ func set_stamina(a: float) -> void:
 
 func get_stamina() -> float:
     return _value
+
+func jump_to_value() -> void:
+    $StaminaMeter.value = _value
