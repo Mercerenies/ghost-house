@@ -46,11 +46,11 @@ func _make_ghost_info() -> void:
     for p in players:
         var gender = randi() % 2
         var generated = namer.generate_name(gender)
-        _ghost_info[p] = {
-            "icon_index": generated["index"],
-            "name": generated["name"],
-            "gender": gender,
-        }
+        var info = GhostInfo.new()
+        info.icon_index = generated["index"]
+        info.ghost_name = generated["name"]
+        info.gender = gender
+        _ghost_info[p] = info
 
 func _get_rect_from_room_id(id: int) -> Rect2:
     var room = _boxes[id]
@@ -67,7 +67,7 @@ func _get_valid_room_ids(excluded_room_ids: Array) -> Array:
 
 func _get_ghost_name(id: String) -> String:
     assert(id in _ghost_info)
-    return _ghost_info[id]["name"]
+    return _ghost_info[id].ghost_name
 
 func _place_ghosts(order: Array) -> void:
     assert(len(order) > 0)
@@ -91,9 +91,9 @@ func _place_ghosts(order: Array) -> void:
         var clue = players[key]["statement"]
         ghost.set_clue(StatementPrinter.batch_rename(clue, self, "_get_ghost_name"))
 
-        minimap.add_icon(order[index], Icons.Index.FIRST_GHOST + _ghost_info[key]["icon_index"])
-        ghost.set_name(_ghost_info[key]["name"])
-        ghost.texture = MaleGhost if _ghost_info[key]["gender"] == GhostNamer.Gender.Male else FemaleGhost
+        minimap.add_icon(order[index], Icons.Index.FIRST_GHOST + _ghost_info[key].icon_index)
+        ghost.set_name(_ghost_info[key].ghost_name)
+        ghost.texture = MaleGhost if _ghost_info[key].gender == GhostNamer.Gender.Male else FemaleGhost
 
         index = (index + 1) % len(order)
 

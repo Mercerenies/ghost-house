@@ -54,6 +54,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://GeneratorData/GeneratorData.gd"
 }, {
+"base": "Reference",
+"class": "GhostInfo",
+"language": "GDScript",
+"path": "res://GhostDatabase/GhostInfo.gd"
+}, {
 "base": "Entity",
 "class": "MobileEntity",
 "language": "GDScript",
@@ -94,6 +99,7 @@ _global_script_class_icons={
 "Furniture": "",
 "FurniturePlacement": "",
 "GeneratorData": "",
+"GhostInfo": "",
 "MobileEntity": "",
 "OutlinedPolygon2D": "",
 "Room": "",
