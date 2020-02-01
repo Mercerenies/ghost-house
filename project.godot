@@ -122,6 +122,7 @@ EnemyAI="*res://Singleton/EnemyAI.gd"
 AverageColors="*res://Singleton/AverageColors.gd"
 Icons="*res://Minimap/Icons.gd"
 StatementPrinter="*res://Singleton/StatementPrinter.gd"
+GhostColors="*res://Singleton/GhostColors.gd"
 
 [input]
 
