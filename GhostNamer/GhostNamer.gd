@@ -123,3 +123,6 @@ func generate_name(gender: int):
 
 static func gender_to_image(gender: int) -> Texture:
     return MaleGhost if gender == Gender.Male else FemaleGhost
+
+static func gender_to_string(gender: int) -> String:
+    return "Male" if gender == Gender.Male else "Female"
