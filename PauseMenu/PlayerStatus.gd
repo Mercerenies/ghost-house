@@ -13,10 +13,17 @@ func get_room():
 func on_push() -> void:
     visible = true
     var player = get_room().get_marked_entities()["player"]
+    var player_stats = get_room().get_player_stats()
+
     if player == null:
         $Sprite.texture = MalePlayer # Just a default in case we can't find the player
     else:
         $Sprite.texture = player.get_node("Sprite").texture
+
+    $PlayerHealth.set_health(player_stats.get_player_health())
+    $PlayerStamina.set_stamina(player_stats.get_player_stamina())
+    $PlayerStamina.jump_to_value()
+
     $SpriteAnimationTimer.start()
 
 func on_pop() -> void:
