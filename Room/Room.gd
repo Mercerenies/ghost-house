@@ -51,8 +51,8 @@ func get_player_stats():
 func get_pause_menu():
     return $CanvasLayer/PauseMenu
 
-func get_ghost_info():
-    return $Info/GhostInfo
+func get_ghost_database():
+    return $Info/GhostDatabase
 
 func get_entities() -> Array:
     return $Entities.get_children()

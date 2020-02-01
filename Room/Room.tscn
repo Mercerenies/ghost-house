@@ -7,7 +7,7 @@
 [ext_resource path="res://PlayerStats/PlayerStats.tscn" type="PackedScene" id=5]
 [ext_resource path="res://PauseMenu/PauseMenu.tscn" type="PackedScene" id=6]
 [ext_resource path="res://Lighting/Lighting.tscn" type="PackedScene" id=7]
-[ext_resource path="res://GhostInfo/GhostInfo.gd" type="Script" id=8]
+[ext_resource path="res://GhostDatabase/GhostDatabase.gd" type="Script" id=8]
 
 [node name="Room" type="TileMap"]
 tile_set = ExtResource( 1 )
@@ -36,6 +36,6 @@ visible = false
 
 [node name="Info" type="Node" parent="."]
 
-[node name="GhostInfo" type="Node" parent="Info"]
+[node name="GhostDatabase" type="Node" parent="Info"]
 script = ExtResource( 8 )
 [connection signal="do_action" from="CanvasLayer/DialogueBox" to="." method="_on_DialogueBox_do_action"]

@@ -98,9 +98,9 @@ func _place_ghosts(order: Array) -> void:
         index = (index + 1) % len(order)
 
 func _inform_room() -> void:
-    var room_ghost_info = _room.get_ghost_info()
-    room_ghost_info.set_ghost_info(_ghost_info)
-    room_ghost_info.set_ghost_data(_data["puzzle"]["players"])
+    var ghost_database = _room.get_ghost_database()
+    ghost_database.set_ghost_info(_ghost_info)
+    ghost_database.set_ghost_data(_data["puzzle"]["players"])
 
 func run(excluded_room_ids: Array) -> void:
     if not ("puzzle" in _data):
