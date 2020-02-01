@@ -31,6 +31,7 @@ func get_chosen_option() -> Dictionary:
 
 func on_push() -> void:
     _option = 0
+    _update_self()
 
 func on_pop() -> void:
     pass

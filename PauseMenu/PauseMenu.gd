@@ -7,9 +7,12 @@ var control_stack: Array = [] # Right-hand-side is top of stack
 func is_active() -> bool:
     return visible
 
+func _unpause_deferred() -> void:
+    get_tree().paused = false
+
 func unpause() -> void:
     visible = false
-    get_tree().paused = false
+    call_deferred("_unpause_deferred")
 
     while len(control_stack) > 0:
         pop_control()
@@ -18,7 +21,7 @@ func pause() -> void:
     visible = true
     get_tree().paused = true
     control_stack.clear()
-    control_stack.push_back($TopLevelPauseMenu)
+    push_control($TopLevelPauseMenu)
 
 func get_room():
     return get_parent().get_parent()
