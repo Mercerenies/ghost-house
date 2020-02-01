@@ -97,6 +97,11 @@ func _place_ghosts(order: Array) -> void:
 
         index = (index + 1) % len(order)
 
+func _inform_room() -> void:
+    var room_ghost_info = _room.get_ghost_info()
+    room_ghost_info.set_ghost_info(_ghost_info)
+    room_ghost_info.set_ghost_data(_data["puzzle"]["players"])
+
 func run(excluded_room_ids: Array) -> void:
     if not ("puzzle" in _data):
         # No puzzle supplied so don't spawn any ghosts
@@ -105,3 +110,4 @@ func run(excluded_room_ids: Array) -> void:
     var ids = _get_valid_room_ids(excluded_room_ids)
     ids.shuffle()
     _place_ghosts(ids)
+    _inform_room()
