@@ -7,6 +7,7 @@ enum Dir {
 
 export(float) var speed: float = 120.0 # Pixels / sec
 export(Texture) var texture: Texture = null
+export(Color) var color: Color = Color.white
 var sprite: Sprite = null
 var timer: Timer = null
 

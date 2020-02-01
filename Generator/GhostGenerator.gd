@@ -43,11 +43,13 @@ func _make_ghost_info() -> void:
     var players = _data["puzzle"]["players"]
     for p in players:
         var gender = randi() % 2
+        var color = Util.choose(GhostColors.color_constants())
         var generated = namer.generate_name(gender)
         var info = GhostInfo.new()
         info.icon_index = generated["index"]
         info.ghost_name = generated["name"]
         info.gender = gender
+        info.color = color
         _ghost_info[p] = info
 
 func _get_rect_from_room_id(id: int) -> Rect2:
@@ -93,6 +95,7 @@ func _place_ghosts(order: Array) -> void:
         ghost.set_name(_ghost_info[key].ghost_name)
         ghost.set_key(key)
         ghost.texture = GhostNamer.gender_to_image(_ghost_info[key].gender)
+        ghost.color = GhostColors.color_constant_to_color(_ghost_info[key].color)
 
         index = (index + 1) % len(order)
 

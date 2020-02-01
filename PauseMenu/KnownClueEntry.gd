@@ -11,6 +11,7 @@ var _image_index: int
 
 func _update_self() -> void:
     $Sprite.texture = GhostNamer.gender_to_image(_info.gender)
+    $Sprite.modulate = GhostColors.color_constant_to_color(_info.color)
     var clue_text = StatementPrinter.translate(_clue)
     $Label.set_text('{} says, "{}."'.format([_info.ghost_name, clue_text], "{}"))
 

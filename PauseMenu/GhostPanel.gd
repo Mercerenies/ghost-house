@@ -13,8 +13,14 @@ func get_pause_menu():
 
 func _update_self() -> void:
     $Sprite.texture = GhostNamer.gender_to_image(_info.gender)
+    $Sprite.modulate = GhostColors.color_constant_to_color(_info.color)
     var gender_text = GhostNamer.gender_to_string(_info.gender)
-    $Label.set_text("Name: {}\nGender: {}".format([_info.ghost_name, gender_text], "{}"))
+    var color_text = GhostColors.color_constant_to_string(_info.color)
+    $Label.set_text("Name: {}\nGender: {}\nColor: {}".format([
+        _info.ghost_name,
+        gender_text,
+        color_text
+    ], "{}"))
 
 func fill_in_data(clue: Dictionary, info: GhostInfo) -> void:
     _clue = clue
