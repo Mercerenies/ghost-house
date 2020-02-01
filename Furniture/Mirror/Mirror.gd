@@ -6,7 +6,8 @@ func _ready() -> void:
     ]
 
 func set_direction(a: int):
-    $Sprite.frame = floor(a / 2)
+    # warning-ignore: integer_division
+    $Sprite.frame = a / 2
 
 func get_furniture_name():
     return "Mirror"

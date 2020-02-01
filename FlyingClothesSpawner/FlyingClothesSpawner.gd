@@ -25,7 +25,6 @@ func deactivate() -> void:
     $StartDelayTimer.stop()
 
 func _on_CycleTimer_timeout():
-    var player = get_room().get_marked_entities()['player']
     var player_distance = EnemyAI.distance_to_player(entity)
     var player_dir = EnemyAI.player_line_of_sight(entity)
 

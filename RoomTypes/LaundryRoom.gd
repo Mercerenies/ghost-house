@@ -41,7 +41,7 @@ class CentralBar extends FurniturePlacement:
             arr.append({ "strictness": Strictness.WASHERS_AND_DRYERS, "mask": mask })
         return arr
 
-    func value_to_position(value) -> Rect2:
+    func value_to_position(_value) -> Rect2:
         return GeneratorData.PLACEMENT_SAFE
 
     func spawn_at(room, value, cb):

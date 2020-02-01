@@ -23,11 +23,11 @@ func determine_starting_offset() -> int:
     # Abstract, override me
     return 0
 
-func generate_furniture(max_len, params):
+func generate_furniture(_max_len, _params):
     # Abstract; override me
     pass
 
-func set_furniture_direction(obj, dir, params):
+func set_furniture_direction(obj, dir, _params):
     # Can be overridden but the default behavior is sensible
     obj.set_direction(dir)
 
@@ -35,7 +35,7 @@ func get_short_edge() -> int:
     # Can be overridden; default is 1
     return 1
 
-func enumerate(room) -> Array:
+func enumerate(_room) -> Array:
     var direction_masks = direction_masks()
     var arr = []
     for mask in direction_masks:

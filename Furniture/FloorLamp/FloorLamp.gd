@@ -5,7 +5,7 @@ func _ready() -> void:
          { "command": "say", "text": "A floor lamp." }
     ]
 
-func set_direction(a: int):
+func set_direction(_a: int):
     pass
 
 func lighting() -> Array:

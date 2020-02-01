@@ -82,8 +82,6 @@ func _process(delta: float) -> void:
             if player_dir < PI / 3 and player_dist < FLEE_DISTANCE:
                 state = State.Fleeing
         State.Fleeing:
-            var player_dir = EnemyAI.player_line_of_sight(self)
-            var player_dist = EnemyAI.distance_to_player(self)
             var speed = PANIC_HIDEAWAY_SPEED * delta
             var direction_vector = (target_position - global_position).normalized()
             if (target_position - global_position).length() < speed:

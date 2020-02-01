@@ -9,7 +9,7 @@ func _ready() -> void:
     ]
     $Sprite.frame = randi() % 2
 
-func set_direction(a: int):
+func set_direction(_a: int):
     pass # This one actually doesn't depend on direction, for once.
 
 func get_furniture_name():

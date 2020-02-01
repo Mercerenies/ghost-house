@@ -60,7 +60,7 @@ class HorizontalRows extends SimpleRows:
         else:
             return 3
 
-    func enumerate(room) -> Array:
+    func enumerate(_room) -> Array:
         return [
             { "strictness": Strictness.MANY_OTHERS },
             { "strictness": Strictness.FEW_OTHERS },
@@ -84,7 +84,7 @@ class VerticalRows extends SimpleRows:
         else:
             return 3
 
-    func enumerate(room) -> Array:
+    func enumerate(_room) -> Array:
         return [
             { "strictness": Strictness.MANY_OTHERS },
             { "strictness": Strictness.FEW_OTHERS },
@@ -94,7 +94,7 @@ class VerticalRows extends SimpleRows:
 
 class Labyrinth extends FurniturePlacement:
 
-    func enumerate(room) -> Array:
+    func enumerate(_room) -> Array:
         # Placeholder value. It just needs to exist
         return [0]
 

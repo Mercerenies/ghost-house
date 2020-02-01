@@ -20,7 +20,7 @@ enum Strictness {
 
 class _Helper:
 
-    static func _make_furniture(strictness):
+    static func _make_furniture(_strictness):
         match randi() % 6:
             0, 1:
                 return { "object": KitchenCounter.instance(), "length": 2 }
@@ -41,6 +41,7 @@ class BarAcross extends FurniturePlacement:
 
         # Vertical options
         pos = upperleft + TOTAL_CELL_SIZE * Vector2(1, 0)
+        # warning-ignore: integer_division
         while pos.x + CELL_SIZE / 2 < room.box.end.x * TOTAL_CELL_SIZE:
             for offset in [Vector2(0, -1), Vector2()]:
                 for strictness in [Strictness.DEFAULT]:
@@ -51,6 +52,7 @@ class BarAcross extends FurniturePlacement:
 
         # Horizontal options
         pos = upperleft + TOTAL_CELL_SIZE * Vector2(0, 1)
+        # warning-ignore: integer_division
         while pos.y + CELL_SIZE / 2 < room.box.end.y * TOTAL_CELL_SIZE:
             for offset in [Vector2(-1, 0), Vector2()]:
                 for strictness in [Strictness.DEFAULT]:

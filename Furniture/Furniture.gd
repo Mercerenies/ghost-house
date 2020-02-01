@@ -33,7 +33,6 @@ func _ready():
     ]
 
 func _process(delta: float) -> void:
-    var player = get_room().get_marked_entities()['player']
     if vars['vanishing']:
         var distance = EnemyAI.distance_to_player(self)
         var dir = EnemyAI.player_line_of_sight(self)

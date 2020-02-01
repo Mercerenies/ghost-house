@@ -5,7 +5,7 @@ func _ready() -> void:
         { "command": "say", "text": "A dining room table." }
     ]
 
-func set_direction(a: int):
+func set_direction(_a: int):
     pass
 
 func get_furniture_name():

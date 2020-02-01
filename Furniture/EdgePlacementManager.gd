@@ -2,7 +2,7 @@ extends Reference
 class_name EdgePlacementManager
 
 var _placements: Array
-var _pindices: Array
+#var _pindices: Array # (I don't know why this variable exists)
 
 # Pass dictionaries of the form { "placement": obj, "chance": weight }
 func _init(placements: Array) -> void:

@@ -13,7 +13,7 @@ func _ready() -> void:
     $FlyingClothesSpawner.set_entity(self)
     $Sprite.frame = _image_index
 
-func set_direction(a: int):
+func set_direction(_a: int):
     pass
 
 func get_furniture_name():

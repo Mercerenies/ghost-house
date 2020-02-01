@@ -36,6 +36,7 @@ func _init(room_data: Dictionary,
     _helper = helper
 
 func _identify_valid_rect() -> Rect2:
+    # warning-ignore: integer_division
     var target_pos = Vector2(_grid.get_width() / 2, _grid.get_height() - 1)
     var room_id = _grid.get_value(target_pos)
     var room = _boxes[room_id]

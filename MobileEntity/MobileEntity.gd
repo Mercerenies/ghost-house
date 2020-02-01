@@ -58,7 +58,8 @@ func _ready() -> void:
 
     timer = Timer.new()
     add_child(timer)
-    timer.connect("timeout", self, "_on_Timer_timeout")
+    var conn_result = timer.connect("timeout", self, "_on_Timer_timeout")
+    assert(conn_result == OK)
     timer.wait_time = 0.1
     timer.start()
 

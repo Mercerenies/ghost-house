@@ -18,7 +18,7 @@ func _init(room_data: Dictionary, painter: GeneratorPainter):
 func _produce_hallway_attempt():
     var w = int(_data['config']['width'])
     var h = int(_data['config']['height'])
-    var hall_length = Util.randi_range(4, min(w, h))
+    var hall_length = Util.randi_range(4, int(min(w, h)))
     var arr = []
     var startx = randi() % w
     var starty = randi() % h

@@ -135,7 +135,7 @@ class LongRowWithBreaks extends Reference:
         var index = 0
 
         var gaps = []
-        for i in range(3):
+        for _i in range(3):
             gaps.append(randi() % total_length)
         gaps.sort()
 

@@ -12,13 +12,13 @@ func set_player_health(a: int) -> void:
 func set_player_stamina(a: float) -> void:
     $PlayerStamina.set_stamina(a)
 
-func add_player_health(a: float) -> void:
+func add_player_health(a: int) -> void:
     set_player_health(get_player_health() + a)
 
 func add_player_stamina(a: float) -> void:
     set_player_stamina(get_player_stamina() + a)
 
-func damage_player(a: float) -> bool:
+func damage_player(a: int) -> bool:
     if has_iframe():
         return false
     add_player_health(- a)

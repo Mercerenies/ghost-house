@@ -7,7 +7,7 @@ var _oob = null
 
 func _init(width: int, height: int, init, oob = null):
     _grid = []
-    for i in range(width * height):
+    for _i in range(width * height):
         _grid.append(init)
     _width = width
     _height = height

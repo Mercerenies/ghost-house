@@ -116,8 +116,10 @@ func _draw() -> void:
             var cellpos = pos[0] * GRID_CELL_SIZE + upperleft
             var center = Vector2(-128, -128) # Off-screen to start with, just in case
             if pos[1] - pos[0] == Vector2(1, 0):
+                # warning-ignore: integer_division
                 center = cellpos + Vector2(GRID_CELL_SIZE, GRID_CELL_SIZE / 2)
             elif pos[1] - pos[0] == Vector2(0, 1):
+                # warning-ignore: integer_division
                 center = cellpos + Vector2(GRID_CELL_SIZE / 2, GRID_CELL_SIZE)
             draw_rect(Rect2(center - Vector2(DOOR_DRAW_RADIUS, DOOR_DRAW_RADIUS),
                             Vector2(DOOR_DRAW_RADIUS, DOOR_DRAW_RADIUS) * 2),
@@ -133,6 +135,7 @@ func _draw() -> void:
             var icons = _icons[v.id]
             var rect = v.box
             var screen_rect = Rect2(rect.position * GRID_CELL_SIZE + upperleft, rect.size * GRID_CELL_SIZE)
+            # warning-ignore: integer_division
             var draw_pos = screen_rect.position + screen_rect.size / 2
             draw_pos -= (Vector2(6, 0) if len(icons) == 1 else Vector2(12, 0))
             draw_pos -= Vector2(0, 6) * ceil((len(icons) + 1) / 2)

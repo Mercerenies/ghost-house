@@ -12,6 +12,7 @@ func get_room():
     return get_pause_menu().get_room()
 
 func _update_option() -> void:
+    # warning-ignore: integer_division
     $CurrentOption.position = $CluesList.position + Vector2(-16, KnownClueEntry.TOTAL_HEIGHT / 2)
     $CurrentOption.position.y += KnownClueEntry.TOTAL_HEIGHT * _option
 

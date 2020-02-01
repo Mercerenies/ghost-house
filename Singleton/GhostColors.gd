@@ -16,7 +16,6 @@ func color_constant_to_color(value: int) -> Color:
             return Color(0xEBFC21FF)
         GhostColor.Pink:
             return Color(0xF946C8FF)
-    return Color()
 
 func color_constant_to_string(value: int) -> String:
     match value:
@@ -30,7 +29,6 @@ func color_constant_to_string(value: int) -> String:
             return "Yellow"
         GhostColor.Pink:
             return "Pink"
-    return ""
 
 func color_constants() -> Array:
     return [GhostColor.Red, GhostColor.Green, GhostColor.Blue, GhostColor.Yellow, GhostColor.Pink]

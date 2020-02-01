@@ -64,7 +64,7 @@ class CarsAgainstWall extends InnerCircle:
     func determine_starting_offset() -> int:
         return 0 if randf() < 0.5 else 1
 
-    func generate_furniture(max_len, params):
+    func generate_furniture(_max_len, params):
         var furniture = params["spawner"].generate_furniture()
         return { "object": furniture,
                  "length": 2 }
@@ -101,7 +101,7 @@ class HorizontalRows extends SimpleRows:
             index = randi() % TYPES_OF_CARS
         value["spawner"] = CarSpawner.new(0.00, index)
 
-    func enumerate(room) -> Array:
+    func enumerate(_room) -> Array:
         var arr = []
         for dir in range(4):
             arr.append({ "dir": dir })
@@ -132,7 +132,7 @@ class VerticalRows extends SimpleRows:
             index = randi() % TYPES_OF_CARS
         value["spawner"] = CarSpawner.new(0.00, index)
 
-    func enumerate(room) -> Array:
+    func enumerate(_room) -> Array:
         var arr = []
         for dir in range(4):
             arr.append({ "dir": dir })
@@ -176,6 +176,8 @@ class PlacementManager extends SpecialPlacementManager:
                     if min_dim <= 2:
                         result.append(CarsAgainstWall.new())
                     else:
+                        # What does this warning mean (???)
+                        # warning-ignore: incompatible_ternary
                         result.append(HorizontalRows.new() if randf() < 0.5 else VerticalRows.new())
             for _i in range(2):
                 if randf() < 0.25:

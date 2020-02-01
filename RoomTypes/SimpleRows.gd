@@ -8,7 +8,7 @@ enum Orientation {
     HORIZONTAL, VERTICAL
 }
 
-func generate_furniture(value):
+func generate_furniture(_value):
     # Abstract method; override me
     pass
 
@@ -20,12 +20,12 @@ func get_gap_size():
     # Abstract method; override me
     pass
 
-func spawn_prologue(value):
+func spawn_prologue(_value):
     # Not abstract, but feel free to override if needed. This will get
     # called once at the beginning of spawn_at.
     pass
 
-func value_to_position(value) -> Rect2:
+func value_to_position(_value) -> Rect2:
     return GeneratorData.PLACEMENT_SAFE
 
 func spawn_at(room, value, cb):

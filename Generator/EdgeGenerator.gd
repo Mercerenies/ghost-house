@@ -64,6 +64,8 @@ func _fill_edges() -> void:
     var h = int(_data['config']['height']) * TOTAL_CELL_SIZE
     for x in range(w):
         for y in range(h):
+            # warning-ignore: integer_division
+            # warning-ignore: integer_division
             var room = _boxes[_grid.get_value(Vector2(floor(x / TOTAL_CELL_SIZE), floor(y / TOTAL_CELL_SIZE)))]
             var mngr = room.edgetype
             if _flag_grid.get_flag(Vector2(x, y), FLAG_EDGE_FURNITURE):
