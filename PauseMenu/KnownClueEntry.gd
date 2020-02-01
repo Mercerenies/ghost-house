@@ -24,3 +24,9 @@ func _process(_delta: float) -> void:
 
 func _on_SpriteAnimationTimer_timeout() -> void:
     _image_index = (_image_index + 1) % 4
+
+func get_clue() -> Dictionary:
+    return _clue
+
+func get_info() -> GhostInfo:
+    return _info

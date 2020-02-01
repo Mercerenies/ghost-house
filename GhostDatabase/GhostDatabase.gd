@@ -14,7 +14,6 @@ func set_ghost_info(ghost_info: Dictionary) -> void:
 
 func meet_ghost(ghost_key: String) -> void:
     if not (ghost_key in _known_clues):
-        print(ghost_key)
         _known_clues.push_back(ghost_key)
 
 func get_known_clues() -> Array:
