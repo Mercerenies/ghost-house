@@ -50,4 +50,6 @@ func handle_input(input_type: String) -> bool:
             _update_self()
         "ui_accept":
             emit_signal("option_selected", get_chosen_option())
+        "ui_cancel":
+            get_parent().unpause()
     return true # Modal

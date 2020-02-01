@@ -1,6 +1,6 @@
 extends Node2D
 
-const CONTROL_STACK_ACTIONS = ["ui_up", "ui_down", "ui_accept"]
+const CONTROL_STACK_ACTIONS = ["ui_up", "ui_down", "ui_accept", "ui_cancel"]
 
 var control_stack: Array = [] # Right-hand-side is top of stack
 
@@ -10,6 +10,9 @@ func is_active() -> bool:
 func unpause() -> void:
     visible = false
     get_tree().paused = false
+
+    while len(control_stack) > 0:
+        pop_control()
 
 func pause() -> void:
     visible = true
@@ -37,7 +40,7 @@ func _process(_delta: float) -> void:
     if is_active():
 
         # Allow unpausing (DEBUG CODE as this will be somewhere else later)
-        if Input.is_action_just_released("ui_cancel") or Input.is_action_just_released("ui_pause"):
+        if Input.is_action_just_released("ui_pause"):
             unpause()
 
         for action in CONTROL_STACK_ACTIONS:
