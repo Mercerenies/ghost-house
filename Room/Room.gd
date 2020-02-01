@@ -73,3 +73,5 @@ func _on_DialogueBox_do_action(action, arg):
             var scene = FurnitureDropScene.instance()
             scene.assign_sprite(arg)
             $CanvasLayer.add_child(scene)
+        "meet_ghost":
+            get_ghost_database().meet_ghost(arg)

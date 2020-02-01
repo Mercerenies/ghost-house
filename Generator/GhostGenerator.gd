@@ -93,6 +93,7 @@ func _place_ghosts(order: Array) -> void:
 
         minimap.add_icon(order[index], Icons.Index.FIRST_GHOST + _ghost_info[key].icon_index)
         ghost.set_name(_ghost_info[key].ghost_name)
+        ghost.set_key(key)
         ghost.texture = MaleGhost if _ghost_info[key].gender == GhostNamer.Gender.Male else FemaleGhost
 
         index = (index + 1) % len(order)

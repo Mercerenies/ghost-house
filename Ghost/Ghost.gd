@@ -4,6 +4,7 @@ const GhostVisibilityParticle = preload("GhostVisibilityParticle.tscn")
 
 var appearing: bool = false
 var invisible: bool = true
+var ghost_key: String = ""
 var ghost_name: String = ""
 var ghost_clue = null
 
@@ -13,6 +14,10 @@ func _ready() -> void:
     unposition_self()
     modulate.a = 0
     invisible = true
+
+func set_key(key: String) -> void:
+    ghost_key = key
+    _update_dialogue()
 
 func set_name(name: String) -> void:
     ghost_name = name
@@ -30,7 +35,8 @@ func _update_dialogue() -> void:
     if ghost_clue != null:
         var clue_text = StatementPrinter.translate(ghost_clue)
         dialogue['clue'] = [
-            { "command": "say", "speaker": ghost_name, "text": clue_text + "." }
+            { "command": "say", "speaker": ghost_name, "text": clue_text + "." },
+            { "command": "action", "action": "meet_ghost", "arg": ghost_key },
         ]
 
 func _process(delta: float) -> void:

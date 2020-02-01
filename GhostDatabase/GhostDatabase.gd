@@ -11,3 +11,20 @@ func set_ghost_data(ghost_data: Dictionary) -> void:
 
 func set_ghost_info(ghost_info: Dictionary) -> void:
     _ghost_info = ghost_info
+
+func meet_ghost(ghost_key: String) -> void:
+    if not (ghost_key in _known_clues):
+        print(ghost_key)
+        _known_clues.push_back(ghost_key)
+
+func get_known_clues() -> Array:
+    return _known_clues
+
+func get_clue_by_id(key: String) -> Dictionary:
+    assert(key in _ghost_data)
+    return _ghost_data[key]["statement"]
+
+func get_info_by_id(key: String) -> GhostInfo:
+    assert(key in _ghost_info)
+    return _ghost_info[key]
+

@@ -38,6 +38,12 @@
 *** ~furniture_drop~ Action
     Performs the furniture drop visual effect. ~arg~ is required and
     must be a sprite resource.
+*** ~meet_ghost~ Action
+    Registers the fact that the player has met (and interrogated) a
+    given ghost in the ghost database. Once registered, the ghost will
+    show up in the player's pause menu, where he can view the clues of
+    all ghosts he has met. ~arg~ is required and must be the ghost's
+    string key (from the JSON file).
 ** ~dump_vars~ Instruction
    Prints out all of the variables currently available to the current
    dialogue in JSON form, for debugging purposes.
