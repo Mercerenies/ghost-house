@@ -518,43 +518,5 @@ func decide_special_manager(dims: Vector2, rtype: int) -> Array:
     var arr = _config[rtype]["special"]
     return arr.determine_placements(dims)
 
-var _tmp = null
-
-func get_edge_manager(rtype: int) -> EdgePlacementManager:
-    # DEBUG CODE (Just returns a constant right now that doesn't depend on the room type)
-    if _tmp == null:
-        var vac = EdgeVacuousFurniturePlacement.new()
-        var bks = EdgeBookshelfPlacement.new()
-        var lbk = EdgeLongBookshelfPlacement.new()
-        var tlv = EdgeTelevisionPlacement.new()
-        var lau = EdgeLaundryMachinePlacement.new()
-        var dry = EdgeDryerPlacement.new()
-        var sof = EdgeSofaPlacement.new()
-        var rec = EdgeReclinerPlacement.new()
-        var dnc = EdgeDiningChairPlacement.new()
-        var ofc = EdgeOfficeChairPlacement.new()
-        var toi = EdgeToiletPlacement.new()
-        var dre = EdgeDresserPlacement.new()
-        var lca = EdgeLongCabinetPlacement.new()
-        var cab = EdgeCabinetPlacement.new()
-        var kco = EdgeKitchenCounterPlacement.new()
-        var ksi = EdgeKitchenSinkPlacement.new()
-        _tmp = EdgePlacementManager.new([{ "placement": bks, "chance": 10 },
-                                         { "placement": lbk, "chance": 20 },
-                                         { "placement": lau, "chance": 10 },
-                                         { "placement": dry, "chance": 10 },
-                                         { "placement": tlv, "chance": 20 },
-                                         { "placement": sof, "chance": 10 },
-                                         { "placement": rec, "chance": 10 },
-                                         { "placement": dnc, "chance": 10 },
-                                         { "placement": ofc, "chance": 10 },
-                                         { "placement": toi, "chance": 10 },
-                                         { "placement": dre, "chance": 15 },
-                                         { "placement": lca, "chance": 15 },
-                                         { "placement": cab, "chance": 15 },
-                                         { "placement": kco, "chance": 15 },
-                                         { "placement": ksi, "chance": 15 }])
-    return _tmp
-
 func _ready():
     pass
