@@ -9,8 +9,6 @@ const GeneratorPlacementHelper = preload("res://GeneratorPlacementHelper/Generat
 const GhostNamer = preload("res://GhostNamer/GhostNamer.gd")
 
 const Ghost = preload("res://Ghost/Ghost.tscn")
-const FemaleGhost = preload("res://Ghost/FemaleGhost.png")
-const MaleGhost = preload("res://Ghost/MaleGhost.png")
 
 const HallwayData = GeneratorData.HallwayData
 const RoomData = GeneratorData.RoomData
@@ -94,7 +92,7 @@ func _place_ghosts(order: Array) -> void:
         minimap.add_icon(order[index], Icons.Index.FIRST_GHOST + _ghost_info[key].icon_index)
         ghost.set_name(_ghost_info[key].ghost_name)
         ghost.set_key(key)
-        ghost.texture = MaleGhost if _ghost_info[key].gender == GhostNamer.Gender.Male else FemaleGhost
+        ghost.texture = GhostNamer.gender_to_image(_ghost_info[key].gender)
 
         index = (index + 1) % len(order)
 

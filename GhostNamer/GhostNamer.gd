@@ -5,6 +5,9 @@ enum Gender {
     Female = 1,
 }
 
+const MaleGhost = preload("res://Ghost/MaleGhost.png")
+const FemaleGhost = preload("res://Ghost/FemaleGhost.png")
+
 const NAMES = [
     # A
     ["Antonio", "Arthur", "Antoine"],
@@ -117,3 +120,6 @@ func generate_name(gender: int):
                         "index": letters[female % 26],
                         "name": Util.choose(_get_name_list(female, Gender.Female)),
                     }
+
+static func gender_to_image(gender: int) -> Texture:
+    return MaleGhost if gender == Gender.Male else FemaleGhost
