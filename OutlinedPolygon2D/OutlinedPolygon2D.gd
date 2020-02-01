@@ -1,3 +1,4 @@
+tool
 extends Polygon2D
 class_name OutlinedPolygon2D
 
