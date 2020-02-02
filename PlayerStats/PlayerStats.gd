@@ -38,3 +38,6 @@ func has_iframe() -> bool:
 
 func get_status_effects():
     return $PlayerStatusEffects
+
+func _on_PlayerStatusEffects_status_effects_changed():
+    $PlayerStamina.set_color_based_on_rate_multiplier($PlayerStatusEffects.stamina_recovery_rate_multiplier())

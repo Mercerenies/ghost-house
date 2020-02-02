@@ -1,5 +1,7 @@
 extends Node
 
+signal status_effects_changed
+
 var _status_effects: Array = []
 
 func get_effect_list():
@@ -15,6 +17,7 @@ func apply_status_effect(effect: StatusInstance) -> void:
                     curr.set_length(effect.get_length())
                 return
     _status_effects.push_back(effect)
+    emit_signal("status_effects_changed")
 
 func stamina_recovery_rate_multiplier() -> float:
     var mult = 1.0
@@ -30,8 +33,11 @@ func _on_PlayerStatusEffectTimer_timeout():
         _status_effects[j] = _status_effects[i]
         if s.get_length() > 0:
             j += 1
+    var need_to_purge = (len(_status_effects) > j)
     while len(_status_effects) > j:
         _status_effects.pop_back() # Purge expired status effects
+    if need_to_purge:
+        emit_signal("status_effects_changed")
 
 func _ready() -> void:
     # DEBUG CODE

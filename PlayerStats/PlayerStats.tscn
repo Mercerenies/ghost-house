@@ -24,3 +24,4 @@ autostart = true
 [node name="PlayerStatusEffects" type="Node" parent="."]
 script = ExtResource( 4 )
 [connection signal="timeout" from="PlayerStatusEffectTimer" to="PlayerStatusEffects" method="_on_PlayerStatusEffectTimer_timeout"]
+[connection signal="status_effects_changed" from="PlayerStatusEffects" to="." method="_on_PlayerStatusEffects_status_effects_changed"]
