@@ -8,7 +8,7 @@ var _option: int = 0
 func _update_self():
     $Label.text = ""
     for opt in _options:
-        $Label.text += opt + '\n'
+        $Label.text += opt["text"] + '\n'
     call_deferred("_update_text") # Need to give the label a frame to update itself.
 
 func _update_text():
@@ -24,6 +24,8 @@ func _update_text():
     $CurrentOption.position = $Label.rect_position + Vector2(-16, $Label.get_line_height() / 2)
     $CurrentOption.position.y += line_height * _option
 
+# Each entry should be a dictionary containing an integer "id" field
+# and a string "text" field.
 func set_options(options: Array) -> void:
     _options = options
     _update_self()
@@ -52,7 +54,7 @@ func handle_input(input_type: String) -> bool:
             _option = (_option % len(_options) + len(_options)) % len(_options)
             _update_self()
         "ui_accept":
-            emit_signal("option_selected", get_chosen_option())
+            emit_signal("option_selected", get_chosen_option()["id"])
         "ui_cancel":
             get_parent().unpause()
     return true # Modal

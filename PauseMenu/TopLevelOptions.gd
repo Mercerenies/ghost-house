@@ -1,12 +1,34 @@
 extends Node
 
-const TOP_LEVEL_OPTIONS = ["Player Status", "Known Clues", "Example Option 1", "Example Option 2", "Example Option 3", "Example Option 4", "Example Option 5", "Example Option 6", "Back to Game"]
+enum Option {
+    PlayerStatus = 0,
+    KnownClues = 1,
+    BackToGame = 2,
+    Example1 = 1001,
+    Example2 = 1002,
+    Example3 = 1003,
+    Example4 = 1004,
+    Example5 = 1005,
+    Example6 = 1006,
+}
 
-func _on_TopLevelPauseMenu_option_selected(option: String):
+const TOP_LEVEL_OPTIONS = [
+    { "id": Option.PlayerStatus, "text": "Player Status" },
+    { "id": Option.KnownClues, "text": "Known Clues" },
+    { "id": Option.Example1, "text": "Example Option 1" },
+    { "id": Option.Example2, "text": "Example Option 2" },
+    { "id": Option.Example3, "text": "Example Option 3" },
+    { "id": Option.Example4, "text": "Example Option 4" },
+    { "id": Option.Example5, "text": "Example Option 5" },
+    { "id": Option.Example6, "text": "Example Option 6" },
+    { "id": Option.BackToGame, "text": "Back to Game" }
+]
+
+func _on_TopLevelPauseMenu_option_selected(option: int):
     match option:
-        "Player Status":
+        Option.PlayerStatus:
             get_parent().push_control(get_node("../PlayerStatus"))
-        "Known Clues":
+        Option.KnownClues:
             get_parent().push_control(get_node("../KnownCluesList"))
-        "Back to Game":
+        Option.BackToGame:
             get_parent().unpause()
