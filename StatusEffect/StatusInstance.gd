@@ -14,6 +14,9 @@ func get_effect() -> StatusEffect:
 func get_length() -> int:
     return _length
 
+func set_length(length: int) -> void:
+    _length = length
+
 func decrement_length() -> void:
     if _length != 0:
         _length -= 1
