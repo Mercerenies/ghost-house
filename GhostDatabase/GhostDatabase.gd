@@ -27,3 +27,5 @@ func get_info_by_id(key: String) -> GhostInfo:
     assert(key in _ghost_info)
     return _ghost_info[key]
 
+func get_ghost_keys() -> Array:
+    return _ghost_data.keys()

@@ -3,7 +3,8 @@ extends Node
 enum Option {
     PlayerStatus = 0,
     KnownClues = 1,
-    BackToGame = 2,
+    DebugMenu = 2,
+    BackToGame = 3,
     Example1 = 1001,
     Example2 = 1002,
     Example3 = 1003,
@@ -15,6 +16,7 @@ enum Option {
 const TOP_LEVEL_OPTIONS = [
     { "id": Option.PlayerStatus, "text": "Player Status" },
     { "id": Option.KnownClues, "text": "Known Clues" },
+    { "id": Option.DebugMenu, "text": "Debug Menu" },
     { "id": Option.Example1, "text": "Example Option 1" },
     { "id": Option.Example2, "text": "Example Option 2" },
     { "id": Option.Example3, "text": "Example Option 3" },
@@ -30,5 +32,7 @@ func _on_TopLevelPauseMenu_option_selected(option: int):
             get_parent().push_control(get_node("../PlayerStatus"))
         Option.KnownClues:
             get_parent().push_control(get_node("../KnownCluesList"))
+        Option.DebugMenu:
+            get_parent().push_control(get_node("../DebugMenu"))
         Option.BackToGame:
             get_parent().unpause()

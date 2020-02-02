@@ -52,6 +52,13 @@ func get_room_id_at_pos(pos: Vector2):
 func update_map() -> void:
     self.update()
 
+func discover_room(id: int) -> void:
+    _discovered[id] = true
+    update_map()
+
+func room_ids() -> Array:
+    return _boxes.keys()
+
 func add_icon(room_id: int, icon_id: int) -> void:
     if not (room_id in _icons):
         _icons[room_id] = []
