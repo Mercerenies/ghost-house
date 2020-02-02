@@ -25,7 +25,7 @@ func _update_self() -> void:
 
     var desc_text = ""
     # Handle Statuses
-    var status_effects = player_stats.get_status_effects()
+    var status_effects = player_stats.get_status_effects().get_effect_list()
     desc_text += "Status: "
     if len(status_effects) == 0:
         desc_text += "Healthy"

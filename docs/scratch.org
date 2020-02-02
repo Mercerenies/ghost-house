@@ -140,7 +140,7 @@
     + [ ] Rugs
     + [ ] Parking Spots
 * STATUS EFFECTS
-  + [ ] Debug Effect (No in-game effect; for testing)
+  + [X] Debug Effect (No in-game effect; for testing)
   + [ ] Slowed (Can't sprint)
   + [ ] Tired (Sprint meter refills slower)
   + [ ] Hyper (Sprint meter refills faster)

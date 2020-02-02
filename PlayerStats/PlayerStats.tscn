@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://PlayerStats/PlayerStats.gd" type="Script" id=1]
 [ext_resource path="res://PlayerStats/PlayerHealth.tscn" type="PackedScene" id=2]
 [ext_resource path="res://PlayerStats/PlayerStamina.tscn" type="PackedScene" id=3]
+[ext_resource path="res://PlayerStats/PlayerStatusEffects.gd" type="Script" id=4]
 
 [node name="PlayerStats" type="Node2D"]
 script = ExtResource( 1 )
@@ -19,4 +20,7 @@ one_shot = true
 
 [node name="PlayerStatusEffectTimer" type="Timer" parent="."]
 autostart = true
-[connection signal="timeout" from="PlayerStatusEffectTimer" to="." method="_on_PlayerStatusEffectTimer_timeout"]
+
+[node name="PlayerStatusEffects" type="Node" parent="."]
+script = ExtResource( 4 )
+[connection signal="timeout" from="PlayerStatusEffectTimer" to="PlayerStatusEffects" method="_on_PlayerStatusEffectTimer_timeout"]
