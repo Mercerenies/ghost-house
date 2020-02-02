@@ -31,7 +31,8 @@ func damage_player(a: int) -> bool:
     return false
 
 func trigger_iframe() -> void:
-    $PlayerIFrame.start()
+    if not has_iframe():
+        $PlayerIFrame.start()
 
 func has_iframe() -> bool:
     return $PlayerIFrame.time_left > 0

@@ -31,7 +31,7 @@ func _on_PlayerStatusEffectTimer_timeout():
         var s = _status_effects[i]
         s.decrement_length()
         _status_effects[j] = _status_effects[i]
-        if s.get_length() > 0:
+        if s.get_length() != 0:
             j += 1
     var need_to_purge = (len(_status_effects) > j)
     while len(_status_effects) > j:
