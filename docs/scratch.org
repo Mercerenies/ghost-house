@@ -142,8 +142,8 @@
 * STATUS EFFECTS
   + [X] Debug Effect (No in-game effect; for testing)
   + [ ] Slowed (Can't sprint)
-  + [ ] Tired (Sprint meter refills slower)
-  + [ ] Hyper (Sprint meter refills faster)
+  + [X] Tired (Sprint meter refills slower)
+  + [X] Hyper (Sprint meter refills faster)
   + [ ] Blinded (No flashlight; only light radius)
   + [ ] Night Vision (Wider and longer flashlight)
   + [ ] Invincible (Cannot take damage)

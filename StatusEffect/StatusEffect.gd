@@ -2,6 +2,8 @@ extends Reference
 class_name StatusEffect
 
 const ID_DebugEffect = 1
+const ID_TiredEffect = 2
+const ID_HyperEffect = 3
 
 func get_id() -> int:
     return 0
@@ -15,3 +17,6 @@ func get_name() -> String:
 # applied only once. The default is false.
 func can_stack() -> bool:
     return false
+
+func stamina_recovery_rate_multiplier() -> float:
+    return 1.0

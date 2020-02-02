@@ -16,6 +16,12 @@ func apply_status_effect(effect: StatusInstance) -> void:
                 return
     _status_effects.push_back(effect)
 
+func stamina_recovery_rate_multiplier() -> float:
+    var mult = 1.0
+    for eff in get_effect_list():
+        mult *= eff.get_effect().stamina_recovery_rate_multiplier()
+    return mult
+
 func _on_PlayerStatusEffectTimer_timeout():
     var j = 0
     for i in range(len(_status_effects)):

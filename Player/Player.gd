@@ -44,6 +44,7 @@ func can_move_to(pos: Vector2) -> bool:
 
 func _process(delta: float) -> void:
     var stats = get_room().get_player_stats()
+    var effects = stats.get_status_effects()
     var input_dir = get_input_direction()
     var is_running = false
     if _can_move_at_all():
@@ -72,7 +73,8 @@ func _process(delta: float) -> void:
             if target_entity != null:
                 target_entity.on_debug_tap()
     if not Input.is_action_pressed("ui_dash"):
-        stats.add_player_stamina(stamina_recovery_rate * delta)
+        var recovery_rate = stamina_recovery_rate * effects.stamina_recovery_rate_multiplier()
+        stats.add_player_stamina(recovery_rate * delta)
     if stats.has_iframe():
         modulate.a = 0.5
     else:
