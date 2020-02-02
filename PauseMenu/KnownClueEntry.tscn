@@ -18,6 +18,7 @@ margin_right = 448.0
 margin_bottom = 32.0
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 text = "Sample Ghost says, \"Example Clue\""
+autowrap = true
 
 [node name="SpriteAnimationTimer" type="Timer" parent="."]
 wait_time = 0.1
