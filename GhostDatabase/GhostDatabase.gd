@@ -11,9 +11,6 @@ func set_ghost_data(ghost_data: Dictionary) -> void:
 
 func set_ghost_info(ghost_info: Dictionary) -> void:
     _ghost_info = ghost_info
-    # DEBUG CODE
-    for key in _ghost_info:
-        meet_ghost(key)
 
 func meet_ghost(ghost_key: String) -> void:
     if not (ghost_key in _known_clues):
