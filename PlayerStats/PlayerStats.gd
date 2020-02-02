@@ -18,6 +18,9 @@ func add_player_health(a: int) -> void:
 func add_player_stamina(a: float) -> void:
     set_player_stamina(get_player_stamina() + a)
 
+func get_player_max_health() -> int:
+    return $PlayerHealth.get_max_health()
+
 func damage_player(a: int) -> bool:
     if has_iframe():
         return false

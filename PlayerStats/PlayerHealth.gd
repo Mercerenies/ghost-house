@@ -22,3 +22,6 @@ func set_health(a: int) -> void:
 
 func get_health() -> int:
     return health
+
+func get_max_health() -> int:
+    return max_health

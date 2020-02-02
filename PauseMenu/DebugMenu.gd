@@ -7,11 +7,13 @@ signal option_selected(option)
 enum Option {
     UnlockAllClues = 0,
     RevealMinimap = 1,
+    FullyHealPlayer = 2,
 }
 
 onready var _options: Array = [
     { "id": Option.UnlockAllClues, "text": "Unlock All Clues" },
     { "id": Option.RevealMinimap, "text": "Reveal Minimap" },
+    { "id": Option.FullyHealPlayer, "text": "Fully Heal Player" },
 ]
 var _option: int = 0
 
@@ -87,4 +89,9 @@ func _on_DebugMenu_option_selected(option: int):
             var minimap = room.get_minimap()
             for key in minimap.room_ids():
                 minimap.discover_room(key)
+            get_pause_menu().unpause()
+        Option.FullyHealPlayer:
+            var room = get_pause_menu().get_room()
+            var stats = room.get_player_stats()
+            stats.set_player_health( stats.get_player_max_health() )
             get_pause_menu().unpause()
