@@ -88,6 +88,16 @@ _global_script_classes=[ {
 "class": "StaticEntity",
 "language": "GDScript",
 "path": "res://StaticEntity/StaticEntity.gd"
+}, {
+"base": "Reference",
+"class": "StatusEffect",
+"language": "GDScript",
+"path": "res://StatusEffect/StatusEffect.gd"
+}, {
+"base": "Reference",
+"class": "StatusInstance",
+"language": "GDScript",
+"path": "res://StatusEffect/StatusInstance.gd"
 } ]
 _global_script_class_icons={
 "DialogueConstants": "",
@@ -105,7 +115,9 @@ _global_script_class_icons={
 "Room": "",
 "SpecialPlacement": "",
 "SpecialPlacementManager": "",
-"StaticEntity": ""
+"StaticEntity": "",
+"StatusEffect": "",
+"StatusInstance": ""
 }
 
 [application]

@@ -10,8 +10,7 @@ func get_pause_menu():
 func get_room():
     return get_pause_menu().get_room()
 
-func on_push() -> void:
-    visible = true
+func _update_self() -> void:
     var player = get_room().get_marked_entities()["player"]
     var player_stats = get_room().get_player_stats()
 
@@ -24,6 +23,22 @@ func on_push() -> void:
     $PlayerStamina.set_stamina(player_stats.get_player_stamina())
     $PlayerStamina.jump_to_value()
 
+    var desc_text = ""
+    # Handle Statuses
+    var status_effects = player_stats.get_status_effects()
+    desc_text += "Status: "
+    if len(status_effects) == 0:
+        desc_text += "Healthy"
+    else:
+        desc_text += status_effects[0].to_display_string()
+        for i in range(1, len(status_effects)):
+            desc_text += ", " + status_effects[i].to_display_string()
+    desc_text += "\n"
+    $PlayerDescription.set_text(desc_text)
+
+func on_push() -> void:
+    visible = true
+    _update_self()
     $SpriteAnimationTimer.start()
 
 func on_pop() -> void:

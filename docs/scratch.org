@@ -139,6 +139,14 @@
     + [ ] Refined Layout
     + [ ] Rugs
     + [ ] Parking Spots
+* STATUS EFFECTS
+  + [ ] Debug Effect (No in-game effect; for testing)
+  + [ ] Slowed (Can't sprint)
+  + [ ] Tired (Sprint meter refills slower)
+  + [ ] Hyper (Sprint meter refills faster)
+  + [ ] Blinded (No flashlight; only light radius)
+  + [ ] Night Vision (Wider and longer flashlight)
+  + [ ] Invincible (Cannot take damage)
 * THOUGHTS
 ** "Evil" Rooms
    + Some rooms (very small probability) will randomly just have all

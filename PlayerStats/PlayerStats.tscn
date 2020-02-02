@@ -16,3 +16,7 @@ position = Vector2( 0, 40 )
 [node name="PlayerIFrame" type="Timer" parent="."]
 wait_time = 2.0
 one_shot = true
+
+[node name="PlayerStatusEffectTimer" type="Timer" parent="."]
+autostart = true
+[connection signal="timeout" from="PlayerStatusEffectTimer" to="." method="_on_PlayerStatusEffectTimer_timeout"]
