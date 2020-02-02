@@ -25,6 +25,12 @@ func stamina_recovery_rate_multiplier() -> float:
         mult *= eff.get_effect().stamina_recovery_rate_multiplier()
     return mult
 
+func player_damage_multiplier() -> int:
+    var mult = 1
+    for eff in get_effect_list():
+        mult *= eff.get_effect().player_damage_multiplier()
+    return mult
+
 func _on_PlayerStatusEffectTimer_timeout():
     var j = 0
     for i in range(len(_status_effects)):

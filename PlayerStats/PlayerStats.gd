@@ -24,6 +24,9 @@ func get_player_max_health() -> int:
 func damage_player(a: int) -> bool:
     if has_iframe():
         return false
+
+    a *= $PlayerStatusEffects.player_damage_multiplier()
+
     add_player_health(- a)
     if a > 0:
         trigger_iframe()

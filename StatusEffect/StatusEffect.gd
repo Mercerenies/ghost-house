@@ -4,6 +4,7 @@ class_name StatusEffect
 const ID_DebugEffect = 1
 const ID_TiredEffect = 2
 const ID_HyperEffect = 3
+const ID_InvincibleEffect = 4
 
 func get_id() -> int:
     return 0
@@ -20,3 +21,6 @@ func can_stack() -> bool:
 
 func stamina_recovery_rate_multiplier() -> float:
     return 1.0
+
+func player_damage_multiplier() -> int:
+    return 1
