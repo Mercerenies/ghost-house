@@ -31,7 +31,7 @@ position = Vector2( 97, 49 )
 [node name="PlayerDescription" type="Label" parent="."]
 margin_left = 27.0
 margin_top = 96.0
-margin_right = 301.0
+margin_right = 452.0
 margin_bottom = 226.0
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 text = "Player Status
