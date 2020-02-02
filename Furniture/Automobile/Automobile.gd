@@ -15,7 +15,8 @@ func set_image_type(a: int):
     _image_type = a
 
 func set_direction(a: int):
-    $Sprite.frame = 4 * _image_type + a
+    if _image_type >= 0:
+        $Sprite.frame = 4 * _image_type + a
     _dir = a
 
 func get_furniture_name():
