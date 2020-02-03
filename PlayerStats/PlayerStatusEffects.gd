@@ -37,6 +37,12 @@ func darkness_visibility_multiplier() -> float:
         mult *= eff.get_effect().darkness_visibility_multiplier()
     return mult
 
+func can_dash() -> bool:
+    for eff in get_effect_list():
+        if not eff.get_effect().can_dash():
+            return false
+    return true
+
 func _on_PlayerStatusEffectTimer_timeout():
     var j = 0
     for i in range(len(_status_effects)):
@@ -56,4 +62,5 @@ func _ready() -> void:
 
 func _tmp() -> void:
     # DEBUG CODE
+    #apply_status_effect(StatusInstance.new(load("res://StatusEffect/SlowedEffect.gd").new(), 10))
     pass

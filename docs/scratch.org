@@ -141,7 +141,7 @@
     + [ ] Parking Spots
 * STATUS EFFECTS
   + [X] Debug Effect (No in-game effect; for testing)
-  + [ ] Slowed (Can't sprint)
+  + [X] Slowed (Can't sprint)
   + [X] Tired (Sprint meter refills slower)
   + [X] Hyper (Sprint meter refills faster)
   + [X] Blinded (Dark areas of map are darker)

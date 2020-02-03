@@ -9,6 +9,7 @@ const ID_BlindedEffect = 5
 const ID_NightVisionEffect = 6
 const ID_DarknessEffect = 7
 const ID_PerfectVisionEffect = 8
+const ID_SlowedEffect = 9
 
 func get_id() -> int:
     return 0
@@ -31,3 +32,6 @@ func player_damage_multiplier() -> int:
 
 func darkness_visibility_multiplier() -> float:
     return 1.0
+
+func can_dash() -> bool:
+    return true

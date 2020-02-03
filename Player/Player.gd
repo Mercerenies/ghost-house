@@ -55,8 +55,9 @@ func _process(delta: float) -> void:
             set_direction(_input_dir_to_dir(input_dir))
             speed = base_speed
             if Input.is_action_pressed("ui_dash") and stats.get_player_stamina() >= stamina_dash_cost:
-                speed *= 2
-                is_running = true
+                if effects.can_dash():
+                    speed *= 2
+                    is_running = true
             if try_move_to(target_cell):
                 emit_signal("player_moved")
                 if is_running:
