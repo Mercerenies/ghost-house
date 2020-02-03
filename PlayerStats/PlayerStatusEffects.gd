@@ -72,5 +72,20 @@ func _tmp() -> void:
     #apply_status_effect(StatusInstance.new(load("res://StatusEffect/SlowedEffect.gd").new(), 10))
     pass
 
+func _draw() -> void:
+    var width = StatusEffect.get_width() / 32
+    var pos = Vector2()
+
+    var arr = _status_effects
+    if Engine.editor_hint:
+        # Just makes it look pretty in the editor :)
+        arr = _editor_helper_array
+
+    for eff in arr:
+        var index = eff.get_effect().get_icon_index()
+        var src_rect = Rect2(Vector2(32 * (index % width), 32 * floor(index / width)), Vector2(32, 32))
+        draw_texture_rect_region(StatusEffect, Rect2(pos, Vector2(32, 32)), src_rect)
+        pos += Vector2(48, 0)
+
 func _on_PlayerStatusEffects_status_effects_changed():
     update()
