@@ -1,8 +1,12 @@
-extends Node
+tool
+extends Node2D
 
 signal status_effects_changed
 
+const DebugEffect = preload("res://StatusEffect/DebugEffect.gd")
+
 var _status_effects: Array = []
+var _editor_helper_array = [StatusInstance.new(DebugEffect.new(), -1)]
 
 func get_effect_list():
     return _status_effects
@@ -58,9 +62,13 @@ func _on_PlayerStatusEffectTimer_timeout():
         emit_signal("status_effects_changed")
 
 func _ready() -> void:
-    call_deferred("_tmp")
+    if not Engine.editor_hint:
+        call_deferred("_tmp")
 
 func _tmp() -> void:
     # DEBUG CODE
     #apply_status_effect(StatusInstance.new(load("res://StatusEffect/SlowedEffect.gd").new(), 10))
     pass
+
+func _on_PlayerStatusEffects_status_effects_changed():
+    update()

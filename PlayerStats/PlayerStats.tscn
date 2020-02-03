@@ -3,7 +3,7 @@
 [ext_resource path="res://PlayerStats/PlayerStats.gd" type="Script" id=1]
 [ext_resource path="res://PlayerStats/PlayerHealth.tscn" type="PackedScene" id=2]
 [ext_resource path="res://PlayerStats/PlayerStamina.tscn" type="PackedScene" id=3]
-[ext_resource path="res://PlayerStats/PlayerStatusEffects.gd" type="Script" id=4]
+[ext_resource path="res://PlayerStats/PlayerStatusEffects.tscn" type="PackedScene" id=4]
 
 [node name="PlayerStats" type="Node2D"]
 script = ExtResource( 1 )
@@ -14,14 +14,10 @@ modulate = Color( 1, 1, 1, 0.376471 )
 [node name="PlayerStamina" parent="." instance=ExtResource( 3 )]
 position = Vector2( 0, 40 )
 
+[node name="PlayerStatusEffects" parent="." instance=ExtResource( 4 )]
+position = Vector2( 0, 64 )
+
 [node name="PlayerIFrame" type="Timer" parent="."]
 wait_time = 2.0
 one_shot = true
-
-[node name="PlayerStatusEffectTimer" type="Timer" parent="."]
-autostart = true
-
-[node name="PlayerStatusEffects" type="Node" parent="."]
-script = ExtResource( 4 )
-[connection signal="timeout" from="PlayerStatusEffectTimer" to="PlayerStatusEffects" method="_on_PlayerStatusEffectTimer_timeout"]
 [connection signal="status_effects_changed" from="PlayerStatusEffects" to="." method="_on_PlayerStatusEffects_status_effects_changed"]
