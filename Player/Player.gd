@@ -11,10 +11,6 @@ var stamina_dash_cost: float = 5
 func _ready():
     base_speed = speed
     $Sprite.visible = false
-    call_deferred("_tmp")
-
-func _tmp():
-    get_sprite().set_material(preload("Outline.tres"))
 
 func _input_dir_to_dir(v: Vector2) -> int:
     if v == Vector2(1, 0):
