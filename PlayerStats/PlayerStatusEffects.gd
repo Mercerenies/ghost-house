@@ -3,6 +3,8 @@ extends Node2D
 
 signal status_effects_changed
 
+const StatusEffect = preload("res://StatusEffect/StatusEffect.png")
+
 const DebugEffect = preload("res://StatusEffect/DebugEffect.gd")
 
 var _status_effects: Array = []
