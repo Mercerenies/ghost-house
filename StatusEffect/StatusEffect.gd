@@ -7,6 +7,8 @@ const ID_HyperEffect = 3
 const ID_InvincibleEffect = 4
 const ID_BlindedEffect = 5
 const ID_NightVisionEffect = 6
+const ID_DarknessEffect = 7
+const ID_PerfectVisionEffect = 8
 
 func get_id() -> int:
     return 0

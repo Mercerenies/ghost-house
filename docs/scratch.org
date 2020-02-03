@@ -146,6 +146,8 @@
   + [X] Hyper (Sprint meter refills faster)
   + [X] Blinded (Dark areas of map are darker)
   + [X] Night Vision (Dark areas of map are lighter)
+  + [X] Darkness (Dark areas of the map are 100% dark)
+  + [X] Perfect Vision (Dark areas of the map are 100% lit)
   + [X] Invincible (Cannot take damage)
 * THOUGHTS
 ** "Evil" Rooms

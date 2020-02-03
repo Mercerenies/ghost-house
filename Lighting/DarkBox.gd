@@ -17,4 +17,4 @@ func find_player():
 func _on_PlayerStatusEffects_status_effects_changed():
     var visibility = (1 - _alpha)
     var mult = get_room().get_player_stats().get_status_effects().darkness_visibility_multiplier()
-    color.a = 1 - visibility * mult
+    color.a = clamp(1 - visibility * mult, 0.0, 1.0)
