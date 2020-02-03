@@ -31,6 +31,12 @@ func player_damage_multiplier() -> int:
         mult *= eff.get_effect().player_damage_multiplier()
     return mult
 
+func darkness_visibility_multiplier() -> float:
+    var mult = 1.0
+    for eff in get_effect_list():
+        mult *= eff.get_effect().darkness_visibility_multiplier()
+    return mult
+
 func _on_PlayerStatusEffectTimer_timeout():
     var j = 0
     for i in range(len(_status_effects)):
@@ -46,4 +52,7 @@ func _on_PlayerStatusEffectTimer_timeout():
         emit_signal("status_effects_changed")
 
 func _ready() -> void:
+    call_deferred("_tmp")
+
+func _tmp() -> void:
     pass

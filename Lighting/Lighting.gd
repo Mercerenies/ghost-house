@@ -8,6 +8,9 @@ func _ready():
 func get_room():
     return get_parent()
 
+func get_darkbox():
+    return $Viewport/DarkBox
+
 func find_player():
     for ent in get_room().get_entities():
         if ent is Player:

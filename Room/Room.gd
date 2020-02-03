@@ -61,11 +61,15 @@ func get_marked_entities() -> Dictionary:
     return marked_entities
 
 func _ready():
+    var result
+    var effects = get_player_stats().get_status_effects()
     if 'player' in get_marked_entities():
         var player = get_marked_entities()['player']
-        var effects = get_player_stats().get_status_effects()
-        var result = effects.connect("status_effects_changed", player, "_on_PlayerStatusEffects_status_effects_changed")
+        result = effects.connect("status_effects_changed", player, "_on_PlayerStatusEffects_status_effects_changed")
         assert(result == OK)
+    var darkbox = $Lighting.get_darkbox()
+    result = effects.connect("status_effects_changed", darkbox, "_on_PlayerStatusEffects_status_effects_changed")
+    assert(result == OK)
 
 func _on_DialogueBox_do_action(action, arg):
     match action:

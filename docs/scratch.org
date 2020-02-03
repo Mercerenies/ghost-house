@@ -144,8 +144,8 @@
   + [ ] Slowed (Can't sprint)
   + [X] Tired (Sprint meter refills slower)
   + [X] Hyper (Sprint meter refills faster)
-  + [ ] Blinded (No flashlight; only light radius)
-  + [ ] Night Vision (Wider and longer flashlight)
+  + [X] Blinded (Dark areas of map are darker)
+  + [X] Night Vision (Dark areas of map are lighter)
   + [X] Invincible (Cannot take damage)
 * THOUGHTS
 ** "Evil" Rooms

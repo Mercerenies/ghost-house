@@ -5,6 +5,8 @@ const ID_DebugEffect = 1
 const ID_TiredEffect = 2
 const ID_HyperEffect = 3
 const ID_InvincibleEffect = 4
+const ID_BlindedEffect = 5
+const ID_NightVisionEffect = 6
 
 func get_id() -> int:
     return 0
@@ -24,3 +26,6 @@ func stamina_recovery_rate_multiplier() -> float:
 
 func player_damage_multiplier() -> int:
     return 1
+
+func darkness_visibility_multiplier() -> float:
+    return 1.0
