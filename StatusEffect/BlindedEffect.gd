@@ -7,4 +7,4 @@ func get_name() -> String:
     return "Blinded"
 
 func darkness_visibility_multiplier() -> float:
-    return 0.7
+    return 0.55
