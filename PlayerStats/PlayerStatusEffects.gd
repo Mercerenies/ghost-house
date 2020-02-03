@@ -46,6 +46,4 @@ func _on_PlayerStatusEffectTimer_timeout():
         emit_signal("status_effects_changed")
 
 func _ready() -> void:
-    # DEBUG CODE
-    apply_status_effect(StatusInstance.new(load("res://StatusEffect/DebugEffect.gd").new(), 60))
     pass
