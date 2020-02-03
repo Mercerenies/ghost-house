@@ -146,7 +146,7 @@
   + [X] Hyper (Sprint meter refills faster)
   + [ ] Blinded (No flashlight; only light radius)
   + [ ] Night Vision (Wider and longer flashlight)
-  + [ ] Invincible (Cannot take damage)
+  + [X] Invincible (Cannot take damage)
 * THOUGHTS
 ** "Evil" Rooms
    + Some rooms (very small probability) will randomly just have all

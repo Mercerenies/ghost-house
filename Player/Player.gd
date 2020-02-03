@@ -2,6 +2,8 @@ extends MobileEntity
 
 signal player_moved
 
+const OutlineMaterial = preload("Outline.tres")
+
 var base_speed: float
 var stamina_recovery_rate: float = 10
 var stamina_dash_cost: float = 5
@@ -9,6 +11,10 @@ var stamina_dash_cost: float = 5
 func _ready():
     base_speed = speed
     $Sprite.visible = false
+    call_deferred("_tmp")
+
+func _tmp():
+    get_sprite().set_material(preload("Outline.tres"))
 
 func _input_dir_to_dir(v: Vector2) -> int:
     if v == Vector2(1, 0):
@@ -112,3 +118,12 @@ func flashlight_triangle() -> PoolVector2Array:
 
 func base_flashlight_radius() -> int:
     return 64
+
+func _on_PlayerStatusEffects_status_effects_changed():
+    var sprite = get_sprite()
+    var effects = get_room().get_player_stats().get_status_effects()
+    var is_invincible = (effects.player_damage_multiplier() == 0)
+    if is_invincible:
+        sprite.material = OutlineMaterial
+    else:
+        sprite.material = null
