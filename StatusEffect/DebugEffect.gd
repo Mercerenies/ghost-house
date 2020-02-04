@@ -7,4 +7,4 @@ func get_name() -> String:
     return "Debug Effect"
 
 func get_icon_index() -> int:
-    return 0
+    return 1

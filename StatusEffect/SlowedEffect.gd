@@ -7,7 +7,7 @@ func get_name() -> String:
     return "Slowed"
 
 func get_icon_index() -> int:
-    return 1
+    return 9
 
 func can_dash() -> bool:
     return false
