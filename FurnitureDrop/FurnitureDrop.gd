@@ -7,6 +7,7 @@ func assign_sprite(old_sprite: Sprite) -> void:
     var sprite = old_sprite.duplicate()
     sprite.scale *= 5
     sprite.position = Vector2()
+    sprite.visible = true
     add_child(sprite)
 
 func _ready():
