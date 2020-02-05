@@ -1,5 +1,7 @@
 extends DialogueEntity
 
+# ///// Can spawn in the same room as other ghosts (??)
+
 const GhostVisibilityParticle = preload("res://Ghost/GhostVisibilityParticle.tscn")
 const GhostNamer = preload("res://GhostNamer/GhostNamer.gd")
 const MaleGhost = preload("res://Ghost/MaleGhost.png")
@@ -32,9 +34,9 @@ func _establish_appearance() -> void:
 func _update_dialogue() -> void:
     dialogue = {}
     dialogue['idle'] = [
-        { "command": "say", "speaker": "???", "text": "Ooohohohohohoho!" },
         { "command": "action", "action": "harm_player", "arg": 1 },
-        { "command": "action", "action": "furniture_drop", "arg": $DropSprite }
+        { "command": "action", "action": "furniture_drop", "arg": $DropSprite },
+        { "command": "say", "speaker": "???", "text": "Ooohohohohohoho!" }
     ]
 
 func is_inactive() -> bool:
