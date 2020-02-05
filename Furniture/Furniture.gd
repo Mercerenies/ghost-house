@@ -3,6 +3,12 @@ class_name Furniture
 
 const FlyingFairySpawner = preload("res://FlyingFairySpawner/FlyingFairySpawner.tscn")
 
+enum ShimChannel {
+    NoShim = 0,
+    KitchenCounterWE = 1,
+    KitchenCounterNS = 2,
+}
+
 var interaction: Dictionary = {}
 var vars: Dictionary = {
     "vanishing": false,
@@ -71,5 +77,9 @@ func turn_evil() -> void:
 func evil_drop_sprite() -> Sprite:
     return $Sprite as Sprite # God, I hope this exists. If it doesn't, override this method!
 
+# TODO Make this return string. It's an easy fix but I'm too lazy to do it right now.
 func get_furniture_name():
     return "Furniture"
+
+func get_shim_channel() -> int:
+    return ShimChannel.NoShim
