@@ -45,6 +45,7 @@ func can_move_to(pos: Vector2) -> bool:
     return .can_move_to(pos)
 
 func _process(delta: float) -> void:
+
     var stats = get_room().get_player_stats()
     var effects = stats.get_status_effects()
     var input_dir = get_input_direction()
@@ -82,6 +83,11 @@ func _process(delta: float) -> void:
         modulate.a = 0.5
     else:
         modulate.a = 1.0
+
+func get_view_bounds() -> Rect2:
+    var viewport = get_viewport()
+    var center = $Camera2D.global_position + $Camera2D.offset
+    return Rect2(center - viewport.size / 2, viewport.size)
 
 func lighting() -> Array:
     return [
