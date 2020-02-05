@@ -4,7 +4,6 @@ func _ready() -> void:
     interaction["idle"] = [
          { "command": "say", "text": "Everything but the kitchen sink." }
     ]
-    set_dims(Vector2(2, 1))
 
 func set_direction(a: int):
     $Sprite.frame = (5 - a) % 4
@@ -12,3 +11,8 @@ func set_direction(a: int):
 
 func get_furniture_name():
     return "KitchenCounter"
+
+func get_shim_channel() -> int:
+    if vars["vanishing"]:
+        return ShimChannel.NoShim
+    return ShimChannel.KitchenCounterNS if get_dims().y == 2 else ShimChannel.KitchenCounterWE
