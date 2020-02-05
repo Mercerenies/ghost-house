@@ -7,6 +7,8 @@ enum ShimChannel {
     NoShim = 0,
     KitchenCounterWE = 1,
     KitchenCounterNS = 2,
+    BathroomCounterWE = 3,
+    BathroomCounterNS = 4,
 }
 
 var interaction: Dictionary = {}

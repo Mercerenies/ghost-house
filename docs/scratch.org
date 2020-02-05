@@ -35,7 +35,13 @@
    + [X] Coffee Table
    + [X] Lamp
    + [X] Kitchen Sink
+     - [X] Kitchen Counter Shim
+   + [X] Kitchen Counter
+     - [X] Kitchen Counter Shim
    + [X] Bathroom Sink
+     - [X] Bathroom Counter Shim
+   + [X] Bathroom Counter
+     - [X] Bathroom Counter Shim
    + [X] Washing Machine
    + [X] Dryer
    + [X] Television
@@ -48,7 +54,9 @@
      - [X] "Flying furniture" mode
    + [X] Dresser
    + [X] Stove
+     - [X] Kitchen Counter Shim
    + [X] Dishwasher
+     - [X] Kitchen Counter Shim
    + [X] Torch
    + [X] Clothes Rack
      - [X] "Flying clothes" mode
