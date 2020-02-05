@@ -7,7 +7,7 @@ func get_name() -> String:
     return "Darkness"
 
 func get_icon_index() -> int:
-    return 0 # TODO This icon
+    return 7
 
 func darkness_visibility_multiplier() -> float:
     return 0.0

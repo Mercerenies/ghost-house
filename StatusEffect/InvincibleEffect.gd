@@ -7,7 +7,7 @@ func get_name() -> String:
     return "Invincible"
 
 func get_icon_index() -> int:
-    return 0 # TODO This
+    return 4
 
 func player_damage_multiplier() -> int:
     return 0

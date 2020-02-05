@@ -7,7 +7,7 @@ func get_name() -> String:
     return "Hyper"
 
 func get_icon_index() -> int:
-    return 0 # TODO This
+    return 3
 
 func can_stack() -> bool:
     return true

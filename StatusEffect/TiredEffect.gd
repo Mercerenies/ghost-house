@@ -7,7 +7,7 @@ func get_name() -> String:
     return "Tired"
 
 func get_icon_index() -> int:
-    return 0 # TODO This
+    return 2
 
 func can_stack() -> bool:
     return true
