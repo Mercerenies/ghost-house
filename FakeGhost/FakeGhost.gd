@@ -1,7 +1,5 @@
 extends DialogueEntity
 
-# ///// Can spawn in the same room as other ghosts (??)
-
 const GhostVisibilityParticle = preload("res://Ghost/GhostVisibilityParticle.tscn")
 const GhostNamer = preload("res://GhostNamer/GhostNamer.gd")
 const MaleGhost = preload("res://Ghost/MaleGhost.png")
@@ -16,7 +14,6 @@ var invisible: bool = true
 func _ready() -> void:
     $Sprite.visible = false
     _update_dialogue()
-    call_deferred("_establish_appearance")
     unposition_self()
     modulate.a = 0
     invisible = true
@@ -42,7 +39,7 @@ func _update_dialogue() -> void:
 func is_inactive() -> bool:
     return position.x <= OFFSCREEN.x
 
-func try_to_place() -> void:
+func _try_to_place() -> void:
     if is_inactive():
         var room: Room = get_room()
         var minimap = room.get_minimap()
@@ -59,7 +56,8 @@ func try_to_place() -> void:
                     return # There's another ghost in this room, so don't select this one.
         position = pos * 32
         target_pos = pos * 32
-        print(position / 32)
+        _establish_appearance()
+        print(position / (32 * 6))
 
 func _process(delta: float) -> void:
 
@@ -128,5 +126,17 @@ func _on_WanderTimer_timeout():
 func _on_PlacementTimer_timeout():
     if get_room().is_showing_modal():
         return
+
+    # If inactive, try to place
     if is_inactive():
-        try_to_place()
+        _try_to_place()
+
+    # If active, revealed, and off-screen, disappear
+    if (not invisible) and (not is_inactive()):
+        var player = EnemyAI.get_player(self)
+        var bounds = player.get_view_bounds()
+        var pos = global_position
+        if pos.x + 32 < bounds.position.x or pos.x > bounds.end.x or pos.y + 32 < bounds.position.y or pos.y > bounds.end.y:
+            position = OFFSCREEN
+            target_pos = OFFSCREEN
+            $AppearParticleTimer.start()
