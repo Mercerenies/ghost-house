@@ -68,8 +68,13 @@ func add_icon(room_id: int, icon_id: int) -> void:
 # collects a key)
 
 func clear_icons(room_id: int) -> void:
-    if (room_id in _icons):
+    if room_id in _icons:
         _icons[room_id] = []
+
+func get_icons(room_id: int) -> Array:
+    if room_id in _icons:
+        return _icons[room_id]
+    return []
 
 func _draw() -> void:
     if _grid == null:

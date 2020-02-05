@@ -33,6 +33,10 @@ func move_entity(src: Vector2, dest: Vector2) -> void:
 func is_wall_at(pos: Vector2) -> bool:
     return RoomTypes.walls.has(get_tile_cell(pos))
 
+func get_room_bounds() -> Rect2:
+    # Returns grid coordinates
+    return get_used_rect()
+
 func is_showing_modal() -> bool:
     return get_dialogue_box().is_active()
 

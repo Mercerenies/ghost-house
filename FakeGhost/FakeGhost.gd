@@ -4,6 +4,9 @@ const GhostVisibilityParticle = preload("res://Ghost/GhostVisibilityParticle.tsc
 const GhostNamer = preload("res://GhostNamer/GhostNamer.gd")
 const MaleGhost = preload("res://Ghost/MaleGhost.png")
 const FemaleGhost = preload("res://Ghost/FemaleGhost.png")
+const GeneratorPlacementHelper = preload("res://GeneratorPlacementHelper/GeneratorPlacementHelper.gd")
+
+const OFFSCREEN = Vector2(-3200, -3200)
 
 var appearing: bool = false
 var invisible: bool = true
@@ -15,6 +18,8 @@ func _ready() -> void:
     unposition_self()
     modulate.a = 0
     invisible = true
+    position = OFFSCREEN
+    target_pos = OFFSCREEN
 
 func _establish_appearance() -> void:
     var gender = Util.choose([GhostNamer.Gender.Male, GhostNamer.Gender.Female])
@@ -32,9 +37,35 @@ func _update_dialogue() -> void:
         { "command": "action", "action": "furniture_drop", "arg": $DropSprite }
     ]
 
+func is_inactive() -> bool:
+    return position.x <= OFFSCREEN.x
+
+func try_to_place() -> void:
+    if is_inactive():
+        var room: Room = get_room()
+        var minimap = room.get_minimap()
+        var bounds = room.get_room_bounds()
+        var pos = Vector2(Util.randi_range(bounds.position.x, bounds.end.x),
+                          Util.randi_range(bounds.position.y, bounds.end.y))
+        if GeneratorPlacementHelper.is_blocked(room, pos):
+            return # Position is blocked.
+        var target_room = minimap.get_room_id_at_pos(pos)
+        if target_room != null:
+            var icons = minimap.get_icons(target_room)
+            for icn in icons:
+                if icn >= Icons.Index.FIRST_GHOST and icn < Icons.Index.FIRST_GHOST + 26:
+                    return # There's another ghost in this room, so don't select this one.
+        position = pos * 32
+        target_pos = pos * 32
+        print(position / 32)
+
 func _process(delta: float) -> void:
 
-    if invisible:
+    if is_inactive():
+        invisible = true
+        modulate.a = 0
+
+    elif invisible:
         var player = EnemyAI.get_player(self)
         var flashlight = player.flashlight_triangle()
         var flashlight_rad = player.base_flashlight_radius()
@@ -72,7 +103,7 @@ func _on_AppearParticleTimer_timeout():
         self.add_child(part)
 
 func _on_WanderTimer_timeout():
-    if get_room().is_showing_modal():
+    if get_room().is_showing_modal() or invisible or is_inactive():
         return
 
     var minimap = get_room().get_minimap()
@@ -91,3 +122,9 @@ func _on_WanderTimer_timeout():
         set_direction(dir)
         if try_move_to(destination):
             break
+
+func _on_PlacementTimer_timeout():
+    if get_room().is_showing_modal():
+        return
+    if is_inactive():
+        try_to_place()

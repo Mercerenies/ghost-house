@@ -82,7 +82,7 @@ func _on_AppearParticleTimer_timeout():
         self.add_child(part)
 
 func _on_WanderTimer_timeout():
-    if get_room().is_showing_modal():
+    if get_room().is_showing_modal() or invisible:
         return
 
     var minimap = get_room().get_minimap()
