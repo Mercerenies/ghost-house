@@ -45,8 +45,6 @@ func is_initialized() -> bool:
 func get_room_id_at_pos(pos: Vector2):
     if not is_initialized():
         return null
-    if not (pos in _grid):
-        return null
     return _grid.get_value(pos)
 
 func update_map() -> void:
