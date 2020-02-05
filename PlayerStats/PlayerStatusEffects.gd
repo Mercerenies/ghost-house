@@ -76,6 +76,7 @@ func _tmp() -> void:
     pass
 
 func _draw() -> void:
+    # warning-ignore: integer_division
     var width = StatusEffect.get_width() / 32
     var pos = Vector2()
 
