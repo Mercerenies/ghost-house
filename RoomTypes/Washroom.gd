@@ -80,7 +80,7 @@ class CentralBar extends FurniturePlacement:
         if mask & 2:
             i = int(cells.size.x / 2) - 1
             j = 0
-            while j < cells.size.x:
+            while j < cells.size.y:
                 var furn = _Helper._make_furniture(strictness)
                 furn["object"].set_direction(2)
                 furn["object"].position = 32 * (cells.position + Vector2(i, j))
@@ -88,7 +88,7 @@ class CentralBar extends FurniturePlacement:
                 j += furn["length"]
             i += 1
             j = 0
-            while j < cells.size.x:
+            while j < cells.size.y:
                 var furn = _Helper._make_furniture(strictness)
                 furn["object"].set_direction(0)
                 furn["object"].position = 32 * (cells.position + Vector2(i, j))
