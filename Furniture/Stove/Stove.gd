@@ -10,3 +10,8 @@ func set_direction(a: int):
 
 func get_furniture_name():
     return "Stove"
+
+func get_shim_channel() -> int:
+    if vars["vanishing"]:
+        return ShimChannel.NoShim
+    return ShimChannel.KitchenCounterNS if $Sprite.frame % 2 == 1 else ShimChannel.KitchenCounterWE
