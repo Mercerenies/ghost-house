@@ -22,6 +22,3 @@ func _process(_delta: float) -> void:
     if player != null:
         position = player.position
     update()
-
-func _draw() -> void:
-    draw_texture_rect($Viewport.get_texture(), Rect2(- $Viewport.size / 2.0, Vector2($Viewport.size.x, - $Viewport.size.y)), false)

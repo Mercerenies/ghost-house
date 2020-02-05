@@ -1,6 +1,9 @@
 tool
 extends Node2D
 
+# TODO Draw the status effects as icons in the pause menu as well
+# (currently just text in the pause menu)
+
 signal status_effects_changed
 
 const StatusEffect = preload("res://StatusEffect/StatusEffect.png")
