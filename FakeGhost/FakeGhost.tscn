@@ -21,6 +21,10 @@ wait_time = 5.0
 [node name="PlacementTimer" type="Timer" parent="."]
 autostart = true
 
+[node name="SmokeTimer" type="Timer" parent="."]
+wait_time = 0.2
+one_shot = true
+
 [node name="GhostVisibilityParticleSystem" parent="." instance=ExtResource( 3 )]
 position = Vector2( 16, 16 )
 z_index = 1
@@ -31,3 +35,4 @@ texture = ExtResource( 4 )
 hframes = 2
 [connection signal="timeout" from="WanderTimer" to="." method="_on_WanderTimer_timeout"]
 [connection signal="timeout" from="PlacementTimer" to="." method="_on_PlacementTimer_timeout"]
+[connection signal="timeout" from="SmokeTimer" to="." method="_on_SmokeTimer_timeout"]

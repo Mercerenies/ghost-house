@@ -5,6 +5,7 @@ const GhostNamer = preload("res://GhostNamer/GhostNamer.gd")
 const MaleGhost = preload("res://Ghost/MaleGhost.png")
 const FemaleGhost = preload("res://Ghost/FemaleGhost.png")
 const GeneratorPlacementHelper = preload("res://GeneratorPlacementHelper/GeneratorPlacementHelper.gd")
+const FakeGhostSmokeCloud = preload("FakeGhostSmokeCloud.tscn")
 
 const OFFSCREEN = Vector2(-3200, -3200)
 
@@ -98,6 +99,7 @@ func on_interact() -> void:
     dir = fmod(dir + 4, 4)
     set_direction(dir)
     get_room().show_dialogue(dialogue, "idle")
+    _disappear_in_smoke()
 
 func _on_WanderTimer_timeout():
     if get_room().is_showing_modal() or invisible or is_inactive():
@@ -136,3 +138,13 @@ func _on_PlacementTimer_timeout():
         if pos.x + 32 < bounds.position.x or pos.x > bounds.end.x or pos.y + 32 < bounds.position.y or pos.y > bounds.end.y:
             position = OFFSCREEN
             target_pos = OFFSCREEN
+
+func _disappear_in_smoke():
+    var smokecloud = FakeGhostSmokeCloud.instance()
+    smokecloud.position = position + Vector2(16, 16)
+    get_room().add_decoration(smokecloud)
+    $SmokeTimer.start()
+
+func _on_SmokeTimer_timeout():
+    position = OFFSCREEN
+    target_pos = OFFSCREEN
