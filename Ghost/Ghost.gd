@@ -1,7 +1,5 @@
 extends DialogueEntity
 
-const GhostVisibilityParticle = preload("GhostVisibilityParticle.tscn")
-
 var appearing: bool = false
 var invisible: bool = true
 var ghost_key: String = ""

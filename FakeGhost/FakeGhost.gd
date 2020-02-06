@@ -1,6 +1,5 @@
 extends DialogueEntity
 
-const GhostVisibilityParticle = preload("res://Ghost/GhostVisibilityParticle.tscn")
 const GhostNamer = preload("res://GhostNamer/GhostNamer.gd")
 const MaleGhost = preload("res://Ghost/MaleGhost.png")
 const FemaleGhost = preload("res://Ghost/FemaleGhost.png")
