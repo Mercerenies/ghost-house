@@ -61,7 +61,7 @@ func _try_to_place() -> void:
         target_pos = pos * 32
         _establish_appearance()
         set_direction(1)
-        print(position / (32 * 6))
+        #print(position / (32 * 6))
 
 func _process(delta: float) -> void:
 
