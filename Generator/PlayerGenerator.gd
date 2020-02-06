@@ -1,8 +1,8 @@
 extends Reference
 
-###############################
-# STAGE 9 - PLAYER GENERATION #
-###############################
+################################
+# STAGE 10 - PLAYER GENERATION #
+################################
 
 const GeneratorGrid = preload("res://GeneratorGrid/GeneratorGrid.gd")
 const GeneratorPlacementHelper = preload("res://GeneratorPlacementHelper/GeneratorPlacementHelper.gd")

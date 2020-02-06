@@ -4,6 +4,9 @@
     "height": 12,
     "percent_evil": 0.05
   },
+  "ambient_enemies": [
+    "fake_ghost", "fake_ghost"
+  ],
   "puzzle": {
     "players": {
       "A": {

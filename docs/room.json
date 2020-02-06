@@ -29,6 +29,10 @@
       "additionalProperties": false,
       "required": ["width", "height", "percent_evil"]
     },
+    "ambient_enemies": {
+      "type": "array",
+      "items": { "enum": ["fake_ghost"] }
+    },
     "puzzle": {
       "$ref": "puzzle.json"
     }

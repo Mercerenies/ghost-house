@@ -12,6 +12,7 @@ const PropertiesGenerator = preload("res://Generator/PropertiesGenerator.gd")
 const ActualizingGenerator = preload("res://Generator/ActualizingGenerator.gd")
 const SpecialGenerator = preload("res://Generator/SpecialGenerator.gd")
 const EdgeGenerator = preload("res://Generator/EdgeGenerator.gd")
+const AmbientEnemyGenerator = preload("res://Generator/AmbientEnemyGenerator.gd")
 const PlayerGenerator = preload("res://Generator/PlayerGenerator.gd")
 const GhostGenerator = preload("res://Generator/GhostGenerator.gd")
 
@@ -73,6 +74,7 @@ func generate() -> Room:
     var actualizing_generator = ActualizingGenerator.new(_data, _grid, _boxes, _room)
     var special_generator = SpecialGenerator.new(_data, _boxes, _room, helper)
     var edge_generator = EdgeGenerator.new(_data, _grid, _flag_grid, _boxes, _room, helper)
+    var ambient_enemy_generator = AmbientEnemyGenerator.new(_data, helper)
     var player_generator = PlayerGenerator.new(_data, _grid, _boxes, _room, helper)
     var ghost_generator = GhostGenerator.new(_data, _grid, _boxes, _room, helper)
 
@@ -86,6 +88,8 @@ func generate() -> Room:
     edge_generator.run()
 
     _room.get_minimap().initialize(Vector2(w, h), _grid, _boxes, _connections)
+
+    ambient_enemy_generator.run()
 
     var player = player_generator.run()
     var player_pos = player.cell / TOTAL_CELL_SIZE
