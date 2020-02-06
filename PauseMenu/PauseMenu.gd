@@ -42,7 +42,7 @@ func _ready() -> void:
 func _process(_delta: float) -> void:
     if is_active():
 
-        # Allow unpausing (DEBUG CODE as this will be somewhere else later)
+        # Allow unpausing
         if Input.is_action_just_released("ui_pause"):
             unpause()
 
