@@ -50,17 +50,20 @@ func handle_input(input_type: String) -> bool:
     var option_count = $CluesList.get_child_count()
     match input_type:
         "ui_down":
-            _option += 1
-            _option = (_option % option_count + option_count) % option_count
-            _update_option()
+            if option_count > 0:
+                _option += 1
+                _option = (_option % option_count + option_count) % option_count
+                _update_option()
         "ui_up":
-            _option -= 1
-            _option = (_option % option_count + option_count) % option_count
-            _update_option()
+            if option_count > 0:
+                _option -= 1
+                _option = (_option % option_count + option_count) % option_count
+                _update_option()
         "ui_accept":
-            var selected = $CluesList.get_child(_option)
-            $GhostPanel.fill_in_data(selected.get_clue(), selected.get_info())
-            get_pause_menu().push_control($GhostPanel)
+            if option_count > 0:
+                var selected = $CluesList.get_child(_option)
+                $GhostPanel.fill_in_data(selected.get_clue(), selected.get_info())
+                get_pause_menu().push_control($GhostPanel)
         "ui_cancel":
             get_pause_menu().pop_control()
     return true # Modal
