@@ -164,14 +164,14 @@
 ** More Exciting "Evil" Effects
    + Vanishing Furniture that can attack on inspection is cool and
      all, but some other stuff may be neat.
-     - Chairs that get up and throw themselves at you when you pass.
-     - Bookshelves that spawn books to fly at you.
-     - Fairies that emit light and "hide" in furniture.
+     - [X] Chairs that get up and throw themselves at you when you pass.
+     - [X] Bookshelves that spawn books to fly at you.
+     - [X] Fairies that emit light and "hide" in furniture.
 ** Shadow Players
   + Appears randomly several steps behind the player, mocks the
     player's movements at a relatively slow fixed rate in an attempt
     to catch up to them. Deals damage and disappears on contact, or
-    after a certain amount of time.
+    after a certain amount of time. (/////)
 ** DONE Running into the Wall
    Minor bug with the player running. If holding the run button, the
    player continues to consume stamina even if facing a wall or other
@@ -194,7 +194,7 @@
    + Flipping all chairs to face the opposite way
    + Flipping all chairs upside down
    + Changing the designs of the rugs
-** Coherence
+** DONE Coherence
    If matching counters or sinks are next to each other, consider
    having them change images to look like they're part of a larger
    piece.
