@@ -58,11 +58,12 @@ func _process(delta: float) -> void:
                 get_room().set_entity_cell(current_cell, self)
                 cell = current_cell
                 invisible = false
-                $AppearParticleTimer.stop()
                 $WanderTimer.start()
         else:
             appearing = false
             modulate.a = Util.toward(modulate.a, delta / 8, 0)
+
+    $GhostVisibilityParticleSystem.emitting = (appearing and invisible)
 
 func on_interact() -> void:
     var player = get_room().get_marked_entities()['player']
@@ -74,12 +75,6 @@ func on_interact() -> void:
         get_room().show_dialogue(dialogue, "clue")
     else:
         get_room().show_dialogue(dialogue, "idle")
-
-func _on_AppearParticleTimer_timeout():
-    if appearing and invisible:
-        var part = GhostVisibilityParticle.instance()
-        part.position = Vector2(randf() * 32, randf() * 32)
-        self.add_child(part)
 
 func _on_WanderTimer_timeout():
     if get_room().is_showing_modal() or invisible:

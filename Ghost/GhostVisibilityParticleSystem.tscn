@@ -1,0 +1,13 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Ghost/GhostVisibilityParticle.png" type="Texture" id=1]
+
+[node name="GhostVisibilityParticleSystem" type="CPUParticles2D"]
+amount = 5
+randomness = 0.2
+texture = ExtResource( 1 )
+emission_shape = 2
+emission_rect_extents = Vector2( 16, 16 )
+gravity = Vector2( 0, 0 )
+initial_velocity = 5.0
+initial_velocity_random = 0.49

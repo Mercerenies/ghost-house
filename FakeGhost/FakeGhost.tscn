@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://FakeGhost/FakeGhost.gd" type="Script" id=1]
 [ext_resource path="res://Ghost/FemaleGhost.png" type="Texture" id=2]
-[ext_resource path="res://FakeGhost/FakeGhostDrop.png" type="Texture" id=3]
+[ext_resource path="res://Ghost/GhostVisibilityParticleSystem.tscn" type="PackedScene" id=3]
+[ext_resource path="res://FakeGhost/FakeGhostDrop.png" type="Texture" id=4]
 
 [node name="FakeGhost" type="Node2D"]
 script = ExtResource( 1 )
@@ -14,20 +15,18 @@ offset = Vector2( 16, 16 )
 vframes = 4
 hframes = 4
 
-[node name="AppearParticleTimer" type="Timer" parent="."]
-wait_time = 0.2
-autostart = true
-
 [node name="WanderTimer" type="Timer" parent="."]
 wait_time = 5.0
 
 [node name="PlacementTimer" type="Timer" parent="."]
 autostart = true
 
+[node name="GhostVisibilityParticleSystem" parent="." instance=ExtResource( 3 )]
+position = Vector2( 16, 16 )
+
 [node name="DropSprite" type="Sprite" parent="."]
 visible = false
-texture = ExtResource( 3 )
+texture = ExtResource( 4 )
 hframes = 2
-[connection signal="timeout" from="AppearParticleTimer" to="." method="_on_AppearParticleTimer_timeout"]
 [connection signal="timeout" from="WanderTimer" to="." method="_on_WanderTimer_timeout"]
 [connection signal="timeout" from="PlacementTimer" to="." method="_on_PlacementTimer_timeout"]
