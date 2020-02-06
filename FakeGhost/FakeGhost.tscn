@@ -23,6 +23,7 @@ autostart = true
 
 [node name="GhostVisibilityParticleSystem" parent="." instance=ExtResource( 3 )]
 position = Vector2( 16, 16 )
+z_index = 1
 
 [node name="DropSprite" type="Sprite" parent="."]
 visible = false

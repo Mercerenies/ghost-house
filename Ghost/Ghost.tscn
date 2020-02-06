@@ -19,4 +19,5 @@ wait_time = 5.0
 
 [node name="GhostVisibilityParticleSystem" parent="." instance=ExtResource( 3 )]
 position = Vector2( 16, 16 )
+z_index = 1
 [connection signal="timeout" from="WanderTimer" to="." method="_on_WanderTimer_timeout"]
