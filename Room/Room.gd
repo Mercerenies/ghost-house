@@ -64,6 +64,9 @@ func get_entities() -> Array:
 func get_marked_entities() -> Dictionary:
     return marked_entities
 
+func add_decoration(node: Node) -> void:
+    $Decorations.add_child(node)
+
 func _ready():
     var result
     var effects = get_player_stats().get_status_effects()
