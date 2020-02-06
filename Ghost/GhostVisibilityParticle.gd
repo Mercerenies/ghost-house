@@ -1,5 +1,7 @@
 extends Node2D
 
+# This whole scene is obsolete. It's been replaced by GhostVisibilityParticleSystem.
+
 var vel: Vector2
 var lifetime: float
 
