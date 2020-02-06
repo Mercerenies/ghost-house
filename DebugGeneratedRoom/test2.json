@@ -1,0 +1,45 @@
+{
+  "config": {
+    "width": 12,
+    "height": 12,
+    "percent_evil": 0.05
+  },
+  "puzzle": {
+    "players": {
+      "A": {
+        "statement": {
+          "op": "or",
+          "target": [
+            { "op": "atomic", "name": "B", "query": "truth" },
+            { "op": "atomic", "name": "C", "query": "truth" }
+          ]
+        }
+      },
+      "B": {
+        "statement": { "op": "atomic", "name": "A", "query": "guilt" }
+      },
+      "C": {
+        "statement": {
+          "op": "or",
+          "target": [
+            { "op": "not", "target": { "op": "atomic", "name": "A", "query": "truth" } },
+            { "op": "not", "target": { "op": "atomic", "name": "B", "query": "truth" } }
+          ]
+        }
+      },
+      "D": { "statement": { "op": "atomic", "name": "D", "query": "guilt" } },
+      "E": { "statement": { "op": "atomic", "name": "E", "query": "guilt" } },
+      "F": { "statement": { "op": "atomic", "name": "F", "query": "guilt" } },
+      "G": { "statement": { "op": "atomic", "name": "G", "query": "guilt" } },
+      "H": { "statement": { "op": "atomic", "name": "H", "query": "guilt" } },
+      "I": { "statement": { "op": "atomic", "name": "I", "query": "guilt" } },
+      "J": { "statement": { "op": "atomic", "name": "J", "query": "guilt" } },
+      "K": { "statement": { "op": "atomic", "name": "K", "query": "guilt" } },
+      "L": { "statement": { "op": "atomic", "name": "L", "query": "guilt" } }
+    },
+    "solution": {
+      "truth": ["A", "C"],
+      "guilty": "B"
+    }
+  }
+}
