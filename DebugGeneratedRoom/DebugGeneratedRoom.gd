@@ -15,8 +15,3 @@ func _ready():
     var gen = Generator.new(data)
     var room = gen.generate()
     add_child(room)
-
-    # DEBUG CODE
-    var fakeghost = preload("res://FakeGhost/FakeGhost.tscn").instance()
-    fakeghost.position = Vector2(128, 128)
-    room.get_node("Entities").add_child(fakeghost)
