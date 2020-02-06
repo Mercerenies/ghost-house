@@ -48,7 +48,9 @@ func _try_to_place() -> void:
                           Util.randi_range(bounds.position.y, bounds.end.y))
         if GeneratorPlacementHelper.is_blocked(room, pos):
             return # Position is blocked.
-        var target_room = minimap.get_room_id_at_pos(pos)
+        var cell = Vector2(floor(pos.x / GeneratorData.TOTAL_CELL_SIZE),
+                           floor(pos.y / GeneratorData.TOTAL_CELL_SIZE))
+        var target_room = minimap.get_room_id_at_pos(cell)
         if target_room != null:
             var icons = minimap.get_icons(target_room)
             for icn in icons:
