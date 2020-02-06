@@ -19,6 +19,7 @@ hframes = 4
 wait_time = 5.0
 
 [node name="PlacementTimer" type="Timer" parent="."]
+wait_time = 8.0
 autostart = true
 
 [node name="SmokeTimer" type="Timer" parent="."]
