@@ -136,6 +136,7 @@ func _on_PlacementTimer_timeout():
         var bounds = player.get_view_bounds()
         var pos = global_position
         if pos.x + 32 < bounds.position.x or pos.x > bounds.end.x or pos.y + 32 < bounds.position.y or pos.y > bounds.end.y:
+            unposition_self()
             position = OFFSCREEN
             target_pos = OFFSCREEN
 
@@ -146,5 +147,6 @@ func _disappear_in_smoke():
     $SmokeTimer.start()
 
 func _on_SmokeTimer_timeout():
+    unposition_self()
     position = OFFSCREEN
     target_pos = OFFSCREEN
