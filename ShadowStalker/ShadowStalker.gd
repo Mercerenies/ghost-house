@@ -37,6 +37,10 @@ var tick_delay: int = 0
 var movement_log: Array = []
 # The current index in the log.
 var log_index: int = 0
+# Current target position when actively stalking
+var target_pos: Vector2 = Vector2()
+# Current movement speed when stalking
+var target_speed: float = 0.0
 
 func _ready() -> void:
     _configure_self()
@@ -76,6 +80,23 @@ func _process(delta: float) -> void:
     match state:
         State.Stalking:
             modulate.a = Util.toward(modulate.a, delta * APPEAR_SPEED, 1)
+
+            if log_index >= len(movement_log):
+                state = State.Disappearing
+            else:
+                var tick_with_delay = tick - tick_delay
+                var current = movement_log[log_index]
+                if tick_with_delay > current['time']:
+                    log_index += 1
+                else:
+                    target_speed = current['speed']
+                    target_pos = current['position'] * 32
+                    if (target_pos - position).length() < target_speed * delta:
+                        position = target_pos
+                    else:
+                        position += (target_pos - position).normalized() * target_speed * delta
+
+
         State.Disappearing:
             modulate.a = Util.toward(modulate.a, delta * DISAPPEAR_SPEED, 0)
             if modulate.a == 0:
