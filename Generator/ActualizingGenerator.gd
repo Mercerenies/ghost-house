@@ -26,6 +26,9 @@ func _init(room_data: Dictionary, grid: GeneratorGrid, boxes: Dictionary, room: 
     _boxes = boxes
     _room = room
 
+# TODO Use RoomDimensions here to calculate the positions of the
+# transitions, for consistency (this file predates RoomDimensions so
+# we didn't use it the first time around)
 func _open_doorways() -> void:
     # Assumes all connections are of the form [a, b] where b is either
     # strictly one to the right or strictly one below a.
