@@ -161,3 +161,6 @@ func _draw() -> void:
                     offset.y += 12
                 else:
                     offset.x += 12
+
+func _on_Player_player_moved(_speed: float) -> void:
+    update_map()

@@ -60,5 +60,5 @@ func put_player_in(valid_rect: Rect2):
 func run():
     var rect = _identify_valid_rect()
     var player = put_player_in(rect)
-    player.connect("player_moved", _room.get_minimap(), "update_map")
+    player.connect("player_moved", _room.get_minimap(), "_on_Player_player_moved")
     return player

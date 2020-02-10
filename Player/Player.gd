@@ -1,6 +1,6 @@
 extends MobileEntity
 
-signal player_moved
+signal player_moved(speed)
 
 const OutlineMaterial = preload("Outline.tres")
 
@@ -60,7 +60,7 @@ func _process(delta: float) -> void:
                     speed *= 2
                     is_running = true
             if try_move_to(target_cell):
-                emit_signal("player_moved")
+                emit_signal("player_moved", speed)
                 if is_running:
                     stats.add_player_stamina(- stamina_dash_cost)
         elif Input.is_action_just_released("ui_accept"):
