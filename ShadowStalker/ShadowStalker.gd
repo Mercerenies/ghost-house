@@ -121,7 +121,7 @@ func _process(delta: float) -> void:
         $Sprite.frame = floor($Sprite.frame / 4) * 4
     else:
         var dir = (position - prior_pos).angle()
-        dir = int(round(dir / (PI / 2))) % 4
+        dir = (int(round(dir / (PI / 2))) + 4) % 4
         $Sprite.frame = int(dir * 4 + anim_index)
 
 func _on_StateTimer_timeout():
@@ -137,6 +137,9 @@ func _on_Area2D_area_entered(area):
             var stats = get_room().get_player_stats()
             if stats.damage_player(1):
                 state = State.Disappearing
+
+# ///// Put Shadow Stalkers into the room.json format so we can spawn
+# them as ambient entities.
 
 func _on_Player_player_moved(speed: float) -> void:
     match state:
@@ -162,6 +165,7 @@ func _on_Player_player_moved(speed: float) -> void:
                 tick_delay = tick
                 log_index = 0
                 print("Stalking") # DEBUG CODE
+            print(len(movement_log))
             if state == State.Stalking and len(movement_log) >= DISAPPEAR_AFTER_LOGS:
                 state = State.Disappearing
 
