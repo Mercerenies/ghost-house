@@ -86,17 +86,8 @@ func _on_StateTimer_timeout():
     if get_room().is_showing_modal():
         return
 
-    match state:
-        State.Unplaced:
-            _try_to_place_self()
-        State.Planted:
-            pass
-        State.Triggered:
-            pass
-        State.Stalking:
-            pass
-        State.Disappearing:
-            pass
+    if state == State.Unplaced:
+        _try_to_place_self()
 
 func _on_Area2D_area_entered(area):
     if state == State.Stalking:
@@ -128,7 +119,7 @@ func _on_Player_player_moved(speed: float) -> void:
                 position = movement_log[0]['position'] * 32
                 tick_delay = tick
                 log_index = 0
-                print("Stalking")
+                print("Stalking") # DEBUG CODE
 
 func _on_TickTimer_timeout():
     if get_room().is_showing_modal():
