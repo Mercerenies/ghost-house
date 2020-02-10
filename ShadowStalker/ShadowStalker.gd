@@ -25,7 +25,7 @@ func _ready() -> void:
     _reset_position()
 
 func _configure_image() -> void:
-    var player = EnemyAI.get_player()
+    var player = EnemyAI.get_player(self)
     if player != null:
         $Sprite.texture = player.get_node("Sprite").texture
 
