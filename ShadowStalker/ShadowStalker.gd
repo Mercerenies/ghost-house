@@ -59,6 +59,8 @@ func _reset_position() -> void:
     position = Vector2(-1024, -1024)
     modulate.a = 0
     $TickTimer.stop()
+    target_pos = Vector2()
+    target_speed = 0.0
 
 func _try_to_place_self() -> void:
     var minimap = get_room().get_minimap()
@@ -96,8 +98,12 @@ func _process(delta: float) -> void:
                     else:
                         position += (target_pos - position).normalized() * target_speed * delta
 
-
         State.Disappearing:
+            if (target_pos - position).length() < target_speed * delta:
+                position = target_pos
+            else:
+                position += (target_pos - position).normalized() * target_speed * delta
+
             modulate.a = Util.toward(modulate.a, delta * DISAPPEAR_SPEED, 0)
             if modulate.a == 0:
                 state = State.Unplaced
