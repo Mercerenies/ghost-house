@@ -74,6 +74,9 @@ func get_icons(room_id: int) -> Array:
         return _icons[room_id]
     return []
 
+func get_connections_list() -> Array:
+    return _connections
+
 func _draw() -> void:
     if _grid == null:
         return

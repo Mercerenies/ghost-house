@@ -35,5 +35,9 @@ shape = SubResource( 1 )
 [node name="StateTimer" type="Timer" parent="."]
 wait_time = 2.0
 autostart = true
+
+[node name="TickTimer" type="Timer" parent="."]
+wait_time = 0.1
 [connection signal="area_entered" from="Area2D" to="." method="_on_Area2D_area_entered"]
 [connection signal="timeout" from="StateTimer" to="." method="_on_StateTimer_timeout"]
+[connection signal="timeout" from="TickTimer" to="." method="_on_TickTimer_timeout"]

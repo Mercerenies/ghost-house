@@ -4,6 +4,10 @@ const Player = preload("res://Player/Player.gd")
 
 const TOTAL_CELL_SIZE = GeneratorData.TOTAL_CELL_SIZE
 
+const APPEAR_AFTER_LOGS = 16
+const APPEAR_SPEED = 2
+const DISAPPEAR_SPEED = 2
+
 enum State {
     # Hiding out, inactive
     Unplaced,
@@ -17,39 +21,71 @@ enum State {
     Disappearing,
 }
 
+# State, determines overarching behavior at the moment
 var state: int = State.Unplaced
-var hideout_position: Vector2 = Vector2()
+# Used in State.Planted; when the player steps inside this box, we
+# move to State.Triggered.
+var hideout_box: Rect2 = Rect2()
+# The tick, managed by $TickTimer, used to determine the "time" in the
+# movement_log.
+var tick: int = 0
+# The moment we switched from State.Triggered to State.Stalking, using
+# the same units as `tick' above.
+var tick_delay: int = 0
+# The log. Each entry is of the form { "position": position, "speed":
+# speed, "time": tick }.
+var movement_log: Array = []
+# The current index in the log.
+var log_index: int = 0
 
 func _ready() -> void:
-    _configure_image()
+    _configure_self()
     _reset_position()
 
-func _configure_image() -> void:
+# Sets up signals and appearance to link with the player.
+func _configure_self() -> void:
     var player = EnemyAI.get_player(self)
     if player != null:
         $Sprite.texture = player.get_node("Sprite").texture
+        if not player.is_connected("player_moved", self, "_on_Player_player_moved"):
+            player.connect("player_moved", self, "_on_Player_player_moved")
 
 func _reset_position() -> void:
     # Move out of bounds to avoid being involved in collisions, etc.
     position = Vector2(-1024, -1024)
+    modulate.a = 0
+    $TickTimer.stop()
+
+func _try_to_place_self() -> void:
+    var minimap = get_room().get_minimap()
+    var connections = minimap.get_connections_list()
+
+    var attempt = Util.choose(connections)
+    # There may be some more specific criteria later, but for now, any
+    # connection will do.
+    var rect = RoomDimensions.connection_rect(attempt)
+    hideout_box = rect
+    state = State.Planted
+    _configure_self()
+    print(hideout_box.position / 6) # DEBUG CODE
 
 func _process(delta: float) -> void:
+    if get_room().is_showing_modal():
+        return
+
     match state:
-        State.Unplaced:
-            pass
-        State.Planted:
-            pass
-        State.Triggered:
-            pass
         State.Stalking:
-            pass
+            modulate.a = Util.toward(modulate.a, delta * APPEAR_SPEED, 1)
         State.Disappearing:
             pass
 
 func _on_StateTimer_timeout():
+    if get_room().is_showing_modal():
+        return
+
     match state:
         State.Unplaced:
-            pass
+            _try_to_place_self()
         State.Planted:
             pass
         State.Triggered:
@@ -65,3 +101,35 @@ func _on_Area2D_area_entered(area):
             var stats = get_room().get_player_stats()
             if stats.damage_player(1):
                 state = State.Disappearing
+
+func _on_Player_player_moved(speed: float) -> void:
+    match state:
+
+        State.Planted:
+            var player = EnemyAI.get_player(self)
+            var player_cell = player.cell
+            if hideout_box.has_point(player_cell):
+                state = State.Triggered
+                tick = 0
+                movement_log = []
+                $TickTimer.start()
+                movement_log.append({ "position": player_cell, "speed": 100, "time": 0 })
+                print("Triggered") # DEBUG CODE
+
+        State.Triggered, State.Stalking:
+            var player = EnemyAI.get_player(self)
+            var player_cell = player.cell
+            movement_log.append({ "position": player_cell, "speed": speed, "time": tick })
+            if state == State.Triggered and len(movement_log) >= APPEAR_AFTER_LOGS:
+                state = State.Stalking
+                position = movement_log[0]['position'] * 32
+                tick_delay = tick
+                log_index = 0
+                print("Stalking")
+
+func _on_TickTimer_timeout():
+    if get_room().is_showing_modal():
+        return
+
+    if state in [State.Triggered, State.Stalking]:
+        tick += 1
