@@ -8,6 +8,7 @@ const APPEAR_AFTER_LOGS = 16
 const DISAPPEAR_AFTER_LOGS = 128
 const APPEAR_SPEED = 2
 const DISAPPEAR_SPEED = 2
+const IMAGE_SPEED = 10
 
 enum State {
     # Hiding out, inactive
@@ -42,6 +43,8 @@ var log_index: int = 0
 var target_pos: Vector2 = Vector2()
 # Current movement speed when stalking
 var target_speed: float = 0.0
+# Animation index, for the visuals
+var anim_index: float = 0.0
 
 func _ready() -> void:
     _configure_self()
@@ -80,9 +83,11 @@ func _process(delta: float) -> void:
     if get_room().is_showing_modal():
         return
 
+    var prior_pos = position
     match state:
         State.Stalking:
             modulate.a = Util.toward(modulate.a, delta * APPEAR_SPEED, 1)
+            anim_index = fmod(anim_index + IMAGE_SPEED * delta, 4.0)
 
             if log_index >= len(movement_log):
                 state = State.Disappearing
@@ -105,10 +110,19 @@ func _process(delta: float) -> void:
             else:
                 position += (target_pos - position).normalized() * target_speed * delta
 
+            anim_index = fmod(anim_index + IMAGE_SPEED * delta, 4.0)
+
             modulate.a = Util.toward(modulate.a, delta * DISAPPEAR_SPEED, 0)
             if modulate.a == 0:
                 state = State.Unplaced
                 _reset_position()
+
+    if prior_pos == position:
+        $Sprite.frame = floor($Sprite.frame / 4) * 4
+    else:
+        var dir = (position - prior_pos).angle()
+        dir = int(round(dir / (PI / 2))) % 4
+        $Sprite.frame = int(dir * 4 + anim_index)
 
 func _on_StateTimer_timeout():
     if get_room().is_showing_modal():
