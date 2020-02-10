@@ -75,6 +75,11 @@ _global_script_classes=[ {
 "path": "res://Room/Room.gd"
 }, {
 "base": "Node",
+"class": "RoomDimensions",
+"language": "GDScript",
+"path": "res://RoomDimensions/RoomDimensions.gd"
+}, {
+"base": "Node",
 "class": "SpecialPlacement",
 "language": "GDScript",
 "path": "res://Furniture/SpecialPlacement.gd"
@@ -113,6 +118,7 @@ _global_script_class_icons={
 "MobileEntity": "",
 "OutlinedPolygon2D": "",
 "Room": "",
+"RoomDimensions": "",
 "SpecialPlacement": "",
 "SpecialPlacementManager": "",
 "StaticEntity": "",

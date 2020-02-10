@@ -17,6 +17,5 @@ static func connection_rect(connection: Dictionary) -> Rect2:
     assert(diff in [Vector2(1, 0), Vector2(0, 1)])
 
     var room_upperleft = pos1 * TOTAL_CELL_SIZE
-    var tr_upperleft =
-        room_upperleft + Vector2(-1, -1) + Vector2(diff.y, diff.x) * TOTAL_CELL_SIZE / 2
+    var tr_upperleft = room_upperleft + Vector2(-1, -1) + Vector2(diff.y, diff.x) * TOTAL_CELL_SIZE / 2
     return Rect2(tr_upperleft, Vector2(2, 2))
