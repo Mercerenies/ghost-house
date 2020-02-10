@@ -5,6 +5,7 @@ const Player = preload("res://Player/Player.gd")
 const TOTAL_CELL_SIZE = GeneratorData.TOTAL_CELL_SIZE
 
 const APPEAR_AFTER_LOGS = 16
+const DISAPPEAR_AFTER_LOGS = 128
 const APPEAR_SPEED = 2
 const DISAPPEAR_SPEED = 2
 
@@ -147,6 +148,8 @@ func _on_Player_player_moved(speed: float) -> void:
                 tick_delay = tick
                 log_index = 0
                 print("Stalking") # DEBUG CODE
+            if state == State.Stalking and len(movement_log) >= DISAPPEAR_AFTER_LOGS:
+                state = State.Disappearing
 
 func _on_TickTimer_timeout():
     if get_room().is_showing_modal():
