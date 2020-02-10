@@ -77,7 +77,10 @@ func _process(delta: float) -> void:
         State.Stalking:
             modulate.a = Util.toward(modulate.a, delta * APPEAR_SPEED, 1)
         State.Disappearing:
-            pass
+            modulate.a = Util.toward(modulate.a, delta * DISAPPEAR_SPEED, 0)
+            if modulate.a == 0:
+                state = State.Unplaced
+                _reset_position()
 
 func _on_StateTimer_timeout():
     if get_room().is_showing_modal():
