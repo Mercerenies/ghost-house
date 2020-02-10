@@ -2,6 +2,9 @@ extends Node2D
 
 const Generator = preload("res://Generator/Generator.gd")
 
+# DEBUG CODE
+const ShadowStalker = preload("res://ShadowStalker/ShadowStalker.tscn")
+
 func _ready():
     randomize()
 
@@ -15,3 +18,7 @@ func _ready():
     var gen = Generator.new(data)
     var room = gen.generate()
     add_child(room)
+
+    var ss = ShadowStalker.instance()
+    ss.position = Vector2(128, 128)
+    room.get_node("Entities").add_child(ss)
