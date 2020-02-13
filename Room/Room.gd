@@ -4,6 +4,11 @@ class_name Room
 const Tile = RoomTypes.Tile
 const FurnitureDropScene = preload("res://FurnitureDrop/FurnitureDrop.tscn")
 
+# The base entity dict uses Vector2 positions as keys and nodes in the
+# scene tree (specifically, children of the Entities node) as values.
+# marked_entities is used for more efficient access between nodes that
+# need to be aware of each other. It uses arbitrary strings as keys
+# and nodes or arrays of nodes as values.
 var entities: Dictionary = {}
 var marked_entities: Dictionary = {}
 
