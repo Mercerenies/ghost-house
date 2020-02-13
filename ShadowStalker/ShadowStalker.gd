@@ -83,9 +83,14 @@ func _try_to_place_self() -> void:
     var connections = minimap.get_connections_list()
 
     var attempt = Util.choose(connections)
-    # There may be some more specific criteria later, but for now, any
-    # connection will do.
     var rect = RoomDimensions.connection_rect(attempt)
+
+    # Make sure there isn't another stalker at this position
+    for stalker in get_room().get_marked_entities()['shadow_stalker']:
+        if stalker.state in [State.Planted, State.Triggered] and stalker.hideout_box == rect:
+            # Can't hide here, abort.
+            return
+
     hideout_box = rect
     state = State.Planted
     _configure_self()
