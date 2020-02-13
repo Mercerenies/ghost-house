@@ -5,7 +5,7 @@
     "percent_evil": 0.05
   },
   "ambient_enemies": [
-    "fake_ghost", "fake_ghost"
+    "fake_ghost", "fake_ghost", "shadow_stalker", "shadow_stalker", "shadow_stalker"
   ],
   "puzzle": {
     "players": {

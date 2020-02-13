@@ -9,6 +9,7 @@ const GeneratorPlacementHelper = preload("res://GeneratorPlacementHelper/Generat
 const GhostNamer = preload("res://GhostNamer/GhostNamer.gd")
 
 const FakeGhost = preload("res://FakeGhost/FakeGhost.tscn")
+const ShadowStalker = preload("res://ShadowStalker/ShadowStalker.tscn")
 
 const HallwayData = GeneratorData.HallwayData
 const RoomData = GeneratorData.RoomData
@@ -40,6 +41,9 @@ func _spawn_enemy(type: String) -> void:
             # itself immediately anyway); I just don't want it
             # onscreen.
             _helper.add_entity(Vector2(-1280, -1280), fake_ghost)
+        "shadow_stalker":
+            var shadow_stalker = ShadowStalker.instance()
+            _helper.add_entity(Vector2(-1280, -1280), shadow_stalker)
         _:
             assert(false) # Invalid enemy type to spawn
 

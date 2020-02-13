@@ -31,7 +31,7 @@
     },
     "ambient_enemies": {
       "type": "array",
-      "items": { "enum": ["fake_ghost"] }
+      "items": { "enum": ["fake_ghost", "shadow_stalker"] }
     },
     "puzzle": {
       "$ref": "puzzle.json"

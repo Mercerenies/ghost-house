@@ -154,9 +154,6 @@ func _on_Area2D_area_entered(area):
             if stats.damage_player(1):
                 state = State.Disappearing
 
-# ///// Put Shadow Stalkers into the room.json format so we can spawn
-# them as ambient entities.
-
 func _on_Player_player_moved(speed: float) -> void:
     match state:
 
