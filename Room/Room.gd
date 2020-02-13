@@ -8,7 +8,8 @@ const FurnitureDropScene = preload("res://FurnitureDrop/FurnitureDrop.tscn")
 # scene tree (specifically, children of the Entities node) as values.
 # marked_entities is used for more efficient access between nodes that
 # need to be aware of each other. It uses arbitrary strings as keys
-# and nodes or arrays of nodes as values.
+# and nodes or arrays of nodes as values. See res://Room/Mark.gd for
+# commonly used keys.
 var entities: Dictionary = {}
 var marked_entities: Dictionary = {}
 

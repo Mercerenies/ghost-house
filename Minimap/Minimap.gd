@@ -29,7 +29,7 @@ func _find_player() -> Vector2:
     # First, check marked entities (more efficient)
     var marks = room.get_marked_entities()
     if 'player' in marks:
-        return marks['player'].cell
+        return marks[Mark.PLAYER].cell
     # If not, fall back to the less efficient linear search
     for c in room.get_entities():
         if c is Player:

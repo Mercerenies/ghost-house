@@ -95,4 +95,4 @@ func add_entity(pos: Vector2, entity: Object) -> void:
     entity.position = pos * 32
     entity.position_self()
     if entity is Player:
-        _room.get_marked_entities()["player"] = entity
+        _room.get_marked_entities()[Mark.PLAYER] = entity

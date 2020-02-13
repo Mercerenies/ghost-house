@@ -59,6 +59,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://GhostDatabase/GhostInfo.gd"
 }, {
+"base": "Node",
+"class": "Mark",
+"language": "GDScript",
+"path": "res://Room/Mark.gd"
+}, {
 "base": "Entity",
 "class": "MobileEntity",
 "language": "GDScript",
@@ -115,6 +120,7 @@ _global_script_class_icons={
 "FurniturePlacement": "",
 "GeneratorData": "",
 "GhostInfo": "",
+"Mark": "",
 "MobileEntity": "",
 "OutlinedPolygon2D": "",
 "Room": "",

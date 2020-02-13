@@ -93,7 +93,7 @@ func _process(delta: float) -> void:
     $GhostVisibilityParticleSystem.emitting = (appearing and invisible)
 
 func on_interact() -> void:
-    var player = get_room().get_marked_entities()['player']
+    var player = get_room().get_marked_entities()[Mark.PLAYER]
     var dir = atan2(player.global_position.y - global_position.y, player.global_position.x - global_position.x)
     dir = round(fmod((4 * dir) / (2 * PI), 4))
     dir = fmod(dir + 4, 4)

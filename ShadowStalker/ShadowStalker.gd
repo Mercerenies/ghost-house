@@ -53,14 +53,14 @@ func _ready() -> void:
 
 func _mark_self() -> void:
     var marks = get_room().get_marked_entities()
-    if not ('shadow_stalker' in marks):
-        marks['shadow_stalker'] = []
-    marks['shadow_stalker'].append(self)
+    if not (Mark.SHADOW_STALKER in marks):
+        marks[Mark.SHADOW_STALKER] = []
+    marks[Mark.SHADOW_STALKER].append(self)
 
 func _unmark_self() -> void:
     var marks = get_room().get_marked_entities()
-    if 'shadow_stalker' in marks:
-        marks['shadow_stalker'].erase(self)
+    if Mark.SHADOW_STALKER in marks:
+        marks[Mark.SHADOW_STALKER].erase(self)
 
 # Sets up signals and appearance to link with the player.
 func _configure_self() -> void:
@@ -86,7 +86,7 @@ func _try_to_place_self() -> void:
     var rect = RoomDimensions.connection_rect(attempt)
 
     # Make sure there isn't another stalker at this position
-    for stalker in get_room().get_marked_entities()['shadow_stalker']:
+    for stalker in get_room().get_marked_entities()[Mark.SHADOW_STALKER]:
         if stalker.state in [State.Planted, State.Triggered] and stalker.hideout_box == rect:
             # Can't hide here, abort.
             return

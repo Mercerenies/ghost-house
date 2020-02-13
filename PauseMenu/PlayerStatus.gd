@@ -11,7 +11,7 @@ func get_room():
     return get_pause_menu().get_room()
 
 func _update_self() -> void:
-    var player = get_room().get_marked_entities()["player"]
+    var player = get_room().get_marked_entities()[Mark.PLAYER]
     var player_stats = get_room().get_player_stats()
 
     if player == null:

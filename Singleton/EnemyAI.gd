@@ -1,7 +1,7 @@
 extends Node
 
 func get_player(entity):
-    return entity.get_room().get_marked_entities()['player']
+    return entity.get_room().get_marked_entities()[Mark.PLAYER]
 
 func distance_to_player(entity):
     var player = get_player(entity)

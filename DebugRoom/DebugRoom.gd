@@ -27,7 +27,7 @@ var _sample_dialogue = {
 
 func _ready():
     #$Room.get_dialogue_box().popup(_sample_dialogue, "idle")
-    $Room.get_marked_entities()["player"] = $Room/Entities/Player
+    $Room.get_marked_entities()[Mark.PLAYER] = $Room/Entities/Player
     $Room/Entities/LongBookshelf.turn_evil()
     $Room/Entities/OfficeChair.turn_evil()
 
