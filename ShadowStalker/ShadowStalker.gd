@@ -51,6 +51,17 @@ func _ready() -> void:
     _configure_self()
     _reset_position()
 
+func _mark_self() -> void:
+    var marks = get_room().get_marked_entities()
+    if not ('shadow_stalker' in marks):
+        marks['shadow_stalker'] = []
+    marks['shadow_stalker'].append(self)
+
+func _unmark_self() -> void:
+    var marks = get_room().get_marked_entities()
+    if 'shadow_stalker' in marks:
+        marks['shadow_stalker'].erase(self)
+
 # Sets up signals and appearance to link with the player.
 func _configure_self() -> void:
     var player = EnemyAI.get_player(self)
@@ -174,3 +185,9 @@ func _on_TickTimer_timeout():
 
     if state in [State.Triggered, State.Stalking]:
         tick += 1
+
+func _on_ShadowStalker_tree_entered():
+    _mark_self()
+
+func _on_ShadowStalker_tree_exiting():
+    _unmark_self()
