@@ -5,7 +5,7 @@ const Player = preload("res://Player/Player.gd")
 const TOTAL_CELL_SIZE = GeneratorData.TOTAL_CELL_SIZE
 
 const APPEAR_AFTER_LOGS = 16
-const DISAPPEAR_AFTER_LOGS = 128
+const DISAPPEAR_AFTER_LOGS = 96
 const APPEAR_SPEED = 2
 const DISAPPEAR_SPEED = 2
 const IMAGE_SPEED = 10
