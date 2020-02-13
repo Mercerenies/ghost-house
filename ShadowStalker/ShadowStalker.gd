@@ -9,6 +9,7 @@ const DISAPPEAR_AFTER_LOGS = 128
 const APPEAR_SPEED = 2
 const DISAPPEAR_SPEED = 2
 const IMAGE_SPEED = 10
+const MIN_STALK_DISTANCE = 96
 
 enum State {
     # Hiding out, inactive
@@ -157,16 +158,19 @@ func _on_Player_player_moved(speed: float) -> void:
 
         State.Triggered, State.Stalking:
             var player = EnemyAI.get_player(self)
+            var center = hideout_box.position + hideout_box.size / 2
+            var player_dist = (player.global_position - center * 32).length()
             var player_cell = player.cell
             movement_log.append({ "position": player_cell, "speed": speed, "time": tick })
-            if state == State.Triggered and len(movement_log) >= APPEAR_AFTER_LOGS:
+            print(player_dist)
+            if state == State.Triggered and len(movement_log) >= APPEAR_AFTER_LOGS and player_dist > MIN_STALK_DISTANCE:
                 state = State.Stalking
                 position = movement_log[0]['position'] * 32
                 tick_delay = tick
                 log_index = 0
                 print("Stalking") # DEBUG CODE
             print(len(movement_log))
-            if state == State.Stalking and len(movement_log) >= DISAPPEAR_AFTER_LOGS:
+            if len(movement_log) >= DISAPPEAR_AFTER_LOGS:
                 state = State.Disappearing
 
 func _on_TickTimer_timeout():
