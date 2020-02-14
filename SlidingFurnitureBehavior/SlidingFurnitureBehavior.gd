@@ -1,5 +1,9 @@
 extends Node2D
 
+# NOTE: Like with FlyingFurnitureSpawner, this currently assumes a 1x1
+# object (both in this code and in the collision mask). We could
+# change that, but it's not quite a trivial change to make.
+
 const Player = preload("res://Player/Player.gd")
 
 const OOB_CELL = Vector2(-2048, -2048)
@@ -18,6 +22,8 @@ var owner_origin: Vector2 = Vector2()
 var disappearing: bool = false
 var respawning: bool = false
 
+onready var GeneratorPlacementHelper = load("res://GeneratorPlacementHelper/GeneratorPlacementHelper.gd")
+
 func get_furniture() -> StaticEntity:
     return get_parent() as StaticEntity
 
@@ -32,6 +38,27 @@ func _process(delta: float) -> void:
 
     if not furniture.is_positioned():
         furniture.position += movement * ATTACK_SPEED * delta
+        # Test for position capture
+        var target_cell = Vector2(round(furniture.position.x / 32), round(furniture.position.y / 32))
+        var aligned = target_cell * 32
+        if (aligned - furniture.position).length() <= ATTACK_SPEED * delta:
+            # Movement is a normalized vector, so target_cell +
+            # movement is the "next" position we would have to move
+            # to. If it's occupied, then stop.
+            var collision_cell = target_cell + movement
+            if GeneratorPlacementHelper.is_blocked(get_room(), collision_cell):
+                # Try to place self at target_cell. If we can't, then
+                # disappear. In the ideal case, we always can place
+                # ourselves, but it's possible a ghost or something
+                # moved onto this position at the same time as us, so
+                # we need to be prepared for the worst.
+                movement = Vector2()
+                furniture.position = aligned
+                if get_room().get_entity_cell(target_cell) == null:
+                    get_room().set_entity_cell(target_cell, furniture)
+                    furniture.cell = target_cell
+                else:
+                    disappearing = true
 
     if disappearing:
         furniture.modulate.a = Util.toward(furniture.modulate.a, delta * DISAPPEAR_SPEED, 0)
@@ -69,7 +96,7 @@ func _consider_triggering() -> void:
             while test_index < max(abs(diffx), abs(diffy)):
                 var test_pos = furniture.global_position + direction * test_index
                 test_pos = Vector2(round(test_pos.x / 32), round(test_pos.y / 32))
-                if room.is_wall_at(test_pos):
+                if GeneratorPlacementHelper.is_blocked(room, test_pos):
                     # There's something in the way of us hitting the
                     # player successfully, so don't move.
                     return
