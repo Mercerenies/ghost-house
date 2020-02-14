@@ -2,6 +2,7 @@ extends StaticEntity
 class_name Furniture
 
 const FlyingFairySpawner = preload("res://FlyingFairySpawner/FlyingFairySpawner.tscn")
+const FurnitureVanishEffect = preload("res://Furniture/FurnitureVanishEffect.tscn")
 
 enum ShimChannel {
     NoShim = 0,
@@ -18,8 +19,6 @@ var vars: Dictionary = {
 }
 var fairy_spawner = null
 
-var increase_in_alpha: float = 1.2
-var decrease_in_alpha: float = 0.4
 
 func _init():
     # Every furniture node gets a flying fairy spawner automatically. It's
@@ -39,18 +38,6 @@ func _ready():
     interaction['debug_dump'] = [
         { "command": "dump_vars" }
     ]
-
-func _process(delta: float) -> void:
-    if vars['vanishing']:
-        var distance = EnemyAI.distance_to_player(self)
-        var dir = EnemyAI.player_line_of_sight(self)
-        var distance_a = clamp((1 / 128.0) * (192 - distance), 0, 1)
-        var dir_a = clamp((4.0 / PI) * (PI / 2.0 - dir), 0, 1)
-        var target_a = round(max(distance_a, dir_a))
-        var change_a = increase_in_alpha if modulate.a < target_a else decrease_in_alpha
-        modulate.a = Util.toward(modulate.a, change_a * delta, target_a)
-    else:
-        modulate.a = 1.0
 
 func on_interact() -> void:
     if not interaction.empty():
@@ -75,6 +62,7 @@ func turn_evil() -> void:
         fairy_spawner.activate()
     else:
         vars['vanishing'] = true
+        add_child(FurnitureVanishEffect.instance())
 
 func evil_drop_sprite() -> Sprite:
     return $Sprite as Sprite # God, I hope this exists. If it doesn't, override this method!
