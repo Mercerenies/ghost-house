@@ -57,6 +57,7 @@ func _process(delta: float) -> void:
                 if get_room().get_entity_cell(target_cell) == null:
                     get_room().set_entity_cell(target_cell, furniture)
                     furniture.cell = target_cell
+                    $CooldownTimer.start()
                 else:
                     disappearing = true
 
