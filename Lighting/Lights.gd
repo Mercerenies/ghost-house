@@ -13,6 +13,9 @@ func find_player():
     return get_lighting().find_player()
 
 func _process(_delta: float) -> void:
+    # TODO This is killing my performance. Need to find some way to
+    # not update this thing every frame, given how complicated its
+    # draw(...) call is.
     update()
 
 func _draw() -> void:
