@@ -47,19 +47,21 @@ func _process(delta: float) -> void:
             # to. If it's occupied, then stop.
             var collision_cell = target_cell + movement
             if GeneratorPlacementHelper.is_blocked(get_room(), collision_cell):
-                # Try to place self at target_cell. If we can't, then
-                # disappear. In the ideal case, we always can place
-                # ourselves, but it's possible a ghost or something
-                # moved onto this position at the same time as us, so
-                # we need to be prepared for the worst.
-                movement = Vector2()
-                furniture.position = aligned
-                if get_room().get_entity_cell(target_cell) == null:
-                    get_room().set_entity_cell(target_cell, furniture)
-                    furniture.cell = target_cell
-                    $CooldownTimer.start()
-                else:
-                    disappearing = true
+                # Keep moving if it's the player.
+                if not (get_room().get_entity_cell(collision_cell) is Player):
+                    # Try to place self at target_cell. If we can't, then
+                    # disappear. In the ideal case, we always can place
+                    # ourselves, but it's possible a ghost or something
+                    # moved onto this position at the same time as us, so
+                    # we need to be prepared for the worst.
+                    movement = Vector2()
+                    furniture.position = aligned
+                    if get_room().get_entity_cell(target_cell) == null:
+                        get_room().set_entity_cell(target_cell, furniture)
+                        furniture.cell = target_cell
+                        $CooldownTimer.start()
+                    else:
+                        disappearing = true
 
     if disappearing:
         furniture.modulate.a = Util.toward(furniture.modulate.a, delta * DISAPPEAR_SPEED, 0)
@@ -121,4 +123,5 @@ func _on_Area2D_area_entered(area):
             disappearing = true
     elif area.get_parent() is cls:
         # Bounce off of other sliding furniture entities
-        movement *= -1
+        if not disappearing and not area.get_parent().disappearing:
+            movement *= -1
