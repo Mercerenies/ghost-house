@@ -1,5 +1,7 @@
 extends Furniture
 
+const SlidingFurnitureBehavior = preload("res://SlidingFurnitureBehavior/SlidingFurnitureBehavior.tscn")
+
 func _ready() -> void:
     interaction["idle"] = [
          { "command": "say", "text": "A dryer. It doesn't appear to be in use right now." }
@@ -7,6 +9,21 @@ func _ready() -> void:
 
 func set_direction(a: int):
     $Sprite.frame = (5 - a) % 4
+
+func chance_of_turning_evil() -> float:
+    return 2.0
+
+func turn_evil() -> void:
+    # 60% chance of having flying books, 40% chance of default behavior
+    if randf() < 0.6:
+        vars['sliding_furniture'] = true
+        var behavior = SlidingFurnitureBehavior.instance()
+        add_child(behavior)
+        # Have to defer the call since the player probably doesn't
+        # exist yet, but he will in one more frame.
+        behavior.call_deferred("activate")
+    else:
+        .turn_evil()
 
 func get_furniture_name():
     return "Dryer"
