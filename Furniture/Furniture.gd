@@ -17,15 +17,8 @@ var vars: Dictionary = {
     "vanishing": false,
     "flying_fairy": false,
 }
-var fairy_spawner = null
-
 
 func _init():
-    # Every furniture node gets a flying fairy spawner automatically. It's
-    # disabled by default
-    fairy_spawner = FlyingFairySpawner.instance()
-    fairy_spawner.set_entity(self)
-    add_child(fairy_spawner)
     vars['furniture_name']  = get_furniture_name()
 
 func _ready():
@@ -58,8 +51,11 @@ func turn_evil() -> void:
     # 10% chance of spawning fairies (if no natural light is emitted). In any other case,
     # be vanishing
     if (not naturally_emits_light()) and randf() < 0.10:
-        vars['flying_fairy'] = true
+        var fairy_spawner = FlyingFairySpawner.instance()
+        fairy_spawner.set_entity(self)
+        add_child(fairy_spawner)
         fairy_spawner.activate()
+        vars['flying_fairy'] = true
     else:
         vars['vanishing'] = true
         add_child(FurnitureVanishEffect.instance())
