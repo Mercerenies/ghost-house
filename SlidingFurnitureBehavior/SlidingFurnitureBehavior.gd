@@ -1,11 +1,22 @@
 extends Node2D
 
+const Player = preload("res://Player/Player.gd")
+
+const OOB_CELL = Vector2(-2048, -2048)
+
 const MIN_TRIGGER_DISTANCE = 64
 const MAX_TRIGGER_DISTANCE = 256
 
 const ROW_TOLERANCE = 2
 
+const ATTACK_SPEED = 192
+const APPEAR_SPEED = 2
+const DISAPPEAR_SPEED = 2
+
 var movement: Vector2 = Vector2()
+var owner_origin: Vector2 = Vector2()
+var disappearing: bool = false
+var respawning: bool = false
 
 func get_furniture() -> StaticEntity:
     return get_parent() as StaticEntity
@@ -14,10 +25,20 @@ func get_room():
     return get_furniture().get_room()
 
 func _ready() -> void:
-    pass
+    owner_origin = get_furniture().position
 
 func _process(delta: float) -> void:
-    pass
+    var furniture = get_furniture()
+
+    if not furniture.is_positioned():
+        furniture.position += movement * ATTACK_SPEED * delta
+
+    if disappearing:
+        furniture.modulate.a = Util.toward(furniture.modulate.a, delta * DISAPPEAR_SPEED, 0)
+        if furniture.modulate.a == 0:
+            furniture.position = OOB_CELL
+            movement = Vector2()
+            disappearing = false
 
 func activate() -> void:
     var player = EnemyAI.get_player(self)
@@ -63,3 +84,13 @@ func _on_Player_player_moved(_speed: float) -> void:
 func _on_CooldownTimer_timeout():
     if get_furniture().is_positioned():
         _consider_triggering()
+
+func _on_Area2D_area_entered(area):
+    var cls = get_script()
+    if area.get_parent() is Player:
+        var stats = get_room().get_player_stats()
+        if stats.damage_player(1):
+            disappearing = true
+    elif area.get_parent() is cls:
+        # Bounce off of other sliding furniture entities
+        movement *= -1
