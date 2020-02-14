@@ -1,4 +1,4 @@
-extends Entity
+extends FloatingEntity
 
 const Player = preload("res://Player/Player.gd")
 
