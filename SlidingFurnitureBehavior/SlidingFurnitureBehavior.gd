@@ -87,7 +87,7 @@ func _consider_triggering() -> void:
     if player != null and dist >= MIN_TRIGGER_DISTANCE and dist < MAX_TRIGGER_DISTANCE:
         var diffx = player.global_position.x - furniture.global_position.x
         var diffy = player.global_position.y - furniture.global_position.y
-        if min(abs(diffx), abs(diffy)) <= ROW_TOLERANCE:
+        if min(abs(diffx), abs(diffy)) <= ROW_TOLERANCE * 32:
             var direction
             if abs(diffx) > abs(diffy):
                 direction = Vector2(sign(diffx), 0)
