@@ -43,7 +43,9 @@
    + [X] Bathroom Counter
      - [X] Bathroom Counter Shim
    + [X] Washing Machine
+     - [X] "Sliding furniture" mode
    + [X] Dryer
+     - [X] "Sliding furniture" mode
    + [X] Television
    + [X] Recliner
      - [X] "Flying furniture" mode
@@ -167,11 +169,12 @@
      - [X] Chairs that get up and throw themselves at you when you pass.
      - [X] Bookshelves that spawn books to fly at you.
      - [X] Fairies that emit light and "hide" in furniture.
-** Shadow Players
+     - [X] Washers and dryers fling themselves at you.
+** DONE Shadow Players
   + Appears randomly several steps behind the player, mocks the
     player's movements at a relatively slow fixed rate in an attempt
     to catch up to them. Deals damage and disappears on contact, or
-    after a certain amount of time. (/////)
+    after a certain amount of time.
 ** DONE Running into the Wall
    Minor bug with the player running. If holding the run button, the
    player continues to consume stamina even if facing a wall or other
@@ -200,3 +203,22 @@
    piece.
    + Note: Probably not if they're vanishing though.
    + Done for kitchens, need to do bathroom / washroom next (/////)
+** Visuals
+   Some brief video animations to play on the television and
+   (eventually) projector screen.
+** Book Behavior
+   Flying books may want to run away from the flashlight too, like
+   flying clothes. Not to a hiding place but... just away.
+** Occupational Ghosts
+   Ghosts that spawn (maybe as ambients, maybe next to furniture) in
+   specific rooms.
+   + A chef in kitchens who throws knives at you.
+   + A butler in dining rooms / halls who throws something at you.
+   + A maid in the wardrobe room or laundry room who throws something
+     at you.
+   + A lady of the house in the bedroom or wardrobe room who throws
+     something at you.
+** Black Cat
+   No haunted house is complete without one. Ambient. Appears in the
+   corner of the screen and wanders around. Relatively harmless and
+   runs away from the player. If cornered may attack.

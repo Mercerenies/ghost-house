@@ -8,6 +8,8 @@ extends Node2D
 # only attack if the player is moving perpendicular to the desired
 # angle of attack.
 
+# ///// Need to correct the behavior with respect to modals.
+
 const Player = preload("res://Player/Player.gd")
 
 const OOB_CELL = Vector2(-2048, -2048)
