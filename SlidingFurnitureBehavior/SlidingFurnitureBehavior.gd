@@ -10,6 +10,7 @@ const OOB_CELL = Vector2(-2048, -2048)
 
 const MIN_TRIGGER_DISTANCE = 64
 const MAX_TRIGGER_DISTANCE = 256
+const MAX_IN_PLAY_DISTANCE = 512
 
 const ROW_TOLERANCE = 2
 
@@ -32,6 +33,7 @@ func get_room():
 
 func _ready() -> void:
     owner_origin = get_furniture().position
+    $DisappearCheckTimer.start(randf() * 5)
 
 func _process(delta: float) -> void:
     var furniture = get_furniture()
@@ -41,7 +43,7 @@ func _process(delta: float) -> void:
         # Test for position capture
         var target_cell = Vector2(round(furniture.position.x / 32), round(furniture.position.y / 32))
         var aligned = target_cell * 32
-        if (aligned - furniture.position).length() <= ATTACK_SPEED * delta:
+        if (aligned - furniture.position).length() <= ATTACK_SPEED * delta and not disappearing:
             # Movement is a normalized vector, so target_cell +
             # movement is the "next" position we would have to move
             # to. If it's occupied, then stop.
@@ -70,6 +72,15 @@ func _process(delta: float) -> void:
             movement = Vector2()
             disappearing = false
 
+    if respawning:
+        furniture.modulate.a = Util.toward(furniture.modulate.a, delta * DISAPPEAR_SPEED, 1)
+        if furniture.modulate.a == 1:
+            var target_cell = Vector2(round(furniture.position.x / 32), round(furniture.position.y / 32))
+            if get_room().get_entity_cell(target_cell) == null:
+                get_room().set_entity_cell(target_cell, furniture)
+                furniture.cell = target_cell
+                respawning = false
+
 func activate() -> void:
     var player = EnemyAI.get_player(self)
     if player != null and not player.is_connected("player_moved", self, "_on_Player_player_moved"):
@@ -81,6 +92,9 @@ func deactivate() -> void:
         player.disconnect("player_moved", self, "_on_Player_player_moved")
 
 func _consider_triggering() -> void:
+    if respawning:
+        return # Do nothing if respawning
+
     var furniture = get_furniture()
     var room = get_room()
     var player = EnemyAI.get_player(furniture)
@@ -121,7 +135,23 @@ func _on_Area2D_area_entered(area):
         var stats = get_room().get_player_stats()
         if stats.damage_player(1):
             disappearing = true
+            if get_furniture().is_positioned():
+                get_furniture().unposition_self()
     elif area.get_parent() is cls:
         # Bounce off of other sliding furniture entities
         if not disappearing and not area.get_parent().disappearing:
             movement *= -1
+
+func _on_DisappearCheckTimer_timeout():
+    $DisappearCheckTimer.wait_time = 5
+    var furniture = get_furniture()
+    var player = EnemyAI.get_player(furniture)
+    var dist = EnemyAI.distance_to_player(furniture)
+    if furniture.position != owner_origin and furniture.position != OOB_CELL and dist > MAX_IN_PLAY_DISTANCE:
+        disappearing = true
+        if furniture.is_positioned():
+            furniture.unposition_self()
+    if furniture.position == OOB_CELL and (player.position - owner_origin).length() > MAX_IN_PLAY_DISTANCE:
+        furniture.modulate.a = 0
+        furniture.position = owner_origin
+        respawning = true
