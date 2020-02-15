@@ -30,6 +30,7 @@ func _ready():
     $Room.get_marked_entities()[Mark.PLAYER] = $Room/Entities/Player
     $Room/Entities/LongBookshelf.turn_evil()
     $Room/Entities/OfficeChair.turn_evil()
+    $Room/Entities/LaundryMachine.turn_evil()
 
     $Room/Entities/KitchenCounter.unposition_self()
     $Room/Entities/KitchenCounter2.unposition_self()
