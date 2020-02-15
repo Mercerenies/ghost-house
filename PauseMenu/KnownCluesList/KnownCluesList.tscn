@@ -1,8 +1,10 @@
 [gd_scene load_steps=4 format=2]
 
-[ext_resource path="res://PauseMenu/KnownCluesList.gd" type="Script" id=1]
+[ext_resource path="res://PauseMenu/KnownCluesList/KnownCluesList.gd" type="Script" id=1]
 [ext_resource path="res://OutlinedPolygon2D/OutlinedPolygon2D.gd" type="Script" id=2]
-[ext_resource path="res://PauseMenu/GhostPanel.tscn" type="PackedScene" id=3]
+[ext_resource path="res://PauseMenu/GhostPanel/GhostPanel.tscn" type="PackedScene" id=3]
+
+
 
 [node name="KnownCluesList" type="Node2D"]
 script = ExtResource( 1 )

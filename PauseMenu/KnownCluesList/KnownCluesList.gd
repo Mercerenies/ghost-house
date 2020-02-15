@@ -1,7 +1,7 @@
 extends Node2D
 
-const KnownClueEntryScene = preload("KnownClueEntry.tscn")
-const KnownClueEntry = preload("KnownClueEntry.gd")
+const KnownClueEntryScene = preload("res://PauseMenu/KnownClueEntry/KnownClueEntry.tscn")
+const KnownClueEntry = preload("res://PauseMenu/KnownClueEntry/KnownClueEntry.gd")
 
 var _option: int = 0
 
