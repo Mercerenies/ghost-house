@@ -206,7 +206,7 @@
 ** Visuals
    Some brief video animations to play on the television and
    (eventually) projector screen.
-** Book Behavior
+** DONE Book Behavior
    Flying books may want to run away from the flashlight too, like
    flying clothes. Not to a hiding place but... just away.
 ** Occupational Ghosts

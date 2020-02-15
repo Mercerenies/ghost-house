@@ -10,9 +10,11 @@ const CHARGING_IMAGE_SPEED = 16
 const DISAPPEAR_SPEED = 2
 const IDLE_MOVEMENT_SPEED = 10
 const CHARGING_MOVEMENT_SPEED = 210
+const FLEEING_MOVEMENT_SPEED = 180
 const MAX_PLAYER_DISTANCE = 768
 const MIN_CHARGE_DISTANCE = 128
 const MAX_CHARGE_DISTANCE = 256
+const FLEE_DISTANCE = 192
 
 enum State {
     # Playing introductory animation
@@ -23,6 +25,8 @@ enum State {
     Preparing,
     # Attacking
     Attacking,
+    # Running away from the player's light
+    Fleeing,
     # Fading out
     Disappearing,
 }
@@ -31,6 +35,7 @@ var state: int = State.Introducing
 var attack_vector = Vector2()
 var anim_index = 0.0
 var hover_index = 0.0
+var target_position: Vector2
 
 func _ready() -> void:
     modulate = VALID_COLORS[randi() % len(VALID_COLORS)]
@@ -57,7 +62,11 @@ func _process(delta: float) -> void:
 
             if player_dist > MAX_PLAYER_DISTANCE:
                 state = State.Disappearing
-            if player_dir > 3 * PI / 8:
+            elif player_dir < 3 * PI / 8 and player_dist < FLEE_DISTANCE:
+                var diff = global_position - player.global_position
+                target_position = player.position + diff * 2
+                state = State.Fleeing
+            else:
                 position += (player.global_position - global_position).normalized() * IDLE_MOVEMENT_SPEED * delta
 
         State.Preparing:
@@ -66,12 +75,31 @@ func _process(delta: float) -> void:
             anim_index = (fmod((anim_index - 4), 4)) + 4
             $Sprite.position.y = 10 + 4 * sin(hover_index * 2 * PI)
 
+            var player = EnemyAI.get_player(self)
+            var player_dist = EnemyAI.distance_to_player(self)
+            var player_dir = EnemyAI.player_line_of_sight(self)
+
+            if player_dir < 3 * PI / 8 and player_dist < FLEE_DISTANCE:
+                var diff = global_position - player.global_position
+                target_position = player.position + diff * 2
+                state = State.Fleeing
+
         State.Attacking:
             hover_index += 2 * delta
             anim_index += CHARGING_IMAGE_SPEED * delta
             anim_index = (fmod((anim_index - 4), 4)) + 4
             $Sprite.position.y = 10 + 4 * sin(hover_index * 2 * PI)
             position += attack_vector * CHARGING_MOVEMENT_SPEED * delta
+
+        State.Fleeing:
+            hover_index += 2 * delta
+            anim_index += CHARGING_IMAGE_SPEED * delta
+            anim_index = (fmod((anim_index - 4), 4)) + 4
+            $Sprite.position.y = 10 + 4 * sin(hover_index * 2 * PI)
+
+            position += (target_position - position).normalized() * FLEEING_MOVEMENT_SPEED * delta
+            if (target_position - position).length() <= FLEEING_MOVEMENT_SPEED * delta:
+                state = State.Idle
 
         State.Disappearing:
             hover_index += delta
