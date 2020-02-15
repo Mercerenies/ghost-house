@@ -8,8 +8,6 @@ extends Node2D
 # only attack if the player is moving perpendicular to the desired
 # angle of attack.
 
-# ///// Need to correct the behavior with respect to modals.
-
 const Player = preload("res://Player/Player.gd")
 
 const OOB_CELL = Vector2(-2048, -2048)
@@ -42,6 +40,9 @@ func _ready() -> void:
     $DisappearCheckTimer.start(randf() * 5)
 
 func _process(delta: float) -> void:
+    if get_room().is_showing_modal():
+        return
+
     var furniture = get_furniture()
 
     if not furniture.is_positioned():
@@ -132,6 +133,8 @@ func _on_Player_player_moved(_speed: float) -> void:
         _consider_triggering()
 
 func _on_CooldownTimer_timeout():
+    if get_room().is_showing_modal():
+        $CooldownTimer.start()
     if get_furniture().is_positioned():
         _consider_triggering()
 
