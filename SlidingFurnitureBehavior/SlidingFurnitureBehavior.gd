@@ -4,6 +4,10 @@ extends Node2D
 # object (both in this code and in the collision mask). We could
 # change that, but it's not quite a trivial change to make.
 
+# TODO Some minor refinements could be made. For instance, make them
+# only attack if the player is moving perpendicular to the desired
+# angle of attack.
+
 const Player = preload("res://Player/Player.gd")
 
 const OOB_CELL = Vector2(-2048, -2048)
