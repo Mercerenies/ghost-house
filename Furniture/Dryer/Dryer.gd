@@ -2,6 +2,9 @@ extends Furniture
 
 const SlidingFurnitureBehavior = preload("res://SlidingFurnitureBehavior/SlidingFurnitureBehavior.tscn")
 
+func _init() -> void:
+    vars["sliding_furniture"] = false
+
 func _ready() -> void:
     interaction["idle"] = [
          { "command": "say", "text": "A dryer. It doesn't appear to be in use right now." }
