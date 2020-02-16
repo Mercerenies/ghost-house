@@ -1,6 +1,11 @@
 extends Node2D
 
-var MalePlayer = preload("res://Player/MalePlayer.png")
+const MalePlayer = preload("res://Player/MalePlayer.png")
+const StatusBox = preload("res://PauseMenu/StatusBox/StatusBox.tscn")
+
+const STATUS_AILMENTS_PANE_WIDTH = 452
+const STATUS_AILMENTS_ITEM_WIDTH = 64
+const STATUS_AILMENTS_ITEM_HEIGHT = 96
 
 var _sprite_image_index = 0
 
@@ -24,18 +29,28 @@ func _update_self() -> void:
     $PlayerStamina.jump_to_value()
     $PlayerStamina.set_color_based_on_rate_multiplier(player_stats.get_status_effects().stamina_recovery_rate_multiplier())
 
-    var desc_text = ""
     # Handle Statuses
+    var desc_text = ""
     var status_effects = player_stats.get_status_effects().get_effect_list()
-    desc_text += "Status: "
+
+    desc_text += "Status Effects: "
     if len(status_effects) == 0:
-        desc_text += "Healthy"
-    else:
-        desc_text += status_effects[0].to_display_string()
-        for i in range(1, len(status_effects)):
-            desc_text += ", " + status_effects[i].to_display_string()
-    desc_text += "\n"
-    $PlayerDescription.set_text(desc_text)
+        desc_text += "(None)"
+    $StatusAilmentsLabel.set_text(desc_text)
+
+    for box in $StatusAilmentsList.get_children():
+        box.queue_free()
+    var xpos = 0
+    var ypos = 0
+    for eff in status_effects:
+        var box = StatusBox.instance()
+        box.set_status(eff)
+        box.position = Vector2(xpos, ypos)
+        $StatusAilmentsList.add_child(box)
+        xpos += STATUS_AILMENTS_ITEM_WIDTH
+        if xpos >= STATUS_AILMENTS_PANE_WIDTH - STATUS_AILMENTS_ITEM_WIDTH:
+            xpos = 0
+            ypos += STATUS_AILMENTS_ITEM_HEIGHT
 
 func on_push() -> void:
     visible = true
