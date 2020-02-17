@@ -10,7 +10,12 @@ const DebugEffect = preload("res://StatusEffect/DebugEffect.gd")
 var _status_effects: Array = []
 var _editor_helper_array = [StatusInstance.new(DebugEffect.new(), -1)]
 
-func get_effect_list():
+# Generally, consider this list pseudo-immutable. That is, feel free
+# to read from it and mutate the individual elements, but do not add
+# or delete elements from the list. To add a status, use
+# apply_status_effect(). To remove one, set the length to zero and let
+# it expire naturally.
+func get_effect_list() -> Array:
     return _status_effects
 
 func apply_status_effect(effect: StatusInstance) -> void:
