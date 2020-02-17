@@ -69,6 +69,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Item/Item.gd"
 }, {
+"base": "Reference",
+"class": "ItemInstance",
+"language": "GDScript",
+"path": "res://Item/ItemInstance.gd"
+}, {
 "base": "Node",
 "class": "Mark",
 "language": "GDScript",
@@ -132,6 +137,7 @@ _global_script_class_icons={
 "GeneratorData": "",
 "GhostInfo": "",
 "Item": "",
+"ItemInstance": "",
 "Mark": "",
 "MobileEntity": "",
 "OutlinedPolygon2D": "",
