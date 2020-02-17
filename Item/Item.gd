@@ -1,6 +1,8 @@
 extends Reference
 class_name Item
 
+const ID_DebugItem = 1
+
 func get_id() -> int:
     return 0
 
