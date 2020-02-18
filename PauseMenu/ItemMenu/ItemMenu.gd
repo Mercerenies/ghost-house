@@ -4,7 +4,7 @@ signal option_selected(option)
 
 const ItemBox = preload("res://PauseMenu/ItemBox/ItemBox.tscn")
 
-const ITEM_BOX_PANE_WIDTH = 452
+const ITEM_BOX_PANE_WIDTH = 388
 const ITEM_BOX_WIDTH = 64
 const ITEM_BOX_HEIGHT = 96
 
