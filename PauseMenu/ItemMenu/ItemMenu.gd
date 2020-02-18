@@ -20,6 +20,8 @@ func _update_self():
     var player_stats = get_room().get_player_stats()
     var items = player_stats.get_inventory().get_item_list()
 
+    $Label.visible = (len(items) == 0)
+
     _rowlength = 0
 
     for box in $ItemList.get_children():
