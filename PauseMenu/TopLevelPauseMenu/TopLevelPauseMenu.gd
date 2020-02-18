@@ -6,36 +6,27 @@ var _options: Array = []
 var _option: int = 0
 
 func _update_self():
-    $Label.text = ""
-    for opt in _options:
-        $Label.text += opt["text"] + '\n'
+    $SelectionsList.update()
     call_deferred("_update_text") # Need to give the label a frame to update itself.
 
 func _update_text():
-
-    var height0 = ($Label.get_line_height()) * ($Label.get_line_count() - 1)
-    $Label.rect_size.y = height0 - 4
-    var line_height = $Label.rect_size.y / (len(_options) + 1)
-    var height = $Label.rect_size.y
+    var height = $SelectionsList.get_text_rect().size.y
 
     $Frame.polygon[2].y = $Frame.polygon[1].y + height + 8
     $Frame.polygon[3].y = $Frame.polygon[0].y + height + 8
 
-    $CurrentOption.position = $Label.rect_position + Vector2(-16, $Label.get_line_height() / 2)
-    $CurrentOption.position.y += line_height * _option
-
 # Each entry should be a dictionary containing an integer "id" field
 # and a string "text" field.
 func set_options(options: Array) -> void:
-    _options = options
+    $SelectionsList.set_options(options)
     _update_self()
 
 func get_chosen_option() -> Dictionary:
-    return _options[_option]
+    return $SelectionsList.get_selected_option()
 
 func on_push() -> void:
-    _option = 0
     _update_self()
+    $SelectionsList.set_selected_option_index(0)
 
 func on_pop() -> void:
     pass
@@ -46,13 +37,9 @@ func _ready() -> void:
 func handle_input(input_type: String) -> bool:
     match input_type:
         "ui_down":
-            _option += 1
-            _option = (_option % len(_options) + len(_options)) % len(_options)
-            _update_self()
+            $SelectionsList.cursor_down()
         "ui_up":
-            _option -= 1
-            _option = (_option % len(_options) + len(_options)) % len(_options)
-            _update_self()
+            $SelectionsList.cursor_up()
         "ui_accept":
             emit_signal("option_selected", get_chosen_option()["id"])
         "ui_cancel":

@@ -1,8 +1,8 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://PauseMenu/TopLevelPauseMenu/TopLevelPauseMenu.gd" type="Script" id=1]
 [ext_resource path="res://OutlinedPolygon2D/OutlinedPolygon2D.gd" type="Script" id=2]
-
+[ext_resource path="res://SelectionsList/SelectionsList.tscn" type="PackedScene" id=3]
 
 [node name="TopLevelPauseMenu" type="Node2D"]
 script = ExtResource( 1 )
@@ -11,22 +11,5 @@ script = ExtResource( 1 )
 polygon = PoolVector2Array( 0, 0, 224, 0, 224, 480, 0, 480, 0, 0 )
 script = ExtResource( 2 )
 
-[node name="Label" type="Label" parent="."]
-margin_left = 36.0
-margin_top = 8.0
-margin_right = 213.0
-margin_bottom = 468.0
-custom_colors/font_color = Color( 0, 0, 0, 1 )
-text = "Sample Option 1
-Sample Option 2
-Sample Option 3"
-
-[node name="CurrentOption" type="Node2D" parent="."]
-position = Vector2( 21, 15 )
-__meta__ = {
-"_edit_group_": true
-}
-
-[node name="Polygon2D" type="Polygon2D" parent="CurrentOption"]
-color = Color( 0, 0, 0, 1 )
-polygon = PoolVector2Array( -8, -8, -8, 8, 8, 8, 8, -8, -8, -8 )
+[node name="SelectionsList" parent="." instance=ExtResource( 3 )]
+position = Vector2( 21, 8 )
