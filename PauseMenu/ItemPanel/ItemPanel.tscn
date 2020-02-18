@@ -26,3 +26,12 @@ margin_bottom = 98.0
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 text = "Item Name"
 align = 1
+
+[node name="DescLabel" type="Label" parent="."]
+margin_left = 32.0
+margin_top = 110.0
+margin_right = 224.0
+margin_bottom = 214.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "Item description placeholder for an item description which goes here."
+autowrap = true

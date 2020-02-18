@@ -10,6 +10,7 @@ func set_item(item: ItemInstance) -> void:
     var data = item.get_item()
     $Sprite.frame = data.get_icon_index()
     $NameLabel.set_text(data.get_name())
+    $DescLabel.set_text(data.get_description())
 
 func on_push() -> void:
     visible = true
