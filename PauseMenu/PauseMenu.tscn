@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://PauseMenu/PauseMenu.gd" type="Script" id=1]
 [ext_resource path="res://PauseMenu/TopLevelPauseMenu/TopLevelPauseMenu.tscn" type="PackedScene" id=2]
@@ -6,10 +6,7 @@
 [ext_resource path="res://PauseMenu/PlayerStatus/PlayerStatus.tscn" type="PackedScene" id=4]
 [ext_resource path="res://PauseMenu/KnownCluesList/KnownCluesList.tscn" type="PackedScene" id=5]
 [ext_resource path="res://PauseMenu/DebugMenu/DebugMenu.tscn" type="PackedScene" id=6]
-
-
-
-
+[ext_resource path="res://PauseMenu/ItemMenu/ItemMenu.tscn" type="PackedScene" id=7]
 
 [node name="PauseMenu" type="Node2D"]
 pause_mode = 2
@@ -36,5 +33,8 @@ position = Vector2( 256, 32 )
 
 [node name="DebugMenu" parent="." instance=ExtResource( 6 )]
 visible = false
+position = Vector2( 256, 32 )
+
+[node name="ItemMenu" parent="." instance=ExtResource( 7 )]
 position = Vector2( 256, 32 )
 [connection signal="option_selected" from="TopLevelPauseMenu" to="TopLevelOptions" method="_on_TopLevelPauseMenu_option_selected"]

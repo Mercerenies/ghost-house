@@ -13,6 +13,8 @@ var _items: Array = []
 func get_item_list() -> Array:
     return _items
 
+# TODO Inventory size limits; this function should be able to fail if
+# we exceed inventory size limits.
 func add_item(item: ItemInstance) -> void:
     _items.append(item)
 
