@@ -9,6 +9,7 @@ const ITEM_BOX_WIDTH = 64
 const ITEM_BOX_HEIGHT = 96
 
 var _rowlength: int = 0
+var _option: int = 0
 
 func get_pause_menu():
     return get_parent()
@@ -16,11 +17,12 @@ func get_pause_menu():
 func get_room():
     return get_pause_menu().get_room()
 
-func _update_self():
+func _reset_self():
     var player_stats = get_room().get_player_stats()
     var items = player_stats.get_inventory().get_item_list()
 
     $Label.visible = (len(items) == 0)
+    $CurrentOption.visible = (len(items) != 0)
 
     _rowlength = 0
 
@@ -28,7 +30,7 @@ func _update_self():
         box.queue_free()
     var xpos = 0
     var ypos = 0
-    var startindex = 0
+    var startindex = -1
     for index in range(len(items)):
         var item = items[index]
         var box = ItemBox.instance()
@@ -40,24 +42,49 @@ func _update_self():
             xpos = 0
             ypos += ITEM_BOX_HEIGHT # TODO Enable scrolling if there are too many items
             _rowlength = max(_rowlength, index - startindex)
+            startindex = index
+    _rowlength = max(_rowlength, (len(items) - 1) - startindex)
+
+    set_option(0)
+    _update_self()
+
+func _update_self():
+    pass # Does nothing right now
 
 func on_push() -> void:
     visible = true
-    _update_self()
+    _reset_self()
 
 func on_pop() -> void:
     visible = false
 
 func _ready() -> void:
     visible = false
+    _reset_self()
+
+func get_option() -> int:
+    return _option
+
+func set_option(option: int) -> void:
+    var items = get_room().get_player_stats().get_inventory().get_item_list()
+
+    if len(items) != 0 and option >= 0 and option < len(items):
+        _option = option
+        var xindex = _option % _rowlength
+        var yindex = int(_option / _rowlength)
+        $CurrentOption.position = $ItemList.position + Vector2(xindex * ITEM_BOX_WIDTH, yindex * ITEM_BOX_HEIGHT)
     _update_self()
 
 func handle_input(input_type: String) -> bool:
     match input_type:
         "ui_down":
-            pass
+            set_option(get_option() + _rowlength)
         "ui_up":
-            pass
+            set_option(get_option() - _rowlength)
+        "ui_left":
+            set_option(get_option() - 1)
+        "ui_right":
+            set_option(get_option() + 1)
         "ui_accept":
             pass
         "ui_cancel":

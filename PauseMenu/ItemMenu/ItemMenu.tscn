@@ -14,10 +14,17 @@ script = ExtResource( 2 )
 position = Vector2( 30, 30 )
 
 [node name="Label" type="Label" parent="."]
-visible = false
 margin_left = 30.0
 margin_top = 30.0
 margin_right = 249.0
 margin_bottom = 88.0
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 text = "(No items)"
+
+[node name="CurrentOption" type="Node2D" parent="."]
+position = Vector2( 30, 30 )
+
+[node name="Polygon2D" type="Polygon2D" parent="CurrentOption"]
+color = Color( 1, 1, 1, 0 )
+polygon = PoolVector2Array( 0, 0, 64, 0, 64, 96, 0, 96, 0, 0 )
+script = ExtResource( 2 )

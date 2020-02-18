@@ -1,6 +1,6 @@
 extends Node2D
 
-const CONTROL_STACK_ACTIONS = ["ui_up", "ui_down", "ui_accept", "ui_cancel"]
+const CONTROL_STACK_ACTIONS = ["ui_up", "ui_down", "ui_left", "ui_right", "ui_accept", "ui_cancel"]
 
 var control_stack: Array = [] # Right-hand-side is top of stack
 
