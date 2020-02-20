@@ -202,7 +202,7 @@
    having them change images to look like they're part of a larger
    piece.
    + Note: Probably not if they're vanishing though.
-   + Done for kitchens, need to do bathroom / washroom next (/////)
+   + Done for kitchens / bathroom / washroom
 ** Visuals
    Some brief video animations to play on the television and
    (eventually) projector screen.

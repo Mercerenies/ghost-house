@@ -11,3 +11,10 @@ func get_description() -> String:
 
 func get_icon_index() -> int:
     return 1
+
+func _get_actions_app(out: Array):
+    out.append(ACTION_DROP)
+    ._get_actions_app(out)
+
+static func action_name(action: int) -> String:
+    return .action_name(action)
