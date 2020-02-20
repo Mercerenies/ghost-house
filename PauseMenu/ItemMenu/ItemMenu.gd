@@ -17,10 +17,7 @@ func get_pause_menu():
 func get_room():
     return get_pause_menu().get_room()
 
-func refresh_data():
-    _reset_self()
-
-func _reset_self():
+func refresh_data(reset_option: bool):
     var player_stats = get_room().get_player_stats()
     var items = player_stats.get_inventory().get_item_list()
 
@@ -48,7 +45,12 @@ func _reset_self():
             startindex = index
     _rowlength = max(_rowlength, (len(items) - 1) - startindex)
 
-    set_option(0)
+    if reset_option:
+        set_option(0)
+    else:
+        # Just in case the bounds of the list have changed, make sure
+        # the index is still valid.
+        set_option(get_option())
     _update_self()
 
 func _update_self():
@@ -56,14 +58,14 @@ func _update_self():
 
 func on_push() -> void:
     visible = true
-    _reset_self()
+    refresh_data(true)
 
 func on_pop() -> void:
     visible = false
 
 func _ready() -> void:
     visible = false
-    _reset_self()
+    refresh_data(true)
 
 func get_option() -> int:
     return _option
@@ -71,7 +73,8 @@ func get_option() -> int:
 func set_option(option: int) -> void:
     var items = get_room().get_player_stats().get_inventory().get_item_list()
 
-    if len(items) != 0 and option >= 0 and option < len(items):
+    if len(items) != 0:
+        option = clamp(option, 0, len(items) - 1)
         _option = option
         var xindex = _option % _rowlength
         var yindex = int(_option / _rowlength)

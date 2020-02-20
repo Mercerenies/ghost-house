@@ -64,4 +64,4 @@ func _on_ItemPanel_option_selected(option: int) -> void:
     # If not, delegate to the item
     item.get_item().do_action(get_room(), item, option)
     get_pause_menu().pop_control()
-    get_parent().refresh_data()
+    get_parent().refresh_data(false)
