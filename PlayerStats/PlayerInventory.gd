@@ -20,3 +20,6 @@ func add_item(item: ItemInstance) -> void:
 
 func remove_item(index: int) -> void:
     _items.remove(index)
+
+func erase_item(item: ItemInstance) -> void:
+    _items.erase(item)

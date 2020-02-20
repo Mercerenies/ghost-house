@@ -17,6 +17,9 @@ func get_pause_menu():
 func get_room():
     return get_pause_menu().get_room()
 
+func refresh_data():
+    _reset_self()
+
 func _reset_self():
     var player_stats = get_room().get_player_stats()
     var items = player_stats.get_inventory().get_item_list()

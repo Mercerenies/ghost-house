@@ -44,6 +44,15 @@ func get_actions() -> Array:
     _get_actions_app(arr)
     return arr
 
+# The default Item implementation handles special IDs and performs no
+# action on others. Override this method to handle ordinary IDs and
+# call the parent in any unhandled cases.
+func do_action(room: Room, instance, action_id: int) -> void:
+    match action_id:
+        ACTION_DROP:
+            # TODO Maybe an animation? Idk
+            room.get_player_stats().get_inventory().erase_item(instance)
+
 # Given an action ID associated with the given item, returns the name
 # of the action. Should be overridden in subclasses to account for
 # item-specific actions (IDs 3001-4000)
