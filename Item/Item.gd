@@ -21,27 +21,27 @@ const ACTION_CANCEL = 1001
 
 const ACTION_DROP = 2001
 
-func get_id() -> int:
+func get_id(_instance) -> int:
     return 0
 
-func get_name() -> String:
+func get_name(_instance) -> String:
     return ""
 
-func get_description() -> String:
+func get_description(_instance) -> String:
     return ""
 
-func get_icon_index() -> int:
+func get_icon_index(_instance) -> int:
     return 0
 
 # Appends the actions for this item to the array argument.
-func _get_actions_app(out: Array) -> void:
+func _get_actions_app(_out: Array, _instance) -> void:
     pass
 
 # Returns an array of action IDs. Do not override this method;
 # override _get_actions_app() instead, which this method calls.
-func get_actions() -> Array:
+func get_actions(instance) -> Array:
     var arr = []
-    _get_actions_app(arr)
+    _get_actions_app(arr, instance)
     return arr
 
 # The default Item implementation handles special IDs and performs no

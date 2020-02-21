@@ -16,3 +16,18 @@ func get_item() -> Item:
 
 func get_metadata():
     return _metadata
+
+func get_id() -> int:
+    return _item.get_id(self)
+
+func get_name() -> String:
+    return _item.get_name(self)
+
+func get_description() -> String:
+    return _item.get_description(self)
+
+func get_icon_index() -> int:
+    return _item.get_icon_index(self)
+
+func get_actions() -> Array:
+    return _item.get_actions(self)

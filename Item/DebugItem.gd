@@ -10,22 +10,22 @@ const DIALOGUE_ON_USE = {
     ]
 }
 
-func get_id() -> int:
+func get_id(_instance) -> int:
     return Item.ID_DebugItem
 
-func get_name() -> String:
+func get_name(_instance) -> String:
     return "Debug Item"
 
-func get_description() -> String:
+func get_description(_instance) -> String:
     return "An item intended for debug purposes. Has no effect."
 
-func get_icon_index() -> int:
+func get_icon_index(_instance) -> int:
     return 1
 
-func _get_actions_app(out: Array):
+func _get_actions_app(out: Array, instance):
     out.append(ACTION_USE)
     out.append(ACTION_DROP)
-    ._get_actions_app(out)
+    ._get_actions_app(out, instance)
 
 func do_action(room: Room, instance, action_id: int) -> void:
     match action_id:

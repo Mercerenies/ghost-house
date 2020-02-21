@@ -22,12 +22,11 @@ func _add_default_actions(actions: Array) -> void:
 
 func set_item(item: ItemInstance) -> void:
     self.item = item
-    var data = item.get_item()
-    $Sprite.frame = data.get_icon_index()
-    $NameLabel.set_text(data.get_name())
-    $DescLabel.set_text(data.get_description())
+    $Sprite.frame = item.get_icon_index()
+    $NameLabel.set_text(item.get_name())
+    $DescLabel.set_text(item.get_description())
 
-    var actions = data.get_actions()
+    var actions = item.get_actions()
     _add_default_actions(actions)
     actions = Util.map(self, "_expand_item_action", actions)
 
