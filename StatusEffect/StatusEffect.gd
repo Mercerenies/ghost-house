@@ -7,6 +7,9 @@ func get_id() -> int:
 func get_name() -> String:
     return ""
 
+func get_potion_name() -> String:
+    return get_name() # For most statuses, the usual name suffices.
+
 func get_icon_index() -> int:
     return 0
 
