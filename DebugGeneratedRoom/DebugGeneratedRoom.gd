@@ -21,4 +21,4 @@ func _ready():
     # DEBUG CODE
     var inv = room.get_player_stats().get_inventory()
     for i in range(20):
-        inv.add_item(ItemInstance.new(DebugItem.new()))
+        inv.add_item(ItemInstance.new(DebugItem.new(), null))
