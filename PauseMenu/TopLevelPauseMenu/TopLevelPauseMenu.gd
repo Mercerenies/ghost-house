@@ -2,9 +2,6 @@ extends Node2D
 
 signal option_selected(option)
 
-var _options: Array = []
-var _option: int = 0
-
 func _update_self():
     $SelectionsList.update()
     call_deferred("_update_text") # Need to give the label a frame to update itself.

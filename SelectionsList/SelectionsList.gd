@@ -16,7 +16,6 @@ func _update_text():
     var height0 = ($Label.get_line_height()) * ($Label.get_line_count() - 1)
     $Label.rect_size.y = height0 - 4
     var line_height = $Label.rect_size.y / (len(_options) + 1)
-    var height = $Label.rect_size.y
 
     $CurrentOption.visible = (len(_options) != 0)
 
@@ -41,7 +40,7 @@ func set_selected_option_index(index: int) -> void:
         if wrap_around:
             _option = (index % len(_options) + len(_options)) % len(_options)
         else:
-            _option = clamp(index, 0, len(_options) - 1)
+            _option = int(clamp(index, 0, len(_options) - 1))
     _update_self()
 
 func get_selected_option_index() -> int:

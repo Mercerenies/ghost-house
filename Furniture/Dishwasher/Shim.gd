@@ -10,7 +10,6 @@ func _draw() -> void:
     var room = dishwasher.get_room()
     var pos = dishwasher.cell
     var image = FurnitureShim.Image
-    var frame = get_node("../Sprite").frame
     match dishwasher.get_shim_channel():
         dishwasher.ShimChannel.KitchenCounterNS:
             var above = room.get_entity_cell(pos + Vector2(0, -1))

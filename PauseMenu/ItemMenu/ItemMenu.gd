@@ -43,9 +43,9 @@ func refresh_data(reset_option: bool):
         if xpos > ITEM_BOX_PANE_WIDTH - ITEM_BOX_WIDTH:
             xpos = 0
             ypos += ITEM_BOX_HEIGHT # TODO Enable scrolling if there are too many items
-            _rowlength = max(_rowlength, index - startindex)
+            _rowlength = int(max(_rowlength, index - startindex))
             startindex = index
-    _rowlength = max(_rowlength, (len(items) - 1) - startindex)
+    _rowlength = int(max(_rowlength, (len(items) - 1) - startindex))
 
     if reset_option:
         set_option(0)
@@ -76,9 +76,10 @@ func set_option(option: int) -> void:
     var items = get_room().get_player_stats().get_inventory().get_item_list()
 
     if len(items) != 0:
-        option = clamp(option, 0, len(items) - 1)
+        option = int(clamp(option, 0, len(items) - 1))
         _option = option
         var xindex = _option % _rowlength
+        # warning-ignore: integer_division
         var yindex = int(_option / _rowlength)
         $CurrentOption.position = $ItemList.position + Vector2(xindex * ITEM_BOX_WIDTH, yindex * ITEM_BOX_HEIGHT)
     _update_self()

@@ -20,7 +20,7 @@ func _ready():
     var DebugItem = ItemCodex.get_item_script(ItemCodex.ID_DebugItem)
     var Potion = ItemCodex.get_item_script(ItemCodex.ID_Potion)
     var inv = room.get_player_stats().get_inventory()
-    for i in range(5):
+    for _i in range(5):
         inv.add_item(ItemInstance.new(DebugItem.new(), null))
     for i in range(5):
         inv.add_item(ItemInstance.new(Potion.new(), { "status_id": StatusEffectCodex.ID_InvincibleEffect, "status_length": 10 * i }))

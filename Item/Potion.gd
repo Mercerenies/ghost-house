@@ -51,4 +51,5 @@ static func action_name(action: int) -> String:
     match action:
         ACTION_DRINK:
             return "Drink"
-    return .action_name(action)
+        _:
+            return .action_name(action)

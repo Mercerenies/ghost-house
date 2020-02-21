@@ -59,4 +59,5 @@ static func action_name(action: int) -> String:
             return "Cancel"
         ACTION_DROP:
             return "Drop"
-    return ""
+        _:
+            return ""
