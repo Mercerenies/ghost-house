@@ -4,6 +4,8 @@ signal option_selected(option)
 
 const ItemBox = preload("res://PauseMenu/ItemBox/ItemBox.tscn")
 
+# TODO Spacing is a bit tight on some of the names (Invincible Potion
+# comes to mind). Make more space.
 const ITEM_BOX_PANE_WIDTH = 388
 const ITEM_BOX_WIDTH = 64
 const ITEM_BOX_HEIGHT = 96
