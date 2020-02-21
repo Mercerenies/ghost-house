@@ -42,7 +42,7 @@ func refresh_data(reset_option: bool):
         xpos += ITEM_BOX_WIDTH
         if xpos > ITEM_BOX_PANE_WIDTH - ITEM_BOX_WIDTH:
             xpos = 0
-            ypos += ITEM_BOX_HEIGHT # TODO Enable scrolling if there are too many items
+            ypos += ITEM_BOX_HEIGHT # TODO Enable scrolling if there are too many items (/////)
             _rowlength = int(max(_rowlength, index - startindex))
             startindex = index
     _rowlength = int(max(_rowlength, (len(items) - 1) - startindex))
