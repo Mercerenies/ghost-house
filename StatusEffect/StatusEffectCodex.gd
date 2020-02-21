@@ -31,3 +31,6 @@ static func get_status_script(id: int) -> Script:
             return load("res://StatusEffect/PerfectVisionEffect.gd") as Script
         ID_SlowedEffect:
             return load("res://StatusEffect/SlowedEffect.gd") as Script
+
+static func get_status(id: int) -> StatusEffect:
+    return get_status_script(id).new()
