@@ -2,8 +2,6 @@ extends Node2D
 
 const Generator = preload("res://Generator/Generator.gd")
 
-const DebugItem = preload("res://Item/DebugItem.gd") # DEBUG CODE
-
 func _ready():
     randomize()
 
@@ -19,6 +17,7 @@ func _ready():
     add_child(room)
 
     # DEBUG CODE
+    var DebugItem = ItemCodex.get_item_script(ItemCodex.ID_DebugItem)
     var inv = room.get_player_stats().get_inventory()
     for i in range(20):
         inv.add_item(ItemInstance.new(DebugItem.new(), null))

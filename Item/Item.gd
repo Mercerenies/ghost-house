@@ -1,8 +1,6 @@
 extends Reference
 class_name Item
 
-const ID_DebugItem = 1
-
 # Item actions are integer ID values. These values obey the following
 # scheme. Any integer values not listed below are reserved for future
 # use.
