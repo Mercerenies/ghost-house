@@ -60,8 +60,8 @@ func _on_ItemPanel_option_selected(option: int) -> void:
     match option:
         Item.ACTION_CANCEL:
             get_pause_menu().pop_control()
-            return
-    # If not, delegate to the item
-    item.get_item().do_action(get_room(), item, option)
-    get_pause_menu().pop_control()
-    get_parent().refresh_data(false)
+        _:
+            # If not, delegate to the item
+            item.get_item().do_action(get_room(), item, option)
+            get_pause_menu().pop_control()
+            get_parent().refresh_data(false)

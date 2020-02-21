@@ -50,7 +50,6 @@ func get_actions() -> Array:
 func do_action(room: Room, instance, action_id: int) -> void:
     match action_id:
         ACTION_DROP:
-            # TODO Maybe an animation? Idk
             room.get_player_stats().get_inventory().erase_item(instance)
 
 # Given an action ID associated with the given item, returns the name
