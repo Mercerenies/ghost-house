@@ -1,7 +1,7 @@
 extends StatusEffect
 
 func get_id() -> int:
-    return StatusEffect.ID_TiredEffect
+    return StatusEffectCodex.ID_TiredEffect
 
 func get_name() -> String:
     return "Tired"

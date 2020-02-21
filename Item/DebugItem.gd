@@ -11,7 +11,7 @@ const DIALOGUE_ON_USE = {
 }
 
 func get_id(_instance) -> int:
-    return Item.ID_DebugItem
+    return ItemCodex.ID_DebugItem
 
 func get_name(_instance) -> String:
     return "Debug Item"

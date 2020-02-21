@@ -1,7 +1,7 @@
 extends StatusEffect
 
 func get_id() -> int:
-    return StatusEffect.ID_HyperEffect
+    return StatusEffectCodex.ID_HyperEffect
 
 func get_name() -> String:
     return "Hyper"

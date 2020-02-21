@@ -1,7 +1,7 @@
 extends StatusEffect
 
 func get_id() -> int:
-    return StatusEffect.ID_BlindedEffect
+    return StatusEffectCodex.ID_BlindedEffect
 
 func get_name() -> String:
     return "Blinded"

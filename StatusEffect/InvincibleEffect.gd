@@ -1,7 +1,7 @@
 extends StatusEffect
 
 func get_id() -> int:
-    return StatusEffect.ID_InvincibleEffect
+    return StatusEffectCodex.ID_InvincibleEffect
 
 func get_name() -> String:
     return "Invincible"
