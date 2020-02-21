@@ -95,11 +95,14 @@ func handle_input(input_type: String) -> bool:
         "ui_right":
             set_option(get_option() + 1)
         "ui_accept":
-            var items = get_room().get_player_stats().get_inventory().get_item_list()
-            if len(items) > 0:
-                var item = items[get_option()]
-                $ItemPanel.set_item(item)
-                get_pause_menu().push_control($ItemPanel)
+            emit_signal("option_selected", get_option())
         "ui_cancel":
             get_pause_menu().pop_control()
     return true # Modal
+
+func _on_ItemMenu_option_selected(option: int):
+    var items = get_room().get_player_stats().get_inventory().get_item_list()
+    if len(items) > 0:
+        var item = items[option]
+        $ItemPanel.set_item(item)
+        get_pause_menu().push_control($ItemPanel)

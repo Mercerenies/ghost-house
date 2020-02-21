@@ -33,3 +33,4 @@ script = ExtResource( 2 )
 [node name="ItemPanel" parent="." instance=ExtResource( 3 )]
 visible = false
 position = Vector2( 448, 0 )
+[connection signal="option_selected" from="." to="." method="_on_ItemMenu_option_selected"]
