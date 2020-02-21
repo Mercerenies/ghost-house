@@ -119,6 +119,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://StatusEffect/StatusEffect.gd"
 }, {
+"base": "Node",
+"class": "StatusEffectCodex",
+"language": "GDScript",
+"path": "res://StatusEffect/StatusEffectCodex.gd"
+}, {
 "base": "Reference",
 "class": "StatusInstance",
 "language": "GDScript",
@@ -147,6 +152,7 @@ _global_script_class_icons={
 "SpecialPlacementManager": "",
 "StaticEntity": "",
 "StatusEffect": "",
+"StatusEffectCodex": "",
 "StatusInstance": ""
 }
 
