@@ -159,6 +159,12 @@
   + [X] Darkness (Dark areas of the map are 100% dark)
   + [X] Perfect Vision (Dark areas of the map are 100% lit)
   + [X] Invincible (Cannot take damage)
+* ITEMS
+  + [X] Debug Item (No in-game effect; for testing)
+  + [X] Potion (Grants status effect)
+  + [ ] Elixir (Cures all status effects; possibly ignores some that
+    are marked specially)
+  + [ ] Flash Bomb (Eliminates any enemies within a particular radius)
 * THOUGHTS
 ** "Evil" Rooms
    + Some rooms (very small probability) will randomly just have all
