@@ -7,6 +7,7 @@ const ItemBox = preload("res://PauseMenu/ItemBox/ItemBox.tscn")
 # TODO Spacing is a bit tight on some of the names (Invincible Potion
 # comes to mind). Make more space.
 const ITEM_BOX_PANE_WIDTH = 388
+const ITEM_BOX_PANE_HEIGHT = 388
 const ITEM_BOX_WIDTH = 64
 const ITEM_BOX_HEIGHT = 96
 
@@ -19,6 +20,21 @@ func get_pause_menu():
 func get_room():
     return get_pause_menu().get_room()
 
+func _adjust_children_positions() -> void:
+    for index in range($ItemList.get_child_count()):
+        var box = $ItemList.get_child(index)
+        # warning-ignore: integer_division
+        var row: int = index / _rowlength
+        var col: int = index % _rowlength
+
+        var pos = Vector2(col * ITEM_BOX_WIDTH, row * ITEM_BOX_HEIGHT)
+        box.position = pos
+
+    # warning-ignore: integer_division
+    var row: int = _option / _rowlength
+    var col: int = _option % _rowlength
+    $CurrentOption.position = $ItemList.position + Vector2(col * ITEM_BOX_WIDTH, row * ITEM_BOX_HEIGHT)
+
 func refresh_data(reset_option: bool):
     var player_stats = get_room().get_player_stats()
     var items = player_stats.get_inventory().get_item_list()
@@ -26,6 +42,7 @@ func refresh_data(reset_option: bool):
     $Label.visible = (len(items) == 0)
     $CurrentOption.visible = (len(items) != 0)
 
+    # warning-ignore: integer_division
     _rowlength = int(ITEM_BOX_PANE_WIDTH / ITEM_BOX_WIDTH)
 
     for box in $ItemList.get_children():
@@ -38,6 +55,7 @@ func refresh_data(reset_option: bool):
         var box = ItemBox.instance()
         box.set_item(item)
         box.position = Vector2(xpos, ypos)
+        box.visible = ((ypos >= 0) and (ypos < ITEM_BOX_PANE_HEIGHT - ITEM_BOX_HEIGHT))
         $ItemList.add_child(box)
         xpos += ITEM_BOX_WIDTH
         if xpos > ITEM_BOX_PANE_WIDTH - ITEM_BOX_WIDTH:
@@ -54,7 +72,7 @@ func refresh_data(reset_option: bool):
     _update_self()
 
 func _update_self():
-    pass # Does nothing right now
+    _adjust_children_positions()
 
 func on_push() -> void:
     visible = true
@@ -76,10 +94,6 @@ func set_option(option: int) -> void:
     if len(items) != 0:
         option = int(clamp(option, 0, len(items) - 1))
         _option = option
-        var xindex = _option % _rowlength
-        # warning-ignore: integer_division
-        var yindex = int(_option / _rowlength)
-        $CurrentOption.position = $ItemList.position + Vector2(xindex * ITEM_BOX_WIDTH, yindex * ITEM_BOX_HEIGHT)
     _update_self()
 
 func handle_input(input_type: String) -> bool:
