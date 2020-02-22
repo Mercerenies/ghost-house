@@ -12,6 +12,7 @@ const ITEM_BOX_WIDTH = 64
 const ITEM_BOX_HEIGHT = 96
 
 var _option: int = 0
+var _rowoffset: int = 0
 
 func get_pause_menu():
     return get_parent()
@@ -28,21 +29,34 @@ func determine_column_length() -> int:
     return ITEM_BOX_PANE_HEIGHT / ITEM_BOX_HEIGHT
 
 func _adjust_children_positions() -> void:
+    var items = get_room().get_player_stats().get_inventory().get_item_list()
     var rowlength = determine_row_length()
+
+    # warning-ignore: integer_division
+    var selected_row = _option / rowlength
+    var onscreen_rowcount = determine_column_length()
+    var total_rowcount = ceil(float(len(items)) / rowlength) as int
+
+    var yoffset_entries = selected_row - int(onscreen_rowcount / 2)
+    yoffset_entries = int(clamp(yoffset_entries, 0, total_rowcount - onscreen_rowcount))
+    var offset = Vector2(0, - yoffset_entries * ITEM_BOX_HEIGHT)
+
+    _rowoffset = yoffset_entries
+
     for index in range($ItemList.get_child_count()):
         var box = $ItemList.get_child(index)
         # warning-ignore: integer_division
         var row: int = index / rowlength
         var col: int = index % rowlength
 
-        var pos = Vector2(col * ITEM_BOX_WIDTH, row * ITEM_BOX_HEIGHT)
+        var pos = offset + Vector2(col * ITEM_BOX_WIDTH, row * ITEM_BOX_HEIGHT)
         box.position = pos
         box.visible = ((pos.y >= 0) and (pos.y < ITEM_BOX_PANE_HEIGHT - ITEM_BOX_HEIGHT))
 
     # warning-ignore: integer_division
     var row: int = _option / rowlength
     var col: int = _option % rowlength
-    $CurrentOption.position = $ItemList.position + Vector2(col * ITEM_BOX_WIDTH, row * ITEM_BOX_HEIGHT)
+    $CurrentOption.position = $ItemList.position + offset + Vector2(col * ITEM_BOX_WIDTH, row * ITEM_BOX_HEIGHT)
 
 func refresh_data(reset_option: bool):
     var player_stats = get_room().get_player_stats()
