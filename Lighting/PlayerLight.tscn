@@ -1,0 +1,19 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Lighting/PlayerLight.gd" type="Script" id=1]
+
+[node name="PlayerLight" type="Node2D"]
+script = ExtResource( 1 )
+
+[node name="Camera2D" type="Camera2D" parent="."]
+offset = Vector2( 16, 16 )
+current = true
+drag_margin_left = 0.0
+drag_margin_top = 0.0
+drag_margin_right = 0.0
+drag_margin_bottom = 0.0
+
+[node name="DarkBox" type="Polygon2D" parent="."]
+z_index = -1
+color = Color( 0, 0, 0, 0.752941 )
+polygon = PoolVector2Array( -668, 357, 645, 385, 574, -470, -672, -452 )

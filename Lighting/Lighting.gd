@@ -12,6 +12,9 @@ func get_room():
 func get_darkbox():
     return $Viewport/DarkBox
 
+func add_light(light: Node2D) -> void:
+    $Viewport.add_child(light)
+
 func find_player():
     var marked = get_room().get_marked_entities()
     if Mark.PLAYER in marked:
