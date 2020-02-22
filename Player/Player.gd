@@ -3,6 +3,9 @@ extends MobileEntity
 signal player_moved(speed)
 
 const OutlineMaterial = preload("Outline.tres")
+const PlayerLight = preload("res://Lighting/PlayerLight.tscn")
+
+var _lighting = null
 
 var base_speed: float
 var stamina_recovery_rate: float = 10
@@ -84,6 +87,14 @@ func _process(delta: float) -> void:
     else:
         get_sprite().modulate.a = 1.0
 
+func set_position(value: Vector2) -> void:
+    if _lighting != null and _lighting.is_inside_tree():
+        _lighting.position = value
+        # Don't know why this is needed, but it fixes one-frame lag.
+        # See: https://godotengine.org/qa/6197/how-to-stop-camera-lag
+        _lighting.get_node("Camera2D").align()
+    .set_position(value)
+
 func get_view_bounds() -> Rect2:
     var viewport = get_viewport()
     var center = $Camera2D.global_position + $Camera2D.offset
@@ -130,3 +141,13 @@ func _on_PlayerStatusEffects_status_effects_changed():
         sprite.material = OutlineMaterial
     else:
         sprite.material = null
+
+func _on_Player_tree_entered():
+    _lighting = PlayerLight.instance()
+    _lighting.position = get_position()
+    get_room().get_lighting().add_light(_lighting)
+
+func _on_Player_tree_exiting():
+    if _lighting != null and _lighting.is_inside_tree():
+        _lighting.queue_free()
+        _lighting = null
