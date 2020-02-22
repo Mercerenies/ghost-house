@@ -11,7 +11,6 @@ const ITEM_BOX_PANE_HEIGHT = 388
 const ITEM_BOX_WIDTH = 64
 const ITEM_BOX_HEIGHT = 96
 
-var _rowlength: int = 0
 var _option: int = 0
 
 func get_pause_menu():
@@ -20,20 +19,29 @@ func get_pause_menu():
 func get_room():
     return get_pause_menu().get_room()
 
+func determine_row_length() -> int:
+    # warning-ignore: integer_division
+    return ITEM_BOX_PANE_WIDTH / ITEM_BOX_WIDTH
+
+func determine_column_length() -> int:
+    # warning-ignore: integer_division
+    return ITEM_BOX_PANE_HEIGHT / ITEM_BOX_HEIGHT
+
 func _adjust_children_positions() -> void:
+    var rowlength = determine_row_length()
     for index in range($ItemList.get_child_count()):
         var box = $ItemList.get_child(index)
         # warning-ignore: integer_division
-        var row: int = index / _rowlength
-        var col: int = index % _rowlength
+        var row: int = index / rowlength
+        var col: int = index % rowlength
 
         var pos = Vector2(col * ITEM_BOX_WIDTH, row * ITEM_BOX_HEIGHT)
         box.position = pos
         box.visible = ((pos.y >= 0) and (pos.y < ITEM_BOX_PANE_HEIGHT - ITEM_BOX_HEIGHT))
 
     # warning-ignore: integer_division
-    var row: int = _option / _rowlength
-    var col: int = _option % _rowlength
+    var row: int = _option / rowlength
+    var col: int = _option % rowlength
     $CurrentOption.position = $ItemList.position + Vector2(col * ITEM_BOX_WIDTH, row * ITEM_BOX_HEIGHT)
 
 func refresh_data(reset_option: bool):
@@ -42,9 +50,6 @@ func refresh_data(reset_option: bool):
 
     $Label.visible = (len(items) == 0)
     $CurrentOption.visible = (len(items) != 0)
-
-    # warning-ignore: integer_division
-    _rowlength = int(ITEM_BOX_PANE_WIDTH / ITEM_BOX_WIDTH)
 
     for box in $ItemList.get_children():
         box.queue_free()
@@ -87,11 +92,12 @@ func set_option(option: int) -> void:
     _update_self()
 
 func handle_input(input_type: String) -> bool:
+    var rowlength = determine_row_length()
     match input_type:
         "ui_down":
-            set_option(get_option() + _rowlength)
+            set_option(get_option() + rowlength)
         "ui_up":
-            set_option(get_option() - _rowlength)
+            set_option(get_option() - rowlength)
         "ui_left":
             set_option(get_option() - 1)
         "ui_right":
