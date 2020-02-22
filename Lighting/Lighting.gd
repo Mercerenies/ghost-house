@@ -13,6 +13,9 @@ func get_darkbox():
     return $Viewport/DarkBox
 
 func find_player():
+    var marked = get_room().get_marked_entities()
+    if Mark.PLAYER in marked:
+        return marked[Mark.PLAYER]
     for ent in get_room().get_entities():
         if ent is Player:
             return ent

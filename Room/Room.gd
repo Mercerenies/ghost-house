@@ -64,6 +64,9 @@ func get_pause_menu():
 func get_ghost_database():
     return $Info/GhostDatabase
 
+func get_lighting():
+    return $Lighting
+
 func get_entities() -> Array:
     return $Entities.get_children()
 
