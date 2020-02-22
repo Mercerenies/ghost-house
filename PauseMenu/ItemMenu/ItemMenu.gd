@@ -29,6 +29,7 @@ func _adjust_children_positions() -> void:
 
         var pos = Vector2(col * ITEM_BOX_WIDTH, row * ITEM_BOX_HEIGHT)
         box.position = pos
+        box.visible = ((pos.y >= 0) and (pos.y < ITEM_BOX_PANE_HEIGHT - ITEM_BOX_HEIGHT))
 
     # warning-ignore: integer_division
     var row: int = _option / _rowlength
@@ -47,21 +48,10 @@ func refresh_data(reset_option: bool):
 
     for box in $ItemList.get_children():
         box.queue_free()
-    var xpos = 0
-    var ypos = 0
-    var startindex = -1
-    for index in range(len(items)):
-        var item = items[index]
+    for item in items:
         var box = ItemBox.instance()
         box.set_item(item)
-        box.position = Vector2(xpos, ypos)
-        box.visible = ((ypos >= 0) and (ypos < ITEM_BOX_PANE_HEIGHT - ITEM_BOX_HEIGHT))
         $ItemList.add_child(box)
-        xpos += ITEM_BOX_WIDTH
-        if xpos > ITEM_BOX_PANE_WIDTH - ITEM_BOX_WIDTH:
-            xpos = 0
-            ypos += ITEM_BOX_HEIGHT # TODO Enable scrolling if there are too many items (/////)
-            startindex = index
 
     if reset_option:
         set_option(0)
