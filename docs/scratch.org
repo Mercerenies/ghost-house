@@ -229,7 +229,7 @@
    corner of the screen and wanders around. Relatively harmless and
    runs away from the player. If cornered may attack.
 * LIGHTING REVAMP
-  1. [ ] Disable the old lighting system
+  1. [X] Disable the old lighting system
   2. [ ] Individual nodes for different types of lighting
   3. [ ] Torches to use new lighting
   4. [ ] All other furniture to new lighting

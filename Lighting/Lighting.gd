@@ -1,6 +1,7 @@
 extends Node2D
 
 const Player = preload("res://Player/Player.gd")
+const Desaturate = preload("Desaturate.tres")
 
 func _ready():
     pass
@@ -18,7 +19,7 @@ func find_player():
     return null
 
 func _process(_delta: float) -> void:
-    var player = find_player()
-    if player != null:
-        position = player.position
+    #var player = find_player()
+    #if player != null:
+    #    position = player.position
     update()
