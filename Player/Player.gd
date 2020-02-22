@@ -80,9 +80,9 @@ func _process(delta: float) -> void:
         var recovery_rate = stamina_recovery_rate * effects.stamina_recovery_rate_multiplier()
         stats.add_player_stamina(recovery_rate * delta)
     if stats.has_iframe():
-        modulate.a = 0.5
+        get_sprite().modulate.a = 0.5
     else:
-        modulate.a = 1.0
+        get_sprite().modulate.a = 1.0
 
 func get_view_bounds() -> Rect2:
     var viewport = get_viewport()
@@ -93,13 +93,13 @@ func lighting() -> Array:
     return [
         {
             "type": "circle",
-            "position": position + Vector2(16, 16),
+            "position": get_position() + Vector2(16, 16),
             "radius": 64,
             "color": Color(1, 1, 1, 1)
         },
         {
             "type": "flashlight",
-            "position": position + Vector2(16, 16) + Vector2(-16, 0).rotated(get_direction() * PI / 2.0),
+            "position": get_position() + Vector2(16, 16) + Vector2(-16, 0).rotated(get_direction() * PI / 2.0),
             "range": Vector2(192, 0).rotated(get_direction() * PI / 2.0),
             "fov": PI * 0.45,
             "color": Color(1, 1, 1, 1)
@@ -111,7 +111,7 @@ func naturally_emits_light() -> bool:
 
 func flashlight_triangle() -> PoolVector2Array:
     var arr = PoolVector2Array()
-    var base_point = position + Vector2(16, 16) + Vector2(-16, 0).rotated(get_direction() * PI / 2.0)
+    var base_point = get_position() + Vector2(16, 16) + Vector2(-16, 0).rotated(get_direction() * PI / 2.0)
     var range_ = Vector2(192, 0).rotated(get_direction() * PI / 2.0)
     var fov = PI * 0.45
     arr.append(base_point)
