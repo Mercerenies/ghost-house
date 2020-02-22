@@ -12,7 +12,6 @@ const ITEM_BOX_WIDTH = 64
 const ITEM_BOX_HEIGHT = 96
 
 var _option: int = 0
-var _rowoffset: int = 0
 
 func get_pause_menu():
     return get_parent()
@@ -41,7 +40,8 @@ func _adjust_children_positions() -> void:
     yoffset_entries = int(clamp(yoffset_entries, 0, total_rowcount - onscreen_rowcount))
     var offset = Vector2(0, - yoffset_entries * ITEM_BOX_HEIGHT)
 
-    _rowoffset = yoffset_entries
+    $UpArrowSprite.visible = (yoffset_entries > 0)
+    $DownArrowSprite.visible = (yoffset_entries < total_rowcount - onscreen_rowcount)
 
     for index in range($ItemList.get_child_count()):
         var box = $ItemList.get_child(index)
