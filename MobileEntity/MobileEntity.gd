@@ -36,10 +36,10 @@ func try_move_to(dest: Vector2) -> bool:
     return false
 
 func position_self() -> void:
-    var current_cell = Vector2(floor(position.x / 32), floor(position.y / 32))
+    var current_cell = Vector2(floor(get_position().x / 32), floor(get_position().y / 32))
     get_room().set_entity_cell(current_cell, self)
     cell = current_cell
-    target_pos = position
+    target_pos = get_position()
 
 func unposition_self() -> void:
     get_room().set_entity_cell(cell, null)
@@ -65,13 +65,13 @@ func _ready() -> void:
 
 func _process(delta: float) -> void:
     sprite.frame = get_direction() * 4
-    if position != target_pos:
+    if get_position() != target_pos:
         sprite.frame += _image_index
 
-    if (target_pos - position).length() <= speed * delta:
-        position = target_pos
+    if (target_pos - get_position()).length() <= speed * delta:
+        set_position(target_pos)
     else:
-        position += (target_pos - position).normalized() * speed * delta
+        set_position(get_position() + (target_pos - position).normalized() * speed * delta)
 
 func _on_Timer_timeout() -> void:
     _image_index = (_image_index + 1) % 4
