@@ -4,7 +4,13 @@ const Player = preload("res://Player/Player.gd")
 const Desaturate = preload("Desaturate.tres")
 
 func _ready():
-    pass
+    var player = find_player()
+    var sprite = Sprite.new()
+    sprite.texture = $Viewport.get_texture()
+    sprite.z_index = 1
+    sprite.material = Desaturate
+    sprite.position = Vector2(16, 16)
+    player.add_child(sprite)
 
 func get_room():
     return get_parent()
