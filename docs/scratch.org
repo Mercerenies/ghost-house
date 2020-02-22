@@ -228,3 +228,13 @@
    No haunted house is complete without one. Ambient. Appears in the
    corner of the screen and wanders around. Relatively harmless and
    runs away from the player. If cornered may attack.
+* LIGHTING REVAMP
+  1. [ ] Disable the old lighting system
+  2. [ ] Individual nodes for different types of lighting
+  3. [ ] Torches to use new lighting
+  4. [ ] All other furniture to new lighting
+  5. [ ] Fairies to new lighting
+  6. [ ] The player to new lighting
+  7. [ ] Status effects on the new DarkBox
+  8. [ ] Remove all of the unused nodes
+  9. [ ] Remove old lighting functions
