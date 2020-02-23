@@ -232,7 +232,7 @@
   1. [X] Disable the old lighting system
   2. [X] Individual nodes for different types of lighting
   3. [X] Torches to use new lighting
-  4. [ ] All other furniture to new lighting
+  4. [X] All other furniture to new lighting
   5. [ ] Fairies to new lighting
   6. [ ] The player to new lighting
   7. [ ] Status effects on the new DarkBox

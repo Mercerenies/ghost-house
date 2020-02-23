@@ -21,5 +21,9 @@ func naturally_emits_light() -> bool:
 
 func chance_of_turning_evil() -> float:
     return 0.10
+
 func get_furniture_name():
     return "FloorLamp"
+
+func on_alpha_updated() -> void:
+    $RadialLightSpawner.get_light().modulate.a = modulate.a
