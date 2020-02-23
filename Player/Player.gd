@@ -153,7 +153,8 @@ func _on_Player_tree_entered():
     var status_effects = get_room().get_player_stats().get_status_effects()
     _lighting = PlayerLight.instance()
     _lighting.position = get_position()
-    status_effects.connect("status_effects_changed", _lighting, "_on_PlayerStatusEffects_status_effects_changed")
+    var result = status_effects.connect("status_effects_changed", _lighting, "_on_PlayerStatusEffects_status_effects_changed")
+    assert(result == OK)
     get_room().get_lighting().add_light(_lighting)
 
 func _on_Player_tree_exiting():
