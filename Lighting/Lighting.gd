@@ -26,9 +26,3 @@ func find_player():
         if ent is Player:
             return ent
     return null
-
-func _process(_delta: float) -> void:
-    #var player = find_player()
-    #if player != null:
-    #    position = player.position
-    update()
