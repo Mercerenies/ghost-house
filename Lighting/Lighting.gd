@@ -15,9 +15,6 @@ func _ready():
 func get_room():
     return get_parent()
 
-func get_darkbox():
-    return $Viewport/DarkBox
-
 func add_light(light: Node2D) -> void:
     $Viewport.add_child(light)
 

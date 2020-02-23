@@ -83,9 +83,6 @@ func _ready():
         var player = get_marked_entities()['player']
         result = effects.connect("status_effects_changed", player, "_on_PlayerStatusEffects_status_effects_changed")
         assert(result == OK)
-    var darkbox = $Lighting.get_darkbox()
-    result = effects.connect("status_effects_changed", darkbox, "_on_PlayerStatusEffects_status_effects_changed")
-    assert(result == OK)
 
 func _on_DialogueBox_do_action(action, arg):
     match action:
