@@ -14,5 +14,6 @@ texture = ExtResource( 2 )
 hframes = 4
 
 [node name="RadialLightSpawner" parent="." instance=ExtResource( 3 )]
+position = Vector2( 16, 16 )
 radius = 23.0
 [connection signal="frame_changed" from="Sprite" to="." method="_on_Sprite_frame_changed"]
