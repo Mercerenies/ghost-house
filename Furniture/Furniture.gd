@@ -57,8 +57,10 @@ func turn_evil() -> void:
         fairy_spawner.activate()
         vars['flying_fairy'] = true
     else:
+        var vanish = FurnitureVanishEffect.instance()
+        add_child(vanish)
+        vanish.connect("alpha_changed", self, "_on_FurnitureVanishEffect_alpha_changed")
         vars['vanishing'] = true
-        add_child(FurnitureVanishEffect.instance())
 
 func evil_drop_sprite() -> Sprite:
     return $Sprite as Sprite # God, I hope this exists. If it doesn't, override this method!
@@ -69,3 +71,9 @@ func get_furniture_name():
 
 func get_shim_channel() -> int:
     return ShimChannel.NoShim
+
+func on_alpha_updated() -> void:
+    pass
+
+func _on_FurnitureVanishEffect_alpha_changed(_new_alpha: float) -> void:
+    on_alpha_updated()

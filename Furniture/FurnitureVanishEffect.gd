@@ -1,5 +1,7 @@
 extends Node
 
+signal alpha_changed(new_alpha)
+
 var increase_in_alpha: float = 1.2
 var decrease_in_alpha: float = 0.4
 
@@ -11,4 +13,6 @@ func _process(delta: float) -> void:
     var dir_a = clamp((4.0 / PI) * (PI / 2.0 - dir), 0, 1)
     var target_a = round(max(distance_a, dir_a))
     var change_a = increase_in_alpha if furn.modulate.a < target_a else decrease_in_alpha
-    furn.modulate.a = Util.toward(furn.modulate.a, change_a * delta, target_a)
+    if furn.modulate.a != target_a:
+        furn.modulate.a = Util.toward(furn.modulate.a, change_a * delta, target_a)
+        emit_signal("alpha_changed", furn.modulate.a)
