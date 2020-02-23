@@ -16,8 +16,5 @@ func on_interact() -> void:
 func on_debug_tap() -> void:
     pass
 
-func lighting() -> Array:
-    return []
-
 func naturally_emits_light() -> bool:
     return false

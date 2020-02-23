@@ -236,5 +236,5 @@
   5. [X] Fairies to new lighting
   6. [X] The player to new lighting
   7. [X] Status effects on the new DarkBox
-  8. [ ] Remove all of the unused nodes
-  9. [ ] Remove old lighting functions
+  8. [X] Remove all of the unused nodes
+  9. [X] Remove old lighting functions

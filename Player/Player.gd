@@ -107,23 +107,6 @@ func get_view_bounds() -> Rect2:
     var center = $Camera2D.global_position + $Camera2D.offset
     return Rect2(center - viewport.size / 2, viewport.size)
 
-func lighting() -> Array:
-    return [
-        {
-            "type": "circle",
-            "position": get_position() + Vector2(16, 16),
-            "radius": 64,
-            "color": Color(1, 1, 1, 1)
-        },
-        {
-            "type": "flashlight",
-            "position": get_position() + Vector2(16, 16) + Vector2(-16, 0).rotated(get_direction() * PI / 2.0),
-            "range": Vector2(192, 0).rotated(get_direction() * PI / 2.0),
-            "fov": PI * 0.45,
-            "color": Color(1, 1, 1, 1)
-        }
-    ]
-
 func naturally_emits_light() -> bool:
     return true
 

@@ -180,14 +180,6 @@ func get_light_radius() -> float:
 func set_light_radius(rad: float) -> void:
     light_radius = rad
 
-func lighting() -> Array:
-    return [{
-        "type": "circle",
-        "position": position,
-        "radius": light_radius,
-        "color": Color(1, 1, 1, modulate.a)
-    }]
-
 func naturally_emits_light() -> bool:
     return true
 

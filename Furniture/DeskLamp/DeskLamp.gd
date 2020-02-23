@@ -8,14 +8,6 @@ func _ready() -> void:
 func set_direction(_a: int):
     pass
 
-func lighting() -> Array:
-    return [{
-        "type": "circle",
-        "position": position + Vector2(16, 16),
-        "radius": 32,
-        "color": Color(1, 1, 1, modulate.a)
-    }]
-
 func naturally_emits_light() -> bool:
     return true
 
