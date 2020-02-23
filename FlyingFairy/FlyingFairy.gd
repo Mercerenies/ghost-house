@@ -81,6 +81,10 @@ func _process(delta: float) -> void:
             if modulate.a == 0:
                 queue_free()
 
+    var lighting = $RadialLightSpawner.get_light()
+    if lighting != null and lighting.is_inside_tree():
+        lighting.position = global_position
+
     #hue = fmod(hue + HUE_CHANGE_SPEED * delta, 1)
     #modulate = Color.from_hsv(hue, 1, 1, modulate.a)
 
