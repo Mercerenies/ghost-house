@@ -1,5 +1,10 @@
 extends Node2D
 
+# A helper for RadialLight. Simply make this a direct child of an
+# entity and set its radius to make the entity in question produce
+# radial light. Don't forget to update the radial light's position
+# whenever the entity moves.
+
 const RadialLight = preload("res://Lighting/RadialLight.tscn")
 
 export(float, 0, 128, 1) var radius: float = 16.0
