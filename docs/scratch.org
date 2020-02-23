@@ -234,7 +234,7 @@
   3. [X] Torches to use new lighting
   4. [X] All other furniture to new lighting
   5. [X] Fairies to new lighting
-  6. [ ] The player to new lighting
+  6. [X] The player to new lighting
   7. [ ] Status effects on the new DarkBox
   8. [ ] Remove all of the unused nodes
   9. [ ] Remove old lighting functions

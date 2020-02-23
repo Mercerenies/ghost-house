@@ -1,6 +1,8 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://Lighting/PlayerLight.gd" type="Script" id=1]
+[ext_resource path="res://Lighting/RadialLight.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Lighting/LightingMaterial.tres" type="Material" id=3]
 
 [node name="PlayerLight" type="Node2D"]
 script = ExtResource( 1 )
@@ -17,3 +19,15 @@ drag_margin_bottom = 0.0
 z_index = -1
 color = Color( 0, 0, 0, 0.752941 )
 polygon = PoolVector2Array( -668, 357, 645, 385, 574, -470, -672, -452 )
+
+[node name="RadialLight" parent="." instance=ExtResource( 2 )]
+position = Vector2( 16, 16 )
+radius = 63.0
+
+[node name="Flashlight" type="Node2D" parent="."]
+position = Vector2( 16, 16 )
+
+[node name="Polygon2D" type="Polygon2D" parent="Flashlight"]
+material = ExtResource( 3 )
+offset = Vector2( -16, 0 )
+polygon = PoolVector2Array( 0, 0, 192, -163, 192, 163 )

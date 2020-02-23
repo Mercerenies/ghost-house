@@ -14,6 +14,13 @@ var stamina_dash_cost: float = 5
 func _ready():
     base_speed = speed
     $Sprite.visible = false
+    set_direction(get_direction()) # Normalize and make the flashlight
+                                   # face the right way.
+
+func set_direction(a: int) -> void:
+    if _lighting != null and _lighting.is_inside_tree():
+        _lighting.set_direction(a)
+    .set_direction(a)
 
 func _input_dir_to_dir(v: Vector2) -> int:
     if v == Vector2(1, 0):
