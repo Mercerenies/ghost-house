@@ -8,7 +8,7 @@ var _lighting = null
 func _on_RadialLightSpawner_tree_entered():
     _lighting = RadialLight.instance()
     _lighting.radius = radius
-    _lighting.position = position
+    _lighting.position = global_position
     get_parent().get_room().get_lighting().add_light(_lighting)
 
 func _on_RadialLightSpawner_tree_exiting():
