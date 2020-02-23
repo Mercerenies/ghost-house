@@ -9,6 +9,9 @@ func _ready() -> void:
 
 func set_direction(a: int):
     $Sprite.frame = a % 4
+    $RadialLightSpawner.position = position + Vector2(16, 16) + Vector2(-12, 0).rotated($Sprite.frame * PI / 2.0)
+    if $Sprite.frame == 1:
+        $RadialLightSpawner.position += Vector2(0, -8)
 
 func lighting() -> Array:
     var pos = position + Vector2(16, 16) + Vector2(-12, 0).rotated($Sprite.frame * PI / 2.0)
@@ -30,21 +33,9 @@ func chance_of_turning_evil() -> float:
 func get_furniture_name():
     return "Torch"
 
-func _on_Torch_tree_entered():
-    _lighting = RadialLight.instance()
-    _lighting.radius = 23.0
-    _lighting.position = position + Vector2(16, 16) + Vector2(-12, 0).rotated($Sprite.frame * PI / 2.0)
-    if $Sprite.frame == 1:
-        _lighting.position += Vector2(0, -8)
-    get_room().get_lighting().add_light(_lighting)
-
-func _on_Torch_tree_exiting():
-    if _lighting != null and _lighting.is_inside_tree():
-        _lighting.queue_free()
-        _lighting = null
-
 func _on_Sprite_frame_changed():
-    if _lighting != null and _lighting.is_inside_tree():
-        _lighting.position = position + Vector2(16, 16) + Vector2(-12, 0).rotated($Sprite.frame * PI / 2.0)
+    var lighting = $RadialLightSpawner.get_light()
+    if lighting != null and lighting.is_inside_tree():
+        lighting.position = position + Vector2(16, 16) + Vector2(-12, 0).rotated($Sprite.frame * PI / 2.0)
         if $Sprite.frame == 1:
-            _lighting.position += Vector2(0, -8)
+            lighting.position += Vector2(0, -8)
