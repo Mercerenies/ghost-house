@@ -228,7 +228,14 @@
    No haunted house is complete without one. Ambient. Appears in the
    corner of the screen and wanders around. Relatively harmless and
    runs away from the player. If cornered may attack.
-* LIGHTING REVAMP
+** Interactions
+   In the spirit of streamlining things and making the game not
+   constantly pause for dialogue, I want to minimize the number of
+   times furniture will freeze the game when examining. I'll leave in
+   the generic descriptions, as we might still use them later (with a
+   different action button). But I'll be changing on_interact for lots
+   of types of furniture.
+* DONE LIGHTING REVAMP
   1. [X] Disable the old lighting system
   2. [X] Individual nodes for different types of lighting
   3. [X] Torches to use new lighting
