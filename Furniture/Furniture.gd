@@ -26,7 +26,8 @@ func _ready():
     interaction['evil'] = [
         { "command": "action", "action": "harm_player", "arg": 1 },
         { "command": "action", "action": "furniture_drop", "arg": evil_drop_sprite() },
-        { "command": "say", "text": "Ouch!" }
+#        { "command": "say", "text": "Ouch!" },
+        { "command": "end" },
     ]
     interaction['debug_dump'] = [
         { "command": "dump_vars" }
