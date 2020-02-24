@@ -34,6 +34,7 @@
    + [X] Wardrobe
    + [X] Coffee Table
    + [X] Lamp
+     - [X] Interaction: Turn on / off
    + [X] Kitchen Sink
      - [X] Kitchen Counter Shim
    + [X] Kitchen Counter

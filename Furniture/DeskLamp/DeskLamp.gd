@@ -8,6 +8,13 @@ func _ready() -> void:
 func set_direction(_a: int):
     pass
 
+func on_interact() -> void:
+    if vars['vanishing']:
+        .on_interact()
+    else:
+        $RadialLightSpawner.get_light().visible = not $RadialLightSpawner.get_light().visible
+        # ///// For this and FloorLamp, a visual indicator when it changes
+
 func naturally_emits_light() -> bool:
     return true
 
