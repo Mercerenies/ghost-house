@@ -1,6 +1,7 @@
 extends Furniture
 
 func _ready() -> void:
+    $Sprite.frame = 1
     interaction["idle"] = [
          { "command": "say", "text": "A lamp on a small end table." }
     ]
@@ -12,8 +13,9 @@ func on_interact() -> void:
     if vars['vanishing']:
         .on_interact()
     else:
-        $RadialLightSpawner.get_light().visible = not $RadialLightSpawner.get_light().visible
-        # ///// For this and FloorLamp, a visual indicator when it changes
+        var light = $RadialLightSpawner.get_light()
+        light.visible = not light.visible
+        $Sprite.frame = int(light.visible)
 
 func naturally_emits_light() -> bool:
     return true
