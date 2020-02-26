@@ -63,15 +63,28 @@ func _ready() -> void:
     timer.wait_time = 0.1
     timer.start()
 
+func _move_toward_target(max_distance: float) -> float:
+    if (target_pos - get_position()).length() <= max_distance:
+        set_position(target_pos)
+        return max_distance - (target_pos - get_position()).length()
+    else:
+        set_position(get_position() + (target_pos - get_position()).normalized() * max_distance)
+        return 0.0
+
+func _process_movement(_delta: float) -> void:
+    pass
+
 func _process(delta: float) -> void:
     sprite.frame = get_direction() * 4
     if get_position() != target_pos:
         sprite.frame += _image_index
 
-    if (target_pos - get_position()).length() <= speed * delta:
-        set_position(target_pos)
-    else:
-        set_position(get_position() + (target_pos - position).normalized() * speed * delta)
+    _process_movement(delta)
+    var _movement_left = _move_toward_target(speed * delta)
+    # TODO Use this movement_left
+    #_process_movement(delta)
+    #_move_toward_target(movement_left)
+    #_process_movement(delta)
 
 func _on_Timer_timeout() -> void:
     _image_index = (_image_index + 1) % 4

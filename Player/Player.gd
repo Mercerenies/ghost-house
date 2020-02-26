@@ -54,13 +54,13 @@ func can_move_to(pos: Vector2) -> bool:
         return false
     return .can_move_to(pos)
 
-func _process(delta: float) -> void:
-
-    var stats = get_room().get_player_stats()
-    var effects = stats.get_status_effects()
-    var input_dir = get_input_direction()
-    var is_running = false
+func _process_movement(delta: float) -> void:
     if _can_move_at_all():
+        var stats = get_room().get_player_stats()
+        var effects = stats.get_status_effects()
+        var input_dir = get_input_direction()
+        var is_running = false
+
         if input_dir != Vector2():
             var target_cell = cell + input_dir
             set_direction(_input_dir_to_dir(input_dir))
@@ -73,7 +73,15 @@ func _process(delta: float) -> void:
                 emit_signal("player_moved", speed)
                 if is_running:
                     stats.add_player_stamina(- stamina_dash_cost)
-        elif Input.is_action_just_released("ui_accept"):
+
+    ._process_movement(delta)
+
+func _process(delta: float) -> void:
+
+    var stats = get_room().get_player_stats()
+    var effects = stats.get_status_effects()
+    if _can_move_at_all():
+        if Input.is_action_just_released("ui_accept"):
             var target_cell = cell + Vector2(1, 0).rotated(get_direction() * PI / 2)
             target_cell = Vector2(round(target_cell.x), round(target_cell.y))
             var target_entity = get_room().get_entity_cell(target_cell)
