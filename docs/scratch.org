@@ -236,6 +236,39 @@
    the generic descriptions, as we might still use them later (with a
    different action button). But I'll be changing on_interact for lots
    of types of furniture.
+   + [ ] Twin Bed
+   + [ ] King Bed
+   + [ ] Shower
+   + [ ] Bathtub
+   + [ ] Dining Table
+   + [ ] (Circular) Dining Table
+   + [ ] Mirror
+   + [ ] Automobile
+   + [ ] Bench
+   + [ ] Bookshelf
+   + [ ] Cardboard Box
+   + [ ] Toilet
+   + [ ] Cabinet
+   + [ ] Wardrobe
+   + [ ] Coffee Table
+   + [X] Lamp
+   + [ ] Kitchen Sink
+   + [ ] Kitchen Counter
+   + [ ] Bathroom Sink
+   + [ ] Bathroom Counter
+   + [ ] Washing Machine
+   + [ ] Dryer
+   + [ ] Television
+   + [ ] Recliner
+   + [ ] Sofa
+   + [ ] Dining Chair
+   + [ ] Office Chair
+   + [ ] Dresser
+   + [ ] Stove
+   + [ ] Dishwasher
+   + [ ] Clothes Rack
+   + [ ] Workbench
+   + [ ] Laundry Basket
 * DONE LIGHTING REVAMP
   1. [X] Disable the old lighting system
   2. [X] Individual nodes for different types of lighting
