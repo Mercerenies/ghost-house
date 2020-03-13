@@ -9,13 +9,13 @@ func _ready() -> void:
 func set_direction(_a: int):
     pass
 
-func on_interact() -> void:
-    if vars['vanishing']:
-        .on_interact()
-    else:
-        var light = $RadialLightSpawner.get_light()
-        light.visible = not light.visible
-        $Sprite.frame = int(light.visible)
+# func on_interact() -> void:
+#     if vars['vanishing']:
+#         .on_interact()
+#     else:
+#         var light = $RadialLightSpawner.get_light()
+#         light.visible = not light.visible
+#         $Sprite.frame = int(light.visible)
 
 func naturally_emits_light() -> bool:
     return true

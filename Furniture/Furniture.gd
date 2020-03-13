@@ -34,11 +34,12 @@ func _ready():
     ]
 
 func on_interact() -> void:
-    if not interaction.empty():
-        if vars['vanishing']:
-            get_room().show_dialogue(interaction, "evil", vars)
-        else:
-            get_room().show_dialogue(interaction, "idle", vars)
+    pass # ////
+    #if not interaction.empty():
+    #    if vars['vanishing']:
+    #        get_room().show_dialogue(interaction, "evil", vars)
+    #    else:
+    #        get_room().show_dialogue(interaction, "idle", vars)
 
 func on_debug_tap() -> void:
     get_room().show_dialogue(interaction, "debug_dump", vars)
