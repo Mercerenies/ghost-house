@@ -33,8 +33,26 @@ func _ready():
         { "command": "dump_vars" }
     ]
 
+# Appends the interactions for this furniture to the array argument.
+# Generally, implementations of this method should append
+# FurnitureInteraction objects to the end of the array and then call
+# the super method at the very end, unless there's a very good reason
+# to override the priority of subclasses.
+func _get_interactions_app(out: Array) -> void:
+    pass
+
+# Do NOT override this method. Override _get_interactions_app instead.
+func get_interactions() -> Array:
+    var arr = []
+    _get_interactions_app(arr)
+    return arr
+
 func on_interact() -> void:
-    pass # ////
+    var interactions = get_interactions()
+    for inter in interactions:
+        if inter.is_active():
+            inter.perform_interaction()
+            break
     #if not interaction.empty():
     #    if vars['vanishing']:
     #        get_room().show_dialogue(interaction, "evil", vars)
