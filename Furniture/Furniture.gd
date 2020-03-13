@@ -5,6 +5,7 @@ const FlyingFairySpawner = preload("res://FlyingFairySpawner/FlyingFairySpawner.
 const FurnitureVanishEffect = preload("res://Furniture/FurnitureVanishEffect.tscn")
 const DustCloudInteraction = preload("res://FurnitureInteraction/DustCloudInteraction.gd")
 const EvilAttackInteraction = preload("res://FurnitureInteraction/EvilAttackInteraction.gd")
+const ItemCollectInteraction = preload("res://FurnitureInteraction/ItemCollectInteraction.gd")
 
 enum ShimChannel {
     NoShim = 0,
@@ -20,6 +21,9 @@ var vars: Dictionary = {
     "flying_fairy": false,
 }
 
+# Should be an ItemInstance.
+var stored_item = null
+
 func _init():
     vars['furniture_name']  = get_furniture_name()
 
@@ -29,12 +33,19 @@ func _ready():
         { "command": "dump_vars" }
     ]
 
+func set_stored_item(item) -> void:
+    stored_item = item
+
+func get_stored_item():
+    return stored_item
+
 # Appends the interactions for this furniture to the array argument.
 # Generally, implementations of this method should append
 # FurnitureInteraction objects to the end of the array and then call
 # the super method at the very end, unless there's a very good reason
 # to override the priority of subclasses.
 func _get_interactions_app(out: Array) -> void:
+    out.append(ItemCollectInteraction.new(self))
     out.append(DustCloudInteraction.new(self))
     # This one is prepended because I'd like it to take precedent over
     # all other interactions.
