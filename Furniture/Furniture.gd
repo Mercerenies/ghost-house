@@ -3,6 +3,7 @@ class_name Furniture
 
 const FlyingFairySpawner = preload("res://FlyingFairySpawner/FlyingFairySpawner.tscn")
 const FurnitureVanishEffect = preload("res://Furniture/FurnitureVanishEffect.tscn")
+const DustCloudInteraction = preload("res://FurnitureInteraction/DustCloudInteraction.gd")
 
 enum ShimChannel {
     NoShim = 0,
@@ -39,7 +40,7 @@ func _ready():
 # the super method at the very end, unless there's a very good reason
 # to override the priority of subclasses.
 func _get_interactions_app(out: Array) -> void:
-    pass
+    out.append(DustCloudInteraction.new(self))
 
 # Do NOT override this method. Override _get_interactions_app instead.
 func get_interactions() -> Array:
