@@ -4,6 +4,7 @@ class_name Furniture
 const FlyingFairySpawner = preload("res://FlyingFairySpawner/FlyingFairySpawner.tscn")
 const FurnitureVanishEffect = preload("res://Furniture/FurnitureVanishEffect.tscn")
 const DustCloudInteraction = preload("res://FurnitureInteraction/DustCloudInteraction.gd")
+const EvilAttackInteraction = preload("res://FurnitureInteraction/EvilAttackInteraction.gd")
 
 enum ShimChannel {
     NoShim = 0,
@@ -24,12 +25,6 @@ func _init():
 
 func _ready():
     # DEBUG CODE
-    interaction['evil'] = [
-        { "command": "action", "action": "harm_player", "arg": 1 },
-        { "command": "action", "action": "furniture_drop", "arg": evil_drop_sprite() },
-#        { "command": "say", "text": "Ouch!" },
-        { "command": "end" },
-    ]
     interaction['debug_dump'] = [
         { "command": "dump_vars" }
     ]
@@ -41,6 +36,9 @@ func _ready():
 # to override the priority of subclasses.
 func _get_interactions_app(out: Array) -> void:
     out.append(DustCloudInteraction.new(self))
+    # This one is prepended because I'd like it to take precedent over
+    # all other interactions.
+    out.push_front(EvilAttackInteraction.new(self))
 
 # Do NOT override this method. Override _get_interactions_app instead.
 func get_interactions() -> Array:
@@ -54,11 +52,6 @@ func on_interact() -> void:
         if inter.is_active():
             inter.perform_interaction()
             break
-    #if not interaction.empty():
-    #    if vars['vanishing']:
-    #        get_room().show_dialogue(interaction, "evil", vars)
-    #    else:
-    #        get_room().show_dialogue(interaction, "idle", vars)
 
 func on_debug_tap() -> void:
     get_room().show_dialogue(interaction, "debug_dump", vars)
