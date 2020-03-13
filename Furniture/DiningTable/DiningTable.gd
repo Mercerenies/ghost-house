@@ -4,7 +4,6 @@ func _ready() -> void:
     interaction["idle"] = [
         { "command": "say", "text": "A dining room table." }
     ]
-    #set_dims(Vector2(2, 2))
 
 func set_dims(v: Vector2) -> void:
     # Dims of this object can be set freely, subject to the constraint

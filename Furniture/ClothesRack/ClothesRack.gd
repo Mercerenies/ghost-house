@@ -8,7 +8,6 @@ func _ready() -> void:
          { "command": "say", "text": "A rack with several articles of clothing hanging." }
     ]
     $FlyingClothesSpawner.set_entity(self)
-    set_dims(Vector2(2, 1))
 
 func set_direction(a: int):
     $Sprite.frame = (a + 1) % 2

@@ -4,7 +4,6 @@ func _ready() -> void:
     interaction["idle"] = [
          { "command": "say", "text": "A large cabinet above a set of drawers." }
     ]
-    set_dims(Vector2(2, 1))
 
 func set_direction(a: int):
     $Sprite.frame = (5 - a) % 4
