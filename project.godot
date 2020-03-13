@@ -50,6 +50,11 @@ _global_script_classes=[ {
 "path": "res://Furniture/Furniture.gd"
 }, {
 "base": "Reference",
+"class": "FurnitureInteraction",
+"language": "GDScript",
+"path": "res://FurnitureInteraction/FurnitureInteraction.gd"
+}, {
+"base": "Reference",
 "class": "FurniturePlacement",
 "language": "GDScript",
 "path": "res://Furniture/FurniturePlacement.gd"
@@ -143,6 +148,7 @@ _global_script_class_icons={
 "Entity": "",
 "FloatingEntity": "",
 "Furniture": "",
+"FurnitureInteraction": "",
 "FurniturePlacement": "",
 "GeneratorData": "",
 "GhostInfo": "",
