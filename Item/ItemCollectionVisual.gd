@@ -6,7 +6,7 @@ var fading_out: bool = false
 var velocity: Vector2
 
 func _ready() -> void:
-    velocity = Vector2(-1, 0).rotated(randf() * PI)
+    velocity = Vector2(-16, 0).rotated(randf() * PI / 2 + PI / 4)
 
 func _process(delta: float) -> void:
     position += velocity * delta
