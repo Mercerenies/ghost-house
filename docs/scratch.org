@@ -269,6 +269,10 @@
    + [ ] Clothes Rack
    + [ ] Workbench
    + [ ] Laundry Basket
+** Resizeable Window
+   TODO: Handle this correctly. At the moment, I just disabled
+   resizing the window. I want the game to, I don't know, stretch,
+   maybe? We'll see.
 * DONE LIGHTING REVAMP
   1. [X] Disable the old lighting system
   2. [X] Individual nodes for different types of lighting

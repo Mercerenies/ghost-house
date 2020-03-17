@@ -185,6 +185,10 @@ StatementPrinter="*res://Singleton/StatementPrinter.gd"
 GhostColors="*res://Singleton/GhostColors.gd"
 FurnitureShim="*res://RoomTransition/FurnitureShim.gd"
 
+[display]
+
+window/size/resizable=false
+
 [input]
 
 ui_cancel={
