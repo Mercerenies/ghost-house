@@ -28,25 +28,34 @@
    + [X] Bookshelf
      - [X] "Flying books" mode
    + [X] Cardboard Box
+     - [X] Interaction: Items
    + [ ] Desk
    + [X] Toilet
    + [X] Cabinet
+     - [X] Interaction: Items
    + [X] Wardrobe
+     - [X] Interaction: Items
    + [X] Coffee Table
    + [X] Lamp
      - [X] Interaction: Turn on / off
    + [X] Kitchen Sink
      - [X] Kitchen Counter Shim
+     - [X] Interaction: Items
    + [X] Kitchen Counter
      - [X] Kitchen Counter Shim
+     - [X] Interaction: Items
    + [X] Bathroom Sink
      - [X] Bathroom Counter Shim
+     - [X] Interaction: Items
    + [X] Bathroom Counter
      - [X] Bathroom Counter Shim
+     - [X] Interaction: Items
    + [X] Washing Machine
      - [X] "Sliding furniture" mode
+     - [X] Interaction: Items
    + [X] Dryer
      - [X] "Sliding furniture" mode
+     - [X] Interaction: Items
    + [X] Television
    + [X] Recliner
      - [X] "Flying furniture" mode
@@ -56,16 +65,22 @@
    + [X] Office Chair
      - [X] "Flying furniture" mode
    + [X] Dresser
+     - [X] Interaction: Items
    + [X] Stove
      - [X] Kitchen Counter Shim
+     - [X] Interaction: Items
    + [X] Dishwasher
      - [X] Kitchen Counter Shim
+     - [X] Interaction: Items
    + [X] Torch
    + [X] Clothes Rack
      - [X] "Flying clothes" mode
+     - [X] Interaction: Items
    + [X] Workbench
+     - [X] Interaction: Items
    + [X] Laundry Basket
      - [X] "Flying clothes" mode
+     - [X] Interaction: Items
 * ROOM TYPES
   + [X] Hallway
     + [X] Edge
@@ -247,29 +262,44 @@
    + [ ] Automobile
    + [ ] Bench
    + [ ] Bookshelf
-   + [ ] Cardboard Box
+   + [X] Cardboard Box
    + [ ] Toilet
-   + [ ] Cabinet
-   + [ ] Wardrobe
+   + [X] Cabinet
+   + [X] Wardrobe
    + [ ] Coffee Table
    + [X] Lamp
-   + [ ] Kitchen Sink
-   + [ ] Kitchen Counter
-   + [ ] Bathroom Sink
-   + [ ] Bathroom Counter
-   + [ ] Washing Machine
-   + [ ] Dryer
+   + [X] Kitchen Sink
+   + [X] Kitchen Counter
+   + [X] Bathroom Sink
+   + [X] Bathroom Counter
+   + [-] Washing Machine
+     - [X] Items
+     - [ ] ???
+   + [-] Dryer
+     - [X] Items
+     - [ ] ???
    + [ ] Television
    + [ ] Recliner
    + [ ] Sofa
    + [ ] Dining Chair
    + [ ] Office Chair
-   + [ ] Dresser
-   + [ ] Stove
-   + [ ] Dishwasher
-   + [ ] Clothes Rack
-   + [ ] Workbench
-   + [ ] Laundry Basket
+   + [X] Dresser
+   + [-] Stove
+     - [X] Items
+     - [ ] ???
+   + [-] Dishwasher
+     - [X] Items
+     - [ ] ???
+   + [X] Clothes Rack
+   + [-] Workbench
+     - [X] Items
+     - [ ] ???
+   + [-] Laundry Basket
+     - [X] Items
+     - [ ] ???
+   TODO: We still need to do the tags fully. I'm just putting generic
+   ones in there right now. I'll fill them out fully when there's more
+   items to distinguish between.
 ** Resizeable Window
    TODO: Handle this correctly. At the moment, I just disabled
    resizing the window. I want the game to, I don't know, stretch,

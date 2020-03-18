@@ -11,3 +11,9 @@ func set_direction(a: int):
 
 func get_furniture_name():
     return "LongCabinet"
+
+func get_storage_chance() -> float:
+    return 1.5
+
+func get_storage_tags() -> Array:
+    return [CollectibleTag.SHORT_TERM, CollectibleTag.LONG_TERM, CollectibleTag.IMMEDIATE]

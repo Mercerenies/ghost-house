@@ -29,3 +29,9 @@ func turn_evil() -> void:
             $Sprite.frame = 1
     else:
         .turn_evil()
+
+func get_storage_chance() -> float:
+    return 0.2
+
+func get_storage_tags() -> Array:
+    return [CollectibleTag.SHORT_TERM, CollectibleTag.LONG_TERM, CollectibleTag.IMMEDIATE]

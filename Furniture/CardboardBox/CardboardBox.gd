@@ -14,3 +14,9 @@ func set_direction(_a: int):
 
 func get_furniture_name():
     return "CardboardBox"
+
+func get_storage_chance() -> float:
+    return 2.0
+
+func get_storage_tags() -> Array:
+    return [CollectibleTag.SHORT_TERM, CollectibleTag.LONG_TERM, CollectibleTag.IMMEDIATE]

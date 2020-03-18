@@ -16,3 +16,9 @@ func get_shim_channel() -> int:
     if vars["vanishing"]:
         return ShimChannel.NoShim
     return ShimChannel.KitchenCounterNS if get_dims().y == 2 else ShimChannel.KitchenCounterWE
+
+func get_storage_chance() -> float:
+    return 1.0
+
+func get_storage_tags() -> Array:
+    return [CollectibleTag.SHORT_TERM, CollectibleTag.LONG_TERM, CollectibleTag.IMMEDIATE]
