@@ -34,3 +34,6 @@ func get_tags() -> Array:
 
 func get_actions() -> Array:
     return _item.get_actions(self)
+
+func copy():
+    return get_script().new(_item, Util.deep_copy(_metadata))

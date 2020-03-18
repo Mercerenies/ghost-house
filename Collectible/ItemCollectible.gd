@@ -22,7 +22,11 @@ func perform_collection(furniture) -> bool:
     visual.position = (furniture.get_dims() * 32) / 2
     furniture.add_child(visual)
 
-    if inv.add_item(item):
+    # We copy the item here to ensure that this ItemCollectible
+    # remains immutable, even if the player or the player's inventory
+    # later modifies the ItemInstance. This allows ItemCollectible
+    # instances to be shared across different articles of furniture.
+    if inv.add_item(item.copy()):
         return true
     else:
         visual.show_no_room_message()
