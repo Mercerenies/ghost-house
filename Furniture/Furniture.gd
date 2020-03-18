@@ -22,7 +22,7 @@ var vars: Dictionary = {
 }
 
 # Should be an ItemInstance.
-var stored_item = null
+var storage = null
 
 func _init():
     vars['furniture_name']  = get_furniture_name()
@@ -33,11 +33,11 @@ func _ready():
         { "command": "dump_vars" }
     ]
 
-func set_stored_item(item) -> void:
-    stored_item = item
+func set_storage(stor) -> void:
+    storage = stor
 
-func get_stored_item():
-    return stored_item
+func get_storage():
+    return storage
 
 # Appends the interactions for this furniture to the array argument.
 # Generally, implementations of this method should append
