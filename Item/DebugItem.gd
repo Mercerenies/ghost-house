@@ -22,6 +22,9 @@ func get_description(_instance) -> String:
 func get_icon_index(_instance) -> int:
     return 1
 
+func get_tags(_instance) -> Array:
+   return [ItemTag.DEBUG]
+
 func _get_actions_app(out: Array, instance):
     out.append(ACTION_USE)
     out.append(ACTION_DROP)

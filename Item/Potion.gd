@@ -30,6 +30,9 @@ func get_description(instance) -> String:
 func get_icon_index(_instance) -> int:
     return 2
 
+func get_tags(_instance) -> Array:
+   return [ItemTag.SHORT_TERM]
+
 func _get_actions_app(out: Array, instance):
     out.append(ACTION_DRINK)
     out.append(ACTION_DROP)

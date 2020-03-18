@@ -31,6 +31,9 @@ func get_description(_instance) -> String:
 func get_icon_index(_instance) -> int:
     return 0
 
+func get_tags(_instance) -> Array:
+   return []
+
 # Appends the actions for this item to the array argument.
 func _get_actions_app(_out: Array, _instance) -> void:
     pass
