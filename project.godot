@@ -10,6 +10,11 @@ config_version=4
 
 _global_script_classes=[ {
 "base": "Node",
+"class": "CollectibleTag",
+"language": "GDScript",
+"path": "res://Collectible/CollectibleTag.gd"
+}, {
+"base": "Node",
 "class": "DialogueConstants",
 "language": "GDScript",
 "path": "res://DialogueBox/DialogueConstants.gd"
@@ -85,11 +90,6 @@ _global_script_classes=[ {
 "path": "res://Item/ItemInstance.gd"
 }, {
 "base": "Node",
-"class": "ItemTag",
-"language": "GDScript",
-"path": "res://Item/ItemTag.gd"
-}, {
-"base": "Node",
 "class": "Mark",
 "language": "GDScript",
 "path": "res://Room/Mark.gd"
@@ -145,6 +145,7 @@ _global_script_classes=[ {
 "path": "res://StatusEffect/StatusInstance.gd"
 } ]
 _global_script_class_icons={
+"CollectibleTag": "",
 "DialogueConstants": "",
 "DialogueEntity": "",
 "EdgeBasicFurniturePlacement": "",
@@ -160,7 +161,6 @@ _global_script_class_icons={
 "Item": "",
 "ItemCodex": "",
 "ItemInstance": "",
-"ItemTag": "",
 "Mark": "",
 "MobileEntity": "",
 "OutlinedPolygon2D": "",

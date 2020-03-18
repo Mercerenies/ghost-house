@@ -1,5 +1,5 @@
 extends Node
-class_name ItemTag
+class_name CollectibleTag
 
 enum {
     # Essential items are potential blockers for completion of the
