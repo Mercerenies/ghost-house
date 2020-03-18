@@ -7,6 +7,7 @@ extends Reference
 const GeneratorGrid = preload("res://GeneratorGrid/GeneratorGrid.gd")
 const GeneratorPlacementHelper = preload("res://GeneratorPlacementHelper/GeneratorPlacementHelper.gd")
 const ItemCollectible = preload("res://Collectible/ItemCollectible.gd")
+const HealthCollectible = preload("res://Collectible/HealthCollectible.gd")
 
 const HallwayData = GeneratorData.HallwayData
 const RoomData = GeneratorData.RoomData
@@ -34,4 +35,7 @@ func run() -> void:
         for j in range(_room.get_room_bounds().size.y):
             var furn = _room.get_entity_cell(Vector2(i, j))
             if furn is Furniture:
-                furn.set_storage(ItemCollectible.new(ItemInstance.new(ItemCodex.get_item(ItemCodex.ID_DebugItem), null)))
+                #furn.set_storage(ItemCollectible.new(ItemInstance.new(ItemCodex.get_item(ItemCodex.ID_DebugItem), null)))
+                furn.set_storage(HealthCollectible.new())
+
+                # ///// Make this actually smart and put the right things in the right places

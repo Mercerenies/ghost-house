@@ -14,4 +14,7 @@ enum {
     # Debug items are, as the name implies, intended for debug use
     # only and should not appear in-game in production.
     DEBUG = 153,
+    # Immediates are collectibles which trigger an immediate effect
+    # and then disappear.
+    IMMEDIATE = 154,
 }
