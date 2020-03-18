@@ -24,10 +24,16 @@
           "description": "The percentage of furniture that will be turned evil in some form.",
           "minimum": 0,
           "maximum": 1
+        },
+        "percent_storage": {
+          "type": "number",
+          "description": "The percentage of eligible furniture that will have some useful item stored in it.",
+          "minimum": 0,
+          "maximum": 1
         }
       },
       "additionalProperties": false,
-      "required": ["width", "height", "percent_evil"]
+      "required": ["width", "height", "percent_evil", "percent_storage"]
     },
     "ambient_enemies": {
       "type": "array",
