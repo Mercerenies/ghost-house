@@ -27,8 +27,26 @@ func get_description(instance) -> String:
         text += " (Length Indefinite)"
     return text
 
-func get_icon_index(_instance) -> int:
-    return 2
+func get_icon_index(instance) -> int:
+    var id = instance.get_metadata()['status_id']
+    match id:
+        StatusEffectCodex.ID_TiredEffect:
+            return 6
+        StatusEffectCodex.ID_HyperEffect:
+            return 3
+        StatusEffectCodex.ID_InvincibleEffect:
+            return 5
+        StatusEffectCodex.ID_BlindedEffect:
+            return 7
+        StatusEffectCodex.ID_NightVisionEffect:
+            return 4
+        StatusEffectCodex.ID_SlowedEffect:
+            return 8
+        _:
+            # This is not just a backup case; icon 2 is actually used
+            # if the potion is for a debug-only status effect such as
+            # ID_DebugEffect.
+            return 2
 
 func get_tags(_instance) -> Array:
    return [CollectibleTag.SHORT_TERM]
