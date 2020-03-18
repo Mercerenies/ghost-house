@@ -29,5 +29,8 @@ func get_description() -> String:
 func get_icon_index() -> int:
     return _item.get_icon_index(self)
 
+func get_tags() -> Array:
+    return _item.get_tags(self)
+
 func get_actions() -> Array:
     return _item.get_actions(self)
