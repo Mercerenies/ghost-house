@@ -177,6 +177,7 @@
      - [X] Bookshelves that spawn books to fly at you.
      - [X] Fairies that emit light and "hide" in furniture.
      - [X] Washers and dryers fling themselves at you.
+     - [X] Clothing Racks that have haunted clothes which chase you.
 ** DONE Shadow Players
   + Appears randomly several steps behind the player, mocks the
     player's movements at a relatively slow fixed rate in an attempt
