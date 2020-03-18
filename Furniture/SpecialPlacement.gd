@@ -22,15 +22,7 @@ class WeightedDistr extends SpecialPlacementManager:
         _values = values
 
     func determine_placements(_size: Vector2) -> Array:
-        var total = 0
-        for v in _values:
-            total += v["weight"]
-        var choice = randi() % int(total)
-        for v in _values:
-            choice -= v["weight"]
-            if choice < 0:
-                return v["result"]
-        return [] # This shouldn't happen
+        return Util.weighted_choose(_values)
 
 class Trivial extends SpecialPlacementManager:
     var _values: Array

@@ -68,3 +68,16 @@ func deep_copy(obj):
     if obj is Array:
         return map_values(self, "deep_copy", obj)
     return obj
+
+# Each entry should be { "result": result, "weight": weight }, where
+# the weights are nonnegative integers.
+func weighted_choose(values: Array):
+    var total = 0
+    for v in values:
+        total += v["weight"]
+    var choice = randi() % int(total)
+    for v in values:
+        choice -= v["weight"]
+        if choice < 0:
+            return v["result"]
+    return null # This shouldn't happen
