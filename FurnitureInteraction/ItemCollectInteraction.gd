@@ -3,7 +3,6 @@ extends FurnitureInteraction
 const ItemCollectionVisual = preload("res://Item/ItemCollectionVisual.tscn")
 
 var furniture
-var interaction
 
 func _init(furniture) -> void:
     self.furniture = furniture
