@@ -5,7 +5,7 @@ const FlyingFairySpawner = preload("res://FlyingFairySpawner/FlyingFairySpawner.
 const FurnitureVanishEffect = preload("res://Furniture/FurnitureVanishEffect.tscn")
 const DustCloudInteraction = preload("res://FurnitureInteraction/DustCloudInteraction.gd")
 const EvilAttackInteraction = preload("res://FurnitureInteraction/EvilAttackInteraction.gd")
-const ItemCollectInteraction = preload("res://FurnitureInteraction/ItemCollectInteraction.gd")
+const CollectInteraction = preload("res://FurnitureInteraction/CollectInteraction.gd")
 
 enum ShimChannel {
     NoShim = 0,
@@ -45,7 +45,7 @@ func get_stored_item():
 # the super method at the very end, unless there's a very good reason
 # to override the priority of subclasses.
 func _get_interactions_app(out: Array) -> void:
-    out.append(ItemCollectInteraction.new(self))
+    out.append(CollectInteraction.new(self))
     out.append(DustCloudInteraction.new(self))
     # This one is prepended because I'd like it to take precedent over
     # all other interactions.

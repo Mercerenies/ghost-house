@@ -1,6 +1,6 @@
 extends FurnitureInteraction
 
-const ItemCollectionVisual = preload("res://Item/ItemCollectionVisual.tscn")
+const ItemCollectionVisual = preload("CollectionVisual.tscn")
 
 var furniture
 

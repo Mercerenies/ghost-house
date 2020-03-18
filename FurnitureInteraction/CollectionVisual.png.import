@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/ItemCollectionVisual.png-725be67baa99cdd01cc74812a9ab078c.stex"
+path="res://.import/CollectionVisual.png-d49ea285114f274b648f92e9710b43bd.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Item/ItemCollectionVisual.png"
-dest_files=[ "res://.import/ItemCollectionVisual.png-725be67baa99cdd01cc74812a9ab078c.stex" ]
+source_file="res://FurnitureInteraction/CollectionVisual.png"
+dest_files=[ "res://.import/CollectionVisual.png-d49ea285114f274b648f92e9710b43bd.stex" ]
 
 [params]
 

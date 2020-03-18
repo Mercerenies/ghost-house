@@ -1,10 +1,10 @@
 [gd_scene load_steps=4 format=2]
 
-[ext_resource path="res://Item/ItemCollectionVisual.gd" type="Script" id=1]
-[ext_resource path="res://Item/ItemCollectionVisual.png" type="Texture" id=2]
+[ext_resource path="res://FurnitureInteraction/CollectionVisual.gd" type="Script" id=1]
+[ext_resource path="res://FurnitureInteraction/CollectionVisual.png" type="Texture" id=2]
 [ext_resource path="res://Item/Item.png" type="Texture" id=3]
 
-[node name="ItemCollectionVisual" type="Node2D"]
+[node name="CollectionVisual" type="Node2D"]
 modulate = Color( 1, 1, 1, 0.533333 )
 z_index = 1
 script = ExtResource( 1 )
