@@ -91,7 +91,7 @@ func generate() -> Room:
 
     _room.get_minimap().initialize(Vector2(w, h), _grid, _boxes, _connections)
 
-    #item_generator.run() /////
+    item_generator.run()
     ambient_enemy_generator.run()
 
     var player = player_generator.run()

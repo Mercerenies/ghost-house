@@ -22,6 +22,8 @@ var _data: Dictionary = {}
 var _room: Room
 var _helper: GeneratorPlacementHelper
 
+var _collectibles: Array = []
+
 func _init(room_data: Dictionary,
            room: Room,
            helper: GeneratorPlacementHelper):
@@ -29,13 +31,79 @@ func _init(room_data: Dictionary,
     _room = room
     _helper = helper
 
-func run() -> void:
-    # Definitely DEBUG CODE
+func _init_collectibles() -> void:
+    _collectibles = [
+        {
+            "result": HealthCollectible.new(),
+            "weight": 30
+        },
+        {
+            "result": ItemCollectible.new(ItemInstance.new(
+                ItemCodex.get_item(ItemCodex.ID_Potion),
+                { "status_id": StatusEffectCodex.ID_HyperEffect, "status_length": 30 }
+            )),
+            "weight": 10
+        },
+        {
+            "result": ItemCollectible.new(ItemInstance.new(
+                ItemCodex.get_item(ItemCodex.ID_Potion),
+                { "status_id": StatusEffectCodex.ID_HyperEffect, "status_length": 60 }
+            )),
+            "weight": 5
+        },
+        {
+            "result": ItemCollectible.new(ItemInstance.new(
+                ItemCodex.get_item(ItemCodex.ID_Potion),
+                { "status_id": StatusEffectCodex.ID_InvincibleEffect, "status_length": 15 }
+            )),
+            "weight": 5
+        },
+        {
+            "result": ItemCollectible.new(ItemInstance.new(
+                ItemCodex.get_item(ItemCodex.ID_Potion),
+                { "status_id": StatusEffectCodex.ID_InvincibleEffect, "status_length": 30 }
+            )),
+            "weight": 2
+        },
+        {
+            "result": ItemCollectible.new(ItemInstance.new(
+                ItemCodex.get_item(ItemCodex.ID_Potion),
+                { "status_id": StatusEffectCodex.ID_NightVisionEffect, "status_length": 30 }
+            )),
+            "weight": 10
+        },
+        {
+            "result": ItemCollectible.new(ItemInstance.new(
+                ItemCodex.get_item(ItemCodex.ID_Potion),
+                { "status_id": StatusEffectCodex.ID_NightVisionEffect, "status_length": 60 }
+            )),
+            "weight": 5
+        },
+    ]
+
+func _put_storage_at(furniture) -> void:
+
+    var arr = []
+    for possible in _collectibles:
+        var v = possible["result"]
+        if Util.intersection(v.get_tags(), furniture.get_storage_tags()):
+            arr.append(possible)
+
+    if len(arr) <= 0:
+        return
+
+    var result = Util.weighted_choose(arr)
+    furniture.set_storage(result)
+
+func _try_each_position() -> void:
     for i in range(_room.get_room_bounds().size.x):
         for j in range(_room.get_room_bounds().size.y):
             var furn = _room.get_entity_cell(Vector2(i, j))
-            if furn is Furniture:
-                #furn.set_storage(ItemCollectible.new(ItemInstance.new(ItemCodex.get_item(ItemCodex.ID_DebugItem), null)))
-                furn.set_storage(HealthCollectible.new())
+            if furn is Furniture and not furn.vars["vanishing"] and furn.get_storage() == null:
+                var chance = furn.get_storage_chance() * _data['config']['percent_storage']
+                if randf() < chance:
+                    _put_storage_at(furn)
 
-                # ///// Make this actually smart and put the right things in the right places
+func run() -> void:
+    _init_collectibles()
+    _try_each_position()

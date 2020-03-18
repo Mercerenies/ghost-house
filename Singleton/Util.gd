@@ -81,3 +81,16 @@ func weighted_choose(values: Array):
         if choice < 0:
             return v["result"]
     return null # This shouldn't happen
+
+# NOTE: Right now, I'm using an asymptotically inferior O(n^2)
+# algorithm to do this. I could easily rewrite it to O(nlogn), but to
+# be quite frank, I'm mainly calling this on small arrays, so I don't
+# think asymptotics really matter here, and this way may actually be
+# more efficient for small data than sorting first.
+func intersection(arr1: Array, arr2: Array) -> Array:
+    var result = []
+    for a in arr1:
+        for b in arr2:
+            if a == b:
+                result.append(a)
+    return result
