@@ -28,6 +28,7 @@ func _update_self() -> void:
     $PlayerStamina.set_stamina(player_stats.get_player_stamina())
     $PlayerStamina.jump_to_value()
     $PlayerStamina.set_color_based_on_rate_multiplier(player_stats.get_status_effects().stamina_recovery_rate_multiplier())
+    $PlayerMoney.set_money(player_stats.get_player_money())
 
     # Handle Statuses
     var desc_text = ""
