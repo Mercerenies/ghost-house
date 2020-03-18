@@ -97,6 +97,16 @@ func get_furniture_name():
 func get_shim_channel() -> int:
     return ShimChannel.NoShim
 
+func get_storage_chance() -> float:
+    # Like chance_of_turning_evil(), this is a modifier on the global
+    # room chance. It's default is 0.0, suitable for furniture that
+    # has no storage tags. Make it 1.0 to match the global room
+    # chance, or slighter larger or smaller to augment it.
+    return 0.0
+
+func get_storage_tags() -> Array:
+    return []
+
 func on_alpha_updated() -> void:
     pass
 
