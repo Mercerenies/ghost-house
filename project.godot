@@ -9,6 +9,11 @@
 config_version=4
 
 _global_script_classes=[ {
+"base": "Reference",
+"class": "Collectible",
+"language": "GDScript",
+"path": "res://Collectible/Collectible.gd"
+}, {
 "base": "Node",
 "class": "CollectibleTag",
 "language": "GDScript",
@@ -145,6 +150,7 @@ _global_script_classes=[ {
 "path": "res://StatusEffect/StatusInstance.gd"
 } ]
 _global_script_class_icons={
+"Collectible": "",
 "CollectibleTag": "",
 "DialogueConstants": "",
 "DialogueEntity": "",

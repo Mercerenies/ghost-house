@@ -21,7 +21,7 @@ var vars: Dictionary = {
     "flying_fairy": false,
 }
 
-# Should be an ItemInstance.
+# Should be a Collectible instance.
 var storage = null
 
 func _init():
