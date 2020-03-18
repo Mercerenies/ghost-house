@@ -18,7 +18,7 @@ func _process(delta: float) -> void:
 
 # Requires an ItemInstance
 func set_item(item) -> void:
-    $Sprite.frame = item.get_icon_index()
+    $ItemSprite.frame = item.get_icon_index()
 
 func _on_FadeOutTimer_timeout():
     fading_out = true
