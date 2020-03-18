@@ -8,6 +8,7 @@ const GeneratorGrid = preload("res://GeneratorGrid/GeneratorGrid.gd")
 const GeneratorPlacementHelper = preload("res://GeneratorPlacementHelper/GeneratorPlacementHelper.gd")
 const ItemCollectible = preload("res://Collectible/ItemCollectible.gd")
 const HealthCollectible = preload("res://Collectible/HealthCollectible.gd")
+const MoneyCollectible = preload("res://Collectible/MoneyCollectible.gd")
 
 const HallwayData = GeneratorData.HallwayData
 const RoomData = GeneratorData.RoomData
@@ -36,6 +37,30 @@ func _init_collectibles() -> void:
         {
             "result": HealthCollectible.new(),
             "weight": 30
+        },
+        {
+            "result": MoneyCollectible.new(1),
+            "weight": 5
+        },
+        {
+            "result": MoneyCollectible.new(5),
+            "weight": 20
+        },
+        {
+            "result": MoneyCollectible.new(10),
+            "weight": 10
+        },
+        {
+            "result": MoneyCollectible.new(20),
+            "weight": 5
+        },
+        {
+            "result": MoneyCollectible.new(30),
+            "weight": 3
+        },
+        {
+            "result": MoneyCollectible.new(50),
+            "weight": 1
         },
         {
             "result": ItemCollectible.new(ItemInstance.new(
