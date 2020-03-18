@@ -84,7 +84,6 @@ func refresh_data(reset_option: bool):
     _update_self()
 
 func _update_self():
-    print($ItemList.get_child_count())
     _adjust_children_positions()
 
 func on_push() -> void:
