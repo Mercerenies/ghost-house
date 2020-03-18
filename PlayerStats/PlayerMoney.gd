@@ -10,6 +10,7 @@ func _update_label() -> void:
     var display_text = ""
     while label_money != 0:
         display_text = "," + str(label_money % 1000) + display_text
+        # warning-ignore: integer_division
         label_money = int(label_money / 1000)
     if display_text == "":
         display_text = ",0"
