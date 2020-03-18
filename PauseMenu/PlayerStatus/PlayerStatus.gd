@@ -38,8 +38,11 @@ func _update_self() -> void:
         desc_text += "(None)"
     $StatusAilmentsLabel.set_text(desc_text)
 
-    for box in $StatusAilmentsList.get_children():
+    for _i in range($StatusAilmentsList.get_child_count()):
+        var box = $StatusAilmentsList.get_child(0)
+        $StatusAilmentsList.remove_child(box)
         box.queue_free()
+
     var xpos = 0
     var ypos = 0
     for eff in status_effects:

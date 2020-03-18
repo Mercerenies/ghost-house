@@ -62,11 +62,14 @@ func refresh_data(reset_option: bool):
     var player_stats = get_room().get_player_stats()
     var items = player_stats.get_inventory().get_item_list()
 
+    for _i in range($ItemList.get_child_count()):
+        var box = $ItemList.get_child(0)
+        $ItemList.remove_child(box)
+        box.queue_free()
+
     $Label.visible = (len(items) == 0)
     $CurrentOption.visible = (len(items) != 0)
 
-    for box in $ItemList.get_children():
-        box.queue_free()
     for item in items:
         var box = ItemBox.instance()
         box.set_item(item)
@@ -81,6 +84,7 @@ func refresh_data(reset_option: bool):
     _update_self()
 
 func _update_self():
+    print($ItemList.get_child_count())
     _adjust_children_positions()
 
 func on_push() -> void:
