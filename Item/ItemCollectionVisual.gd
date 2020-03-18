@@ -20,5 +20,8 @@ func _process(delta: float) -> void:
 func set_item(item) -> void:
     $ItemSprite.frame = item.get_icon_index()
 
+func show_no_room_message() -> void:
+    $NoRoomSprite.visible = true
+
 func _on_FadeOutTimer_timeout():
     fading_out = true

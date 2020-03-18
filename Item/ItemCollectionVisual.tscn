@@ -18,6 +18,12 @@ texture = ExtResource( 3 )
 vframes = 4
 hframes = 8
 
+[node name="NoRoomSprite" type="Sprite" parent="."]
+visible = false
+texture = ExtResource( 2 )
+hframes = 2
+frame = 1
+
 [node name="FadeOutTimer" type="Timer" parent="."]
 wait_time = 1.5
 one_shot = true
