@@ -6,6 +6,7 @@ func _ready() -> void:
     _update_label()
 
 func _update_label() -> void:
+    # warning-ignore: narrowing_conversion
     var label_money: int = min(money, 9999999)
     var display_text = ""
     while label_money != 0:

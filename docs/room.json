@@ -39,6 +39,20 @@
       "type": "array",
       "items": { "enum": ["fake_ghost", "shadow_stalker"] }
     },
+    "locked_doors": {
+      "anyOf": [
+        { "type": "integer", "minimum": 0 },
+        {
+          "type": "object",
+          "properties": {
+            "minimum": { "type": "integer", "minimum": 0 },
+            "maximum": { "type": "integer", "minimum": 0 }
+          },
+          "additionalProperties": false,
+          "required": ["minimum", "maximum"]
+        }
+      ]
+    },
     "puzzle": {
       "$ref": "puzzle.json"
     }

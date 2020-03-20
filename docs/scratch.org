@@ -314,3 +314,11 @@
   7. [X] Status effects on the new DarkBox
   8. [X] Remove all of the unused nodes
   9. [X] Remove old lighting functions
+* LOCKS AND KEYS
+** Lock Placement
+  + [ ] Heuristics (minimum 1 point always)
+    - [ ] +10 automatically
+    - [ ] +20 for being a cut edge
+    - [ ] +10 for being a closet edge (defined, here, as an edge which
+      isolates a room from the rest of the mansion)
+    - [ ] -30 for being a duplicate edge

@@ -8,6 +8,7 @@
   "ambient_enemies": [
     "fake_ghost", "fake_ghost", "shadow_stalker", "shadow_stalker", "shadow_stalker"
   ],
+  "locked_doors": 3,
   "puzzle": {
     "players": {
       "A": {
