@@ -27,7 +27,7 @@ var owner_origin: Vector2 = Vector2()
 var disappearing: bool = false
 var respawning: bool = false
 
-onready var GeneratorPlacementHelper = load("res://GeneratorPlacementHelper/GeneratorPlacementHelper.gd")
+onready var GeneratorPlacementHelper = load("res://Generator/GeneratorPlacementHelper/GeneratorPlacementHelper.gd")
 
 func get_furniture() -> StaticEntity:
     return get_parent() as StaticEntity
