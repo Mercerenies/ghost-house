@@ -304,6 +304,10 @@
    TODO: Handle this correctly. At the moment, I just disabled
    resizing the window. I want the game to, I don't know, stretch,
    maybe? We'll see.
+** Fade in on Fairies
+   Fairies just kind of... pop up right now. Maybe have the light fade
+   in. We can definitely to alpha-transparent light, as vanishing
+   lamps do it already.
 * DONE LIGHTING REVAMP
   1. [X] Disable the old lighting system
   2. [X] Individual nodes for different types of lighting
