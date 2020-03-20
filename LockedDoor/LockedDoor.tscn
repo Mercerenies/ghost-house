@@ -8,6 +8,6 @@ script = ExtResource( 1 )
 dims = Vector2( 2, 2 )
 
 [node name="Sprite" type="Sprite" parent="."]
-position = Vector2( 32, 32 )
+position = Vector2( 32, 16 )
 texture = ExtResource( 2 )
 hframes = 2
