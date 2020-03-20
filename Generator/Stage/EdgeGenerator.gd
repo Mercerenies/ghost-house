@@ -1,7 +1,7 @@
 extends Reference
 
 #######################################
-# STAGE 8 - EDGE FURNITURE GENERATION #
+# STAGE 9 - EDGE FURNITURE GENERATION #
 #######################################
 
 const GeneratorGrid = preload("res://Generator/GeneratorGrid/GeneratorGrid.gd")

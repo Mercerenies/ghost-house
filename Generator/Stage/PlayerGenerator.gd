@@ -1,7 +1,7 @@
 extends Reference
 
 ################################
-# STAGE 11 - PLAYER GENERATION #
+# STAGE 12 - PLAYER GENERATION #
 ################################
 
 const GeneratorGrid = preload("res://Generator/GeneratorGrid/GeneratorGrid.gd")

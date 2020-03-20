@@ -35,5 +35,8 @@ func get_pos1() -> Vector2:
 func get_destination_id() -> int:
     return _dest_id
 
+func get_lock() -> int:
+    return self._lock
+
 func set_lock(lock_type: int) -> void:
     self._lock = lock_type
