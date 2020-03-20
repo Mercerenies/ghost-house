@@ -3,7 +3,7 @@ extends Reference
 const HallwayData = GeneratorData.HallwayData
 const RoomData = GeneratorData.RoomData
 
-const GeneratorGrid = preload("res://GeneratorGrid/GeneratorGrid.gd")
+const GeneratorGrid = preload("res://Generator/GeneratorGrid/GeneratorGrid.gd")
 
 var _grid: GeneratorGrid
 var _boxes: Dictionary

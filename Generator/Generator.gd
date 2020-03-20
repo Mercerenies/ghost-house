@@ -17,9 +17,9 @@ const AmbientEnemyGenerator = preload("res://Generator/Stage/AmbientEnemyGenerat
 const PlayerGenerator = preload("res://Generator/Stage/PlayerGenerator.gd")
 const GhostGenerator = preload("res://Generator/Stage/GhostGenerator.gd")
 
-const GeneratorGrid = preload("res://GeneratorGrid/GeneratorGrid.gd")
-const GeneratorPainter = preload("res://GeneratorPainter/GeneratorPainter.gd")
-const GeneratorPlacementHelper = preload("res://GeneratorPlacementHelper/GeneratorPlacementHelper.gd")
+const GeneratorGrid = preload("res://Generator/GeneratorGrid/GeneratorGrid.gd")
+const GeneratorPainter = preload("res://Generator/GeneratorPainter/GeneratorPainter.gd")
+const GeneratorPlacementHelper = preload("res://Generator/GeneratorPlacementHelper/GeneratorPlacementHelper.gd")
 
 const RoomScene = preload("res://Room/Room.tscn")
 const PlayerScene = preload("res://Player/Player.tscn")

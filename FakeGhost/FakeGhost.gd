@@ -3,7 +3,7 @@ extends DialogueEntity
 const GhostNamer = preload("res://GhostNamer/GhostNamer.gd")
 const MaleGhost = preload("res://Ghost/MaleGhost.png")
 const FemaleGhost = preload("res://Ghost/FemaleGhost.png")
-const GeneratorPlacementHelper = preload("res://GeneratorPlacementHelper/GeneratorPlacementHelper.gd")
+const GeneratorPlacementHelper = preload("res://Generator/GeneratorPlacementHelper/GeneratorPlacementHelper.gd")
 const FakeGhostSmokeCloud = preload("FakeGhostSmokeCloud.tscn")
 
 const OFFSCREEN = Vector2(-3200, -3200)

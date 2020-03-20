@@ -4,8 +4,8 @@ extends Reference
 # STAGE 9 - ITEM GENERATOR #
 ############################
 
-const GeneratorGrid = preload("res://GeneratorGrid/GeneratorGrid.gd")
-const GeneratorPlacementHelper = preload("res://GeneratorPlacementHelper/GeneratorPlacementHelper.gd")
+const GeneratorGrid = preload("res://Generator/GeneratorGrid/GeneratorGrid.gd")
+const GeneratorPlacementHelper = preload("res://Generator/GeneratorPlacementHelper/GeneratorPlacementHelper.gd")
 const ItemCollectible = preload("res://Collectible/ItemCollectible.gd")
 const HealthCollectible = preload("res://Collectible/HealthCollectible.gd")
 const MoneyCollectible = preload("res://Collectible/MoneyCollectible.gd")

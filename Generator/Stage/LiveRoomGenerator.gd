@@ -6,8 +6,8 @@ extends Reference
 
 const RoomData = GeneratorData.RoomData
 
-const GeneratorGrid = preload("res://GeneratorGrid/GeneratorGrid.gd")
-const GeneratorPainter = preload("res://GeneratorPainter/GeneratorPainter.gd")
+const GeneratorGrid = preload("res://Generator/GeneratorGrid/GeneratorGrid.gd")
+const GeneratorPainter = preload("res://Generator/GeneratorPainter/GeneratorPainter.gd")
 
 const ID_OOB = GeneratorData.ID_OOB
 const ID_DEAD = GeneratorData.ID_DEAD

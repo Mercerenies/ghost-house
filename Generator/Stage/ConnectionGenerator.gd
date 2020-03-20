@@ -4,7 +4,7 @@ extends Reference
 # STAGE 4 - CONNECTION GENERATION #
 ###################################
 
-const GeneratorGrid = preload("res://GeneratorGrid/GeneratorGrid.gd")
+const GeneratorGrid = preload("res://Generator/GeneratorGrid/GeneratorGrid.gd")
 const Graph = GeneratorData.Graph
 
 const ID_HALLS = GeneratorData.ID_HALLS

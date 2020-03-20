@@ -3,7 +3,7 @@ extends Node2D
 const GRID_CELL_SIZE = 16
 const DOOR_DRAW_RADIUS = 4
 const Player = preload("res://Player/Player.gd")
-const GeneratorGrid = preload("res://GeneratorGrid/GeneratorGrid.gd")
+const GeneratorGrid = preload("res://Generator/GeneratorGrid/GeneratorGrid.gd")
 const ICONS_PER_ROW = 8
 
 var _dims: Vector2 = Vector2(0, 0)

@@ -4,8 +4,8 @@ extends Reference
 # STAGE 12 - GHOST GENERATION #
 ###############################
 
-const GeneratorGrid = preload("res://GeneratorGrid/GeneratorGrid.gd")
-const GeneratorPlacementHelper = preload("res://GeneratorPlacementHelper/GeneratorPlacementHelper.gd")
+const GeneratorGrid = preload("res://Generator/GeneratorGrid/GeneratorGrid.gd")
+const GeneratorPlacementHelper = preload("res://Generator/GeneratorPlacementHelper/GeneratorPlacementHelper.gd")
 const GhostNamer = preload("res://GhostNamer/GhostNamer.gd")
 
 const Ghost = preload("res://Ghost/Ghost.tscn")

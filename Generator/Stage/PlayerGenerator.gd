@@ -4,8 +4,8 @@ extends Reference
 # STAGE 11 - PLAYER GENERATION #
 ################################
 
-const GeneratorGrid = preload("res://GeneratorGrid/GeneratorGrid.gd")
-const GeneratorPlacementHelper = preload("res://GeneratorPlacementHelper/GeneratorPlacementHelper.gd")
+const GeneratorGrid = preload("res://Generator/GeneratorGrid/GeneratorGrid.gd")
+const GeneratorPlacementHelper = preload("res://Generator/GeneratorPlacementHelper/GeneratorPlacementHelper.gd")
 
 const Player = preload("res://Player/Player.tscn")
 

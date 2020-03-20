@@ -4,8 +4,8 @@ extends Reference
 # STAGE 8 - EDGE FURNITURE GENERATION #
 #######################################
 
-const GeneratorGrid = preload("res://GeneratorGrid/GeneratorGrid.gd")
-const GeneratorPlacementHelper = preload("res://GeneratorPlacementHelper/GeneratorPlacementHelper.gd")
+const GeneratorGrid = preload("res://Generator/GeneratorGrid/GeneratorGrid.gd")
+const GeneratorPlacementHelper = preload("res://Generator/GeneratorPlacementHelper/GeneratorPlacementHelper.gd")
 
 const FLAG_EDGE_FURNITURE = GeneratorData.FLAG_EDGE_FURNITURE
 

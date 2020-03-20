@@ -4,7 +4,7 @@ extends Reference
 # STAGE 6 - ACTUALIZATION #
 ###########################
 
-const GeneratorGrid = preload("res://GeneratorGrid/GeneratorGrid.gd")
+const GeneratorGrid = preload("res://Generator/GeneratorGrid/GeneratorGrid.gd")
 const RoomScene = preload("res://Room/Room.tscn")
 
 const HorizontalFloorTransition = preload("res://RoomTransition/HorizontalFloorTransition.tscn")

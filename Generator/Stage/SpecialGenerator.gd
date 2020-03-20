@@ -4,7 +4,7 @@ extends Reference
 # STAGE 7 - SPECIAL FURNITURE GENERATION #
 ##########################################
 
-const GeneratorPlacementHelper = preload("res://GeneratorPlacementHelper/GeneratorPlacementHelper.gd")
+const GeneratorPlacementHelper = preload("res://Generator/GeneratorPlacementHelper/GeneratorPlacementHelper.gd")
 
 var _data: Dictionary = {}
 var _room: Room

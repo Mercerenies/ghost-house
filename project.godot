@@ -72,7 +72,7 @@ _global_script_classes=[ {
 "base": "Node",
 "class": "GeneratorData",
 "language": "GDScript",
-"path": "res://GeneratorData/GeneratorData.gd"
+"path": "res://Generator/GeneratorData/GeneratorData.gd"
 }, {
 "base": "Reference",
 "class": "GhostInfo",

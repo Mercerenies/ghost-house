@@ -1,6 +1,6 @@
 extends Reference
 
-const GeneratorGrid = preload("res://GeneratorGrid/GeneratorGrid.gd")
+const GeneratorGrid = preload("res://Generator/GeneratorGrid/GeneratorGrid.gd")
 const Player = preload("res://Player/Player.gd")
 
 const CELL_SIZE = GeneratorData.CELL_SIZE
