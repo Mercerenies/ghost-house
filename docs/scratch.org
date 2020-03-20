@@ -327,7 +327,7 @@
       - [X] Define the class
       - [X] Update existing stages to work with the class
       - [X] Update the minimap to work with the class
-   5. [ ] Locked door object (non-furniture ~StaticEntity~ with custom
+   5. [X] Locked door object (non-furniture ~StaticEntity~ with custom
       interaction)
    6. [ ] Locked door generator stage after properties generator
       - [ ] Define generator class

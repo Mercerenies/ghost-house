@@ -39,5 +39,7 @@ func _ready():
     $Room/Entities/KitchenCounter.position_self()
     $Room/Entities/KitchenCounter2.position_self()
 
+    $Room/Entities/LockedDoor.set_direction(1)
+
 func _on_Player_player_moved(_speed: float):
     $Room.get_minimap().update_map()
