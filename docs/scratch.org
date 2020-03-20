@@ -323,10 +323,10 @@
    1. [X] Update JSON format for locked doors
    2. [X] Move generator stages into a new folder
    3. [X] Move generator helper files into ~Generator/~ folder
-   4. [ ] Make the connection informal interface into an actual class
-      - [ ] Define the class
-      - [ ] Update existing stages to work with the class
-      - [ ] Update the minimap to work with the class
+   4. [X] Make the connection informal interface into an actual class
+      - [X] Define the class
+      - [X] Update existing stages to work with the class
+      - [X] Update the minimap to work with the class
    5. [ ] Locked door object (non-furniture ~StaticEntity~ with custom
       interaction)
    6. [ ] Locked door generator stage after properties generator

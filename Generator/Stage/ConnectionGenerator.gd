@@ -5,6 +5,7 @@ extends Reference
 ###################################
 
 const GeneratorGrid = preload("res://Generator/GeneratorGrid/GeneratorGrid.gd")
+const Connection = preload("res://Generator/Connection/Connection.gd")
 const Graph = GeneratorData.Graph
 
 const ID_HALLS = GeneratorData.ID_HALLS
@@ -34,12 +35,12 @@ func _produce_adjacency_graph() -> Graph:
                 adja[c] = []
             if a >= ID_HALLS and b >= ID_HALLS and a != b:
                 var link = [Vector2(x, y), Vector2(x + 1, y)]
-                adja[a].append({ "pos": link, "value": b })
-                adja[b].append({ "pos": link, "value": a })
+                adja[a].append(Connection.new(link, b))
+                adja[b].append(Connection.new(link, a))
             if a >= ID_HALLS and c >= ID_HALLS and a != c:
                 var link = [Vector2(x, y), Vector2(x, y + 1)]
-                adja[a].append({ "pos": link, "value": c })
-                adja[c].append({ "pos": link, "value": a })
+                adja[a].append(Connection.new(link, c))
+                adja[c].append(Connection.new(link, a))
     return graph
 
 func _connect_rooms() -> Array:
@@ -57,8 +58,8 @@ func _connect_rooms() -> Array:
         var i = 0
         while i < edge_count:
             var edge = edges[i]
-            var a = _grid.get_value(edge.pos[0])
-            var b = _grid.get_value(edge.pos[1])
+            var a = _grid.get_value(edge.get_pos0())
+            var b = _grid.get_value(edge.get_pos1())
             if visited.has(a) != visited.has(b):
                 connections.append(edge)
                 if not visited.has(a):

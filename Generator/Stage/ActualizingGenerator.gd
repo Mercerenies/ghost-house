@@ -33,8 +33,8 @@ func _open_doorways() -> void:
     # Assumes all connections are of the form [a, b] where b is either
     # strictly one to the right or strictly one below a.
     for conn in _connections:
-        var a = conn.pos[0]
-        var b = conn.pos[1]
+        var a = conn.get_pos0()
+        var b = conn.get_pos1()
         var floora = _boxes[_grid.get_value(a)].floortype
         var floorb = _boxes[_grid.get_value(b)].floortype
         var walla = _boxes[_grid.get_value(a)].walltype

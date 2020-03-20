@@ -122,16 +122,17 @@ func _draw() -> void:
             draw_rect(rect, trblack, false)
     # Doors
     for c in _connections:
-        var pos = c.pos
-        var a = _grid.get_value(pos[0])
-        var b = _grid.get_value(pos[1])
+        var pos0 = c.get_pos0()
+        var pos1 = c.get_pos1()
+        var a = _grid.get_value(pos0)
+        var b = _grid.get_value(pos1)
         if _discovered.has(a) or _discovered.has(b):
-            var cellpos = pos[0] * GRID_CELL_SIZE + upperleft
+            var cellpos = pos0 * GRID_CELL_SIZE + upperleft
             var center = Vector2(-128, -128) # Off-screen to start with, just in case
-            if pos[1] - pos[0] == Vector2(1, 0):
+            if (pos1 - pos0) == Vector2(1, 0):
                 # warning-ignore: integer_division
                 center = cellpos + Vector2(GRID_CELL_SIZE, GRID_CELL_SIZE / 2)
-            elif pos[1] - pos[0] == Vector2(0, 1):
+            elif (pos1 - pos0) == Vector2(0, 1):
                 # warning-ignore: integer_division
                 center = cellpos + Vector2(GRID_CELL_SIZE / 2, GRID_CELL_SIZE)
             draw_rect(Rect2(center - Vector2(DOOR_DRAW_RADIUS, DOOR_DRAW_RADIUS),
