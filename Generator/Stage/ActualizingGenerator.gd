@@ -9,6 +9,9 @@ const RoomScene = preload("res://Room/Room.tscn")
 
 const HorizontalFloorTransition = preload("res://RoomTransition/HorizontalFloorTransition.tscn")
 const VerticalFloorTransition = preload("res://RoomTransition/VerticalFloorTransition.tscn")
+const Connection = preload("res://Generator/Connection/Connection.gd")
+const LockedDoor = preload("res://LockedDoor/LockedDoor.tscn")
+const GeneratorPlacementHelper = preload("res://Generator/GeneratorPlacementHelper/GeneratorPlacementHelper.gd")
 
 const CELL_SIZE = GeneratorData.CELL_SIZE
 const WALL_SIZE = GeneratorData.WALL_SIZE
@@ -19,19 +22,22 @@ var _grid: GeneratorGrid
 var _boxes: Dictionary = {}
 var _connections: Array = []
 var _room: Room
+var _helper: GeneratorPlacementHelper
 
-func _init(room_data: Dictionary, grid: GeneratorGrid, boxes: Dictionary, room: Room):
+func _init(room_data: Dictionary, grid: GeneratorGrid, boxes: Dictionary, room: Room, helper: GeneratorPlacementHelper):
     _data = room_data
     _grid = grid
     _boxes = boxes
     _room = room
+    _helper = helper
 
 # TODO Use RoomDimensions here to calculate the positions of the
 # transitions, for consistency (this file predates RoomDimensions so
 # we didn't use it the first time around)
 func _open_doorways() -> void:
     # Assumes all connections are of the form [a, b] where b is either
-    # strictly one to the right or strictly one below a.
+    # strictly one to the right or strictly one below a. (This is
+    # guaranteed by the Connection class constructor)
     for conn in _connections:
         var a = conn.get_pos0()
         var b = conn.get_pos1()
@@ -67,6 +73,16 @@ func _open_doorways() -> void:
                 transb.position = Vector2(xpos - 1, ypos + 2) * 32
                 _room.get_node("Decorations").add_child(transa)
                 _room.get_node("Decorations").add_child(transb)
+
+        # Actualizing locks
+        var rect = RoomDimensions.connection_rect(conn)
+        match conn.get_lock():
+            Connection.LockType.NONE:
+                pass
+            Connection.LockType.SIMPLE_LOCK:
+                var door = LockedDoor.instance()
+                door.set_direction(1 if b - a == Vector2(1, 0) else 0)
+                _helper.add_entity(rect.position, door)
 
 func _draw_base_room(pos: Vector2) -> void:
     var xpos = pos.x * TOTAL_CELL_SIZE + WALL_SIZE

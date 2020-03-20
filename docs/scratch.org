@@ -336,7 +336,7 @@
       - [ ] Weighted random selection to determine where to put the
         locks
       - [ ] Repeat the entire process for multiple locks (?)
-      - [ ] Actualizing generator needs to actualize the locks
+      - [X] Actualizing generator needs to actualize the locks
    7. [ ] Keys
       - [ ] Key inventory stat
       - [ ] Ability to unlock doors by interacting with them when you
