@@ -1,6 +1,6 @@
 extends Reference
 
-var adja: Dictionary
+var _adjacency: Dictionary
 var _incidence
 
 # The incidence "function" should be an object with an incidence()
@@ -9,33 +9,33 @@ var _incidence
 # edge as a list. This class represents undirected graphs, so the
 # order of the two return values is irrelevant.
 func _init(vertices: Array, incidence) -> void:
-    adja = {}
+    _adjacency = {}
     _incidence = incidence
 
     for v in vertices:
         add_vertex(v)
 
 func add_vertex(vertex) -> void:
-    if not adja.has(vertex):
-        adja[vertex] = []
+    if not _adjacency.has(vertex):
+        _adjacency[vertex] = []
 
 func has_vertex(vertex) -> bool:
-    return adja.has(vertex)
+    return _adjacency.has(vertex)
 
 func get_vertices() -> Array:
-    return adja.keys()
+    return _adjacency.keys()
 
 func get_edges() -> Array:
     var edges = []
-    for es in adja.values():
+    for es in _adjacency.values():
         for e in es:
             edges.append(e)
     return edges
 
 func add_edge(edge) -> void:
     var vs = _incidence.incidence(edge)
-    adja[ vs[0] ].append(edge)
-    adja[ vs[1] ].append(edge)
+    _adjacency[ vs[0] ].append(edge)
+    _adjacency[ vs[1] ].append(edge)
 
 func incidence(edge) -> Array:
     return _incidence.incidence(edge)
