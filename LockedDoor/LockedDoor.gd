@@ -18,8 +18,16 @@ func set_direction(a: int) -> void:
     $Sprite.frame = a % 2
 
 func on_interact() -> void:
-    # TODO Keys, obviously, if you have them
-    get_room().show_dialogue(INTERACTION, "no_key", vars)
+    var room = get_room()
+    var stats = room.get_player_stats()
+    if stats.get_player_keys() > 0:
+        # TODO Animation for using the key
+        # TODO Animation for opening the door
+        unposition_self()
+        queue_free()
+        stats.add_player_keys(-1)
+    else:
+        room.show_dialogue(INTERACTION, "no_key", vars)
 
 func on_debug_tap() -> void:
     get_room().show_dialogue(INTERACTION, "debug_dump", vars)
