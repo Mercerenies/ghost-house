@@ -37,10 +37,6 @@ class RoomData:
         self.edgetype = null
         self.specialtype = null
 
-class Graph:
-    # warning-ignore: unused_class_variable
-    var adja: Dictionary = {}
-
 const ID_OOB = -3
 const ID_DEAD = -2
 const ID_EMPTY = -1

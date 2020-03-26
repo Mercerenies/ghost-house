@@ -337,6 +337,7 @@
         locks
       - [ ] Repeat the entire process for multiple locks (?)
       - [X] Actualizing generator needs to actualize the locks
+      - [ ] Locked doors should show up on the minimap until unlocked
    7. [ ] Keys
       - [ ] Key inventory stat
       - [ ] Ability to unlock doors by interacting with them when you
@@ -362,5 +363,6 @@
     - [ ] +10 automatically
     - [ ] +20 for being a cut edge
     - [ ] +10 for being a closet edge (defined, here, as an edge which
-      isolates a room from the rest of the mansion)
+      isolates a room from the rest of the mansion; stacks with the
+      cut edge bonus)
     - [ ] -30 for being a duplicate edge

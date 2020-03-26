@@ -2,7 +2,6 @@ extends Reference
 
 const HallwayData = GeneratorData.HallwayData
 const RoomData = GeneratorData.RoomData
-const Graph = GeneratorData.Graph
 
 const HallwayGenerator = preload("res://Generator/Stage/HallwayGenerator.gd")
 const LiveRoomGenerator = preload("res://Generator/Stage/LiveRoomGenerator.gd")

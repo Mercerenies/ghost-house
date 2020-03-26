@@ -6,7 +6,7 @@ extends Reference
 
 const GeneratorGrid = preload("res://Generator/GeneratorGrid/GeneratorGrid.gd")
 const Connection = preload("res://Generator/Connection/Connection.gd")
-const Graph = GeneratorData.Graph
+const Graph = preload("res://Generator/Graph/Graph.gd")
 
 const ID_HALLS = GeneratorData.ID_HALLS
 
