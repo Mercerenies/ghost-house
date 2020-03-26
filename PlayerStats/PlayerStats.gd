@@ -6,8 +6,11 @@ func get_player_health() -> int:
 func get_player_stamina() -> float:
     return $PlayerStamina.get_stamina()
 
-func get_player_money() -> float:
+func get_player_money() -> int:
     return $PlayerMoney.get_money()
+
+func get_player_keys() -> int:
+    return $PlayerKeys.get_keys()
 
 func set_player_health(a: int) -> void:
     $PlayerHealth.set_health(a)
@@ -15,8 +18,11 @@ func set_player_health(a: int) -> void:
 func set_player_stamina(a: float) -> void:
     $PlayerStamina.set_stamina(a)
 
-func set_player_money(a: float) -> void:
+func set_player_money(a: int) -> void:
     $PlayerMoney.set_money(a)
+
+func set_player_keys(a: int) -> void:
+    $PlayerKeys.set_keys(a)
 
 func add_player_health(a: int) -> void:
     set_player_health(get_player_health() + a)
@@ -26,6 +32,9 @@ func add_player_stamina(a: float) -> void:
 
 func add_player_money(a: float) -> void:
     set_player_money(get_player_money() + a)
+
+func add_player_keys(a: int) -> void:
+    set_player_keys(get_player_keys() + a)
 
 func get_player_max_health() -> int:
     return $PlayerHealth.get_max_health()

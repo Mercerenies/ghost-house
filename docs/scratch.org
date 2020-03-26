@@ -340,12 +340,12 @@
       - [ ] Repeat the entire process for multiple locks (?)
       - [X] Actualizing generator needs to actualize the locks
       - [ ] Locked doors should show up on the minimap until unlocked
-   7. [ ] Keys
-      - [ ] Key inventory stat
+   7. [-] Keys
+      - [X] Key inventory stat
       - [ ] Ability to unlock doors by interacting with them when you
         have a key
       - [ ] Animation for the unlocking step
-      - [ ] Default behavior of locked door interaction is to show a
+      - [X] Default behavior of locked door interaction is to show a
         generic message about keys
       - [ ] ~Collectible~ subclass for keys (with a flag for minimap
         interaction)
