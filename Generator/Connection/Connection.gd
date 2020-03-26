@@ -9,6 +9,17 @@ var _pos0: Vector2
 var _pos1: Vector2
 var _lock: int
 
+# For use with the Graph class as an incidence function.
+class Incidence:
+    var _grid
+
+    # Takes a GeneratorGrid
+    func _init(grid) -> void:
+        _grid = grid
+
+    func incidence(edge) -> Array:
+        return [_grid.get_value(edge.get_pos0()), _grid.get_value(edge.get_pos1())]
+
 func _init(pos: Array) -> void:
     assert(len(pos) == 2)
 

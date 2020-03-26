@@ -13,15 +13,6 @@ const ID_HALLS = GeneratorData.ID_HALLS
 var _data: Dictionary = {}
 var _grid: GeneratorGrid = null
 
-class _Incidence:
-    var _grid
-
-    func _init(grid) -> void:
-        _grid = grid
-
-    func incidence(edge) -> Array:
-        return [_grid.get_value(edge.get_pos0()), _grid.get_value(edge.get_pos1())]
-
 class _ConnectionSorter:
 
     static func sort(a, b):
@@ -44,7 +35,7 @@ func _init(room_data: Dictionary, grid: GeneratorGrid):
 func _produce_adjacency_graph() -> Graph:
     var w = int(_data['config']['width'])
     var h = int(_data['config']['height'])
-    var graph = Graph.new([], _Incidence.new(_grid))
+    var graph = Graph.new([], Connection.Incidence.new(_grid))
     for x in range(w):
         for y in range(h):
             var a = _grid.get_value(Vector2(x, y))
