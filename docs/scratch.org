@@ -366,6 +366,8 @@
       isolates a room from the rest of the mansion; stacks with the
       cut edge bonus)
     - [ ] -30 for being a duplicate edge
+    - [ ] -30 for being a closet edge which boxes the player into the
+      starting room
 * GENERATOR STAGES
   Listed here, for convenience.
    1. HallwayGenerator
