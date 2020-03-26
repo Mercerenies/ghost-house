@@ -366,3 +366,18 @@
       isolates a room from the rest of the mansion; stacks with the
       cut edge bonus)
     - [ ] -30 for being a duplicate edge
+* GENERATOR STAGES
+  Listed here, for convenience.
+   1. HallwayGenerator
+   2. LiveRoomGenerator
+   3. DeadRoomGenerator
+   4. ConnectionGenerator
+   5. PropertiesGenerator
+   6. LockedDoorGenerator
+   7. ActualizingGenerator
+   8. SpecialGenerator
+   9. EdgeGenerator
+  10. ItemGenerator
+  11. AmbientEnemyGenerator
+  12. PlayerGenerator
+  13. GhostGenerator
