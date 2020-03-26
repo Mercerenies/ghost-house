@@ -22,6 +22,21 @@ class _Incidence:
     func incidence(edge) -> Array:
         return [_grid.get_value(edge.get_pos0()), _grid.get_value(edge.get_pos1())]
 
+class _ConnectionSorter:
+
+    static func sort(a, b):
+        if a.get_pos0().x != b.get_pos0().x:
+            return (a.get_pos0().x < b.get_pos0().x)
+        if a.get_pos0().y != b.get_pos0().y:
+            return (a.get_pos0().y < b.get_pos0().y)
+        if a.get_pos1().x != b.get_pos1().x:
+            return (a.get_pos1().x < b.get_pos1().x)
+        if a.get_pos1().y != b.get_pos1().y:
+            return (a.get_pos1().y < b.get_pos1().y)
+        if a.get_lock() != b.get_lock():
+            return (a.get_lock() < b.get_lock())
+        return false
+
 func _init(room_data: Dictionary, grid: GeneratorGrid):
     _data = room_data
     _grid = grid
@@ -84,7 +99,9 @@ func _connect_rooms() -> Array:
         if randf() < 0.05:
             connections.append(conn)
 
-    return connections
+    # Remove duplicates
+    connections.sort_custom(_ConnectionSorter, "sort")
+    return Util.dedup_sorted(connections)
 
 func run() -> Array:
     return _connect_rooms()

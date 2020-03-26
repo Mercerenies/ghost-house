@@ -94,3 +94,16 @@ func intersection(arr1: Array, arr2: Array) -> Array:
             if a == b:
                 result.append(a)
     return result
+
+# Removes duplicate elements (as determined by ==) from a SORTED list.
+# The argument to this function should already have been sorted, so
+# that identical elements are adjacent. A new list is returned.
+func dedup_sorted(arr: Array) -> Array:
+    var res = []
+    if len(arr) == 0:
+        return res
+    res.append(arr[0])
+    for k in range(1, len(arr)):
+        if arr[k] != arr[k - 1]:
+            res.append(arr[k])
+    return res
