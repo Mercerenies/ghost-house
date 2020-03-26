@@ -94,5 +94,5 @@ func run(conn: Array) -> void:
     var count = _determine_locked_door_count()
     for _i in range(count):
         var edge = _choose_connection_for_lock(scores)
-        print(scores[edge])
+        #print(scores[edge])
         _lock_connection(edge)
