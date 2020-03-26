@@ -196,6 +196,7 @@ Icons="*res://Minimap/Icons.gd"
 StatementPrinter="*res://Singleton/StatementPrinter.gd"
 GhostColors="*res://Singleton/GhostColors.gd"
 FurnitureShim="*res://RoomTransition/FurnitureShim.gd"
+GraphUtil="*res://Singleton/GraphUtil.gd"
 
 [display]
 

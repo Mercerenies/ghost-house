@@ -3,6 +3,12 @@ extends Reference
 var _adjacency: Dictionary
 var _incidence
 
+# General Note: The vertex set and edge set should be disjoint. Bad
+# things will happen for many, many reasons if a single value tries to
+# act simultaneously as both a vertex and an edge. Phrased precisely,
+# bad things will happen if a vertex v is ever equal to an edge e, as
+# in (v == e).
+
 # The incidence "function" should be an object with an incidence()
 # function. This function shall take one argument, an edge which has
 # been added to the graph, and return the two vertices incident to the
@@ -32,6 +38,9 @@ func get_edges() -> Array:
             edges.append(e)
     return edges
 
+func get_incident_edges(vertex) -> Array:
+    return _adjacency[vertex]
+
 func add_edge(edge) -> void:
     var vs = _incidence.incidence(edge)
     _adjacency[ vs[0] ].append(edge)
@@ -46,3 +55,9 @@ func incidence0(edge):
 func incidence1(edge):
     return incidence(edge)[1]
 
+func incidence_other(vertex, edge):
+    var vs = incidence(edge)
+    if vertex == vs[0]:
+        return vs[1]
+    else:
+        return vs[0]
