@@ -20,7 +20,6 @@ func perform_collection(furniture) -> bool:
     stats.add_player_health(_amount)
 
     var visual = CollectionVisual.instance()
-    visual.get_node("ItemSprite").visible = false
     visual.get_node("BackgroundSprite").visible = false
     visual.add_child(HeartSprite.instance())
     visual.position = (furniture.get_dims() * 32) / 2

@@ -1,8 +1,7 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://FurnitureInteraction/CollectionVisual.gd" type="Script" id=1]
 [ext_resource path="res://FurnitureInteraction/CollectionVisual.png" type="Texture" id=2]
-[ext_resource path="res://Item/Item.png" type="Texture" id=3]
 
 [node name="CollectionVisual" type="Node2D"]
 modulate = Color( 1, 1, 1, 0.533333 )
@@ -12,17 +11,6 @@ script = ExtResource( 1 )
 [node name="BackgroundSprite" type="Sprite" parent="."]
 texture = ExtResource( 2 )
 hframes = 2
-
-[node name="ItemSprite" type="Sprite" parent="."]
-texture = ExtResource( 3 )
-vframes = 4
-hframes = 8
-
-[node name="NoRoomSprite" type="Sprite" parent="."]
-visible = false
-texture = ExtResource( 2 )
-hframes = 2
-frame = 1
 
 [node name="FadeOutTimer" type="Timer" parent="."]
 wait_time = 1.5

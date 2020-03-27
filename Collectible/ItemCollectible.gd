@@ -1,6 +1,8 @@
 extends  Collectible
 
 const CollectionVisual = preload("res://FurnitureInteraction/CollectionVisual.tscn")
+const ItemSprite = preload("res://Item/ItemSprite.tscn")
+const CollectionVisualImage = preload("res://FurnitureInteraction/CollectionVisual.png")
 
 var _instance: ItemInstance
 
@@ -18,7 +20,9 @@ func perform_collection(furniture) -> bool:
     var item = _instance
 
     var visual = CollectionVisual.instance()
-    visual.set_item(item)
+    var item_sprite = ItemSprite.instance()
+    item_sprite.frame = item.get_icon_index()
+    visual.add_child(item_sprite)
     visual.position = (furniture.get_dims() * 32) / 2
     furniture.add_child(visual)
 
@@ -29,5 +33,9 @@ func perform_collection(furniture) -> bool:
     if inv.add_item(item.copy()):
         return true
     else:
-        visual.show_no_room_message()
+        var no_room = Sprite.new()
+        no_room.texture = CollectionVisualImage
+        no_room.hframes = 2
+        no_room.frame = 1
+        visual.add_child(no_room)
         return false
