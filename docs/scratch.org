@@ -356,7 +356,7 @@
       - [X] Ability to unlock doors by interacting with them when you
         have a key
       - [ ] Animation for the unlocking step
-      - [ ] Animation for the key being removed from inventory
+      - [X] Animation for the key being removed from inventory
       - [X] Default behavior of locked door interaction is to show a
         generic message about keys
       - [ ] ~Collectible~ subclass for keys (with a flag for minimap

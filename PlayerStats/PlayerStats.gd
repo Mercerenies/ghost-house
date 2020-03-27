@@ -1,5 +1,11 @@
 extends Node2D
 
+const CollectionVisual = preload("res://FurnitureInteraction/CollectionVisual.tscn")
+const KeyImage = preload("res://PlayerStats/Key.png")
+
+func get_room():
+    return get_node("../..")
+
 func get_player_health() -> int:
     return $PlayerHealth.get_health()
 
@@ -50,6 +56,18 @@ func damage_player(a: int) -> bool:
         trigger_iframe()
         return true
     return false
+
+func consume_key() -> void:
+    add_player_keys(-1)
+    var marked = get_room().get_marked_entities()
+    if marked.has(Mark.PLAYER):
+        var player = marked[Mark.PLAYER]
+        var visual = CollectionVisual.instance()
+        var sprite = Sprite.new()
+        sprite.texture = KeyImage
+        visual.get_node("BackgroundSprite").visible = false
+        visual.add_child(sprite)
+        player.add_child(visual)
 
 func trigger_iframe() -> void:
     if not has_iframe():

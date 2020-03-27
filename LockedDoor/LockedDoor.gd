@@ -29,12 +29,11 @@ func on_interact() -> void:
     var room = get_room()
     var stats = room.get_player_stats()
     if stats.get_player_keys() > 0:
-        # TODO Animation for using the key
         # TODO Animation for opening the door
         unposition_self()
         queue_free()
         room.get_minimap().unlock_doorway(_conn)
-        stats.add_player_keys(-1)
+        stats.consume_key()
     else:
         room.show_dialogue(INTERACTION, "no_key", vars)
 
