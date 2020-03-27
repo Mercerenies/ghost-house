@@ -4,7 +4,12 @@ const GRID_CELL_SIZE = 16
 const DOOR_DRAW_RADIUS = 4
 const Player = preload("res://Player/Player.gd")
 const GeneratorGrid = preload("res://Generator/GeneratorGrid/GeneratorGrid.gd")
+const Connection = preload("res://Generator/Connection/Connection.gd")
 const ICONS_PER_ROW = 8
+
+const COLOR_ROOM = Color(1, 1, 1, 0.25)
+const COLOR_CURRENT_ROOM = Color(1, 0, 0, 0.25)
+const COLOR_BOUNDARY = Color(0, 0, 0, 1)
 
 var _dims: Vector2 = Vector2(0, 0)
 var _grid: GeneratorGrid = null
@@ -92,11 +97,11 @@ func _draw() -> void:
         for j in range(_dims.y):
             var cell = _grid.get_value(Vector2(i, j))
             if _discovered.has(cell):
-                var color = Color(1, 1, 1, 0.25)
+                var color = COLOR_ROOM
                 if cell == playerroom:
-                    color = Color(1, 0, 0, 0.25)
+                    color = COLOR_CURRENT_ROOM
                 draw_rect(Rect2(upperleft + Vector2(i, j) * GRID_CELL_SIZE, Vector2(1, 1) * GRID_CELL_SIZE), color, true)
-    var trblack = Color(0, 0, 0, 1)
+    var trblack = COLOR_BOUNDARY
     # Room barriers
     for v in _boxes.values():
         if not _discovered.has(v.id):
@@ -135,10 +140,13 @@ func _draw() -> void:
             elif (pos1 - pos0) == Vector2(0, 1):
                 # warning-ignore: integer_division
                 center = cellpos + Vector2(GRID_CELL_SIZE / 2, GRID_CELL_SIZE)
-            draw_rect(Rect2(center - Vector2(DOOR_DRAW_RADIUS, DOOR_DRAW_RADIUS),
-                            Vector2(DOOR_DRAW_RADIUS, DOOR_DRAW_RADIUS) * 2),
-                      trblack,
-                      true)
+            var rect = Rect2(center - Vector2(DOOR_DRAW_RADIUS, DOOR_DRAW_RADIUS),
+                             Vector2(DOOR_DRAW_RADIUS, DOOR_DRAW_RADIUS) * 2)
+            match c.get_lock():
+                Connection.LockType.NONE:
+                    draw_rect(rect, trblack, true)
+                Connection.LockType.SIMPLE_LOCK:
+                    draw_rect(rect, trblack, true) # /////
     # Icons
     for v in _boxes.values():
         if not _discovered.has(v.id):
