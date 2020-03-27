@@ -308,6 +308,17 @@
    Fairies just kind of... pop up right now. Maybe have the light fade
    in. We can definitely to alpha-transparent light, as vanishing
    lamps do it already.
+** "Boring" Furniture
+   This would be a major change. I consider furniture "boring" (or,
+   more accurately, passive) if it is NONE of the following.
+   + A spawner for fairies, flying furniture, books, clothes, sliding
+     furniture, or other hazards.
+   + A producer of light.
+   + A vanishing entity.
+   Any passive furniture can probably be managed fine without an
+   explicit node, by just having an entry in the appropriate cells of
+   the room's grid. This would cut down on unnecessary ~_process~ (and
+   ~_draw~) calls significantly.
 * DONE LIGHTING REVAMP
   1. [X] Disable the old lighting system
   2. [X] Individual nodes for different types of lighting
