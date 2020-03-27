@@ -39,4 +39,3 @@ autowrap = true
 
 [node name="SelectionsList" parent="." instance=ExtResource( 4 )]
 position = Vector2( 32, 230 )
-[connection signal="option_selected" from="." to="." method="_on_ItemPanel_option_selected"]

@@ -12,6 +12,10 @@ func get_room():
 
 func _ready() -> void:
     visible = false
+    # Godot won't let me connect the signal in the editor, for some
+    # reason. So here it is in code.
+    var connected = connect("option_selected", self, "_on_ItemPanel_option_selected")
+    assert(connected == OK)
 
 func _expand_item_action(id: int) -> Dictionary:
     var data = item.get_item()
