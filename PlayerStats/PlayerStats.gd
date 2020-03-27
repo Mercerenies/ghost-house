@@ -30,7 +30,7 @@ func add_player_health(a: int) -> void:
 func add_player_stamina(a: float) -> void:
     set_player_stamina(get_player_stamina() + a)
 
-func add_player_money(a: float) -> void:
+func add_player_money(a: int) -> void:
     set_player_money(get_player_money() + a)
 
 func add_player_keys(a: int) -> void:
