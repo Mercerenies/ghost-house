@@ -350,7 +350,7 @@
         locks
       - [ ] Repeat the entire process for multiple locks (?)
       - [X] Actualizing generator needs to actualize the locks
-      - [ ] Locked doors should show up on the minimap until unlocked
+      - [X] Locked doors should show up on the minimap until unlocked
    7. [-] Keys
       - [X] Key inventory stat
       - [X] Ability to unlock doors by interacting with them when you

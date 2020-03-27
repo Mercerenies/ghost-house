@@ -81,6 +81,7 @@ func _open_doorways() -> void:
                 pass
             Connection.LockType.SIMPLE_LOCK:
                 var door = LockedDoor.instance()
+                door.set_connection(conn)
                 door.set_direction(1 if b - a == Vector2(1, 0) else 0)
                 _helper.add_entity(rect.position, door)
 

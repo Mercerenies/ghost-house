@@ -2,6 +2,7 @@ extends Node2D
 
 const GeneratorGrid = preload("res://Generator/GeneratorGrid/GeneratorGrid.gd")
 const Player = preload("res://Player/Player.gd")
+const Connection = preload("res://Generator/Connection/Connection.gd")
 
 var _dims: Vector2 = Vector2(0, 0)
 var _grid: GeneratorGrid = null
@@ -71,6 +72,12 @@ func get_icons(room_id: int) -> Array:
 
 func get_connections_list() -> Array:
     return _connections
+
+func unlock_doorway(ref: WeakRef) -> void:
+    var conn = ref.get_ref()
+    if conn:
+        conn.set_lock(Connection.LockType.NONE)
+        update_map()
 
 func _find_player() -> Vector2:
     var room = get_room()
