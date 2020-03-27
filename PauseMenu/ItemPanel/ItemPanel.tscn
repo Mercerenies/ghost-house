@@ -2,7 +2,7 @@
 
 [ext_resource path="res://PauseMenu/ItemPanel/ItemPanel.gd" type="Script" id=1]
 [ext_resource path="res://OutlinedPolygon2D/OutlinedPolygon2D.gd" type="Script" id=2]
-[ext_resource path="res://Item/Item.png" type="Texture" id=3]
+[ext_resource path="res://Item/ItemSprite.tscn" type="PackedScene" id=3]
 [ext_resource path="res://SelectionsList/SelectionsList.tscn" type="PackedScene" id=4]
 
 [node name="ItemPanel" type="Node2D"]
@@ -12,11 +12,8 @@ script = ExtResource( 1 )
 polygon = PoolVector2Array( 0, 0, 256, 0, 256, 432, 0, 432, 0, 0 )
 script = ExtResource( 2 )
 
-[node name="Sprite" type="Sprite" parent="."]
+[node name="ItemSprite" parent="." instance=ExtResource( 3 )]
 position = Vector2( 128, 32 )
-texture = ExtResource( 3 )
-vframes = 4
-hframes = 8
 frame = 1
 
 [node name="NameLabel" type="Label" parent="."]

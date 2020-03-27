@@ -26,7 +26,7 @@ func _add_default_actions(actions: Array) -> void:
 
 func set_item(item: ItemInstance) -> void:
     self.item = item
-    $Sprite.frame = item.get_icon_index()
+    $ItemSprite.frame = item.get_icon_index()
     $NameLabel.set_text(item.get_name())
     $DescLabel.set_text(item.get_description())
 
