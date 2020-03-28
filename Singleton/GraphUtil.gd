@@ -57,7 +57,7 @@ func _find_reachable_positions_iter(graph: Graph, reachable: Dictionary, vertex)
     reachable[vertex] = true
     for e in graph.get_incident_edges(vertex):
         var v = graph.incidence_other(vertex, e)
-        _find_reachable_positions_iter(v)
+        _find_reachable_positions_iter(graph, reachable, v)
 
 func find_reachable_positions(graph: Graph, starting_vertex) -> Dictionary:
     var reachable = {}
