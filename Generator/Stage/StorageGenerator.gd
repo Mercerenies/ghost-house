@@ -1,8 +1,8 @@
 extends Reference
 
-#############################
-# STAGE 10 - ITEM GENERATOR #
-#############################
+################################
+# STAGE 10 - STORAGE GENERATOR #
+################################
 
 const GeneratorGrid = preload("res://Generator/GeneratorGrid/GeneratorGrid.gd")
 const GeneratorPlacementHelper = preload("res://Generator/GeneratorPlacementHelper/GeneratorPlacementHelper.gd")

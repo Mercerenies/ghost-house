@@ -397,7 +397,7 @@
    7. ActualizingGenerator
    8. SpecialGenerator
    9. EdgeGenerator
-  10. ItemGenerator
+  10. StorageGenerator
   11. AmbientEnemyGenerator
   12. PlayerGenerator
   13. GhostGenerator
