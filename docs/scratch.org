@@ -340,7 +340,7 @@
       - [X] Update the minimap to work with the class
    5. [X] Locked door object (non-furniture ~StaticEntity~ with custom
       interaction)
-   6. [-] Locked door generator stage after properties generator
+   6. [X] Locked door generator stage after properties generator
       - [X] Define generator class
       - [X] Find cut edges
       - [X] Determine score using the various heuristics below
@@ -348,7 +348,7 @@
         (requires restructuring ~Generator.gd~ a bit)
       - [X] Weighted random selection to determine where to put the
         locks
-      - [ ] Repeat the entire process for multiple locks (?)
+      - [X] Repeat the entire process for multiple locks
       - [X] Actualizing generator needs to actualize the locks
       - [X] Locked doors should show up on the minimap until unlocked
    7. [-] Keys

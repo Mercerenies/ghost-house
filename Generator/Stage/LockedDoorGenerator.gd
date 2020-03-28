@@ -99,11 +99,14 @@ func _lock_connection(conn: Connection) -> void:
 
 func run(conn: Array) -> void:
     var graph = _generate_incidence_graph(conn)
-    var cuts = GraphUtil.identify_cut_edges(graph)
-    var scores = _score_all_edges(graph, cuts)
 
     var count = _determine_locked_door_count()
     for _i in range(count):
+        var cuts = GraphUtil.identify_cut_edges(graph)
+        var scores = _score_all_edges(graph, cuts)
         var edge = _choose_connection_for_lock(scores)
-        #print(scores[edge])
         _lock_connection(edge)
+        # Remove the edge from the graph so we can regenerate the
+        # scores without considering that edge (i.e. some edges will
+        # become cuts or closets now)
+        graph.remove_edge(edge)
