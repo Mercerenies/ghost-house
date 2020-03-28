@@ -50,3 +50,18 @@ func identify_cut_edges(graph: Graph) -> Dictionary:
     # Iterate
     _identify_cut_edges_iter(graph, result, visited, stack)
     return result
+
+func _find_reachable_positions_iter(graph: Graph, reachable: Dictionary, vertex) -> void:
+    if reachable[vertex]:
+        return
+    reachable[vertex] = true
+    for e in graph.get_incident_edges(vertex):
+        var v = graph.incidence_other(vertex, e)
+        _find_reachable_positions_iter(v)
+
+func find_reachable_positions(graph: Graph, starting_vertex) -> Dictionary:
+    var reachable = {}
+    for v in graph.get_vertices():
+        reachable[v] = false
+    _find_reachable_positions_iter(graph, reachable, starting_vertex)
+    return reachable
