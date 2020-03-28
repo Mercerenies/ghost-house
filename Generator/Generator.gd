@@ -75,7 +75,7 @@ func generate() -> Room:
     var dead_room_generator = DeadRoomGenerator.new(_data, _grid, painter)
     var connection_generator = ConnectionGenerator.new(_data, _grid)
     var properties_generator = PropertiesGenerator.new(_data, _boxes)
-    var locked_door_generator = LockedDoorGenerator.new(_data, _grid, _boxes)
+    var locked_door_generator = LockedDoorGenerator.new(_data, _grid, _boxes, _vars)
     var actualizing_generator = ActualizingGenerator.new(_data, _grid, _boxes, _room, helper)
     var special_generator = SpecialGenerator.new(_data, _boxes, _room, helper)
     var edge_generator = EdgeGenerator.new(_data, _grid, _flag_grid, _boxes, _room, helper)

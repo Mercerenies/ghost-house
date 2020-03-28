@@ -344,7 +344,7 @@
       - [X] Define generator class
       - [X] Find cut edges
       - [X] Determine score using the various heuristics below
-      - [ ] Heuristic for closeting the player into the starting room
+      - [X] Heuristic for closeting the player into the starting room
         (requires restructuring ~Generator.gd~ a bit)
       - [X] Weighted random selection to determine where to put the
         locks
@@ -374,14 +374,14 @@
       - [ ] Place the generated keys on the minimap in the appropriate
         places
 ** Lock Placement
-  + [-] Heuristics (minimum 1 point always)
+  + [X] Heuristics (minimum 1 point always)
     - [X] +10 automatically
     - [X] +20 for being a cut edge
     - [X] +10 for being a closet edge (defined, here, as an edge which
       isolates a room from the rest of the mansion; stacks with the
       cut edge bonus)
     - [X] -30 for being a duplicate edge
-    - [ ] -30 for being a closet edge which boxes the player into the
+    - [X] -30 for being a closet edge which boxes the player into the
       starting room
 * GENERATOR STAGES
   Listed here, for convenience.

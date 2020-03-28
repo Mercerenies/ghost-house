@@ -10,14 +10,18 @@ const GeneratorGrid = preload("res://Generator/GeneratorGrid/GeneratorGrid.gd")
 const Connection = preload("res://Generator/Connection/Connection.gd")
 const Graph = preload("res://Generator/Graph/Graph.gd")
 
+const VAR_PLAYER_COORDS = GeneratorData.VAR_PLAYER_COORDS
+
 var _data: Dictionary = {}
 var _grid: GeneratorGrid = null
 var _boxes: Dictionary = {}
+var _vars: Dictionary = {}
 
-func _init(room_data: Dictionary, grid: GeneratorGrid, boxes: Dictionary):
+func _init(room_data: Dictionary, grid: GeneratorGrid, boxes: Dictionary, vars: Dictionary):
     _data = room_data
     _grid = grid
     _boxes = boxes
+    _vars = vars
 
 func _generate_incidence_graph(conn: Array) -> Graph:
     var graph = Graph.new(_boxes.keys(), Connection.Incidence.new(_grid))
@@ -28,6 +32,7 @@ func _generate_incidence_graph(conn: Array) -> Graph:
 func _score_edge(graph: Graph, cuts: Dictionary, edge: Connection) -> int:
     var vs = graph.incidence(edge)
     var score = 0
+    var closeted_room = null
 
     # +10: Always
     score += 10
@@ -38,12 +43,11 @@ func _score_edge(graph: Graph, cuts: Dictionary, edge: Connection) -> int:
 
     # +10: Closet Edge
     if cuts[edge]:
-        var closet = false
         for v in vs:
             # See if the vertex is "closeted"
             if len(graph.get_incident_edges(v)) == 1:
-                closet = true
-        if closet:
+                closeted_room = v
+        if closeted_room:
             score += 10
 
     # -30: Duplicate Edge
@@ -53,6 +57,13 @@ func _score_edge(graph: Graph, cuts: Dictionary, edge: Connection) -> int:
             matching_edges += 1
     if matching_edges > 1:
         score -= 30
+
+    # -30 Closet Edge Containing the Player
+    if cuts[edge] and closeted_room:
+        var player_cell = _vars[VAR_PLAYER_COORDS]
+        var player_starting_id = _grid.get_value(player_cell)
+        if player_starting_id == closeted_room:
+            score -= 30
 
     return int(max(score, 1))
 
