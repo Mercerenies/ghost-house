@@ -31,6 +31,8 @@ func has_vertex(vertex) -> bool:
 func get_vertices() -> Array:
     return _adjacency.keys()
 
+# Note that this simply concatenates all incidence lists, so each edge
+# will be listed twice in this array.
 func get_edges() -> Array:
     var edges = []
     for es in _adjacency.values():
