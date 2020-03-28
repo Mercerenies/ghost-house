@@ -359,9 +359,9 @@
       - [X] Animation for the key being removed from inventory
       - [X] Default behavior of locked door interaction is to show a
         generic message about keys
-      - [ ] ~Collectible~ subclass for keys (with a flag for minimap
-        interaction)
-      - [ ] Corresponding animation for the ~Collectible~
+      - [X] ~Collectible~ subclass for keys
+      - [ ] Flag for minimap interaction on the ~Collectible~
+      - [X] Corresponding animation for the ~Collectible~
       - [ ] If the minimap flag is set, the key should remove its icon
         from the minimap on collection
       - [ ] Debug menu option to give the player several keys
