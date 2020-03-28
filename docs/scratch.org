@@ -368,8 +368,8 @@
       - [X] Keys should appear on the pause menu screen
       - [ ] Keys should move up in the HUD if there are no status
         effects to be shown
-   8. [ ] Key generator stage after edge furniture generator
-      - [ ] Define generator class
+   8. [-] Key generator stage after edge furniture generator
+      - [X] Define generator class
       - [ ] DFS or BFS to determine valid rooms in which to place keys
       - [ ] Attempt to place appropriate number of keys in compatible
         furniture
@@ -397,7 +397,8 @@
    7. ActualizingGenerator
    8. SpecialGenerator
    9. EdgeGenerator
-  10. StorageGenerator
-  11. AmbientEnemyGenerator
-  12. PlayerGenerator
-  13. GhostGenerator
+  10. EssentialGenerator
+  11. StorageGenerator
+  12. AmbientEnemyGenerator
+  13. PlayerGenerator
+  14. GhostGenerator

@@ -12,6 +12,7 @@ const LockedDoorGenerator = preload("res://Generator/Stage/LockedDoorGenerator.g
 const ActualizingGenerator = preload("res://Generator/Stage/ActualizingGenerator.gd")
 const SpecialGenerator = preload("res://Generator/Stage/SpecialGenerator.gd")
 const EdgeGenerator = preload("res://Generator/Stage/EdgeGenerator.gd")
+const EssentialGenerator = preload("res://Generator/Stage/EssentialGenerator.gd")
 const StorageGenerator = preload("res://Generator/Stage/StorageGenerator.gd")
 const AmbientEnemyGenerator = preload("res://Generator/Stage/AmbientEnemyGenerator.gd")
 const PlayerGenerator = preload("res://Generator/Stage/PlayerGenerator.gd")
@@ -79,6 +80,7 @@ func generate() -> Room:
     var actualizing_generator = ActualizingGenerator.new(_data, _grid, _boxes, _room, helper)
     var special_generator = SpecialGenerator.new(_data, _boxes, _room, helper)
     var edge_generator = EdgeGenerator.new(_data, _grid, _flag_grid, _boxes, _room, helper)
+    var essential_generator = EssentialGenerator.new(_data, _room, _vars, helper)
     var storage_generator = StorageGenerator.new(_data, _room, helper)
     var ambient_enemy_generator = AmbientEnemyGenerator.new(_data, helper)
     var player_generator = PlayerGenerator.new(_data, _grid, _boxes, _room, _vars, helper)
@@ -100,6 +102,7 @@ func generate() -> Room:
 
     _room.get_minimap().initialize(Vector2(w, h), _grid, _boxes, _connections)
 
+    essential_generator.run(_connections)
     storage_generator.run()
     ambient_enemy_generator.run()
 
