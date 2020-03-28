@@ -364,7 +364,10 @@
       - [X] Corresponding animation for the ~Collectible~
       - [ ] If the minimap flag is set, the key should remove its icon
         from the minimap on collection
-      - [ ] Debug menu option to give the player several keys
+      - [X] Debug menu option to give the player several keys
+      - [ ] Keys should appear on the pause menu screen
+      - [ ] Keys should move up in the HUD if there are no status
+        effects to be shown
    8. [ ] Key generator stage after edge furniture generator
       - [ ] Define generator class
       - [ ] DFS or BFS to determine valid rooms in which to place keys
