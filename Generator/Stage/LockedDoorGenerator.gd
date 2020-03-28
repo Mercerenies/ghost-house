@@ -23,12 +23,6 @@ func _init(room_data: Dictionary, grid: GeneratorGrid, boxes: Dictionary, vars: 
     _boxes = boxes
     _vars = vars
 
-func _generate_incidence_graph(conn: Array) -> Graph:
-    var graph = Graph.new(_boxes.keys(), Connection.Incidence.new(_grid))
-    for c in conn:
-        graph.add_edge(c)
-    return graph
-
 func _score_edge(graph: Graph, cuts: Dictionary, edge: Connection) -> int:
     var vs = graph.incidence(edge)
     var score = 0
@@ -98,7 +92,7 @@ func _lock_connection(conn: Connection) -> void:
     conn.set_lock(Connection.LockType.SIMPLE_LOCK)
 
 func run(conn: Array) -> void:
-    var graph = _generate_incidence_graph(conn)
+    var graph = Connection.make_incidence_graph(_grid, _boxes.keys(), conn)
 
     var count = _determine_locked_door_count()
     for _i in range(count):
