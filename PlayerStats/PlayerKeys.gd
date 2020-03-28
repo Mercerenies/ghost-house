@@ -2,6 +2,7 @@ tool
 extends Node2D
 
 export var max_displayed: int = 5
+export var per_row: int = 5
 export var keys: int = 0
 
 const _image: Texture = preload("res://PlayerStats/Key.png")
@@ -15,7 +16,8 @@ func _draw() -> void:
         shown = max_displayed
 
     for i in range(shown):
-        var pos = Vector2(i * 32, 0)
+        # warning-ignore: integer_division
+        var pos = 32 * Vector2(i % per_row, i / per_row)
         draw_texture(_image, pos)
 
 func set_keys(a: int) -> void:

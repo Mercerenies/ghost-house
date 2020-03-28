@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://PauseMenu/PlayerStatus/PlayerStatus.gd" type="Script" id=1]
 [ext_resource path="res://OutlinedPolygon2D/OutlinedPolygon2D.gd" type="Script" id=2]
@@ -6,16 +6,18 @@
 [ext_resource path="res://PlayerStats/PlayerHealth.tscn" type="PackedScene" id=4]
 [ext_resource path="res://PlayerStats/PlayerStamina.tscn" type="PackedScene" id=5]
 [ext_resource path="res://PlayerStats/PlayerMoney.tscn" type="PackedScene" id=6]
+[ext_resource path="res://PlayerStats/PlayerKeys.tscn" type="PackedScene" id=7]
 
 [node name="PlayerStatus" type="Node2D"]
 script = ExtResource( 1 )
 
 [node name="Frame" type="Polygon2D" parent="."]
+position = Vector2( 0, -1 )
 polygon = PoolVector2Array( 0, 0, 512, 0, 512, 320, 0, 320, 0, 0 )
 script = ExtResource( 2 )
 
 [node name="Sprite" type="Sprite" parent="."]
-position = Vector2( 43, 27 )
+position = Vector2( 53, 27 )
 texture = ExtResource( 3 )
 vframes = 4
 hframes = 4
@@ -24,13 +26,13 @@ hframes = 4
 wait_time = 0.1
 
 [node name="PlayerHealth" parent="." instance=ExtResource( 4 )]
-position = Vector2( 97, 9 )
+position = Vector2( 110, 9 )
 
 [node name="PlayerStamina" parent="." instance=ExtResource( 5 )]
-position = Vector2( 97, 49 )
+position = Vector2( 110, 49 )
 
 [node name="PlayerMoney" parent="." instance=ExtResource( 6 )]
-position = Vector2( 97, 75 )
+position = Vector2( 110, 75 )
 
 [node name="StatusAilmentsLabel" type="Label" parent="."]
 margin_left = 27.0
@@ -42,4 +44,9 @@ text = "Player Status"
 
 [node name="StatusAilmentsList" type="Node2D" parent="."]
 position = Vector2( 30, 151 )
+
+[node name="PlayerKeys" parent="." instance=ExtResource( 7 )]
+position = Vector2( 4, 52 )
+max_displayed = 6
+per_row = 3
 [connection signal="timeout" from="SpriteAnimationTimer" to="." method="_on_SpriteAnimationTimer_timeout"]
