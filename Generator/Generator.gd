@@ -90,6 +90,7 @@ func generate() -> Room:
     _connections = connection_generator.run()
     properties_generator.run()
 
+    # warning-ignore: integer_division
     _vars[VAR_PLAYER_COORDS] = Vector2(floor(_grid.get_width() / 2), floor(_grid.get_height() - 1))
 
     locked_door_generator.run(_connections)
