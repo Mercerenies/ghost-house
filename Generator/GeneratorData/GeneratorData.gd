@@ -57,6 +57,8 @@ const TOTAL_CELL_SIZE = CELL_SIZE + WALL_SIZE * 2
 const PLACEMENT_INVALID = Rect2(-65536, -65536, 1, 1)
 const PLACEMENT_SAFE = Rect2(-65536, -65536, 2, 2)
 
+const VAR_PLAYER_COORDS = 'VAR_PLAYER_COORDS'
+
 static func is_placement_constant(r: Rect2) -> bool:
     return r.position == Vector2(-65536, -65536)
 

@@ -41,12 +41,15 @@ const ID_ROOMS = GeneratorData.ID_ROOMS
 
 const FLAG_EDGE_FURNITURE = GeneratorData.FLAG_EDGE_FURNITURE
 
+const VAR_PLAYER_COORDS = GeneratorData.VAR_PLAYER_COORDS
+
 var _data: Dictionary = {}
 var _grid: GeneratorGrid = null
 var _flag_grid: GeneratorGrid = null
 var _room: Room = null
 var _boxes: Dictionary = {}
 var _connections: Array = []
+var _vars: Dictionary = {}
 
 const CELL_SIZE = GeneratorData.CELL_SIZE
 const WALL_SIZE = GeneratorData.WALL_SIZE
@@ -78,7 +81,7 @@ func generate() -> Room:
     var edge_generator = EdgeGenerator.new(_data, _grid, _flag_grid, _boxes, _room, helper)
     var item_generator = ItemGenerator.new(_data, _room, helper)
     var ambient_enemy_generator = AmbientEnemyGenerator.new(_data, helper)
-    var player_generator = PlayerGenerator.new(_data, _grid, _boxes, _room, helper)
+    var player_generator = PlayerGenerator.new(_data, _grid, _boxes, _room, _vars, helper)
     var ghost_generator = GhostGenerator.new(_data, _grid, _boxes, _room, helper)
 
     hallway_generator.run(ID_HALLS)
@@ -86,6 +89,9 @@ func generate() -> Room:
     dead_room_generator.run(next_id)
     _connections = connection_generator.run()
     properties_generator.run()
+
+    _vars[VAR_PLAYER_COORDS] = Vector2(floor(_grid.get_width() / 2), floor(_grid.get_height() - 1))
+
     locked_door_generator.run(_connections)
     actualizing_generator.run(_connections)
     special_generator.run()

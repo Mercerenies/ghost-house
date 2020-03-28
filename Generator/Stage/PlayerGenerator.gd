@@ -14,6 +14,8 @@ const RoomData = GeneratorData.RoomData
 
 const FLAG_EDGE_FURNITURE = GeneratorData.FLAG_EDGE_FURNITURE
 
+const VAR_PLAYER_COORDS = GeneratorData.VAR_PLAYER_COORDS
+
 const CELL_SIZE = GeneratorData.CELL_SIZE
 const WALL_SIZE = GeneratorData.WALL_SIZE
 const TOTAL_CELL_SIZE = GeneratorData.TOTAL_CELL_SIZE
@@ -22,22 +24,25 @@ var _data: Dictionary = {}
 var _grid: GeneratorGrid = null
 var _boxes: Dictionary = {}
 var _room: Room
+var _vars: Dictionary
 var _helper: GeneratorPlacementHelper
 
 func _init(room_data: Dictionary,
            grid: GeneratorGrid,
            boxes: Dictionary,
            room: Room,
+           vars: Dictionary,
            helper: GeneratorPlacementHelper):
     _data = room_data
     _grid = grid
     _boxes = boxes
     _room = room
+    _vars = vars
     _helper = helper
 
 func _identify_valid_rect() -> Rect2:
     # warning-ignore: integer_division
-    var target_pos = Vector2(_grid.get_width() / 2, _grid.get_height() - 1)
+    var target_pos = _vars[VAR_PLAYER_COORDS]
     var room_id = _grid.get_value(target_pos)
     var room = _boxes[room_id]
     if room is HallwayData:
