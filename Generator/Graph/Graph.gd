@@ -48,6 +48,11 @@ func add_edge(edge) -> void:
     _adjacency[ vs[0] ].append(edge)
     _adjacency[ vs[1] ].append(edge)
 
+func remove_edge(edge) -> void:
+    var vs = _incidence.incidence(edge)
+    _adjacency[ vs[0] ].erase(edge)
+    _adjacency[ vs[1] ].erase(edge)
+
 func incidence(edge) -> Array:
     return _incidence.incidence(edge)
 
