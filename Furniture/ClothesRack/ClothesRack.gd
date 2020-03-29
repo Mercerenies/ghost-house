@@ -38,4 +38,4 @@ func get_storage_chance() -> float:
     return 0.2
 
 func get_storage_tags() -> Array:
-    return [CollectibleTag.SHORT_TERM, CollectibleTag.LONG_TERM, CollectibleTag.IMMEDIATE]
+    return [CollectibleTag.SHORT_TERM, CollectibleTag.LONG_TERM, CollectibleTag.IMMEDIATE, CollectibleTag.ESSENTIAL]
