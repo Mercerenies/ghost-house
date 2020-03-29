@@ -374,7 +374,7 @@
       - [X] Attempt to place appropriate number of keys in compatible
         furniture
       - [ ] If placement fails, delete a lock and retry
-      - [ ] Place the generated keys on the minimap in the appropriate
+      - [X] Place the generated keys on the minimap in the appropriate
         places
 ** Lock Placement
   + [X] Heuristics (minimum 1 point always)

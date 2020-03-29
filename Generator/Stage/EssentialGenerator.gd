@@ -83,14 +83,16 @@ func _is_furniture_valid(furniture) -> bool:
     return true
 
 func _place_keys() -> void:
+    var minimap = _room.get_minimap()
     var furniture = Util.filter(self, "_is_furniture_valid", _all_furniture)
     assert(len(furniture) >= len(_locked_doors)) # TODO Actually handle this corner case correctly
 
     furniture.shuffle()
     for i in range(len(_locked_doors)):
         var curr = furniture[i]
+        var room_id = _grid.get_value(RoomDimensions.cell_to_generator_cell(curr.cell))
         curr.set_storage(_key_collectible)
-        print(curr.get_furniture_name())
+        minimap.add_icon(room_id, Icons.Index.KEY)
 
 func run(conn: Array) -> void:
     _all_furniture = _get_all_furniture()
