@@ -72,14 +72,30 @@ func _generate_reachable_dictionary() -> void:
     _reachable = GraphUtil.find_reachable_positions(_graph, player_room_id)
 
 func _is_furniture_valid(furniture) -> bool:
+
+    # The room must be reachable
     var cell = RoomDimensions.cell_to_generator_cell(furniture.cell)
     var room_id = _grid.get_value(cell)
     if not _reachable[room_id]:
         return false
+
+    # The furniture must be able to hold a key
     var storage_tags = furniture.get_storage_tags()
     var tags = _key_collectible.get_tags()
     if not Util.intersection(storage_tags, tags):
         return false
+
+    # The furniture must not be vanishing
+    if furniture.vars["vanishing"]:
+        return false
+
+    # The furniture must be reachable (extra check)
+    # TODO This
+
+    # The furniture must not be in a hallway (for minimap reasons)
+    if not (_boxes[room_id] is RoomData):
+        return false
+
     return true
 
 func _place_keys() -> void:
