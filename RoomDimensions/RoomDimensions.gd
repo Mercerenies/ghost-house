@@ -21,3 +21,7 @@ static func connection_rect(connection: Connection) -> Rect2:
     var room_upperleft = pos1 * TOTAL_CELL_SIZE
     var tr_upperleft = room_upperleft + Vector2(-1, -1) + Vector2(diff.y, diff.x) * TOTAL_CELL_SIZE / 2
     return Rect2(tr_upperleft, Vector2(2, 2))
+
+# Takes a position in the grid and returns the generator cell to which it belongs
+static func cell_to_generator_cell(pos: Vector2) -> Vector2:
+    return Vector2(floor(pos.x / TOTAL_CELL_SIZE), floor(pos.y / TOTAL_CELL_SIZE))

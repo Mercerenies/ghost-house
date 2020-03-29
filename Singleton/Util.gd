@@ -60,6 +60,13 @@ func map_values(obj, funcname, d0) -> Dictionary:
         d[k] = obj.call(funcname, d0[k])
     return d
 
+func filter(obj, funcname, xs) -> Array:
+    var arr = []
+    for x in xs:
+        if obj.call(funcname, x):
+            arr.append(x)
+    return arr
+
 # Deep-copies any JSON-serializable data (that is, arrays and dicts)
 # arbitrarily nested. Does not check for cycles.
 func deep_copy(obj):
