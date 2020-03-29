@@ -74,8 +74,9 @@ func _generate_reachable_dictionary() -> void:
 func _is_furniture_valid(furniture) -> bool:
 
     # The room must be reachable
-    var cell = RoomDimensions.cell_to_generator_cell(furniture.cell)
-    var room_id = _grid.get_value(cell)
+    var grid_cell = furniture.cell
+    var gen_cell = RoomDimensions.cell_to_generator_cell(grid_cell)
+    var room_id = _grid.get_value(gen_cell)
     if not _reachable[room_id]:
         return false
 
@@ -90,7 +91,10 @@ func _is_furniture_valid(furniture) -> bool:
         return false
 
     # The furniture must be reachable (extra check)
-    # TODO This
+    if not GeneratorPlacementHelper.has_free_position_surrounding(_room,
+                                                                  Rect2(grid_cell, furniture.dims)):
+        print("Locked in (" + furniture.get_furniture_name() + ")")
+        return false
 
     # The furniture must not be in a hallway (for minimap reasons)
     if not (_boxes[room_id] is RoomData):

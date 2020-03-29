@@ -376,7 +376,7 @@
       - [ ] If placement fails, delete a lock and retry
       - [X] Place the generated keys on the minimap in the appropriate
         places
-      - [ ] Additional check for furniture reachability
+      - [X] Additional check for furniture reachability
 ** Lock Placement
   + [X] Heuristics (minimum 1 point always)
     - [X] +10 automatically

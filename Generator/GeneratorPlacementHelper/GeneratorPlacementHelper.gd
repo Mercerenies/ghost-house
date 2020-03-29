@@ -51,6 +51,29 @@ static func can_put_furniture_at(room: Room, rect: Rect2) -> bool:
             transitions += 1
     return transitions <= 2
 
+static func has_free_position_surrounding(room: Room, rect: Rect2) -> bool:
+    # Top edge
+    for i in range(rect.size.x):
+        var pos = Vector2(rect.position.x + i, rect.position.y - 1)
+        if not is_blocked(room, pos):
+            return true
+    # Right edge
+    for i in range(rect.size.y):
+        var pos = Vector2(rect.end.x, rect.position.y + i)
+        if not is_blocked(room, pos):
+            return true
+    # Bottom edge
+    for i in range(rect.size.x):
+        var pos = Vector2(rect.end.x - 1 - i, rect.end.y)
+        if not is_blocked(room, pos):
+            return true
+    # Left edge
+    for i in range(rect.size.y):
+        var pos = Vector2(rect.position.x - 1, rect.end.y - 1 - i)
+        if not is_blocked(room, pos):
+            return true
+    return false
+
 # TODO A few more of these could be made static as well
 
 func is_doorway_at_position(pos: Vector2) -> bool:
