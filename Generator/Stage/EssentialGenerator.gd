@@ -9,6 +9,7 @@ const GeneratorPlacementHelper = preload("res://Generator/GeneratorPlacementHelp
 const Connection = preload("res://Generator/Connection/Connection.gd")
 const Graph = preload("res://Generator/Graph/Graph.gd")
 const KeyCollectible = preload("res://Collectible/KeyCollectible.gd")
+const LockedDoor = preload("res://LockedDoor/LockedDoor.gd")
 
 const HallwayData = GeneratorData.HallwayData
 const RoomData = GeneratorData.RoomData
@@ -25,6 +26,12 @@ var _boxes: Dictionary
 var _room: Room
 var _vars: Dictionary
 var _helper: GeneratorPlacementHelper
+
+var _all_furniture
+var _graph
+var _reachable
+var _locked_doors
+var _key_collectible
 
 class _IncludeAllUnlockedEdges:
 
@@ -53,12 +60,45 @@ func _get_all_furniture() -> Array:
                 furn[entity] = true
     return furn.keys()
 
-func run(conn: Array) -> void:
-    var all_furniture = _get_all_furniture()
-    var graph = Connection.make_incidence_graph(_grid, _boxes.keys(), conn, _IncludeAllUnlockedEdges)
+func _is_LockedDoor(entity) -> bool:
+    return entity is LockedDoor
 
+func _find_locked_doors() -> Array:
+    return Util.filter(self, "_is_LockedDoor", _room.get_entities())
+
+func _generate_reachable_dictionary() -> void:
     var player_cell = _vars[VAR_PLAYER_COORDS]
     var player_room_id = _grid.get_value(player_cell)
-    var reachable = GraphUtil.find_reachable_positions(graph, player_room_id)
+    _reachable = GraphUtil.find_reachable_positions(_graph, player_room_id)
 
+func _is_furniture_valid(furniture) -> bool:
+    var cell = RoomDimensions.cell_to_generator_cell(furniture.cell)
+    var room_id = _grid.get_value(cell)
+    if not _reachable[room_id]:
+        return false
+    var storage_tags = furniture.get_storage_tags()
+    var tags = _key_collectible.get_tags()
+    if not Util.intersection(storage_tags, tags):
+        return false
+    return true
+
+func _place_keys() -> void:
+    var furniture = Util.filter(self, "_is_furniture_valid", _all_furniture)
+    assert(len(furniture) >= len(_locked_doors)) # TODO Actually handle this corner case correctly
+
+    furniture.shuffle()
+    for i in range(len(_locked_doors)):
+        var curr = furniture[i]
+        curr.set_storage(_key_collectible)
+        print(curr.get_furniture_name())
+
+func run(conn: Array) -> void:
+    _all_furniture = _get_all_furniture()
+    _key_collectible = KeyCollectible.new()
+    _graph = Connection.make_incidence_graph(_grid, _boxes.keys(), conn, _IncludeAllUnlockedEdges)
+
+    _generate_reachable_dictionary()
+    _locked_doors = _find_locked_doors()
+
+    _place_keys()
     # /////

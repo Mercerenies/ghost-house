@@ -370,8 +370,8 @@
         effects to be shown
    8. [-] Key generator stage after edge furniture generator
       - [X] Define generator class
-      - [ ] DFS or BFS to determine valid rooms in which to place keys
-      - [ ] Attempt to place appropriate number of keys in compatible
+      - [X] DFS or BFS to determine valid rooms in which to place keys
+      - [X] Attempt to place appropriate number of keys in compatible
         furniture
       - [ ] If placement fails, delete a lock and retry
       - [ ] Place the generated keys on the minimap in the appropriate
