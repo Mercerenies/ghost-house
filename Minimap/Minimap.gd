@@ -57,13 +57,18 @@ func add_icon(room_id: int, icon_id: int) -> void:
     if not (room_id in _icons):
         _icons[room_id] = []
     _icons[room_id].append(icon_id)
+    update_map()
 
-# TODO A function to remove one particular icon (e.g., when the player
-# collects a key)
+# Removes one copy of the icon from the room. No action if the icon
+# does not appear on the room.
+func remove_icon(room_id: int, icon_id: int) -> void:
+    _icons[room_id].erase(icon_id)
+    update_map()
 
 func clear_icons(room_id: int) -> void:
     if room_id in _icons:
         _icons[room_id] = []
+    update_map()
 
 func get_icons(room_id: int) -> Array:
     if room_id in _icons:

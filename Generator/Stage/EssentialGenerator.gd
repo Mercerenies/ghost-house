@@ -116,11 +116,10 @@ func _place_keys() -> void:
 
 func run(conn: Array) -> void:
     _all_furniture = _get_all_furniture()
-    _key_collectible = KeyCollectible.new()
+    _key_collectible = KeyCollectible.new(1, true)
     _graph = Connection.make_incidence_graph(_grid, _boxes.keys(), conn, _IncludeAllUnlockedEdges)
 
     _generate_reachable_dictionary()
     _locked_doors = _find_locked_doors()
 
     _place_keys()
-    # /////
