@@ -93,7 +93,6 @@ func _is_furniture_valid(furniture) -> bool:
     # The furniture must be reachable (extra check)
     if not GeneratorPlacementHelper.has_free_position_surrounding(_room,
                                                                   Rect2(grid_cell, furniture.dims)):
-        print("Locked in (" + furniture.get_furniture_name() + ")")
         return false
 
     # The furniture must not be in a hallway (for minimap reasons)
@@ -105,7 +104,18 @@ func _is_furniture_valid(furniture) -> bool:
 func _place_keys() -> void:
     var minimap = _room.get_minimap()
     var furniture = Util.filter(self, "_is_furniture_valid", _all_furniture)
-    assert(len(furniture) >= len(_locked_doors)) # TODO Actually handle this corner case correctly
+
+    while len(furniture) < len(_locked_doors):
+        # Panic! Remove a lock and try again...
+        var first_door = _locked_doors.pop_back()
+        _graph.add_edge(first_door.get_connection())
+        _generate_reachable_dictionary()
+
+        first_door.unlock_doorway_on_minimap()
+        first_door.unposition_self()
+        first_door.queue_free()
+
+        furniture = Util.filter(self, "_is_furniture_valid", _all_furniture)
 
     furniture.shuffle()
     for i in range(len(_locked_doors)):
@@ -121,5 +131,8 @@ func run(conn: Array) -> void:
 
     _generate_reachable_dictionary()
     _locked_doors = _find_locked_doors()
+    _locked_doors.shuffle() # In case the panic case triggers and we
+                            # have to remove one, we want them in
+                            # random order.
 
     _place_keys()

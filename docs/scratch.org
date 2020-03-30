@@ -368,12 +368,12 @@
       - [X] Keys should appear on the pause menu screen
       - [ ] Keys should move up in the HUD if there are no status
         effects to be shown
-   8. [-] Key generator stage after edge furniture generator
+   8. [X] Key generator stage after edge furniture generator
       - [X] Define generator class
       - [X] DFS or BFS to determine valid rooms in which to place keys
       - [X] Attempt to place appropriate number of keys in compatible
         furniture
-      - [ ] If placement fails, delete a lock and retry
+      - [X] If placement fails, delete a lock and retry
       - [X] Place the generated keys on the minimap in the appropriate
         places
       - [X] Additional check for furniture reachability

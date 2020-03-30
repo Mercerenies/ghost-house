@@ -5,7 +5,8 @@ func get_room():
     return get_parent().get_parent()
 
 func _ready():
-    position_self()
+    if not is_queued_for_deletion():
+        position_self()
 
 func position_self() -> void:
     pass

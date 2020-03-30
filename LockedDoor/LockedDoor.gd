@@ -32,7 +32,7 @@ func on_interact() -> void:
         # TODO Animation for opening the door
         unposition_self()
         queue_free()
-        room.get_minimap().unlock_doorway(_conn)
+        unlock_doorway_on_minimap()
         stats.consume_key()
     else:
         room.show_dialogue(INTERACTION, "no_key", vars)
@@ -42,3 +42,10 @@ func on_debug_tap() -> void:
 
 func set_connection(conn: Connection) -> void:
     _conn = weakref(conn)
+
+func get_connection() -> Connection:
+    return _conn.get_ref()
+
+func unlock_doorway_on_minimap() -> void:
+    var minimap = get_room().get_minimap()
+    minimap.unlock_doorway(_conn)
