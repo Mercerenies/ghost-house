@@ -245,3 +245,6 @@ class PlacementManager extends SpecialPlacementManager:
                 return [UniformTablesWithChairs.new(chair_type)]
             3:
                 return [UniformTablesWithoutChairs.new(chair_type)]
+
+        assert(false)
+        return []

@@ -10,6 +10,11 @@ export var maximum_distance: float = 256
 
 var book = null
 var entity = null
+var active = false
+
+func _ready() -> void:
+    if active:
+        $StartDelayTimer.start(3 * randf())
 
 func set_entity(entity):
     self.entity = entity
@@ -18,11 +23,15 @@ func get_room():
     return entity.get_room()
 
 func activate() -> void:
-    $StartDelayTimer.start(3 * randf())
+    active = true
+    if is_inside_tree():
+        $StartDelayTimer.start(3 * randf())
 
 func deactivate() -> void:
-    $CycleTimer.stop()
-    $StartDelayTimer.stop()
+    active = false
+    if is_inside_tree():
+        $CycleTimer.stop()
+        $StartDelayTimer.stop()
 
 func _on_CycleTimer_timeout():
     var player_distance = EnemyAI.distance_to_player(entity)
@@ -57,4 +66,5 @@ func _on_StartDelayTimer_timeout():
 
 func _on_FlyingBook_tree_exited():
     book = null
-    $CooldownTimer.start()
+    if is_inside_tree():
+        $CooldownTimer.start()

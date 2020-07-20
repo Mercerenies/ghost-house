@@ -25,6 +25,7 @@ func random_dir() -> Vector2:
             return Vector2(0, 1)
         3:
             return Vector2(0, -1)
+    return Vector2(0, 0) # TODO Report an error?
 
 func transpose_v(vec: Vector2) -> Vector2:
     return Vector2(vec.y, vec.x)
