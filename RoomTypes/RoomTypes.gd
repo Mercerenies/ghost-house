@@ -63,7 +63,7 @@ const WeightedDistr = SpecialPlacement.WeightedDistr
 enum Tile {
     EmptyTile = 0, DebugFloor, DebugWall, TileFloor1, TileFloor2, LightGrayCarpet, GrayCarpet, DarkGrayCarpet, TileFloor3, WoodFloor1,
     WoodFloor2, WoodFloor3, ConcreteFloor, StripedWall1, StripedWall2, DiamondWall, CircleWall, GradientWall1, GradientWall2, RockyWall,
-    PipeWall, RedRegalWall, OrangeRegalWall, ColumnedWall1, ColumnedWall2, ColumnedWall3, GrassTile
+    PipeWall, RedRegalWall, OrangeRegalWall, ColumnedWall1, ColumnedWall2, ColumnedWall3, GrassTile, BrickWall1, BrickWall2, BrickWall3
 }
 
 enum RT {
@@ -75,7 +75,8 @@ enum RT {
 
 var walls: Array = [Tile.DebugWall, Tile.StripedWall1, Tile.StripedWall2, Tile.DiamondWall, Tile.CircleWall,
                     Tile.GradientWall1, Tile.GradientWall2, Tile.RockyWall, Tile.PipeWall, Tile.RedRegalWall,
-                    Tile.OrangeRegalWall, Tile.ColumnedWall1, Tile.ColumnedWall2, Tile.ColumnedWall3]
+                    Tile.OrangeRegalWall, Tile.ColumnedWall1, Tile.ColumnedWall2, Tile.ColumnedWall3,
+                    Tile.BrickWall1, Tile.BrickWall2, Tile.BrickWall3]
 
 var _roomtypes: Dictionary = {
     Vector2(1, 1): [RT.Washroom, RT.Closet, RT.LaundryRoom, RT.StorageRoom],
@@ -242,7 +243,7 @@ var _config: Dictionary = {
     },
     RT.Closet: {
         "floors": [Tile.LightGrayCarpet, Tile.GrayCarpet, Tile.DarkGrayCarpet, Tile.WoodFloor1, Tile.WoodFloor2, Tile.WoodFloor3],
-        "walls": [Tile.StripedWall1, Tile.StripedWall2, Tile.GradientWall1, Tile.GradientWall2, Tile.PipeWall],
+        "walls": [Tile.StripedWall1, Tile.StripedWall2, Tile.GradientWall1, Tile.GradientWall2, Tile.PipeWall, Tile.BrickWall1, Tile.BrickWall2, Tile.BrickWall3],
         "edges": [
             EdgePlacementManager.new([
                 {"placement": EdgeVacuousFurniturePlacement.new(), "chance": 5 },
@@ -266,7 +267,7 @@ var _config: Dictionary = {
     },
     RT.LongCloset: {
         "floors": [Tile.LightGrayCarpet, Tile.GrayCarpet, Tile.DarkGrayCarpet, Tile.WoodFloor1, Tile.WoodFloor2, Tile.WoodFloor3],
-        "walls": [Tile.StripedWall1, Tile.StripedWall2, Tile.GradientWall1, Tile.GradientWall2, Tile.PipeWall],
+        "walls": [Tile.StripedWall1, Tile.StripedWall2, Tile.GradientWall1, Tile.GradientWall2, Tile.PipeWall, Tile.BrickWall1, Tile.BrickWall2, Tile.BrickWall3],
         "edges": [
             EdgePlacementManager.new([
                 {"placement": EdgeVacuousFurniturePlacement.new(), "chance": 5 },
@@ -380,7 +381,7 @@ var _config: Dictionary = {
     },
     RT.LaundryRoom: {
         "floors": [Tile.TileFloor1, Tile.TileFloor3, Tile.WoodFloor1, Tile.WoodFloor2, Tile.WoodFloor3, Tile.ConcreteFloor],
-        "walls": [Tile.StripedWall1, Tile.StripedWall2, Tile.GradientWall1, Tile.GradientWall2, Tile.RockyWall, Tile.PipeWall],
+        "walls": [Tile.StripedWall1, Tile.StripedWall2, Tile.GradientWall1, Tile.GradientWall2, Tile.RockyWall, Tile.PipeWall, Tile.BrickWall1, Tile.BrickWall2, Tile.BrickWall3],
         "edges": [
             EdgePlacementManager.new([
                 {"placement": EdgeVacuousFurniturePlacement.new(), "chance": 20 },
@@ -421,7 +422,7 @@ var _config: Dictionary = {
     },
     RT.StorageRoom: {
         "floors": [Tile.WoodFloor1, Tile.WoodFloor2, Tile.WoodFloor3],
-        "walls": [Tile.GradientWall1, Tile.GradientWall2, Tile.RockyWall, Tile.PipeWall],
+        "walls": [Tile.GradientWall1, Tile.GradientWall2, Tile.RockyWall, Tile.PipeWall, Tile.BrickWall1, Tile.BrickWall2, Tile.BrickWall3],
         "edges": [
             EdgePlacementManager.new([
                 {"placement": EdgeVacuousFurniturePlacement.new(), "chance": 10 },
@@ -476,7 +477,7 @@ var _config: Dictionary = {
     },
     RT.Garage: {
         "floors": [Tile.ConcreteFloor],
-        "walls": [Tile.GradientWall1, Tile.GradientWall2, Tile.RockyWall, Tile.PipeWall],
+        "walls": [Tile.GradientWall1, Tile.GradientWall2, Tile.RockyWall, Tile.PipeWall, Tile.BrickWall1, Tile.BrickWall2, Tile.BrickWall3],
         "edges": [
             EdgePlacementManager.new([
                 {"placement": EdgeVacuousFurniturePlacement.new(), "chance": 10 },
