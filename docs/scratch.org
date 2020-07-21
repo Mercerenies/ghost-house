@@ -306,7 +306,7 @@
    maybe? We'll see.
 ** Fade in on Fairies
    Fairies just kind of... pop up right now. Maybe have the light fade
-   in. We can definitely to alpha-transparent light, as vanishing
+   in. We can definitely do alpha-transparent light, as vanishing
    lamps do it already.
 ** "Boring" Furniture
    This would be a major change. I consider furniture "boring" (or,
