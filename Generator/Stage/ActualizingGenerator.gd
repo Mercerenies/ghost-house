@@ -152,6 +152,9 @@ func _draw_outer_rim() -> void:
     for x in range(w * TOTAL_CELL_SIZE):
         _room.set_tile_cell(Vector2(x, -1), _room.Tile.DebugWall)
         _room.set_tile_cell(Vector2(x, h * TOTAL_CELL_SIZE), _room.Tile.DebugWall)
+    for y in range(-1, h * TOTAL_CELL_SIZE + 1):
+        _room.set_tile_cell(Vector2(-1, y), _room.Tile.DebugWall)
+        _room.set_tile_cell(Vector2(w * TOTAL_CELL_SIZE, y), _room.Tile.DebugWall)
 
 func _grid_to_room() -> void:
     var w = int(_data['config']['width'])
