@@ -14,7 +14,7 @@ var _data: Dictionary = {}
 var _boxes: Dictionary = {}
 var _vars: Dictionary = {}
 
-var outer_wall_types: Array = [Tile.BrickWall1, Tile.BrickWall2, Tile.BrickWall3]
+var outer_wall_types: Array = [Tile.BrickWall1, Tile.BrickWall2, Tile.BrickWall3, Tile.Siding1, Tile.Siding2, Tile.Siding3]
 
 func _init(room_data: Dictionary, boxes: Dictionary, vars: Dictionary):
     _data = room_data

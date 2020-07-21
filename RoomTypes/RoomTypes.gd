@@ -63,7 +63,8 @@ const WeightedDistr = SpecialPlacement.WeightedDistr
 enum Tile {
     EmptyTile = 0, DebugFloor, DebugWall, TileFloor1, TileFloor2, LightGrayCarpet, GrayCarpet, DarkGrayCarpet, TileFloor3, WoodFloor1,
     WoodFloor2, WoodFloor3, ConcreteFloor, StripedWall1, StripedWall2, DiamondWall, CircleWall, GradientWall1, GradientWall2, RockyWall,
-    PipeWall, RedRegalWall, OrangeRegalWall, ColumnedWall1, ColumnedWall2, ColumnedWall3, GrassTile, BrickWall1, BrickWall2, BrickWall3
+    PipeWall, RedRegalWall, OrangeRegalWall, ColumnedWall1, ColumnedWall2, ColumnedWall3, GrassTile, BrickWall1, BrickWall2, BrickWall3,
+    Siding1, Siding2, Siding3
 }
 
 enum RT {
@@ -76,7 +77,7 @@ enum RT {
 var walls: Array = [Tile.DebugWall, Tile.StripedWall1, Tile.StripedWall2, Tile.DiamondWall, Tile.CircleWall,
                     Tile.GradientWall1, Tile.GradientWall2, Tile.RockyWall, Tile.PipeWall, Tile.RedRegalWall,
                     Tile.OrangeRegalWall, Tile.ColumnedWall1, Tile.ColumnedWall2, Tile.ColumnedWall3,
-                    Tile.BrickWall1, Tile.BrickWall2, Tile.BrickWall3]
+                    Tile.BrickWall1, Tile.BrickWall2, Tile.BrickWall3, Tile.Siding1, Tile.Siding2, Tile.Siding3]
 
 var _roomtypes: Dictionary = {
     Vector2(1, 1): [RT.Washroom, RT.Closet, RT.LaundryRoom, RT.StorageRoom],
