@@ -394,12 +394,13 @@
    3. DeadRoomGenerator
    4. ConnectionGenerator
    5. PropertiesGenerator
-   6. LockedDoorGenerator
-   7. ActualizingGenerator
-   8. SpecialGenerator
-   9. EdgeGenerator
-  10. EssentialGenerator
-  11. StorageGenerator
-  12. AmbientEnemyGenerator
-  13. PlayerGenerator
-  14. GhostGenerator
+   6. SurroundingGenerator
+   7. LockedDoorGenerator
+   8. ActualizingGenerator
+   9. SpecialGenerator
+  10. EdgeGenerator
+  11. EssentialGenerator
+  12. StorageGenerator
+  13. AmbientEnemyGenerator
+  14. PlayerGenerator
+  15. GhostGenerator

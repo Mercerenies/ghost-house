@@ -1,7 +1,7 @@
 extends Reference
 
 ###############################
-# STAGE 13 - GHOST GENERATION #
+# STAGE 15 - GHOST GENERATION #
 ###############################
 
 const GeneratorGrid = preload("res://Generator/GeneratorGrid/GeneratorGrid.gd")

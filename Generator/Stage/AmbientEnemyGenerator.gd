@@ -1,7 +1,7 @@
 extends Reference
 
 ######################################
-# STAGE 11 - AMBIENT ENEMY GENERATOR #
+# STAGE 13 - AMBIENT ENEMY GENERATOR #
 ######################################
 
 const GeneratorGrid = preload("res://Generator/GeneratorGrid/GeneratorGrid.gd")

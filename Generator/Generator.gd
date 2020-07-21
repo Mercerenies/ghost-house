@@ -8,6 +8,7 @@ const LiveRoomGenerator = preload("res://Generator/Stage/LiveRoomGenerator.gd")
 const DeadRoomGenerator = preload("res://Generator/Stage/DeadRoomGenerator.gd")
 const ConnectionGenerator = preload("res://Generator/Stage/ConnectionGenerator.gd")
 const PropertiesGenerator = preload("res://Generator/Stage/PropertiesGenerator.gd")
+const SurroundingGenerator = preload("res://Generator/Stage/SurroundingGenerator.gd")
 const LockedDoorGenerator = preload("res://Generator/Stage/LockedDoorGenerator.gd")
 const ActualizingGenerator = preload("res://Generator/Stage/ActualizingGenerator.gd")
 const SpecialGenerator = preload("res://Generator/Stage/SpecialGenerator.gd")
@@ -76,6 +77,7 @@ func generate() -> Room:
     var dead_room_generator = DeadRoomGenerator.new(_data, _grid, painter)
     var connection_generator = ConnectionGenerator.new(_data, _grid)
     var properties_generator = PropertiesGenerator.new(_data, _boxes)
+    var surrounding_generator = SurroundingGenerator.new(_data, _room, _vars)
     var locked_door_generator = LockedDoorGenerator.new(_data, _grid, _boxes, _vars)
     var actualizing_generator = ActualizingGenerator.new(_data, _grid, _boxes, _room, helper)
     var special_generator = SpecialGenerator.new(_data, _boxes, _room, helper)
@@ -95,6 +97,7 @@ func generate() -> Room:
     # warning-ignore: integer_division
     _vars[VAR_PLAYER_COORDS] = Vector2(floor(_grid.get_width() / 2), floor(_grid.get_height() - 1))
 
+    surrounding_generator.run()
     locked_door_generator.run(_connections)
     actualizing_generator.run(_connections)
     special_generator.run()

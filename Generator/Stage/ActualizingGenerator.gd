@@ -1,7 +1,7 @@
 extends Reference
 
 ###########################
-# STAGE 7 - ACTUALIZATION #
+# STAGE 8 - ACTUALIZATION #
 ###########################
 
 const GeneratorGrid = preload("res://Generator/GeneratorGrid/GeneratorGrid.gd")
@@ -146,12 +146,20 @@ func _draw_base_room(pos: Vector2) -> void:
         else:
             _room.set_tile_cell(Vector2(xpos + CELL_SIZE, ypos + CELL_SIZE), _room.Tile.DebugWall)
 
+func _draw_outer_rim() -> void:
+    var w = int(_data['config']['width'])
+    var h = int(_data['config']['height'])
+    for x in range(w * TOTAL_CELL_SIZE):
+        _room.set_tile_cell(Vector2(x, -1), _room.Tile.DebugWall)
+        _room.set_tile_cell(Vector2(x, h * TOTAL_CELL_SIZE), _room.Tile.DebugWall)
+
 func _grid_to_room() -> void:
     var w = int(_data['config']['width'])
     var h = int(_data['config']['height'])
     for x in range(w):
         for y in range(h):
             _draw_base_room(Vector2(x, y))
+    _draw_outer_rim()
     _open_doorways()
 
 func run(conn: Array):

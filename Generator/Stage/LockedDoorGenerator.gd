@@ -1,7 +1,7 @@
 extends Reference
 
 ####################################
-# STAGE 6 - LOCKED DOOR GENERATION #
+# STAGE 7 - LOCKED DOOR GENERATION #
 ####################################
 
 const HallwayData = GeneratorData.HallwayData
