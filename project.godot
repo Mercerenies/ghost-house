@@ -198,6 +198,10 @@ GhostColors="*res://Singleton/GhostColors.gd"
 FurnitureShim="*res://RoomTransition/FurnitureShim.gd"
 GraphUtil="*res://Singleton/GraphUtil.gd"
 
+[debug]
+
+gdscript/warnings/shadowed_variable=false
+
 [display]
 
 window/size/resizable=false
