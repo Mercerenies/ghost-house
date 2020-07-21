@@ -12,7 +12,7 @@ func _ready() -> void:
 func set_direction(_a: int):
     pass # This one actually doesn't depend on direction, for once.
 
-func get_furniture_name():
+func get_furniture_name() -> String:
     return "CardboardBox"
 
 func get_storage_chance() -> float:

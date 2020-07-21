@@ -19,5 +19,5 @@ func set_direction(a: int):
         $Sprite.frame = 4 * _image_type + a
     _dir = a
 
-func get_furniture_name():
+func get_furniture_name() -> String:
     return "Automobile"

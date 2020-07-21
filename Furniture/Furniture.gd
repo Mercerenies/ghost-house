@@ -90,8 +90,7 @@ func turn_evil() -> void:
 func evil_drop_sprite() -> Sprite:
     return $Sprite as Sprite # God, I hope this exists. If it doesn't, override this method!
 
-# TODO Make this return string. It's an easy fix but I'm too lazy to do it right now.
-func get_furniture_name():
+func get_furniture_name() -> String:
     return "Furniture"
 
 func get_shim_channel() -> int:

@@ -16,7 +16,7 @@ func _ready() -> void:
 func set_direction(_a: int):
     pass
 
-func get_furniture_name():
+func get_furniture_name() -> String:
     return "LaundryBasket"
 
 func turn_evil() -> void:

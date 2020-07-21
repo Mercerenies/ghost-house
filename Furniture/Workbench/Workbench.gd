@@ -8,7 +8,7 @@ func _ready() -> void:
 func set_direction(a: int):
     $Sprite.frame = (5 - a) % 4
 
-func get_furniture_name():
+func get_furniture_name() -> String:
     return "Workbench"
 
 func get_storage_chance() -> float:

@@ -9,5 +9,5 @@ func set_direction(a: int):
     # warning-ignore: integer_division
     $Sprite.frame = a / 2
 
-func get_furniture_name():
+func get_furniture_name() -> String:
     return "Mirror"

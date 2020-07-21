@@ -15,7 +15,7 @@ func naturally_emits_light() -> bool:
 func chance_of_turning_evil() -> float:
     return 0.0
 
-func get_furniture_name():
+func get_furniture_name() -> String:
     return "Torch"
 
 func _on_Sprite_frame_changed():

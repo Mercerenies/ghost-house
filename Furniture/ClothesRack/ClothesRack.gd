@@ -31,7 +31,7 @@ func turn_evil() -> void:
     else:
         .turn_evil()
 
-func get_furniture_name():
+func get_furniture_name() -> String:
     return "ClothesRack"
 
 func get_storage_chance() -> float:
