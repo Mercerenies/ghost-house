@@ -17,18 +17,22 @@ const CELL_SIZE = GeneratorData.CELL_SIZE
 const WALL_SIZE = GeneratorData.WALL_SIZE
 const TOTAL_CELL_SIZE = GeneratorData.TOTAL_CELL_SIZE
 
+const VAR_OUTER_WALLS = GeneratorData.VAR_OUTER_WALLS
+
 var _data: Dictionary = {}
 var _grid: GeneratorGrid
 var _boxes: Dictionary = {}
 var _connections: Array = []
 var _room: Room
+var _vars: Dictionary
 var _helper: GeneratorPlacementHelper
 
-func _init(room_data: Dictionary, grid: GeneratorGrid, boxes: Dictionary, room: Room, helper: GeneratorPlacementHelper):
+func _init(room_data: Dictionary, grid: GeneratorGrid, boxes: Dictionary, room: Room, vars: Dictionary, helper: GeneratorPlacementHelper):
     _data = room_data
     _grid = grid
     _boxes = boxes
     _room = room
+    _vars = vars
     _helper = helper
 
 # TODO Use RoomDimensions here to calculate the positions of the
@@ -149,10 +153,11 @@ func _draw_base_room(pos: Vector2) -> void:
 func _draw_outer_rim() -> void:
     var w = int(_data['config']['width'])
     var h = int(_data['config']['height'])
-    for x in range(w * TOTAL_CELL_SIZE):
+    var outer_wall = _vars[VAR_OUTER_WALLS]
+    for x in range(-1, w * TOTAL_CELL_SIZE + 1):
         _room.set_tile_cell(Vector2(x, -1), _room.Tile.DebugWall)
-        _room.set_tile_cell(Vector2(x, h * TOTAL_CELL_SIZE), _room.Tile.DebugWall)
-    for y in range(-1, h * TOTAL_CELL_SIZE + 1):
+        _room.set_tile_cell(Vector2(x, h * TOTAL_CELL_SIZE), outer_wall)
+    for y in range(0, h * TOTAL_CELL_SIZE):
         _room.set_tile_cell(Vector2(-1, y), _room.Tile.DebugWall)
         _room.set_tile_cell(Vector2(w * TOTAL_CELL_SIZE, y), _room.Tile.DebugWall)
 

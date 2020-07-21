@@ -7,12 +7,19 @@ extends Reference
 const HallwayData = GeneratorData.HallwayData
 const RoomData = GeneratorData.RoomData
 
+const VAR_OUTER_WALLS = GeneratorData.VAR_OUTER_WALLS
+const Tile = RoomTypes.Tile
+
 var _data: Dictionary = {}
 var _boxes: Dictionary = {}
+var _vars: Dictionary = {}
 
-func _init(room_data: Dictionary, boxes: Dictionary):
+var outer_wall_types: Array = [Tile.BrickWall1, Tile.BrickWall2, Tile.BrickWall3]
+
+func _init(room_data: Dictionary, boxes: Dictionary, vars: Dictionary):
     _data = room_data
     _boxes = boxes
+    _vars = vars
 
 func _determine_room_properties() -> void:
     for v in _boxes.values():
@@ -31,5 +38,10 @@ func _determine_room_properties() -> void:
             # Welp
             pass
 
+func _determine_outer_properties() -> void:
+    var arr = outer_wall_types
+    _vars[VAR_OUTER_WALLS] = arr[randi() % len(arr)]
+
 func run() -> void:
     _determine_room_properties()
+    _determine_outer_properties()
