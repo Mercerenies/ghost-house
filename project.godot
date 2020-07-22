@@ -95,6 +95,11 @@ _global_script_classes=[ {
 "path": "res://Item/ItemInstance.gd"
 }, {
 "base": "Node",
+"class": "JSONData",
+"language": "GDScript",
+"path": "res://MansionRoom/JSONData.gd"
+}, {
+"base": "Node",
 "class": "Mark",
 "language": "GDScript",
 "path": "res://Room/Mark.gd"
@@ -167,6 +172,7 @@ _global_script_class_icons={
 "Item": "",
 "ItemCodex": "",
 "ItemInstance": "",
+"JSONData": "",
 "Mark": "",
 "MobileEntity": "",
 "OutlinedPolygon2D": "",
