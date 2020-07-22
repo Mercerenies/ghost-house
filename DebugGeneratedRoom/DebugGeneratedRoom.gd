@@ -7,7 +7,7 @@ func _ready():
 
     var data = {}
     var file = File.new()
-    file.open("res://DebugGeneratedRoom/test1.json", File.READ)
+    file.open("res://DebugGeneratedRoom/test_standard.json", File.READ)
     var result = JSON.parse(file.get_as_text())
     if result.error == OK:
         data = result.result
