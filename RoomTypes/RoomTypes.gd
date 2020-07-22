@@ -64,7 +64,8 @@ enum Tile {
     EmptyTile = 0, DebugFloor, DebugWall, TileFloor1, TileFloor2, LightGrayCarpet, GrayCarpet, DarkGrayCarpet, TileFloor3, WoodFloor1,
     WoodFloor2, WoodFloor3, ConcreteFloor, StripedWall1, StripedWall2, DiamondWall, CircleWall, GradientWall1, GradientWall2, RockyWall,
     PipeWall, RedRegalWall, OrangeRegalWall, ColumnedWall1, ColumnedWall2, ColumnedWall3, GrassTile, BrickWall1, BrickWall2, BrickWall3,
-    Siding1, Siding2, Siding3
+    Siding1, Siding2, Siding3, LightGrassTile, PathTile, UPathTile, DPathTile, LPathTile, RPathTile, InnerULTile,
+    InnerURTile, InnerDRTile, InnerDLTile, OuterURTile, OuterDRTile, OuterDLTile, OuterULTile
 }
 
 enum RT {
