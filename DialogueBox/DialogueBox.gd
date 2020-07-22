@@ -8,6 +8,7 @@ var _index: int = 0
 var _text: String = ""
 var _vars: Dictionary = {}
 var _active_branch: Array = []
+var _performing_action: bool = false
 
 func _ready():
     _data = {}
@@ -29,6 +30,7 @@ func _end_conversation() -> void:
     call_deferred("_end_conversation_deferred")
 
 func _end_conversation_now() -> void:
+    _performing_action = false
     visible = false
     _text = ""
     _active_branch = []
@@ -48,6 +50,7 @@ func _advance_state() -> void:
     _index += 1
     _text = ""
     _active_branch = []
+    _performing_action = false
     $Label.text = ""
     $SpeakerLabel.text = ""
     $SpeakerFrame.visible = false
@@ -86,8 +89,15 @@ func _advance_state() -> void:
                     arg = instr['arg']
                 else:
                     arg = null
+                # _performing_action is set to true here to detect if
+                # the action tries to cancel the dialogue. If it does,
+                # we don't want to try to continue advancing the
+                # prompts.
+                _performing_action = true
                 emit_signal("do_action", instr['action'], arg)
-                _advance_state()
+                if _performing_action:
+                    _performing_action = false
+                    _advance_state()
             'dump_vars':
                 _text = JSON.print(_vars)
                 if instr.has('speaker'):
