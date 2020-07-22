@@ -44,6 +44,11 @@
     show up in the player's pause menu, where he can view the clues of
     all ghosts he has met. ~arg~ is required and must be the ghost's
     string key (from the JSON file).
+*** ~spawn_mansion~ Action
+    Performs the mansion generation subroutine, using the required
+    ~arg~ as argument. ~arg~ can be a dictionary, a string filename,
+    or a ~JSONData.Data~ object. The mansion will be generated and
+    gameplay will shift into the new room.
 ** ~dump_vars~ Instruction
    Prints out all of the variables currently available to the current
    dialogue in JSON form, for debugging purposes.
