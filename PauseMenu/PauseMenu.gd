@@ -7,6 +7,9 @@ var control_stack: Array = [] # Right-hand-side is top of stack
 # TODO Go through the pause menu and disable options in the overworld
 # which don't make sense there.
 
+func get_pause_menu():
+    return self
+
 func is_active() -> bool:
     return visible
 

@@ -1,0 +1,27 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://OutlinedPolygon2D/OutlinedPolygon2D.gd" type="Script" id=1]
+[ext_resource path="res://SelectionsList/SelectionsList.tscn" type="PackedScene" id=2]
+[ext_resource path="res://PauseMenu/ConfirmBox/ConfirmBox.gd" type="Script" id=3]
+
+[node name="ConfirmBox" type="Node2D"]
+script = ExtResource( 3 )
+
+[node name="OutlinedPolygon2D" type="Polygon2D" parent="."]
+polygon = PoolVector2Array( 0, 0, 320, 0, 320, 240, 0, 240, 0, 0 )
+script = ExtResource( 1 )
+
+[node name="PromptLabel" type="Label" parent="."]
+margin_left = 20.0
+margin_top = 10.0
+margin_right = 301.0
+margin_bottom = 121.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "Placeholder text corresponding to the confirmation text for this confirmation box."
+autowrap = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="SelectionsList" parent="." instance=ExtResource( 2 )]
+position = Vector2( 89, 152 )
