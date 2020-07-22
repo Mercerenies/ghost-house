@@ -24,6 +24,8 @@ func _ready():
     sprite.material = Desaturate
     sprite.position = Vector2(16, 16)
     player.add_child(sprite)
+    if !visible:
+        sprite.visible = false
 
 func get_room():
     return get_parent()
