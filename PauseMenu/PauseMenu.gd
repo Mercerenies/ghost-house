@@ -4,6 +4,9 @@ const CONTROL_STACK_ACTIONS = ["ui_up", "ui_down", "ui_left", "ui_right", "ui_ac
 
 var control_stack: Array = [] # Right-hand-side is top of stack
 
+# TODO Go through the pause menu and disable options in the overworld
+# which don't make sense there.
+
 func is_active() -> bool:
     return visible
 
